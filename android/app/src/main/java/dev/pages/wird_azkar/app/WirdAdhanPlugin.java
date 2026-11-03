@@ -64,7 +64,7 @@ public class WirdAdhanPlugin extends Plugin {
         PowerManager pm = (PowerManager) c.getSystemService(Context.POWER_SERVICE);
         r.put("battery", Build.VERSION.SDK_INT < 23 || pm.isIgnoringBatteryOptimizations(c.getPackageName()));
         r.put("alarmMuted", AdhanService.isMuted(c));
-        r.put("version", BuildConfig.VERSION_NAME);
+        try { r.put("version", c.getPackageManager().getPackageInfo(c.getPackageName(), 0).versionName); } catch (Exception ignored) {}
         call.resolve(r);
     }
 
