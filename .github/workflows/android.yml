@@ -47,13 +47,22 @@ jobs:
           KEY_ALIAS: wird
         run: |
           chmod +x gradlew
-          ./gradlew --no-daemon assembleRelease bundleRelease
+          if [ -n "$KEYSTORE_FILE" ]; then
+            ./gradlew --no-daemon assembleRelease bundleRelease
+          else
+            echo "::warning::No signing key secrets yet - building a test (debug) APK only"
+            ./gradlew --no-daemon assembleDebug
+          fi
 
       - name: Collect outputs
         run: |
           mkdir -p out
-          cp android/app/build/outputs/apk/release/*.apk out/wird-${{ github.run_number }}.apk
-          cp android/app/build/outputs/bundle/release/*.aab out/wird-${{ github.run_number }}.aab
+          if ls android/app/build/outputs/apk/release/*.apk >/dev/null 2>&1; then
+            cp android/app/build/outputs/apk/release/*.apk out/wird-${{ github.run_number }}.apk
+            cp android/app/build/outputs/bundle/release/*.aab out/wird-${{ github.run_number }}.aab
+          else
+            cp android/app/build/outputs/apk/debug/*.apk out/wird-${{ github.run_number }}-test.apk
+          fi
 
       - uses: actions/upload-artifact@v4
         with:
