@@ -1,0 +1,13 @@
+{
+  "appId": "dev.pages.wird_azkar.app",
+  "appName": "وِرد",
+  "webDir": "www",
+  "server": {
+    "url": "https://wird-azkar.pages.dev/?app=android",
+    "androidScheme": "https",
+    "allowNavigation": ["wird-azkar.pages.dev", "*.wird-azkar.pages.dev"]
+  },
+  "android": {
+    "backgroundColor": "#0f2a22"
+  }
+}
