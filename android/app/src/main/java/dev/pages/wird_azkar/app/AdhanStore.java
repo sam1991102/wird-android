@@ -184,6 +184,7 @@ public final class AdhanStore {
 
     static String absolute(String s) {
         if (s == null || s.isEmpty()) return s;
+        int h = s.indexOf('#'); if (h >= 0) s = s.substring(0, h);
         if (s.startsWith("http")) return s;
         return BASE + (s.startsWith("/") ? s : "/" + s);
     }

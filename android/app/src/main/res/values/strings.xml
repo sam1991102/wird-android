@@ -4,4 +4,5 @@
     <string name="title_activity_main">وِرد</string>
     <string name="package_name">dev.pages.wird_azkar.app</string>
     <string name="custom_url_scheme">dev.pages.wird_azkar.app</string>
+    <string name="widget_desc">الصلاة القادمة وذكر اليوم</string>
 </resources>

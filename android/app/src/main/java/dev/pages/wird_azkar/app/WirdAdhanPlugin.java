@@ -45,6 +45,7 @@ public class WirdAdhanPlugin extends Plugin {
             JSONArray events = arr == null ? new JSONArray() : new JSONArray(arr.toString());
             AdhanStore.save(c, events);
             int n = AdhanStore.armAll(c);
+            WirdWidget.refreshAll(c);
             new Thread(() -> AdhanStore.cacheSounds(c, events)).start();
             JSObject r = new JSObject();
             r.put("armed", n);
@@ -125,6 +126,16 @@ public class WirdAdhanPlugin extends Plugin {
         } catch (Exception e) {
             call.reject(e.getMessage());
         }
+    }
+
+    @PluginMethod
+    public void keepAwake(PluginCall call) {
+        final boolean on = Boolean.TRUE.equals(call.getBoolean("on", false));
+        getActivity().runOnUiThread(() -> {
+            if (on) getActivity().getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            else getActivity().getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        });
+        call.resolve();
     }
 
     @PluginMethod

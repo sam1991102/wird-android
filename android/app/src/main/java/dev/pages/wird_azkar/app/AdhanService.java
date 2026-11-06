@@ -129,7 +129,8 @@ public class AdhanService extends Service {
             player.setLooping(isAlarm);
             player.setOnCompletionListener(mp -> { if (!isAlarm) stopAll(); });
             player.setOnErrorListener((mp, w, e) -> { fallback(isAlarm); return true; });
-            player.setOnPreparedListener(MediaPlayer::start);
+            final int stopMs = parseEndMs(current.optString("sound", ""));
+            player.setOnPreparedListener(mp -> { mp.start(); if (stopMs > 0 && !isAlarm) handler.postDelayed(this::stopAll, stopMs); });
             player.prepareAsync();
         } catch (Exception e) {
             fallback(isAlarm);
@@ -173,6 +174,14 @@ public class AdhanService extends Service {
     @Override public void onDestroy() {
         try { if (player != null) player.release(); } catch (Exception ignored) {}
         super.onDestroy();
+    }
+
+    static int parseEndMs(String s) {
+        try {
+            java.util.regex.Matcher m = java.util.regex.Pattern.compile("#t=[\\d.]*,([\\d.]+)").matcher(s == null ? "" : s);
+            if (m.find()) return (int) (Double.parseDouble(m.group(1)) * 1000);
+        } catch (Exception ignored) {}
+        return 0;
     }
 
     static boolean isMuted(Context c) {

@@ -33,6 +33,7 @@ public class AdhanReceiver extends BroadcastReceiver {
         JSONObject ev;
         try { ev = new JSONObject(raw); } catch (Exception e) { return; }
         String kind = ev.optString("kind", "notif");
+        WirdWidget.refreshAll(c);
 
         if (kind.equals("adhan") || kind.equals("alarm")) {
             Intent svc = new Intent(c, AdhanService.class);
