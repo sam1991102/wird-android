@@ -12,7 +12,8 @@
   },
   "android": {
     "backgroundColor": "#0f2a22",
-    "appendUserAgent": "WirdAndroid/1"
+    "appendUserAgent": "WirdAndroid/1",
+    "adjustMarginsForEdgeToEdge": "auto"
   },
   "appendUserAgent": "WirdAndroid/1"
 }
