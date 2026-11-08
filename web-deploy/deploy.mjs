@@ -47,6 +47,17 @@ const append = (file, mark, text) => {
   F[file][1] += text; log.push(`${file}: + ${mark}`);
 };
 
+// يستبدل كتلة مُلحقة سابقًا (من علامتها حتى بداية الكتلة التالية) بالنسخة الجديدة
+const upsert = (file, mark, text) => {
+  const s = F[file][1], i = s.indexOf(mark);
+  if (i < 0) { F[file][1] += text; return log.push(`${file}: + ${mark}`); }
+  const start = s.lastIndexOf('\n', i);
+  const re = /\n\/\*[a-z0-9-]+\*\//g; re.lastIndex = i + mark.length; const mm = re.exec(s); const end = mm ? mm.index : s.length;
+  const old = s.slice(start, end);
+  if (old.trim() === text.trim()) return log.push(`${file}: ${mark} same`);
+  F[file][1] = s.slice(0, start) + text.replace(/\n$/, '') + s.slice(end); log.push(`${file}: ~ ${mark}`);
+};
+
 // 2) التعديلات
 // مواقيت دقيقة: بدون دقيقة احتياط للظهر والمغرب
 rep('app.js', 'dhuhr:m(y.dhuhr)+1/60', 'dhuhr:m(y.dhuhr)');
@@ -61,8 +72,8 @@ rep('index.html', 'r="adhan"===e?c("adhan-fajr"===n):""',
 append('ui.js', '/*st-hub*/', fs.readFileSync(here + 'append-ui.js', 'utf8'));
 // صفحات الإعدادات الفرعية (تذكير الصيام/الذكر): عنصر بديل بنفس المعرّف حتى لا يعيد كود الترتيب القسم إلى مكانه
 rep('ui.js', 'var ph=document.createComment("sh");', 'var ph=sec.classList.contains("st-sub")?Object.assign(document.createElement("section"),{id:id,hidden:true,className:"st-sec st-sub sh-ph"}):document.createComment("sh");');
-append('ui.js', '/*radio*/', fs.readFileSync(here + 'append-radio.js', 'utf8'));
-append('styles.css', '/*radio*/', fs.readFileSync(here + 'append-radio.css', 'utf8'));
+upsert('ui.js', '/*radio*/', fs.readFileSync(here + 'append-radio.js', 'utf8'));
+upsert('styles.css', '/*radio*/', fs.readFileSync(here + 'append-radio.css', 'utf8'));
 append('ui.js', '/*skin-ios*/', fs.readFileSync(here + 'append-skin.js', 'utf8'));
 append('styles.css', '/*skin-ios*/', fs.readFileSync(here + 'append-ios.css', 'utf8'));
 rep('index.html', '<script id="wird-native">', '<script>try{localStorage.getItem("wird-skin")==="ios"&&document.documentElement.classList.add("ios")}catch(e){}</script><script id="wird-native">');
