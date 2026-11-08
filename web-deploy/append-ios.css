@@ -1,0 +1,24 @@
+
+/*skin-ios*/
+html.ios{--emerald-900:#0A2A5E;--emerald-800:#007AFF;--emerald-700:#0A6CFF;--emerald-600:#3D8BFF;--emerald-100:#E5F0FF;--emerald-50:#F2F7FF;--gold:#007AFF;--gold-2:#007AFF;--gold-3:#007AFF;--gold-50:#E5F0FF;--bg:#F2F2F7;--paper:#FFFFFF;--paper-2:#FFFFFF;--ink:#000000;--ink-2:#3C3C43;--muted:rgba(60,60,67,.6);--line:rgba(60,60,67,.16);--line-2:rgba(60,60,67,.1);--primary:#007AFF;--primary-2:#0A6CFF;--accent:#007AFF;--brand:#1C1C1E;--deep:#1C1C1E;--on-dark:#fff;--on-dark-1:#fff;--on-dark-2:rgba(235,235,245,.65);--font-ui:system-ui,-apple-system,"SF Arabic","SF Pro Text","Segoe UI",Roboto,"Noto Sans Arabic",sans-serif;--sh-1:none;--sh-2:0 1px 2px rgba(0,0,0,.04);--sh-3:0 10px 30px rgba(0,0,0,.12)}
+html.ios.dark{--bg:#000000;--paper:#1C1C1E;--paper-2:#2C2C2E;--ink:#FFFFFF;--ink-2:#EBEBF5;--muted:rgba(235,235,245,.6);--line:rgba(84,84,88,.55);--line-2:rgba(84,84,88,.35);--primary:#0A84FF;--primary-2:#409CFF;--accent:#0A84FF;--gold:#0A84FF;--gold-2:#0A84FF;--gold-3:#0A84FF;--emerald-800:#0A84FF;--emerald-700:#409CFF;--emerald-100:#0A2540;--emerald-50:#101A26;--gold-50:#0A2540;--brand:#1C1C1E;--deep:#1C1C1E}
+html.ios body{letter-spacing:0}
+html.ios{--brand:#007AFF;--deep:#0A3D91}html.ios.dark{--brand:#0A84FF;--deep:#0A2A5E}
+html.ios .topbar{background:rgba(249,249,249,.86)!important;-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);color:#000!important;border-bottom:.5px solid var(--line)}
+html.ios.dark .topbar{background:rgba(22,22,24,.86)!important;color:#fff!important}
+html.ios .topbar *{color:inherit;border-color:var(--line)}
+html.ios .tb-logo{filter:brightness(0)}html.ios.dark .tb-logo{filter:brightness(0) invert(1)}
+html.ios #installBtn{background:var(--primary)!important;background-image:none!important;color:#fff!important;border:0!important}
+html.ios #heroStart,html.ios .today-card,html.ios .qk-cont{background:var(--primary)!important;background-image:none!important;color:#fff!important;box-shadow:none}
+html.ios .today-card *{color:#fff!important}
+html.ios .btn-primary>span[aria-hidden]{background:rgba(255,255,255,.22)!important;color:#fff!important}
+html.ios .btn-gold{background:var(--primary)!important;background-image:none!important;color:#fff!important}
+html.ios .btn-ghost{background:var(--paper-2)!important;color:var(--primary)!important}
+html.ios .sk-bg{background:linear-gradient(180deg,#0B2A6B,#1D4FB8 70%,#3B7BEA)!important}
+html.ios .sk-bg *{color:#fff}html.ios .sk-next{color:#fff!important;background:rgba(255,255,255,.18)!important}
+html.ios .dy-card,html.ios .daily-card,html.ios .stat,html.ios #quranCard,html.ios #kidsTile,html.ios #nextd{border:0!important;box-shadow:none!important;border-radius:14px!important}
+html.ios .bottom-nav{background:rgba(249,249,249,.86)!important;-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);border-top:.5px solid var(--line)!important;box-shadow:none!important}
+html.ios.dark .bottom-nav{background:rgba(22,22,24,.86)!important}
+html.ios .bottom-nav [aria-current],html.ios .bottom-nav .on,html.ios .bottom-nav .active{color:var(--primary)!important}
+html.ios body::before,html.ios body::after{display:none}
+.skin-seg{display:flex;gap:6px;margin-top:6px}.skin-seg button{flex:1;padding:9px 0;border-radius:12px;border:1px solid var(--line);background:var(--paper-2);color:var(--ink);font:inherit;cursor:pointer}.skin-seg button[aria-checked=true]{background:var(--primary);color:#fff;border-color:transparent}
