@@ -36,3 +36,12 @@ html:not(.nav-off) .wp-page,html:not(.nav-off) .st{height:auto!important;max-hei
 .wd-sheet.dr2{z-index:2147483300!important}
 }
 .bottom-nav.nav5.st-on>a.active{color:var(--muted)!important}.bottom-nav.nav5.st-on>a.active .nt{font-weight:400}.bottom-nav.nav5.st-on>.nv-x{color:var(--primary)!important}.bottom-nav.nav5.st-on>.nv-x .nt{font-weight:600}
+html:not(.dark) .dr2 .wd-x,html:not(.dark) .dr2 [data-x]{color:var(--ink)!important;background:var(--paper)!important;border:.5px solid var(--line)!important}
+html:not(.dark) .dr2 .wd-x svg,html:not(.dark) .dr2 [data-x] svg{stroke:currentColor!important}
+html:not(.dark) .dr2 .dr-np small,html:not(.dark) .dr2 .dr-brand small,html:not(.dark) .dr2 .dr-ft,html:not(.dark) .dr2 .dr-ft a,html:not(.dark) .dr2 .dr-ver{color:color-mix(in srgb,var(--ink) 60%,transparent)!important}
+html:not(.dark) .bottom-nav.nav5>a:not(.active),html:not(.dark) .bottom-nav.nav5>.nv-x{color:color-mix(in srgb,var(--ink) 58%,transparent)!important}
+html:not(.dark) .bottom-nav.nav5.st-on>.nv-x{color:var(--primary)!important}
+html .bottom-nav.nav5,html.ios .bottom-nav.nav5,html.ios.dark .bottom-nav.nav5,html.ios.sepia .bottom-nav.nav5,html.sepia .bottom-nav.nav5,html.dark .bottom-nav.nav5{background:color-mix(in srgb,var(--paper) 97%,transparent)!important}
+html.ios .topbar .icon-btn{color:var(--primary)!important;background:transparent!important;border-color:transparent!important}
+html.ios .topbar .icon-btn svg{stroke:currentColor!important;color:currentColor!important}
+html:not(.dark):not(.ios) .dr2 .dr-brand img{filter:brightness(.72) saturate(1.4)}
