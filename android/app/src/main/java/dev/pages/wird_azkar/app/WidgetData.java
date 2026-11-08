@@ -48,7 +48,7 @@ final class WidgetData {
 
     static final class Cfg {
         int alpha = 32, bg = 0, ac = 0, text = 0, size = 1, style = 0, grad = 0, sheen = 60, font = 1;
-        boolean hijri = true, timer = true, arDigits = true, h12 = true, ampm = false, sunrise = true, extra = true, dhikr = true;
+        boolean hijri = true, timer = true, arDigits = true, h12 = true, ampm = true, sunrise = true, extra = true, dhikr = true;
 
         JSONObject json() {
             JSONObject o = new JSONObject();

@@ -106,6 +106,10 @@ final class WidgetRender {
         tx(v, R.id.w_name, name(n.k, n.fri), g.accent(c), 26 * s);
         timer(v, g, c, n.t, 18 * s);
         tx(v, R.id.w_time, "الأذان " + fmt(n.t, P, g), g.muted(c), 13 * s);
+        Nx pv = prevOf(P);
+        show(v, R.id.w_prev, g.timer);
+        tx(v, R.id.w_plbl, "مضى على " + name(pv.k, pv.fri) + "  ", g.muted(c), 11 * s);
+        elapsed(v, g, c, pv.t, 11 * s);
         show(v, R.id.w_hijri, g.hijri);
         if (g.hijri) tx(v, R.id.w_hijri, hijri(P, g), g.muted(c), 11 * s);
     }
@@ -124,27 +128,57 @@ final class WidgetRender {
     private static void full(Context c, RemoteViews v, WidgetData.Cfg g) {
         JSONObject P = WidgetData.prayer(c);
         PrayerCalc.Day D = PrayerCalc.day(P, 0), T = PrayerCalc.day(P, 1);
-        Nx n = nextOf(P);
+        Nx n = nextOf(P), pv = prevOf(P);
         float s = g.scale();
         tx(v, R.id.w_day, dayName(P, g), g.accent(c), 15 * s);
-        tx(v, R.id.w_city, P.optString("name", ""), g.fg(c), 15 * s);
-        show(v, R.id.w_hijri, g.hijri);
-        if (g.hijri) tx(v, R.id.w_hijri, hijri(P, g), g.fg(c), 13 * s);
+        tx(v, R.id.w_hd, hijriPart(P, g, "d"), g.fg(c), 40 * s);
+        tx(v, R.id.w_hijri, hijriPart(P, g, "MMMM y"), g.fg(c), 12 * s);
         tx(v, R.id.w_greg, greg(P, g), g.muted(c), 12 * s);
-        tx(v, R.id.w_nlbl, "القادمة: " + name(n.k, n.fri), g.accent(c), 14 * s);
-        timer(v, g, c, n.t, 20 * s);
-        rows(c, v, g, P, D, n, 13 * s, 14 * s);
+        tx(v, R.id.w_city, P.optString("name", ""), g.fg(c), 14 * s);
+        tx(v, R.id.w_plbl, "السابقة", g.muted(c), 11 * s);
+        tx(v, R.id.w_pname, name(pv.k, pv.fri), g.fg(c), 15 * s);
+        tx(v, R.id.w_nlbl, "القادمة", g.muted(c), 11 * s);
+        tx(v, R.id.w_nname, name(n.k, n.fri), g.accent(c), 15 * s);
+        timer(v, g, c, n.t, 16 * s);
+        elapsed(v, g, c, pv.t, 16 * s);
+        show(v, R.id.w_prev, g.timer);
+        rows(c, v, g, P, D, n, 14 * s, 15 * s);
         show(v, R.id.r1, g.sunrise);
         show(v, R.id.w_extra, g.extra);
+        show(v, R.id.w_div, g.extra);
         if (g.extra) {
             long night = T.t[0] - D.t[4];
-            tx(v, R.id.w_ml, "منتصف الليل", g.muted(c), 12 * s);
-            tx(v, R.id.w_mt, fmt(D.t[4] + night / 2, P, g), g.fg(c), 13 * s);
-            tx(v, R.id.w_ll, "الثلث الأخير", g.muted(c), 12 * s);
-            tx(v, R.id.w_lt, fmt(D.t[4] + night * 2 / 3, P, g), g.fg(c), 13 * s);
+            tx(v, R.id.w_ml, "منتصف الليل", g.muted(c), 13 * s);
+            tx(v, R.id.w_mt, fmt(D.t[4] + night / 2, P, g), g.fg(c), 14 * s);
+            tx(v, R.id.w_ll, "الثلث الأخير", g.muted(c), 13 * s);
+            tx(v, R.id.w_lt, fmt(D.t[4] + night * 2 / 3, P, g), g.fg(c), 14 * s);
         }
-        show(v, R.id.w_dhikr, g.dhikr);
-        if (g.dhikr) tx(v, R.id.w_dhikr, DHIKR_LIST[dayIndex() % DHIKR_LIST.length], g.muted(c), 13 * s);
+    }
+
+    static Nx prevOf(JSONObject P) {
+        long now = System.currentTimeMillis();
+        for (int d = 0; d >= -1; d--) {
+            PrayerCalc.Day D = PrayerCalc.day(P, d);
+            for (int k = 5; k >= 0; k--) if (D.t[k] <= now) { Nx n = new Nx(); n.k = k; n.t = D.t[k]; n.fri = D.fri; return n; }
+        }
+        Nx n = new Nx(); n.k = 5; n.t = now; return n;
+    }
+
+    private static void elapsed(RemoteViews v, WidgetData.Cfg g, Context c, long since, float sp) {
+        v.setChronometer(R.id.w_ptimer, SystemClock.elapsedRealtime() - (System.currentTimeMillis() - since), null, true);
+        if (Build.VERSION.SDK_INT >= 24) v.setChronometerCountDown(R.id.w_ptimer, false);
+        v.setTextColor(R.id.w_ptimer, g.fg(c));
+        v.setTextViewTextSize(R.id.w_ptimer, TypedValue.COMPLEX_UNIT_SP, sp);
+    }
+
+    static String hijriPart(JSONObject P, WidgetData.Cfg g, String pat) {
+        if (Build.VERSION.SDK_INT < 24) return "";
+        try {
+            android.icu.util.ULocale L = new android.icu.util.ULocale("ar@calendar=islamic-umalqura");
+            android.icu.text.SimpleDateFormat f = new android.icu.text.SimpleDateFormat(pat, L);
+            f.setTimeZone(android.icu.util.TimeZone.getTimeZone(P.optString("tz", "Asia/Riyadh")));
+            return dg(f.format(new java.util.Date()), g.arDigits);
+        } catch (Exception e) { return ""; }
     }
 
     private static void dhikr(Context c, RemoteViews v, WidgetData.Cfg g, int id) {
@@ -166,27 +200,35 @@ final class WidgetRender {
         try { page = Integer.parseInt(String.valueOf(WidgetData.get(c, "wird-mushaf-page")).replaceAll("\\D", "")); } catch (Exception ignored) {}
         page = Math.max(1, Math.min(604, page));
         String sura = WidgetData.get(c, "wird-mushaf-sura");
-        tx(v, R.id.w_lbl, "المصحف", g.accent(c), 15 * s);
+        tx(v, R.id.w_lbl, "📖  المصحف", g.accent(c), 16 * s);
         tx(v, R.id.w_k, "آخر صفحة", g.muted(c), 12 * s);
-        tx(v, R.id.w_sura, sura == null || sura.isEmpty() ? "ابدأ القراءة" : sura, g.fg(c), 18 * s);
-        tx(v, R.id.w_page, "صفحة " + dg(String.valueOf(page), g.arDigits), g.muted(c), 13 * s);
-        int pct; String label;
+        tx(v, R.id.w_sura, sura == null || sura.isEmpty() ? "ابدأ القراءة" : sura, g.fg(c), 19 * s);
+        int juz = juzOf(page), pct; String label, right;
+        tx(v, R.id.w_page, "صفحة " + dg(String.valueOf(page), g.arDigits) + "  ·  الجزء " + dg(String.valueOf(juz), g.arDigits), g.muted(c), 13 * s);
         try {
             JSONObject k = new JSONObject(WidgetData.get(c, "wird-khatma"));
-            int sp = k.optInt("sp", 1), pos = k.optInt("pos", sp - 1);
+            int sp = k.optInt("sp", 1), pos = Math.max(sp - 1, k.optInt("pos", sp - 1));
             pct = Math.max(0, Math.min(100, Math.round((pos - sp + 1) * 100f / Math.max(1, 604 - sp + 1))));
             label = "الختمة";
+            int done = 0;
+            for (int i = 0; i < 30; i++) { int end = i < 29 ? JUZ[i + 1] - 1 : 604; if (pos >= end) done = i + 1; }
+            right = dg(done + " / 30", g.arDigits);
         } catch (Exception e) {
             pct = Math.round(page * 100f / 604);
-            label = "من المصحف";
+            label = "تقدّمك في المصحف";
+            right = dg(pct + "٪", g.arDigits);
         }
-        tx(v, R.id.w_kh, label, g.fg(c), 13 * s);
-        tx(v, R.id.w_khp, dg(pct + "٪", g.arDigits), g.accent(c), 13 * s);
+        tx(v, R.id.w_kh, label, g.fg(c), 14 * s);
+        tx(v, R.id.w_khp, right, g.accent(c), 14 * s);
         v.setProgressBar(R.id.w_pb, 100, pct, false);
         if (Build.VERSION.SDK_INT >= 31) v.setColorStateList(R.id.w_pb, "setProgressTintList", ColorStateList.valueOf(g.accent(c)));
     }
 
     /* ---------- مساعدات ---------- */
+
+    static final int[] JUZ = {1, 22, 42, 62, 82, 102, 121, 142, 162, 182, 201, 222, 242, 262, 282, 302, 322, 342, 362, 382, 402, 422, 442, 462, 482, 502, 522, 542, 562, 582};
+
+    static int juzOf(int page) { int j = 1; for (int i = 0; i < JUZ.length; i++) if (page >= JUZ[i]) j = i + 1; return j; }
 
     static final class Nx { int k; long t; boolean fri; }
 

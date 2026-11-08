@@ -107,11 +107,10 @@ public class WidgetConfigActivity extends Activity {
             sw(c3, "نظام ١٢ ساعة", cfg.h12, v -> cfg.h12 = v);
             sw(c3, "إظهار ص / م", cfg.ampm, v -> cfg.ampm = v);
         }
-        if (type == WidgetRender.NEXT || type == WidgetRender.FULL) sw(c3, "العدّاد التنازلي", cfg.timer, v -> cfg.timer = v);
+        if (type == WidgetRender.NEXT || type == WidgetRender.FULL) sw(c3, "العدّاد والوقت المنقضي", cfg.timer, v -> cfg.timer = v);
         if (type == WidgetRender.TIMES || type == WidgetRender.FULL) sw(c3, "وقت الشروق", cfg.sunrise, v -> cfg.sunrise = v);
         if (type == WidgetRender.FULL) {
             sw(c3, "منتصف الليل والثلث الأخير", cfg.extra, v -> cfg.extra = v);
-            sw(c3, "ذكر اليوم", cfg.dhikr, v -> cfg.dhikr = v);
         }
         sw(c3, "الأرقام العربية (١٢٣)", cfg.arDigits, v -> cfg.arDigits = v);
 
