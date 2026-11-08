@@ -35,3 +35,4 @@ html:not(.nav-off) .wp-page,html:not(.nav-off) .st,html:not(.nav-off) .wd-sheet:
 html:not(.nav-off) .wp-page,html:not(.nav-off) .st{height:auto!important;max-height:none!important}
 .wd-sheet.dr2{z-index:2147483300!important}
 }
+.bottom-nav.nav5.st-on>a.active{color:var(--muted)!important}.bottom-nav.nav5.st-on>a.active .nt{font-weight:400}.bottom-nav.nav5.st-on>.nv-x{color:var(--primary)!important}.bottom-nav.nav5.st-on>.nv-x .nt{font-weight:600}

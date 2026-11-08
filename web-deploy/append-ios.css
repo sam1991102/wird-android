@@ -45,3 +45,4 @@ html.ios .sh-row:active,html.ios .rd-card:active,html.ios .dr-i2:active{backgrou
 html.ios.sepia{--bg:#F6EEDC;--paper:#FBF5E8;--paper-2:#F1E6CF;--ink:#3B2E1E;--ink-2:#5A4A35;--muted:rgba(80,62,40,.62);--line:rgba(120,95,60,.22);--line-2:rgba(120,95,60,.14);--primary:#A0602A;--primary-2:#B8733A;--accent:#A0602A;--gold:#A0602A;--gold-2:#A0602A;--gold-3:#A0602A;--emerald-800:#A0602A;--emerald-700:#B8733A;--emerald-100:#F1E2C8;--emerald-50:#F7EEDD;--gold-50:#F1E2C8;--brand:#A0602A;--deep:#6B3F1C}
 html.ios.sepia .topbar,html.ios.sepia .bottom-nav{background:rgba(246,238,220,.88)!important;color:#3B2E1E!important}
 html.ios.sepia body{background:var(--bg)!important;color:var(--ink)}
+html.ios .dr2 .wd-x,html.ios .dr2 [data-x]{color:var(--ink)!important;background:var(--paper)!important;border:.5px solid var(--line)!important}

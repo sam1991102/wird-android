@@ -5,6 +5,6 @@ function svg(p){return '<svg class="ph" viewBox="0 0 256 256" aria-hidden="true"
 function draw(){
  document.querySelectorAll(".dr2 .dr-i2[data-n]").forEach(function(b){var k=b.dataset.n,ic=b.querySelector(".dr-ic");if(!ic||!F[k]||ic.dataset.ph===k)return;ic.innerHTML=svg(F[k]);ic.dataset.ph=k});
  var s=document.querySelector(".dr2 .dr-search");if(s&&!s.dataset.ph){var o=s.querySelector("svg");if(o){o.outerHTML=svg(R.search)}s.dataset.ph=1}
- document.querySelectorAll(".bottom-nav.nav5>[data-tab]").forEach(function(a){var k=a.dataset.tab,ni=a.querySelector(".ni");if(!ni||!R[k])return;var on=a.classList.contains("active")||a.hasAttribute("aria-current");var w=on?"f":"r";if(ni.dataset.ph===k+w)return;ni.innerHTML=svg(on?F[k]:R[k]);ni.dataset.ph=k+w})}
+ document.querySelectorAll(".bottom-nav.nav5>[data-tab]").forEach(function(a){var k=a.dataset.tab,ni=a.querySelector(".ni");if(!ni||!R[k])return;var so=a.parentNode.classList.contains("st-on");var on=a.classList.contains("nv-x")?so:(!so&&(a.classList.contains("active")||a.hasAttribute("aria-current")));var w=on?"f":"r";if(ni.dataset.ph===k+w)return;ni.innerHTML=svg(on?F[k]:R[k]);ni.dataset.ph=k+w})}
 var mo=new MutationObserver(function(){clearTimeout(mo.t);mo.t=setTimeout(draw,0)});mo.observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:["class","aria-current"]});draw();
 })();
