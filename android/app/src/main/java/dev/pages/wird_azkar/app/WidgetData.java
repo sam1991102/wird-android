@@ -40,12 +40,14 @@ final class WidgetData {
     static final int AUTO = 0;
     /** ألوان الخلفية (0 = تلقائي حسب وضع الجهاز). */
     static final int[] BG = {AUTO, 0xFF0F2A22, 0xFF000000, 0xFF1B2340, 0xFF3A2350, 0xFF4A1622, 0xFF12355B, 0xFFF3EBDD, 0xFFFFFFFF};
-    static final String[] BG_N = {"تلقائي", "أخضر داكن", "أسود", "كحلي", "بنفسجي", "عنابي", "أزرق", "رملي", "أبيض"};
+    static final String[] BG_N = {"تلقائي", "أخضر", "أسود", "كحلي", "بنفسجي", "عنابي", "أزرق", "رملي", "أبيض"};
     static final int[] AC = {0xFFE2C27F, 0xFF3FB27F, 0xFF4AA3DF, 0xFFF0A03C, 0xFFE06C9F, 0xFF8A8CF5, 0xFFFFFFFF};
+    static final String[] FONT_N = {"خط الجهاز", "تجوّل", "المراعي", "أميري"};
+    static final String[] FONT_K = {"", "tajawal", "almarai", "amiri"};
     static final String[] AC_N = {"ذهبي", "أخضر", "أزرق", "برتقالي", "وردي", "بنفسجي", "أبيض"};
 
     static final class Cfg {
-        int alpha = 88, bg = 0, ac = 0, text = 0, size = 1;
+        int alpha = 32, bg = 0, ac = 0, text = 0, size = 1, style = 0, grad = 0, sheen = 60, font = 1;
         boolean hijri = true, timer = true, arDigits = true, h12 = true, ampm = false, sunrise = true, extra = true, dhikr = true;
 
         JSONObject json() {
@@ -53,7 +55,7 @@ final class WidgetData {
             try {
                 o.put("alpha", alpha).put("bg", bg).put("ac", ac).put("text", text).put("size", size)
                  .put("hijri", hijri).put("timer", timer).put("ar", arDigits).put("h12", h12).put("ampm", ampm)
-                 .put("sunrise", sunrise).put("extra", extra).put("dhikr", dhikr);
+                 .put("style", style).put("grad", grad).put("sheen", sheen).put("font", font).put("sunrise", sunrise).put("extra", extra).put("dhikr", dhikr);
             } catch (Exception ignored) {}
             return o;
         }
@@ -65,6 +67,7 @@ final class WidgetData {
             c.text = o.optInt("text", c.text); c.size = o.optInt("size", c.size);
             c.hijri = o.optBoolean("hijri", c.hijri); c.timer = o.optBoolean("timer", c.timer);
             c.arDigits = o.optBoolean("ar", c.arDigits); c.h12 = o.optBoolean("h12", c.h12); c.ampm = o.optBoolean("ampm", c.ampm);
+            c.style = o.optInt("style", c.style); c.grad = o.optInt("grad", c.grad); c.sheen = o.optInt("sheen", c.sheen); c.font = o.optInt("font", c.font);
             c.sunrise = o.optBoolean("sunrise", c.sunrise); c.extra = o.optBoolean("extra", c.extra); c.dhikr = o.optBoolean("dhikr", c.dhikr);
             return c;
         }
@@ -79,11 +82,11 @@ final class WidgetData {
         }
 
         boolean light(Context ctx) {
-            int c = bgColor(ctx);
-            double l = (0.299 * ((c >> 16) & 255) + 0.587 * ((c >> 8) & 255) + 0.114 * (c & 255)) / 255;
             if (text == 1) return false;
             if (text == 2) return true;
-            return l > 0.6 && alpha > 35;
+            int c = WidgetBg.effective(ctx, this);
+            double l = (0.299 * ((c >> 16) & 255) + 0.587 * ((c >> 8) & 255) + 0.114 * (c & 255)) / 255;
+            return l > 0.62;
         }
 
         int fg(Context ctx) { return light(ctx) ? 0xFF1C2622 : 0xFFFFFFFF; }

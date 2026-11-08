@@ -78,24 +78,26 @@ public class WidgetConfigActivity extends Activity {
         root.addView(sv, new LinearLayout.LayoutParams(-1, 0, 1));
 
         LinearLayout c1 = card(box, "الخلفية");
-        c1.addView(label("الشفافية"));
-        SeekBar sb = new SeekBar(this);
-        sb.setMax(100);
-        sb.setProgress(100 - cfg.alpha);
-        sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            public void onProgressChanged(SeekBar s, int p, boolean u) { cfg.alpha = 100 - p; draw(); }
-            public void onStartTrackingTouch(SeekBar s) {}
-            public void onStopTrackingTouch(SeekBar s) {}
-        });
-        c1.addView(sb);
-        c1.addView(label("اللون"));
-        c1.addView(swatches(WidgetData.BG, WidgetData.BG_N, true));
+        c1.addView(label("النمط"));
+        c1.addView(chips(WidgetBg.STYLE_N, cfg.style, v -> { cfg.style = v; draw(); }));
+        c1.addView(label("التدرّج (لنمط التدرّج)"));
+        c1.addView(swatches(null, WidgetBg.GRAD_N, 2));
+        c1.addView(label("اللون (لنمط اللون السادة)"));
+        c1.addView(swatches(WidgetData.BG, WidgetData.BG_N, 0));
+        c1.addView(label("الكثافة"));
+        c1.addView(seek(cfg.alpha, v -> { cfg.alpha = v; draw(); }));
+        c1.addView(label("اللمعة والحافة المضيئة"));
+        c1.addView(seek(cfg.sheen, v -> { cfg.sheen = v; draw(); }));
 
         LinearLayout c2 = card(box, "الألوان والخط");
         c2.addView(label("لون التمييز"));
-        c2.addView(swatches(WidgetData.AC, WidgetData.AC_N, false));
+        c2.addView(swatches(WidgetData.AC, WidgetData.AC_N, 1));
         c2.addView(label("لون النص"));
         c2.addView(chips(new String[]{"تلقائي", "فاتح", "داكن"}, cfg.text, v -> { cfg.text = v; draw(); }));
+        if (android.os.Build.VERSION.SDK_INT >= 26) {
+            c2.addView(label("الخط"));
+            c2.addView(chips(WidgetData.FONT_N, cfg.font, v -> { cfg.font = v; draw(); }));
+        }
         c2.addView(label("حجم الخط"));
         c2.addView(chips(new String[]{"صغير", "عادي", "كبير"}, cfg.size, v -> { cfg.size = v; draw(); }));
 
@@ -168,24 +170,25 @@ public class WidgetConfigActivity extends Activity {
         return t;
     }
 
-    private View swatches(int[] colors, String[] names, boolean isBg) {
+    private View swatches(int[] colors, String[] names, int kind) {
         HorizontalScrollView hs = new HorizontalScrollView(this);
         hs.setHorizontalScrollBarEnabled(false);
         LinearLayout row = new LinearLayout(this);
         hs.addView(row);
-        for (int i = 0; i < colors.length; i++) {
+        for (int i = 0; i < names.length; i++) {
             final int idx = i;
             LinearLayout cell = new LinearLayout(this);
             cell.setOrientation(LinearLayout.VERTICAL);
             cell.setGravity(Gravity.CENTER_HORIZONTAL);
             cell.setPadding(dp(4), dp(2), dp(4), dp(2));
             View dot = new View(this);
-            GradientDrawable d = colors[i] == WidgetData.AUTO
+            GradientDrawable d = kind == 2 ? new GradientDrawable(GradientDrawable.Orientation.TL_BR, WidgetBg.GRAD[i])
+                    : colors[i] == WidgetData.AUTO
                     ? new GradientDrawable(GradientDrawable.Orientation.TL_BR, new int[]{0xFFF7F3EA, 0xFF0F2A22})
                     : new GradientDrawable();
-            if (colors[i] != WidgetData.AUTO) d.setColor(colors[i]);
+            if (kind != 2 && colors[i] != WidgetData.AUTO) d.setColor(colors[i]);
             d.setShape(GradientDrawable.OVAL);
-            boolean on = isBg ? cfg.bg == i : cfg.ac == i;
+            boolean on = kind == 0 ? cfg.bg == i : kind == 1 ? cfg.ac == i : cfg.grad == i;
             d.setStroke(dp(on ? 3 : 1), on ? GOLD : 0x40FFFFFF);
             dot.setBackground(d);
             cell.addView(dot, new LinearLayout.LayoutParams(dp(38), dp(38)));
@@ -193,11 +196,12 @@ public class WidgetConfigActivity extends Activity {
             n.setPadding(0, dp(3), 0, 0);
             cell.addView(n);
             cell.setOnClickListener(v -> {
-                if (isBg) cfg.bg = idx; else cfg.ac = idx;
+                if (kind == 0) { cfg.bg = idx; cfg.style = 3; } else if (kind == 1) cfg.ac = idx; else { cfg.grad = idx; cfg.style = 2; }
                 ViewGroup p = (ViewGroup) hs.getParent();
                 int at = p.indexOfChild(hs);
                 p.removeView(hs);
-                p.addView(swatches(colors, names, isBg), at);
+                p.addView(swatches(colors, names, kind), at);
+                if (kind != 1) refreshStyle();
                 draw();
             });
             row.addView(cell);
@@ -227,6 +231,23 @@ public class WidgetConfigActivity extends Activity {
             row.addView(c, lp);
         }
         return row;
+    }
+
+    private View seek(int val, IntCb cb) {
+        SeekBar sb = new SeekBar(this);
+        sb.setMax(100);
+        sb.setProgress(val);
+        sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            public void onProgressChanged(SeekBar s, int p, boolean u) { if (u) cb.on(p); }
+            public void onStartTrackingTouch(SeekBar s) {}
+            public void onStopTrackingTouch(SeekBar s) {}
+        });
+        return sb;
+    }
+
+    private void refreshStyle() {
+        setContentView(ui());
+        draw();
     }
 
     private void sw(LinearLayout parent, String label, boolean val, BoolCb cb) {

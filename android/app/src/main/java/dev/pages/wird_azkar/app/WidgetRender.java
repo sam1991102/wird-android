@@ -57,10 +57,33 @@ final class WidgetRender {
         }
     }
 
+    static final int[][] SIZE = {{170, 170}, {320, 90}, {320, 330}, {320, 120}, {170, 170}};
+
+    static int layoutFor(Context c, int type, WidgetData.Cfg g) {
+        if (Build.VERSION.SDK_INT >= 26 && g.font > 0 && g.font < WidgetData.FONT_K.length) {
+            String base = c.getResources().getResourceEntryName(layout(type));
+            int id = c.getResources().getIdentifier(base + "_" + WidgetData.FONT_K[g.font], "layout", c.getPackageName());
+            if (id != 0) return id;
+        }
+        return layout(type);
+    }
+
     static RemoteViews render(Context c, WidgetData.Cfg g, int type, int id) {
-        RemoteViews v = new RemoteViews(c.getPackageName(), layout(type));
-        v.setInt(R.id.w_bg, "setColorFilter", g.bgColor(c));
-        v.setInt(R.id.w_bg, "setImageAlpha", Math.round(g.alpha * 2.55f));
+        return render(c, g, type, id, 0, 0);
+    }
+
+    static RemoteViews render(Context c, WidgetData.Cfg g, int type, int id, int wDp, int hDp) {
+        RemoteViews v = new RemoteViews(c.getPackageName(), layoutFor(c, type, g));
+        if (wDp <= 0 || hDp <= 0) {
+            wDp = SIZE[type][0]; hDp = SIZE[type][1];
+            if (id > 0) try {
+                android.os.Bundle o = android.appwidget.AppWidgetManager.getInstance(c).getAppWidgetOptions(id);
+                int w = o.getInt(android.appwidget.AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
+                int h = o.getInt(android.appwidget.AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT);
+                if (w > 0 && h > 0) { wDp = w; hDp = h; }
+            } catch (Exception ignored) {}
+        }
+        v.setImageViewBitmap(R.id.w_bg, WidgetBg.draw(c, g, wDp, hDp));
         switch (type) {
             case TIMES: times(c, v, g); break;
             case FULL: full(c, v, g); break;
@@ -130,7 +153,9 @@ final class WidgetRender {
         if (i < 0) i = dayIndex();
         tx(v, R.id.w_lbl, "ذكر", g.accent(c), 12 * s);
         tx(v, R.id.w_next, "التالي ‹", g.accent(c), 12 * s);
-        tx(v, R.id.w_dhikr, DHIKR_LIST[i % DHIKR_LIST.length], g.fg(c), 17 * s);
+        int[] D = {R.id.d0, R.id.d1, R.id.d2, R.id.d3, R.id.d4, R.id.d5};
+        for (int k = 0; k < D.length; k++) tx(v, D[k], DHIKR_LIST[(i + k) % DHIKR_LIST.length], g.fg(c), 17 * s);
+        v.setDisplayedChild(R.id.w_flip, 0);
         Intent nx = new Intent(c, WidgetTick.class).setAction(WidgetTick.ACT_NEXT).putExtra("id", id);
         if (id > 0) v.setOnClickPendingIntent(R.id.w_next, PendingIntent.getBroadcast(c, 5100 + id, nx, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT));
     }
