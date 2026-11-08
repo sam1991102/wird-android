@@ -26,7 +26,7 @@ final class WidgetBg {
         int base;
         switch (g.style) {
             case 0: case 1: case 2: case 3: base = mix(THEME[g.style][0], THEME[g.style][1], .5f); break;
-            case 4: base = 0xFFFFFFFF; break;
+            case 4: base = mix(0xFF0B1410, 0xFFFFFFFF, .35f); break;
             case 5: base = 0xFF10151C; break;
             case 6: { int[] p = GRAD[clamp(g.grad, GRAD.length)]; base = mix(p[0], p[1], .5f); break; }
             default: base = g.bgColor(c);
@@ -48,7 +48,14 @@ final class WidgetBg {
         // الطبقة الأساسية
         switch (g.style) {
             case 0: case 1: case 2: case 3: { int[] q = THEME[g.style]; p.setShader(new LinearGradient(0, 0, W * .6f, H, withA(q[0], a), withA(q[1], a), Shader.TileMode.CLAMP)); break; }
-            case 4: p.setShader(new LinearGradient(0, 0, W, H, withA(0xFFFFFFFF, a), withA(0xFFDDE6F0, Math.round(a * .7f)), Shader.TileMode.CLAMP)); break;
+            case 4: {
+                // زجاج مُعتّم قليلًا: طبقة داكنة خفيفة تحت الأبيض حتى يبقى النص مقروءًا فوق أي خلفية
+                Paint sc = new Paint(Paint.ANTI_ALIAS_FLAG);
+                sc.setColor(withA(0xFF0B1410, Math.round(70 + a * .15f)));
+                cv.drawRoundRect(R, r, r, sc);
+                p.setShader(new LinearGradient(0, 0, W, H, withA(0xFFFFFFFF, Math.round(a * .55f)), withA(0xFFDDE6F0, Math.round(a * .35f)), Shader.TileMode.CLAMP));
+                break;
+            }
             case 5: p.setShader(new LinearGradient(0, 0, W, H, withA(0xFF1E2630, a), withA(0xFF06090D, a), Shader.TileMode.CLAMP)); break;
             case 6: { int[] q = GRAD[clamp(g.grad, GRAD.length)]; p.setShader(new LinearGradient(0, 0, W, H, withA(q[0], a), withA(q[1], a), Shader.TileMode.CLAMP)); break; }
             default: p.setColor(withA(g.bgColor(c), a));

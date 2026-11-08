@@ -53,7 +53,7 @@ final class WidgetData {
         JSONObject json() {
             JSONObject o = new JSONObject();
             try {
-                o.put("alpha", alpha).put("bg", bg).put("ac", ac).put("text", text).put("size", size)
+                o.put("v", 2).put("alpha", alpha).put("bg", bg).put("ac", ac).put("text", text).put("size", size)
                  .put("hijri", hijri).put("timer", timer).put("ar", arDigits).put("h12", h12).put("ampm", ampm)
                  .put("style", style).put("grad", grad).put("sheen", sheen).put("font", font).put("sunrise", sunrise).put("extra", extra).put("dhikr", dhikr);
             } catch (Exception ignored) {}
@@ -68,7 +68,11 @@ final class WidgetData {
             c.hijri = o.optBoolean("hijri", c.hijri); c.timer = o.optBoolean("timer", c.timer);
             c.arDigits = o.optBoolean("ar", c.arDigits); c.h12 = o.optBoolean("h12", c.h12); c.ampm = o.optBoolean("ampm", c.ampm);
             c.style = o.optInt("style", c.style); c.grad = o.optInt("grad", c.grad); c.sheen = o.optInt("sheen", c.sheen); c.font = o.optInt("font", c.font);
-            c.sunrise = o.optBoolean("sunrise", c.sunrise); c.extra = o.optBoolean("extra", c.extra); c.dhikr = o.optBoolean("dhikr", c.dhikr);
+            c.sunrise = o.optBoolean("sunrise", c.sunrise);
+            if (!o.has("v")) { // إعدادات محفوظة قبل إضافة الثيمات: نحوّلها للترتيب الجديد
+                if (o.has("style")) c.style = Math.min(7, o.optInt("style", 0) + 4);
+                if (o.has("ac")) c.ac = Math.min(AC.length - 1, o.optInt("ac", 0) + 1);
+            } c.extra = o.optBoolean("extra", c.extra); c.dhikr = o.optBoolean("dhikr", c.dhikr);
             return c;
         }
 

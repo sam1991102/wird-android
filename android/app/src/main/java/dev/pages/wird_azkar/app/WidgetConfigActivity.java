@@ -80,7 +80,7 @@ public class WidgetConfigActivity extends Activity {
         LinearLayout c1 = card(box, "الخلفية");
         c1.addView(label("النمط"));
         c1.addView(chips(java.util.Arrays.copyOfRange(WidgetBg.STYLE_N, 0, 4), cfg.style < 4 ? cfg.style : -1, v -> { cfg.style = v; refreshStyle(); }));
-        c1.addView(chips(java.util.Arrays.copyOfRange(WidgetBg.STYLE_N, 4, 8), cfg.style >= 4 ? cfg.style - 4 : -1, v -> { cfg.style = v + 4; if (cfg.style == 4 && cfg.alpha > 60) cfg.alpha = 32; refreshStyle(); }));
+        c1.addView(chips(java.util.Arrays.copyOfRange(WidgetBg.STYLE_N, 4, 8), cfg.style >= 4 ? cfg.style - 4 : -1, v -> { cfg.style = v + 4; if (cfg.style == 4 && cfg.alpha > 70) cfg.alpha = 45; refreshStyle(); }));
         c1.addView(label("التدرّج (لنمط التدرّج)"));
         c1.addView(swatches(null, WidgetBg.GRAD_N, 2));
         c1.addView(label("اللون (لنمط اللون السادة)"));
