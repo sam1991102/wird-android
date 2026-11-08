@@ -29,7 +29,7 @@ html.ios .wp-page .wp-h p{color:var(--muted)!important;font-size:13px!important}
 html.ios .wp-page .wp-back{background:none!important;border:0!important;color:var(--primary)!important;font-size:22px!important;box-shadow:none!important}
 html.ios .wp-page{background:var(--bg)!important}
 html.ios .st-sw span{position:relative;display:inline-block;width:51px!important;height:31px!important;border-radius:31px!important;background:rgba(120,120,128,.16)!important;transition:background .2s}
-html.ios .st-sw span::before{content:"";position:absolute;top:2px;inset-inline-end:2px;width:27px;height:27px;border-radius:50%;background:#fff!important;box-shadow:0 3px 8px rgba(0,0,0,.15),0 1px 1px rgba(0,0,0,.16);transition:transform .2s}
+html.ios .st-sw span::before{content:"";position:absolute;top:2px;inset-inline-start:2px;width:27px;height:27px;border-radius:50%;background:#fff!important;box-shadow:0 3px 8px rgba(0,0,0,.15),0 1px 1px rgba(0,0,0,.16);transition:transform .2s}
 html.ios .st-sw input:checked+span{background:#34C759!important}
 html.ios .st-sw input:checked+span::before{transform:translateX(-20px)}
 html.ios.dark .st-sw span{background:rgba(120,120,128,.32)!important}

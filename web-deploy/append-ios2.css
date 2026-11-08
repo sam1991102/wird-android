@@ -41,7 +41,18 @@ html:not(.dark) .dr2 .wd-x svg,html:not(.dark) .dr2 [data-x] svg{stroke:currentC
 html:not(.dark) .dr2 .dr-np small,html:not(.dark) .dr2 .dr-brand small,html:not(.dark) .dr2 .dr-ft,html:not(.dark) .dr2 .dr-ft a,html:not(.dark) .dr2 .dr-ver{color:color-mix(in srgb,var(--ink) 60%,transparent)!important}
 html:not(.dark) .bottom-nav.nav5>a:not(.active),html:not(.dark) .bottom-nav.nav5>.nv-x{color:color-mix(in srgb,var(--ink) 58%,transparent)!important}
 html:not(.dark) .bottom-nav.nav5.st-on>.nv-x{color:var(--primary)!important}
-html .bottom-nav.nav5,html.ios .bottom-nav.nav5,html.ios.dark .bottom-nav.nav5,html.ios.sepia .bottom-nav.nav5,html.sepia .bottom-nav.nav5,html.dark .bottom-nav.nav5{background:color-mix(in srgb,var(--paper) 97%,transparent)!important}
+html .bottom-nav.nav5,html.ios .bottom-nav.nav5,html.ios.dark .bottom-nav.nav5,html.ios.sepia .bottom-nav.nav5,html.sepia .bottom-nav.nav5,html.dark .bottom-nav.nav5{background:var(--paper)!important}
 html.ios .topbar .icon-btn{color:var(--primary)!important;background:transparent!important;border-color:transparent!important}
 html.ios .topbar .icon-btn svg{stroke:currentColor!important;color:currentColor!important}
 html:not(.dark):not(.ios) .dr2 .dr-brand img{filter:brightness(.72) saturate(1.4)}
+.wp-page.in{transform:none!important}
+#skyCard .sk-wd{display:inline-block;padding-top:.32em;line-height:1.35}
+.sh-page .st-sec .st-row,.sh-page .st-sec .st-note,.sh-page .st-sec>p{padding-left:16px!important;padding-right:16px!important;box-sizing:border-box}
+.sh-page .st-sec{overflow:hidden}
+html.ios .st-sw span::after{display:none!important}
+.st-tg input[type=checkbox]{-webkit-appearance:none;appearance:none;flex:none;width:51px;height:31px;margin:0;border-radius:31px;background:rgba(120,120,128,.2);position:relative;cursor:pointer;transition:background .2s;border:0}
+.st-tg input[type=checkbox]::before{content:"";position:absolute;top:2px;inset-inline-start:2px;width:27px;height:27px;border-radius:50%;background:#fff;box-shadow:0 3px 8px rgba(0,0,0,.15),0 1px 1px rgba(0,0,0,.16);transition:transform .2s}
+.st-tg input[type=checkbox]:checked{background:var(--primary)}
+html.ios .st-tg input[type=checkbox]:checked{background:#34C759}
+.st-tg input[type=checkbox]:checked::before{transform:translateX(-20px)}
+.bottom-nav.nav5::after{content:""!important;display:block!important;position:absolute!important;left:0;right:0;top:100%;height:80px;background:inherit!important;pointer-events:none}
