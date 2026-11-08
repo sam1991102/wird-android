@@ -1,31 +1,30 @@
 
 /*ios2*/
-html.ios .dr-p{background:var(--bg)!important;color:var(--ink)!important}
-html.ios .dr-top,html.ios .dr-np,html.ios .dr-search{margin-inline:12px!important}
-html.ios .dr-np{background:var(--paper)!important;color:var(--ink)!important;border:0!important;border-radius:12px!important}
-html.ios .dr-np b{color:var(--primary)!important}
-html.ios .dr-search{background:var(--line-2)!important;border:0!important;border-radius:10px!important;color:var(--muted)!important}
-html.ios .dr-g{flex:none!important;height:auto!important;max-height:none!important;background:var(--paper)!important;border-radius:12px!important;overflow:hidden;margin:0 12px!important;padding:0!important;display:block!important}
-html.ios .dr-sep{height:18px!important;background:none!important;border:0!important;margin:0!important}
-html.ios .dr2 .dr-p .dr-i2{flex:none!important;display:flex!important;align-items:center;gap:12px;width:100%;min-height:46px;padding:0 12px!important;margin:0!important;border-radius:0!important;background:none!important;color:var(--ink)!important;font-size:16px}
-html.ios .dr-i2+.dr-i2{border-top:.5px solid var(--line)!important}
-html.ios .dr-i2.on{background:var(--paper-2)!important}
-html.ios .dr-i2.on .dr-l{color:var(--ink)!important;font-weight:600}
-html.ios .dr-i2::after{content:"‹";margin-inline-start:auto;color:var(--muted);font-size:18px}
-html.ios .dr2 .dr-p .dr-i2 .dr-ic{flex:none;width:29px!important;height:29px!important;border-radius:7px!important;background:var(--c,#8E8E93)!important;display:flex!important;align-items:center;justify-content:center;color:#fff!important}
-html.ios .dr2 .dr-p .dr-i2 .dr-ic svg{stroke:#fff!important;color:#fff!important;width:18px!important;height:18px!important}
-html.ios .dr-i2[data-n=home]{--c:#007AFF}html.ios .dr-i2[data-n=library]{--c:#FF9500}html.ios .dr-i2[data-n=mushaf]{--c:#34C759}html.ios .dr-i2[data-n=tasbih]{--c:#AF52DE}html.ios .dr-i2[data-n=prayer]{--c:#5856D6}html.ios .dr-i2[data-n=qibla]{--c:#30B0C7}html.ios .dr-i2[data-n=hijri]{--c:#FF3B30}html.ios .dr-i2[data-n=alarm]{--c:#FF9F0A}html.ios .dr-i2[data-n=khatma]{--c:#00C7BE}html.ios .dr-i2[data-n=bm]{--c:#FFCC00}html.ios .dr-i2[data-n=tools]{--c:#8E8E93}html.ios .dr-i2[data-n=kids]{--c:#FF2D55}html.ios .dr-i2[data-n=learn]{--c:#5AC8FA}html.ios .dr-i2[data-n=hadith]{--c:#A2845E}html.ios .dr-i2[data-n=hajj]{--c:#64D2FF}html.ios .dr-i2[data-n=ruqya]{--c:#32D74B}html.ios .dr-i2[data-n=names]{--c:#BF5AF2}html.ios .dr-i2[data-n=adhan]{--c:#FF3B30}html.ios .dr-i2[data-n=set]{--c:#8E8E93}html.ios .dr-i2[data-n=update]{--c:#0A84FF}html.ios .dr-i2[data-n=install]{--c:#34C759}html.ios .dr-i2[data-n=share]{--c:#FF9500}html.ios .dr-i2[data-n=radio]{--c:#FF375F}html.ios .dr-i2[data-n=search]{--c:#8E8E93}html.ios .dr-i2[data-n=settings]{--c:#8E8E93}
-html.ios .bottom-nav.nav5{display:flex!important;justify-content:space-around;gap:0;padding:6px 4px calc(6px + var(--safe-b,0px))!important}
-html.ios .bottom-nav.nav5 a,html.ios .bottom-nav.nav5 button.nv-x{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0;background:none!important;border:0;color:var(--muted)!important;font:inherit;font-size:10px;padding:2px 0;cursor:pointer;text-decoration:none}
-html.ios .bottom-nav.nav5 .ni{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;color:var(--c,#8E8E93)!important;background:color-mix(in srgb,var(--c,#8E8E93) 14%,transparent)!important;transition:transform .15s}
-html.ios .bottom-nav.nav5 .ni svg{width:19px;height:19px;stroke:currentColor!important;color:currentColor!important}
-html.ios .bottom-nav.nav5 .active .ni,html.ios .bottom-nav.nav5 [aria-current] .ni{background:var(--c)!important;color:#fff!important;transform:scale(1.06)}
-html.ios .bottom-nav.nav5 .active .nt,html.ios .bottom-nav.nav5 [aria-current] .nt{color:var(--ink)!important;font-weight:600}
-html.ios .bottom-nav.nav5 .nt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
-html.ios .bottom-nav.nav5 [data-tab=home]{--c:#007AFF}html.ios .bottom-nav.nav5 [data-tab=library]{--c:#FF9500}html.ios .bottom-nav.nav5 [data-tab=mushaf]{--c:#34C759}html.ios .bottom-nav.nav5 [data-tab=tasbih]{--c:#AF52DE}html.ios .bottom-nav.nav5 [data-tab=prayer]{--c:#5856D6}html.ios .bottom-nav.nav5 [data-tab=qibla]{--c:#30B0C7}html.ios .bottom-nav.nav5 [data-tab=hijri]{--c:#FF3B30}html.ios .bottom-nav.nav5 [data-tab=alarm]{--c:#FF9F0A}html.ios .bottom-nav.nav5 [data-tab=khatma]{--c:#00C7BE}html.ios .bottom-nav.nav5 [data-tab=bm]{--c:#FFCC00}html.ios .bottom-nav.nav5 [data-tab=tools]{--c:#8E8E93}html.ios .bottom-nav.nav5 [data-tab=kids]{--c:#FF2D55}html.ios .bottom-nav.nav5 [data-tab=learn]{--c:#5AC8FA}html.ios .bottom-nav.nav5 [data-tab=hadith]{--c:#A2845E}html.ios .bottom-nav.nav5 [data-tab=hajj]{--c:#64D2FF}html.ios .bottom-nav.nav5 [data-tab=ruqya]{--c:#32D74B}html.ios .bottom-nav.nav5 [data-tab=names]{--c:#BF5AF2}html.ios .bottom-nav.nav5 [data-tab=adhan]{--c:#FF3B30}html.ios .bottom-nav.nav5 [data-tab=set]{--c:#8E8E93}html.ios .bottom-nav.nav5 [data-tab=update]{--c:#0A84FF}html.ios .bottom-nav.nav5 [data-tab=install]{--c:#34C759}html.ios .bottom-nav.nav5 [data-tab=share]{--c:#FF9500}html.ios .bottom-nav.nav5 [data-tab=radio]{--c:#FF375F}html.ios .bottom-nav.nav5 [data-tab=search]{--c:#8E8E93}html.ios .bottom-nav.nav5 [data-tab=settings]{--c:#8E8E93}
-.nv-x{display:none!important}html.ios .nv-x{display:flex!important}
-html.ios .dr2 .dr-i2.on::before,html.ios .dr2 .dr-i2.on::after{border:0}
-html.ios .dr2 .dr-i2.on::before{display:none!important}
+.dr2 .dr-p{background:var(--bg)!important;color:var(--ink)!important}
+.dr2 .dr-top,.dr2 .dr-np,.dr2 .dr-search{margin-inline:12px!important}
+.dr2 .dr-np{background:var(--paper)!important;color:var(--ink)!important;border:0!important;border-radius:12px!important}
+.dr2 .dr-np b{color:var(--primary)!important}
+.dr2 .dr-search{background:var(--line-2)!important;border:0!important;border-radius:10px!important;color:var(--muted)!important}
+.dr2 .dr-g{flex:none!important;height:auto!important;max-height:none!important;background:var(--paper)!important;border-radius:12px!important;overflow:hidden;margin:0 12px!important;padding:0!important;display:block!important}
+.dr2 .dr-sep{height:22px!important;background:none!important;border:0!important;margin:0!important}
+.dr2 .dr-p .dr-i2{flex:none!important;display:flex!important;align-items:center;gap:12px;width:100%;min-height:46px;padding:0 12px!important;margin:0!important;border-radius:0!important;background:none!important;color:var(--ink)!important;font-size:16px}
+.dr2 .dr-p .dr-i2+.dr-i2{border-top:.5px solid var(--line)!important}
+.dr2 .dr-p .dr-i2.on{background:var(--paper-2)!important}
+.dr2 .dr-p .dr-i2.on .dr-l{color:var(--ink)!important;font-weight:600}
+.dr2 .dr-p .dr-i2.on::before{display:none!important}
+.dr2 .dr-p .dr-i2::after{content:"‹";margin-inline-start:auto;color:var(--muted);font-size:18px}
+.dr2 .dr-p .dr-i2 .dr-ic{flex:none;width:29px!important;height:29px!important;border-radius:7px!important;background:var(--c,#8E8E93)!important;display:flex!important;align-items:center;justify-content:center;color:#fff!important}
+.dr2 .dr-p .dr-i2 .dr-ic svg{stroke:#fff!important;color:#fff!important;width:18px!important;height:18px!important}
+.dr2 .dr-i2[data-n=home]{--c:#007AFF}.dr2 .dr-i2[data-n=library]{--c:#FF9500}.dr2 .dr-i2[data-n=mushaf]{--c:#34C759}.dr2 .dr-i2[data-n=tasbih]{--c:#AF52DE}.dr2 .dr-i2[data-n=prayer]{--c:#5856D6}.dr2 .dr-i2[data-n=qibla]{--c:#30B0C7}.dr2 .dr-i2[data-n=hijri]{--c:#FF3B30}.dr2 .dr-i2[data-n=alarm]{--c:#FF9F0A}.dr2 .dr-i2[data-n=khatma]{--c:#00C7BE}.dr2 .dr-i2[data-n=bm]{--c:#FFCC00}.dr2 .dr-i2[data-n=tools]{--c:#8E8E93}.dr2 .dr-i2[data-n=kids]{--c:#FF2D55}.dr2 .dr-i2[data-n=learn]{--c:#5AC8FA}.dr2 .dr-i2[data-n=hadith]{--c:#A2845E}.dr2 .dr-i2[data-n=hajj]{--c:#64D2FF}.dr2 .dr-i2[data-n=ruqya]{--c:#32D74B}.dr2 .dr-i2[data-n=names]{--c:#BF5AF2}.dr2 .dr-i2[data-n=adhan]{--c:#FF3B30}.dr2 .dr-i2[data-n=set]{--c:#8E8E93}.dr2 .dr-i2[data-n=update]{--c:#0A84FF}.dr2 .dr-i2[data-n=install]{--c:#34C759}.dr2 .dr-i2[data-n=share]{--c:#FF9500}.dr2 .dr-i2[data-n=radio]{--c:#FF375F}.dr2 .dr-i2[data-n=search]{--c:#8E8E93}
+.dr-x{border-color:var(--line)!important;color:var(--muted)!important;background:var(--paper)!important}
 html.ios .dr-logo{filter:brightness(0)}html.ios.dark .dr-logo{filter:brightness(0) invert(1)}
-html.ios .dr-x{border-color:var(--line)!important;color:var(--muted)!important;background:var(--paper)!important}
-html.ios .dr-sep{height:22px!important}
+/* شريط سفلي بنمط iOS: أيقونات أحادية اللون، والنشط بلون التطبيق */
+.bottom-nav.nav5{display:flex!important;align-items:stretch;height:auto!important;min-height:58px;padding:6px 4px calc(4px + var(--safe-b,0px))!important;gap:0!important}
+.bottom-nav.nav5>a,.bottom-nav.nav5>.nv-x{flex:1 1 0!important;display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-width:0;height:auto!important;margin:0!important;padding:2px 0!important;background:none!important;border:0!important;box-shadow:none!important;color:var(--muted)!important;font:inherit;font-size:10px!important;text-decoration:none;cursor:pointer;transform:none!important;position:static!important}
+.bottom-nav.nav5 .ni{position:static!important;transform:none!important;width:28px!important;height:26px!important;margin:0!important;padding:0!important;border-radius:0!important;background:none!important;box-shadow:none!important;display:flex;align-items:center;justify-content:center;color:inherit!important}
+.bottom-nav.nav5 .ni svg{width:25px!important;height:25px!important;stroke:currentColor!important;color:currentColor!important;stroke-width:1.7}
+.bottom-nav.nav5 .nt{position:static!important;font-size:10px!important;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.bottom-nav.nav5>.active,.bottom-nav.nav5>[aria-current]{color:var(--primary)!important}
+.bottom-nav.nav5>.active .nt,.bottom-nav.nav5>[aria-current] .nt{font-weight:600}
+.bottom-nav.nav5>.active::before,.bottom-nav.nav5>.active::after,.bottom-nav.nav5>[aria-current]::before{display:none!important}
+.bottom-nav.nav5>.active .ni svg{stroke-width:2.1}
