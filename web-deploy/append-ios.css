@@ -22,3 +22,23 @@ html.ios.dark .bottom-nav{background:rgba(22,22,24,.86)!important}
 html.ios .bottom-nav [aria-current],html.ios .bottom-nav .on,html.ios .bottom-nav .active{color:var(--primary)!important}
 html.ios body::before,html.ios body::after{display:none}
 .skin-seg{display:flex;gap:6px;margin-top:6px}.skin-seg button{flex:1;padding:9px 0;border-radius:12px;border:1px solid var(--line);background:var(--paper-2);color:var(--ink);font:inherit;cursor:pointer}.skin-seg button[aria-checked=true]{background:var(--primary);color:#fff;border-color:transparent}
+/* نمط أبل: عناوين كبيرة، مفاتيح iOS، أزرار مقسومة */
+html.ios .wp-page .wp-h{background:var(--bg)!important;background-image:none!important;color:var(--ink)!important;box-shadow:none!important;border-bottom:.5px solid var(--line)}
+html.ios .wp-page .wp-h h1{font-size:30px!important;font-weight:700!important;letter-spacing:-.3px;color:var(--ink)!important;font-family:var(--font-ui)!important}
+html.ios .wp-page .wp-h p{color:var(--muted)!important;font-size:13px!important}
+html.ios .wp-page .wp-back{background:none!important;border:0!important;color:var(--primary)!important;font-size:22px!important;box-shadow:none!important}
+html.ios .wp-page{background:var(--bg)!important}
+html.ios .st-sw span{position:relative;display:inline-block;width:51px!important;height:31px!important;border-radius:31px!important;background:rgba(120,120,128,.16)!important;transition:background .2s}
+html.ios .st-sw span::before{content:"";position:absolute;top:2px;inset-inline-end:2px;width:27px;height:27px;border-radius:50%;background:#fff!important;box-shadow:0 3px 8px rgba(0,0,0,.15),0 1px 1px rgba(0,0,0,.16);transition:transform .2s}
+html.ios .st-sw input:checked+span{background:#34C759!important}
+html.ios .st-sw input:checked+span::before{transform:translateX(-20px)}
+html.ios.dark .st-sw span{background:rgba(120,120,128,.32)!important}
+html.ios [aria-checked]{transition:background .15s}
+html.ios .st-row [data-seg]{border-radius:7px!important}
+html.ios .st-row [data-seg][aria-checked=true]{background:var(--paper)!important;color:var(--ink)!important;box-shadow:0 3px 8px rgba(0,0,0,.12),0 3px 1px rgba(0,0,0,.04)!important}
+html.ios.dark .st-row [data-seg][aria-checked=true]{background:#636366!important;color:#fff!important}
+html.ios .st-row [data-seg]:not([aria-checked=true]){background:transparent!important;color:var(--ink)!important}
+html.ios .sh-list,html.ios .nt-card,html.ios .rd-grp{border:0!important;border-radius:12px!important}
+html.ios .sh-g h2,html.ios .rd-h{font-weight:400!important;text-transform:none;font-size:13px!important;color:var(--muted)!important}
+html.ios button,html.ios a{-webkit-tap-highlight-color:transparent}
+html.ios .sh-row:active,html.ios .rd-card:active,html.ios .dr-i2:active{background:var(--line-2)!important}

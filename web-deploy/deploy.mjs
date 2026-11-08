@@ -72,12 +72,14 @@ rep('index.html', 'r="adhan"===e?c("adhan-fajr"===n):""',
 append('ui.js', '/*st-hub*/', fs.readFileSync(here + 'append-ui.js', 'utf8'));
 // صفحات الإعدادات الفرعية (تذكير الصيام/الذكر): عنصر بديل بنفس المعرّف حتى لا يعيد كود الترتيب القسم إلى مكانه
 rep('ui.js', 'var ph=document.createComment("sh");', 'var ph=sec.classList.contains("st-sub")?Object.assign(document.createElement("section"),{id:id,hidden:true,className:"st-sec st-sub sh-ph"}):document.createComment("sh");');
+upsert('ui.js', '/*icons*/', fs.readFileSync(here + 'append-icons.js', 'utf8'));
+upsert('styles.css', '/*icons*/', fs.readFileSync(here + 'append-icons.css', 'utf8'));
 upsert('ui.js', '/*ios2*/', fs.readFileSync(here + 'append-ios2.js', 'utf8'));
 upsert('styles.css', '/*ios2*/', fs.readFileSync(here + 'append-ios2.css', 'utf8'));
 upsert('ui.js', '/*radio*/', fs.readFileSync(here + 'append-radio.js', 'utf8'));
 upsert('styles.css', '/*radio*/', fs.readFileSync(here + 'append-radio.css', 'utf8'));
 append('ui.js', '/*skin-ios*/', fs.readFileSync(here + 'append-skin.js', 'utf8'));
-append('styles.css', '/*skin-ios*/', fs.readFileSync(here + 'append-ios.css', 'utf8'));
+upsert('styles.css', '/*skin-ios*/', fs.readFileSync(here + 'append-ios.css', 'utf8'));
 rep('index.html', '<script id="wird-native">', '<script>try{localStorage.getItem("wird-skin")==="ios"&&document.documentElement.classList.add("ios")}catch(e){}</script><script id="wird-native">');
 append('ui.js', '/*sh-seg*/', fs.readFileSync(here + 'append-seg.js', 'utf8'));
 append('ui.js', '/*w-ongoing*/', fs.readFileSync(here + 'append-ongoing.js', 'utf8'));
