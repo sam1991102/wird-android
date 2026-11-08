@@ -3,6 +3,7 @@ name: Build Android
 on:
   push:
     branches: [main]
+    paths-ignore: ['web-deploy/**', '.github/workflows/deploy-web.yml']
   workflow_dispatch:
 
 permissions:

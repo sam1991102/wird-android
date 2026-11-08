@@ -1,0 +1,22 @@
+name: Deploy website (manual)
+
+# يدوي فقط: من تبويب Actions ← Deploy website ← Run workflow
+on:
+  workflow_dispatch:
+    inputs:
+      dry:
+        description: 'تجربة بدون نشر (yes/no)'
+        default: 'no'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Deploy wird-azkar
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: node web-deploy/deploy.mjs ${{ github.event.inputs.dry == 'yes' && '--dry' || '' }}
