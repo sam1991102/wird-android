@@ -28,3 +28,10 @@ html.ios .dr-logo{filter:brightness(0)}html.ios.dark .dr-logo{filter:brightness(
 .bottom-nav.nav5>.active .nt,.bottom-nav.nav5>[aria-current] .nt{font-weight:600}
 .bottom-nav.nav5>.active::before,.bottom-nav.nav5>.active::after,.bottom-nav.nav5>[aria-current]::before{display:none!important}
 .bottom-nav.nav5>.active .ni svg{stroke-width:2.1}
+@media (max-width:760px){
+.bottom-nav.nav5{position:fixed!important;left:0!important;right:0!important;bottom:0!important;margin:0!important;width:auto!important;max-width:none!important;border-radius:0!important;box-shadow:none!important;border:0!important;border-top:.5px solid var(--line)!important;padding:6px 4px max(6px,env(safe-area-inset-bottom,0px))!important;z-index:2147483100!important;-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%)}
+html.nav-off .bottom-nav.nav5{display:none!important}
+html:not(.nav-off) .wp-page,html:not(.nav-off) .st,html:not(.nav-off) .wd-sheet:not(.dr2),html:not(.nav-off) .focus{bottom:var(--nav-h,64px)!important}
+html:not(.nav-off) .wp-page,html:not(.nav-off) .st{height:auto!important;max-height:none!important}
+.wd-sheet.dr2{z-index:2147483300!important}
+}

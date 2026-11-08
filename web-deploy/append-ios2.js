@@ -8,3 +8,12 @@ new MutationObserver(function(){nav();drawer()}).observe(document.body,{childLis
 })();
 
 (function(){setInterval(function(){var R=document.documentElement;if(R.dataset.view==='settings'&&window.__setView)__setView('home',false)},700)})();
+(function(){var R=document.documentElement;
+var SEL='.wp-page,.st,.wd-sheet:not(.dr2),#focus,.reader';
+function openOv(){return[].slice.call(document.querySelectorAll(SEL)).filter(function(o){if(o.hidden)return false;var c=getComputedStyle(o);return c.display!=="none"&&c.visibility!=="hidden"})}
+function closeAll(){openOv().forEach(function(o){var b=o.querySelector("[data-x],.wp-back,.wd-x");if(b)b.click();if(o.classList.contains("wp-page")){o.remove()}else if(!o.hidden&&getComputedStyle(o).display!=="none"){o.hidden=true}});R.classList.remove("ov-lock","reader-open","wp-open")}
+window.__closeOverlays=closeAll;
+function mushafOpen(){if(R.dataset.view==="mushaf")return true;var m=document.querySelector(".mp:not([hidden]),.mushaf-reader:not([hidden])");return!!(m&&getComputedStyle(m).display!=="none")}
+function sync(){R.classList.toggle("nav-off",mushafOpen());var n=document.querySelector(".bottom-nav.nav5");if(n&&n.offsetHeight)R.style.setProperty("--nav-h",n.offsetHeight+"px")}
+document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest(".bottom-nav.nav5>a,.bottom-nav.nav5>.nv-x");if(!a)return;if(openOv().length)closeAll();setTimeout(sync,60)},true);
+setInterval(sync,400);addEventListener("resize",sync);})();
