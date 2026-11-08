@@ -121,6 +121,7 @@ final class WidgetData {
                 for (int id : ids) m.updateAppWidget(id, WidgetRender.build(c, id, typeOf(k)));
             }
         } catch (Exception ignored) {}
+        OngoingNote.update(c);
         scheduleTick(c);
     }
 
@@ -130,6 +131,7 @@ final class WidgetData {
     }
 
     static boolean any(Context c) {
+        if (OngoingNote.on(c)) return true;
         AppWidgetManager m = AppWidgetManager.getInstance(c);
         for (Class<?> k : PROVIDERS) if (m.getAppWidgetIds(new ComponentName(c, k)).length > 0) return true;
         return false;

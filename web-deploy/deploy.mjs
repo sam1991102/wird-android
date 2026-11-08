@@ -59,6 +59,7 @@ rep('index.html', 'r="adhan"===e?c("adhan-fajr"===n):""',
   'r="adhan"===e?(window.__adhanFor?function(p){try{var S=JSON.parse(localStorage.getItem("wird-push")||"{}"),q=(S.cfg&&S.cfg[p]&&S.cfg[p].sound)||S.sound;return!q||"none"===q?"":window.__adhanFor(p,q)||""}catch(x){return c("fajr"===p)}}(n.slice(6)):c("adhan-fajr"===n)):""');
 // صفحة الإعدادات الجديدة + مرآة بيانات الويدجت
 append('ui.js', '/*st-hub*/', fs.readFileSync(here + 'append-ui.js', 'utf8'));
+append('ui.js', '/*w-ongoing*/', fs.readFileSync(here + 'append-ongoing.js', 'utf8'));
 append('styles.css', '/*st-hub*/', fs.readFileSync(here + 'append-styles.css', 'utf8'));
 // إصدار الكاش
 const m = F['sw.js'][1].match(/wird-v(\d+)/);

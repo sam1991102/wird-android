@@ -162,4 +162,14 @@ public class WirdAdhanPlugin extends Plugin {
         WidgetData.refreshAll(c);
         call.resolve();
     }
+
+    /** الإشعار الثابت للصلاة القادمة: setOngoing({on:true|false}) → {on} */
+    @PluginMethod
+    public void setOngoing(PluginCall call) {
+        Boolean v = call.getBoolean("on");
+        if (v != null) OngoingNote.set(getContext(), v);
+        JSObject r = new JSObject();
+        r.put("on", OngoingNote.on(getContext()));
+        call.resolve(r);
+    }
 }
