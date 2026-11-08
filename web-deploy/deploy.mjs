@@ -78,7 +78,7 @@ upsert('ui.js', '/*ios2*/', fs.readFileSync(here + 'append-ios2.js', 'utf8'));
 upsert('styles.css', '/*ios2*/', fs.readFileSync(here + 'append-ios2.css', 'utf8'));
 upsert('ui.js', '/*radio*/', fs.readFileSync(here + 'append-radio.js', 'utf8'));
 upsert('styles.css', '/*radio*/', fs.readFileSync(here + 'append-radio.css', 'utf8'));
-append('ui.js', '/*skin-ios*/', fs.readFileSync(here + 'append-skin.js', 'utf8'));
+upsert('ui.js', '/*skin-ios*/', fs.readFileSync(here + 'append-skin.js', 'utf8'));
 upsert('styles.css', '/*skin-ios*/', fs.readFileSync(here + 'append-ios.css', 'utf8'));
 rep('index.html', '<script id="wird-native">', '<script>try{localStorage.getItem("wird-skin")==="ios"&&document.documentElement.classList.add("ios")}catch(e){}</script><script id="wird-native">');
 rep('ui.js', '(st.s==="night"?moonSVG(d):', '(st.s==="night"?moonSVG(((Date.now()/864e5-10962.76)%29.530589+29.530589)%29.530589):');

@@ -7,3 +7,6 @@ r.innerHTML='<div class="st-l"><strong>نمط التصميم</strong><small>«إ
 r.addEventListener("click",function(e){var b=e.target.closest("[data-skin]");if(b)set(b.dataset.skin)});var h=s.querySelector(".st-row");h?s.insertBefore(r,h):s.appendChild(r);set(get())}
 new MutationObserver(add).observe(document.body,{childList:true,subtree:false});add();
 })();
+(function(){var R=document.documentElement;function btn(t){var s=document.getElementById("st-look");if(!s)return null;return[].find.call(s.querySelectorAll("button"),function(b){return b.textContent.trim()===t})}
+function fix(){var p=btn("ورقي");if(p)p.classList.add("m-sepia");if(R.classList.contains("ios")&&R.classList.contains("sepia")){var l=btn("فاتح");if(l){l.click()}else{R.classList.remove("sepia");try{localStorage.setItem("wird-sepia","false")}catch(e){}}}}
+setInterval(fix,500);fix()})();
