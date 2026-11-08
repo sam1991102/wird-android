@@ -72,6 +72,8 @@ rep('index.html', 'r="adhan"===e?c("adhan-fajr"===n):""',
 append('ui.js', '/*st-hub*/', fs.readFileSync(here + 'append-ui.js', 'utf8'));
 // صفحات الإعدادات الفرعية (تذكير الصيام/الذكر): عنصر بديل بنفس المعرّف حتى لا يعيد كود الترتيب القسم إلى مكانه
 rep('ui.js', 'var ph=document.createComment("sh");', 'var ph=sec.classList.contains("st-sub")?Object.assign(document.createElement("section"),{id:id,hidden:true,className:"st-sec st-sub sh-ph"}):document.createComment("sh");');
+upsert('ui.js', '/*ios2*/', fs.readFileSync(here + 'append-ios2.js', 'utf8'));
+upsert('styles.css', '/*ios2*/', fs.readFileSync(here + 'append-ios2.css', 'utf8'));
 upsert('ui.js', '/*radio*/', fs.readFileSync(here + 'append-radio.js', 'utf8'));
 upsert('styles.css', '/*radio*/', fs.readFileSync(here + 'append-radio.css', 'utf8'));
 append('ui.js', '/*skin-ios*/', fs.readFileSync(here + 'append-skin.js', 'utf8'));
