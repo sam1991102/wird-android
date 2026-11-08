@@ -1,0 +1,8 @@
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:minWidth="250dp" android:minHeight="250dp" android:minResizeWidth="250dp" android:minResizeHeight="250dp"
+    android:targetCellWidth="4" android:targetCellHeight="4"
+    android:updatePeriodMillis="1800000" android:initialLayout="@layout/w_full" android:previewLayout="@layout/w_full"
+    android:resizeMode="horizontal|vertical" android:widgetCategory="home_screen|keyguard"
+    android:configure="dev.pages.wird_azkar.app.WidgetConfigActivity"
+    android:widgetFeatures="reconfigurable|configuration_optional"
+    android:description="@string/wd_full"/>

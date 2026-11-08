@@ -4,5 +4,10 @@
     <string name="title_activity_main">وِرد</string>
     <string name="package_name">dev.pages.wird_azkar.app</string>
     <string name="custom_url_scheme">dev.pages.wird_azkar.app</string>
-    <string name="widget_desc">الصلاة القادمة وذكر اليوم</string>
+    <string name="widget_desc">الصلاة القادمة</string>
+    <string name="wd_next">الصلاة القادمة مع عدّاد تنازلي</string>
+    <string name="wd_times">مواقيت اليوم في سطر واحد</string>
+    <string name="wd_full">كل المواقيت والتاريخ ومنتصف الليل والثلث الأخير</string>
+    <string name="wd_dhikr">ذكر يتجدّد كل يوم، وزر للذكر التالي</string>
+    <string name="wd_mushaf">آخر صفحة قرأتها وتقدّم الختمة</string>
 </resources>
