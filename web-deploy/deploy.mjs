@@ -59,6 +59,8 @@ rep('index.html', 'r="adhan"===e?c("adhan-fajr"===n):""',
   'r="adhan"===e?(window.__adhanFor?function(p){try{var S=JSON.parse(localStorage.getItem("wird-push")||"{}"),q=(S.cfg&&S.cfg[p]&&S.cfg[p].sound)||S.sound;return!q||"none"===q?"":window.__adhanFor(p,q)||""}catch(x){return c("fajr"===p)}}(n.slice(6)):c("adhan-fajr"===n)):""');
 // صفحة الإعدادات الجديدة + مرآة بيانات الويدجت
 append('ui.js', '/*st-hub*/', fs.readFileSync(here + 'append-ui.js', 'utf8'));
+// صفحات الإعدادات الفرعية (تذكير الصيام/الذكر): عنصر بديل بنفس المعرّف حتى لا يعيد كود الترتيب القسم إلى مكانه
+rep('ui.js', 'var ph=document.createComment("sh");', 'var ph=sec.classList.contains("st-sub")?Object.assign(document.createElement("section"),{id:id,hidden:true,className:"st-sec st-sub sh-ph"}):document.createComment("sh");');
 append('ui.js', '/*sh-seg*/', fs.readFileSync(here + 'append-seg.js', 'utf8'));
 append('ui.js', '/*w-ongoing*/', fs.readFileSync(here + 'append-ongoing.js', 'utf8'));
 append('styles.css', '/*st-hub*/', fs.readFileSync(here + 'append-styles.css', 'utf8'));
