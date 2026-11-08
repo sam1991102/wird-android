@@ -41,13 +41,13 @@ final class WidgetData {
     /** ألوان الخلفية (0 = تلقائي حسب وضع الجهاز). */
     static final int[] BG = {AUTO, 0xFF0F2A22, 0xFF000000, 0xFF1B2340, 0xFF3A2350, 0xFF4A1622, 0xFF12355B, 0xFFF3EBDD, 0xFFFFFFFF};
     static final String[] BG_N = {"تلقائي", "أخضر", "أسود", "كحلي", "بنفسجي", "عنابي", "أزرق", "رملي", "أبيض"};
-    static final int[] AC = {0xFFE2C27F, 0xFF3FB27F, 0xFF4AA3DF, 0xFFF0A03C, 0xFFE06C9F, 0xFF8A8CF5, 0xFFFFFFFF};
+    static final int[] AC = {AUTO, 0xFFE2C27F, 0xFF3FB27F, 0xFF4AA3DF, 0xFFF0A03C, 0xFFE06C9F, 0xFF8A8CF5, 0xFFFFFFFF};
     static final String[] FONT_N = {"خط الجهاز", "تجوّل", "المراعي", "أميري"};
     static final String[] FONT_K = {"", "tajawal", "almarai", "amiri"};
-    static final String[] AC_N = {"ذهبي", "أخضر", "أزرق", "برتقالي", "وردي", "بنفسجي", "أبيض"};
+    static final String[] AC_N = {"حسب النمط", "ذهبي", "أخضر", "أزرق", "برتقالي", "وردي", "بنفسجي", "أبيض"};
 
     static final class Cfg {
-        int alpha = 32, bg = 0, ac = 0, text = 0, size = 1, style = 0, grad = 0, sheen = 60, font = 1;
+        int alpha = 96, bg = 0, ac = 0, text = 0, size = 1, style = 0, grad = 0, sheen = 35, font = 1;
         boolean hijri = true, timer = true, arDigits = true, h12 = true, ampm = true, sunrise = true, extra = true, dhikr = true;
 
         JSONObject json() {
@@ -94,7 +94,11 @@ final class WidgetData {
 
         int accent(Context ctx) {
             int a = AC[Math.max(0, Math.min(ac, AC.length - 1))];
-            if (light(ctx) && (a == 0xFFFFFFFF)) return 0xFF0F6B4C;
+            if (a == AUTO) {
+                if (style >= 0 && style < 4) return WidgetBg.THEME[style][2];
+                a = 0xFFE2C27F;
+            }
+            if (light(ctx) && a == 0xFFFFFFFF) return 0xFF0F6B4C;
             if (light(ctx) && a == 0xFFE2C27F) return 0xFF9C7420;
             return a;
         }

@@ -79,7 +79,8 @@ public class WidgetConfigActivity extends Activity {
 
         LinearLayout c1 = card(box, "الخلفية");
         c1.addView(label("النمط"));
-        c1.addView(chips(WidgetBg.STYLE_N, cfg.style, v -> { cfg.style = v; draw(); }));
+        c1.addView(chips(java.util.Arrays.copyOfRange(WidgetBg.STYLE_N, 0, 4), cfg.style < 4 ? cfg.style : -1, v -> { cfg.style = v; refreshStyle(); }));
+        c1.addView(chips(java.util.Arrays.copyOfRange(WidgetBg.STYLE_N, 4, 8), cfg.style >= 4 ? cfg.style - 4 : -1, v -> { cfg.style = v + 4; if (cfg.style == 4 && cfg.alpha > 60) cfg.alpha = 32; refreshStyle(); }));
         c1.addView(label("التدرّج (لنمط التدرّج)"));
         c1.addView(swatches(null, WidgetBg.GRAD_N, 2));
         c1.addView(label("اللون (لنمط اللون السادة)"));
@@ -195,7 +196,7 @@ public class WidgetConfigActivity extends Activity {
             n.setPadding(0, dp(3), 0, 0);
             cell.addView(n);
             cell.setOnClickListener(v -> {
-                if (kind == 0) { cfg.bg = idx; cfg.style = 3; } else if (kind == 1) cfg.ac = idx; else { cfg.grad = idx; cfg.style = 2; }
+                if (kind == 0) { cfg.bg = idx; cfg.style = 7; } else if (kind == 1) cfg.ac = idx; else { cfg.grad = idx; cfg.style = 6; }
                 ViewGroup p = (ViewGroup) hs.getParent();
                 int at = p.indexOfChild(hs);
                 p.removeView(hs);

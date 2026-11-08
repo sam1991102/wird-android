@@ -11,7 +11,11 @@ import android.graphics.Shader;
 
 /** يرسم خلفية الويدجت: زجاج فاتح/داكن، تدرّج، أو لون سادة — مع لمعة وحافة مضيئة. */
 final class WidgetBg {
-    static final String[] STYLE_N = {"زجاج فاتح", "زجاج داكن", "تدرّج", "لون سادة"};
+    static final String[] STYLE_N = {"زمردي", "كحلي ليلي", "فحمي", "رملي", "زجاج فاتح", "زجاج داكن", "تدرّج", "لون سادة"};
+    /** الثيمات الجاهزة: بداية التدرّج، نهايته، لون التمييز */
+    static final int[][] THEME = {
+        {0xFF0B3D33, 0xFF0F5A48, 0xFFE9C46A}, {0xFF0E1A33, 0xFF1B2D55, 0xFFF2C26B},
+        {0xFF121417, 0xFF1F2328, 0xFF5ED3A2}, {0xFFF6EFE2, 0xFFE9DCC3, 0xFF9C6B1E}};
     static final int[][] GRAD = {
         {0xFF6A5ACD, 0xFFE06C9F}, {0xFF1B2340, 0xFF3A7BD5}, {0xFFF0A03C, 0xFFD9467A},
         {0xFF0F6B4C, 0xFF3FB27F}, {0xFF141E30, 0xFF243B55}, {0xFFE9D8B4, 0xFFC9A66B}};
@@ -21,9 +25,10 @@ final class WidgetBg {
     static int effective(Context c, WidgetData.Cfg g) {
         int base;
         switch (g.style) {
-            case 0: base = 0xFFFFFFFF; break;
-            case 1: base = 0xFF10151C; break;
-            case 2: { int[] p = GRAD[clamp(g.grad, GRAD.length)]; base = mix(p[0], p[1], .5f); break; }
+            case 0: case 1: case 2: case 3: base = mix(THEME[g.style][0], THEME[g.style][1], .5f); break;
+            case 4: base = 0xFFFFFFFF; break;
+            case 5: base = 0xFF10151C; break;
+            case 6: { int[] p = GRAD[clamp(g.grad, GRAD.length)]; base = mix(p[0], p[1], .5f); break; }
             default: base = g.bgColor(c);
         }
         return mix(0xFF3A3F45, base, g.alpha / 100f);
@@ -42,9 +47,10 @@ final class WidgetBg {
 
         // الطبقة الأساسية
         switch (g.style) {
-            case 0: p.setShader(new LinearGradient(0, 0, W, H, withA(0xFFFFFFFF, a), withA(0xFFDDE6F0, Math.round(a * .7f)), Shader.TileMode.CLAMP)); break;
-            case 1: p.setShader(new LinearGradient(0, 0, W, H, withA(0xFF1E2630, a), withA(0xFF06090D, a), Shader.TileMode.CLAMP)); break;
-            case 2: { int[] q = GRAD[clamp(g.grad, GRAD.length)]; p.setShader(new LinearGradient(0, 0, W, H, withA(q[0], a), withA(q[1], a), Shader.TileMode.CLAMP)); break; }
+            case 0: case 1: case 2: case 3: { int[] q = THEME[g.style]; p.setShader(new LinearGradient(0, 0, W * .6f, H, withA(q[0], a), withA(q[1], a), Shader.TileMode.CLAMP)); break; }
+            case 4: p.setShader(new LinearGradient(0, 0, W, H, withA(0xFFFFFFFF, a), withA(0xFFDDE6F0, Math.round(a * .7f)), Shader.TileMode.CLAMP)); break;
+            case 5: p.setShader(new LinearGradient(0, 0, W, H, withA(0xFF1E2630, a), withA(0xFF06090D, a), Shader.TileMode.CLAMP)); break;
+            case 6: { int[] q = GRAD[clamp(g.grad, GRAD.length)]; p.setShader(new LinearGradient(0, 0, W, H, withA(q[0], a), withA(q[1], a), Shader.TileMode.CLAMP)); break; }
             default: p.setColor(withA(g.bgColor(c), a));
         }
         cv.drawRoundRect(R, r, r, p);
