@@ -38,7 +38,7 @@ const tail = code.slice(cut);
 const log = [];
 const rep = (file, a, b) => {
   const s = F[file][1];
-  if (s.includes(b) && !s.includes(a)) return log.push(`${file}: already`);
+  if (s.includes(b)) return log.push(`${file}: already`);
   if (!s.includes(a)) throw new Error(`${file}: anchor not found: ${a.slice(0, 60)}`);
   F[file][1] = s.replace(a, b); log.push(`${file}: patched`);
 };
