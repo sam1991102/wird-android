@@ -172,4 +172,47 @@ public class WirdAdhanPlugin extends Plugin {
         r.put("on", OngoingNote.on(getContext()));
         call.resolve(r);
     }
+
+    /** مشاركة صور/نص عبر قائمة المشاركة في أندرويد:
+     *  share({files:[{name,mime,data(base64)}], text, title}) */
+    @PluginMethod
+    public void share(PluginCall call) {
+        try {
+            Context c = getContext();
+            JSArray files = call.getArray("files", new JSArray());
+            String text = call.getString("text", "");
+            String title = call.getString("title", "");
+            java.util.ArrayList<Uri> uris = new java.util.ArrayList<>();
+            String mime = "text/plain";
+            java.io.File dir = new java.io.File(c.getCacheDir(), "share");
+            dir.mkdirs();
+            for (int i = 0; i < files.length(); i++) {
+                org.json.JSONObject f = files.getJSONObject(i);
+                String name = f.optString("name", "wird-" + i + ".png").replaceAll("[^A-Za-z0-9._-]", "_");
+                byte[] b = android.util.Base64.decode(f.optString("data", ""), android.util.Base64.DEFAULT);
+                java.io.File out = new java.io.File(dir, name);
+                try (java.io.FileOutputStream fo = new java.io.FileOutputStream(out)) { fo.write(b); }
+                uris.add(androidx.core.content.FileProvider.getUriForFile(c, c.getPackageName() + ".fileprovider", out));
+                mime = f.optString("mime", "image/png");
+            }
+            Intent it;
+            if (uris.size() > 1) {
+                it = new Intent(Intent.ACTION_SEND_MULTIPLE);
+                it.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+            } else {
+                it = new Intent(Intent.ACTION_SEND);
+                if (uris.size() == 1) it.putExtra(Intent.EXTRA_STREAM, uris.get(0));
+            }
+            it.setType(uris.isEmpty() ? "text/plain" : mime);
+            if (text != null && !text.isEmpty()) it.putExtra(Intent.EXTRA_TEXT, text);
+            if (title != null && !title.isEmpty()) it.putExtra(Intent.EXTRA_SUBJECT, title);
+            it.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            Intent ch = Intent.createChooser(it, title == null || title.isEmpty() ? "مشاركة" : title);
+            ch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            c.startActivity(ch);
+            call.resolve();
+        } catch (Exception e) {
+            call.reject("share failed: " + e.getMessage());
+        }
+    }
 }
