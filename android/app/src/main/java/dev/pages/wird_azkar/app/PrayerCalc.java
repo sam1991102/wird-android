@@ -52,12 +52,28 @@ final class PrayerCalc {
         }
     }
 
+
+    static boolean isRamadan(int y, int mo, int d) {
+        try {
+            if (android.os.Build.VERSION.SDK_INT >= 24) {
+                android.icu.util.IslamicCalendar ic = new android.icu.util.IslamicCalendar();
+                ic.setCalculationType(android.icu.util.IslamicCalendar.CalculationType.ISLAMIC_UMALQURA);
+                java.util.Calendar g = java.util.Calendar.getInstance(java.util.TimeZone.getTimeZone("UTC"));
+                g.clear(); g.set(y, mo - 1, d, 12, 0, 0);
+                ic.setTimeZone(android.icu.util.TimeZone.getTimeZone("UTC"));
+                ic.setTimeInMillis(g.getTimeInMillis());
+                return ic.get(android.icu.util.Calendar.MONTH) == 8;
+            }
+        } catch (Throwable ignored) {}
+        return false;
+    }
+
     /** ساعات محلية عشرية لكل وقت. */
     static double[] hours(int y, int mo, int d, double lat, double lng, double tz, String meth, double asrF) {
         final double[] M = method(meth);
         final double jd = julian(y, mo, d) - lng / 360;
         double[] Y = {5, 6, 12, 13, 18, 18};
-        for (int it = 0; it < 2; it++) {
+        for (int it = 0; it < 6; it++) {
             double[] n = new double[6];
             n[0] = ha(jd, lat, M[0], Y[0] / 24, true);
             n[1] = ha(jd, lat, .833, Y[1] / 24, true);
@@ -70,7 +86,13 @@ final class PrayerCalc {
         double off = tz - lng / 15;
         double[] r = new double[6];
         for (int k = 0; k < 5; k++) r[k] = Y[k] + off;
-        r[5] = M[2] > 0 ? r[4] + M[2] / 60 : Y[5] + off;
+        double im = M[2];
+        if (im == 90 && isRamadan(y, mo, d)) im = 120; // أم القرى: 120 دقيقة في رمضان
+        r[5] = im > 0 ? r[4] + im / 60 : Y[5] + off;
+        // خطوط العرض العالية: قاعدة الزاوية (نسبة من الليل) كما في أغلب التقاويم
+        double night = 24 - (r[4] - r[1]);
+        if (M[0] > 0) { double pf = M[0] / 60 * night; if (Double.isNaN(r[0]) || r[1] - r[0] > pf) r[0] = r[1] - pf; }
+        if (M[1] > 0) { double pi = M[1] / 60 * night; if (Double.isNaN(r[5]) || r[5] - r[4] > pi) r[5] = r[4] + pi; }
         return r;
     }
 

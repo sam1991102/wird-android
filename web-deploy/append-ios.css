@@ -45,3 +45,4 @@ html.ios .sh-row:active,html.ios .rd-card:active,html.ios .dr-i2:active{backgrou
 html.ios .dr2 .wd-x,html.ios .dr2 [data-x]{color:var(--ink)!important;background:var(--paper)!important;border:.5px solid var(--line)!important}
 
 html.ios .m-sepia{display:none!important}
+html.ios.dark #phraseChips button.active,html.ios.dark .mv-card.mv-primary,html.ios.dark #targetSeg button.active{background:#3D5BD0!important;color:#fff!important}html.ios.dark .mv-card.mv-primary *{color:#fff!important}
