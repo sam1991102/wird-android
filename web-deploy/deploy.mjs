@@ -68,6 +68,7 @@ rep('app.js', ADJ, ADJ + 'for(const _k in _t)if(isFinite(_t[_k])){const _m=_t[_k
 // تطبيق أندرويد: أذان كل صلاة حسب اختيارها
 rep('app.js', 'for(let t=0;t<2;t++){const t=t=>t/24;', 'for(let t=0;t<6;t++){const t=t=>t/24;');
 rep('app.js', 'return $.isha=u.ishaMin?$.maghrib+u.ishaMin/60:m(y.isha),$}', 'var _im=u.ishaMin;try{if(_im===90&&new Intl.DateTimeFormat("en-u-ca-islamic-umalqura",{month:"numeric",timeZone:"UTC"}).format(new Date(Date.UTC(r,i-1,o,12)))==="9")_im=120}catch(_e){}$.isha=_im?$.maghrib+_im/60:m(y.isha);var _N=24-($.maghrib-$.sunrise);if(u.fajr){var _pf=u.fajr/60*_N;if(!isFinite($.fajr)||$.sunrise-$.fajr>_pf)$.fajr=$.sunrise-_pf}if(u.isha){var _pi=u.isha/60*_N;if(!isFinite($.isha)||$.isha-$.maghrib>_pi)$.isha=$.maghrib+_pi}return $}');
+rep('ui.js', 'function addAll(){const $=s=>ov.querySelector(s)', 'function addAll(){const $=s=>ov.querySelector(s)||document.querySelector(s)');
 rep('index.html', 'r="adhan"===e?c("adhan-fajr"===n):""',
   'r="adhan"===e?(window.__adhanFor?function(p){try{var S=JSON.parse(localStorage.getItem("wird-push")||"{}"),q=(S.cfg&&S.cfg[p]&&S.cfg[p].sound)||S.sound;return!q||"none"===q?"":window.__adhanFor(p,q)||""}catch(x){return c("fajr"===p)}}(n.slice(6)):c("adhan-fajr"===n)):""');
 // صفحة الإعدادات الجديدة + مرآة بيانات الويدجت

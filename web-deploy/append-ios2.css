@@ -61,3 +61,4 @@ html.st-open .st.hub{top:var(--tb-h,64px)!important;height:auto!important}
 html.st-open .st.hub>.st-bar [data-x]{visibility:hidden!important;pointer-events:none}
 html.st-open .st.hub>.st-bar{justify-content:flex-start!important;background:transparent!important;border:0!important;box-shadow:none!important}
 html.st-open .st.hub>.st-bar #stT{font-size:28px!important;font-weight:700!important}
+@media (min-width:761px){html.st-open .bottom-nav.nav5{z-index:240!important}html.st-open .st.hub{right:104px!important}.bottom-nav.nav5>.nv-x{min-height:68px}}
