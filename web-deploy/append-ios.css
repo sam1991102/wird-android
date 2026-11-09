@@ -46,3 +46,9 @@ html.ios .dr2 .wd-x,html.ios .dr2 [data-x]{color:var(--ink)!important;background
 
 html.ios .m-sepia{display:none!important}
 html.ios.dark #phraseChips button.active,html.ios.dark .mv-card.mv-primary,html.ios.dark #targetSeg button.active{background:#3D5BD0!important;color:#fff!important}html.ios.dark .mv-card.mv-primary *{color:#fff!important}
+html.ios:not(.dark){--bg:#F3F5FA;--paper:#FFFFFF;--paper-2:#EEF1F8;--ink:#0F1B33;--ink-2:#33415C;--muted:rgba(15,27,51,.58);--line:rgba(15,27,51,.12);--line-2:rgba(15,27,51,.07)}
+html.ios.dark{--bg:#0A1020;--paper:#131B2E;--paper-2:#1B2540;--ink:#E9EDF7;--ink-2:#C3CBE0;--muted:rgba(233,237,247,.6);--line:rgba(160,175,215,.18);--line-2:rgba(160,175,215,.1)}
+html.ios:not(.dark) .topbar,html.ios:not(.dark) .bottom-nav.nav5{background:rgba(255,255,255,.94)!important;color:var(--ink)!important}
+html.ios.dark .topbar,html.ios.dark .bottom-nav.nav5{background:rgba(19,27,46,.96)!important;color:var(--ink)!important}
+html.ios:not(.dark) .tb-logo{filter:brightness(0) saturate(100%) invert(9%) sepia(30%) saturate(2000%) hue-rotate(200deg)}
+html.ios body,html.ios main{color:var(--ink)}
