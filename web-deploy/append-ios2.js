@@ -14,9 +14,9 @@ function openOv(){return[].slice.call(document.querySelectorAll(SEL)).filter(fun
 function closeAll(){openOv().forEach(function(o){var b=o.querySelector("[data-x],.wp-back,.wd-x,#fClose,[data-m=close]");if(b)b.click();if(o.classList.contains("wp-page")){o.remove()}else if(!o.hidden&&getComputedStyle(o).display!=="none"){o.hidden=true}});R.classList.remove("ov-lock","reader-open","wp-open")}
 window.__closeOverlays=closeAll;
 function mushafOpen(){var m=document.querySelector(".mp:not([hidden]),#focus:not([hidden]),.lp-ov:not([hidden])");return!!(m&&getComputedStyle(m).display!=="none")}
-function sync(){R.classList.toggle("nav-off",mushafOpen());var n=document.querySelector(".bottom-nav.nav5");if(n&&n.offsetHeight)R.style.setProperty("--nav-h",n.offsetHeight+"px");if(n){var so=[].some.call(document.querySelectorAll(".st"),function(x){return!x.hidden&&x.offsetHeight>200});n.classList.toggle("st-on",so);R.classList.toggle("st-open",so);var tb=document.querySelector(".topbar");if(tb&&tb.offsetHeight)R.style.setProperty("--tb-h",tb.offsetHeight+"px")}}
+function sp(k,v){if(R.style.getPropertyValue(k)!==v)R.style.setProperty(k,v)}function sync(){R.classList.toggle("nav-off",mushafOpen());var n=document.querySelector(".bottom-nav.nav5");if(n&&n.offsetHeight)sp("--nav-h",n.offsetHeight+"px");if(n){var so=[].some.call(document.querySelectorAll(".st"),function(x){return!x.hidden&&x.offsetHeight>200});n.classList.toggle("st-on",so);R.classList.toggle("st-open",so);var tb=document.querySelector(".topbar");if(tb&&tb.offsetHeight)sp("--tb-h",tb.offsetHeight+"px")}}
 document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest(".bottom-nav.nav5>a,.bottom-nav.nav5>.nv-x");if(!a)return;if(a.classList.contains("nv-radio")&&document.querySelector(".wp-page.rd-page"))return;if(a.__re){a.__re=0;setTimeout(sync,60);return}if(openOv().length){e.preventDefault();e.stopPropagation();closeAll();a.__re=1;setTimeout(function(){a.click()},300);return}setTimeout(sync,60)},true);
-setInterval(sync,700);addEventListener("resize",sync);})();
+setInterval(sync,1000);addEventListener("resize",sync);})();
 (function(){function W(ms){return new Promise(function(r){setTimeout(r,ms)})}
 async function page(id){if(!window.__openSettings)return null;__openSettings();await W(250);var st=[].find.call(document.querySelectorAll(".st"),function(x){return!x.hidden});var r=st&&st.querySelector('.sh-row[data-id="'+id+'"]');if(!r)return null;r.click();await W(450);return[].slice.call(document.querySelectorAll(".wp-page.sh-page")).pop()||null}
 window.__openSettingsPage=page;
@@ -31,14 +31,14 @@ function bgOf(e){while(e&&e!==R){var cs=getComputedStyle(e),bi=cs.backgroundImag
 function cr(a,b){var x=L(a),y=L(b);return(Math.max(x,y)+.05)/(Math.min(x,y)+.05)}
 var last="",seen=new WeakSet();function clr(){seen=new WeakSet();[].forEach.call(document.querySelectorAll("[data-cfix]"),function(e){e.style.removeProperty("color");e.style.removeProperty("stroke");e.removeAttribute("data-cfix")})}
 function fix(){var k=R.className;if(k!==last){last=k;clr()}if(!R.classList.contains("ios")){[].forEach.call(document.querySelectorAll("[data-cfix]"),function(e){e.style.removeProperty("color");e.style.removeProperty("stroke");e.removeAttribute("data-cfix")});return}
-var roots=[].slice.call(document.querySelectorAll("main,.wp-page,.st,.wd-sheet,#focus"));roots.forEach(function(rt){if(rt.hidden||!rt.offsetParent&&getComputedStyle(rt).position!=="fixed")return;[].forEach.call(rt.querySelectorAll("*"),function(e){if(seen.has(e)||!e.getClientRects().length)return;seen.add(e);var isSvg=e.tagName.toLowerCase()==="svg";var txt=isSvg||[].some.call(e.childNodes,function(n){return n.nodeType===3&&n.textContent.trim()});if(!txt)return;var cs=getComputedStyle(e);var fg=rgb(isSvg?(cs.stroke!=="none"?cs.stroke:cs.fill):cs.color);if(!fg)return;var bg=bgOf(e);if(!bg||L(bg)>.25)return;if(cr(fg,bg)<3){e.style.setProperty("color","#fff","important");if(isSvg&&cs.stroke!=="none")e.style.setProperty("stroke","#fff","important");e.setAttribute("data-cfix","1")}})})}
-var t,lastRun=0;new MutationObserver(function(){if(t)return;var w=Math.max(250,1500-(Date.now()-lastRun));t=setTimeout(function(){t=0;lastRun=Date.now();fix()},w)}).observe(document.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:["class","hidden"]});setTimeout(fix,800)})();
+if(!R.classList.contains("ios"))return;var roots=[].slice.call(document.querySelectorAll("main,.wp-page:not(.mp),.st,.wd-sheet"));roots.forEach(function(rt){if(rt.hidden||!rt.offsetParent&&getComputedStyle(rt).position!=="fixed")return;[].forEach.call(rt.querySelectorAll("*"),function(e){if(seen.has(e)||e.closest(".mp,.mushaf,.ayah,#mushafView"))return;if(seen.has(e)||!e.getClientRects().length)return;seen.add(e);var isSvg=e.tagName.toLowerCase()==="svg";var txt=isSvg||[].some.call(e.childNodes,function(n){return n.nodeType===3&&n.textContent.trim()});if(!txt)return;var cs=getComputedStyle(e);var fg=rgb(isSvg?(cs.stroke!=="none"?cs.stroke:cs.fill):cs.color);if(!fg)return;var bg=bgOf(e);if(!bg||L(bg)>.25)return;if(cr(fg,bg)<3){e.style.setProperty("color","#fff","important");if(isSvg&&cs.stroke!=="none")e.style.setProperty("stroke","#fff","important");e.setAttribute("data-cfix","1")}})})}
+var t,lastRun=0;new MutationObserver(function(){if(t)return;var w=Math.max(250,1500-(Date.now()-lastRun));t=setTimeout(function(){var go=function(){t=0;lastRun=Date.now();fix()};window.requestIdleCallback?requestIdleCallback(go,{timeout:2000}):go()},w)}).observe(document.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:["class","hidden"]});setTimeout(fix,800)})();
 /* رئيسية أقصر: صف اختصارات + «المزيد» */
 /* الرئيسية: كارت اليوم، آية/حديث اليوم، أذكار اليوم، المصحف — والإذاعة بدل السبحة في الشريط السفلي */
 (function(){var R=document.documentElement,AR="٠١٢٣٤٥٦٧٨٩";function ar(n){return String(n).replace(/\d/g,function(d){return AR[d]})}
 function hm(h){h=((h%24)+24)%24;var H=Math.floor(h),M=Math.round((h-H)*60);if(M===60){H++;M=0}var pm=H>=12,h12=H%12||12;return ar(h12)+":"+ar(String(M).padStart(2,"0"))+(pm?" م":" ص")}
 /* 1) الشريط السفلي */
-function nav(){var n=document.querySelector(".bottom-nav.nav5");if(!n)return;var t=n.querySelector('[data-nav="tasbih"],[href$="#tasbih"],[data-tab="tasbih"]');if(!t)[].forEach.call(n.children,function(c){if(!t&&!c.classList.contains("nv-x")&&(c.textContent||"").trim()==="السبحة")t=c});if(t)t.style.setProperty("display","none","important");if(n.querySelector('.nv-x[data-tab="radio"]'))return;
+function nav(){var n=document.querySelector(".bottom-nav.nav5");if(!n)return;var t=n.querySelector('[data-nav="tasbih"],[href$="#tasbih"],[data-tab="tasbih"]');if(!t)[].forEach.call(n.children,function(c){if(!t&&!c.classList.contains("nv-x")&&(c.textContent||"").trim()==="السبحة")t=c});if(t&&t.style.display!=="none")t.style.setProperty("display","none","important");if(n.querySelector('.nv-x[data-tab="radio"]'))return;
 var b=document.createElement("button");b.type="button";b.className="nv-x nv-radio";b.dataset.tab="radio";b.innerHTML='<span class="ni" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="12" rx="3"/><path d="M7 8l9-5"/><circle cx="15.5" cy="14" r="2.5"/></svg></span><span class="nt">الإذاعة</span>';
 b.addEventListener("click",function(e){e.preventDefault();e.stopPropagation();if(document.querySelector(".wp-page.rd-page"))return;window.__closeOverlays&&__closeOverlays();setTimeout(function(){window.__openRadio&&__openRadio()},120)});
 var anchor=t||n.querySelector('a[data-nav="prayer"],a[href$="#prayer"]');anchor?n.insertBefore(b,anchor.nextSibling):n.appendChild(b)}
@@ -64,7 +64,7 @@ function findAy(main){var out=[];
  if(box.parentNode!==main){var top=box.closest("main>*");if(top&&top!==box&&!top.classList.contains("hero")&&!top.querySelector(".today-card"))box=top;else main.appendChild(box)}
  if(out.indexOf(box)<0&&!out.some(function(o){return o.contains(box)}))out.push(box)});
 return out}
-function card(list){var c=document.getElementById("ayCard");if(!c){c=document.createElement("section");c.id="ayCard";c.className="container";c.setAttribute("aria-label","آية وحديث اليوم")}
+function card(list){var c=document.getElementById("ayCard");if(!c){c=document.createElement("section");c.id="ayCard";c.className="container";c.dataset.v="home";c.setAttribute("aria-label","آية وحديث اليوم")}
 if(!list.length)return c;
 list.sort(function(x,y){return isHd(x)-isHd(y)});
 list.forEach(function(x){if(x.parentNode!==c)c.appendChild(x)});
@@ -77,13 +77,13 @@ function isHd(x){return x.classList.contains("hadith-day")||!!x.querySelector(".
 /* 4) ترتيب الرئيسية */
 function order(){var main=document.querySelector("main");if(!main)return;
 var today=document.querySelector(".today-card"),tsec=today&&today.closest("main>*");
-var ays=findAy(main);
+var ac0=document.getElementById("ayCard"),ays=ac0&&ac0.children.length>1?[]:findAy(main);
 var ac=card(ays);
-var al=document.getElementById("homeAlerts");if(!al){al=document.createElement("section");al.id="homeAlerts";al.className="container";al.setAttribute("aria-label","أذكار اليوم");fillAlerts(al)}
+var al=document.getElementById("homeAlerts");if(!al){al=document.createElement("section");al.id="homeAlerts";al.className="container";al.dataset.v="home";al.setAttribute("aria-label","أذكار اليوم");fillAlerts(al)}
 var ref=tsec&&tsec.parentNode===main?tsec.nextSibling:main.firstChild;
 [ac,al].forEach(function(x){if(x.nextSibling!==ref||x.parentNode!==main)main.insertBefore(x,ref);ref=x.nextSibling});
 R.classList.add("home-v2")}
 function run(){nav();navState();order()}
-run();if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",run);(function(){var n=0,t=setInterval(function(){run();if(R.classList.contains("home-v2")||++n>40)clearInterval(t)},50)})();setTimeout(run,1200);setTimeout(run,3500);setInterval(function(){navState();nav()},600);
+run();if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",run);(function(){var n=0,t=setInterval(function(){run();if(R.classList.contains("home-v2")||++n>40)clearInterval(t)},50)})();setTimeout(run,1200);setTimeout(run,3500);setInterval(function(){navState();nav()},1500);
 setInterval(function(){var a=document.getElementById("homeAlerts");a&&fillAlerts(a)},300000);
 })();

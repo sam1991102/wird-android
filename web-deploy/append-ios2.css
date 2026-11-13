@@ -122,3 +122,4 @@ html.home-v2 main{opacity:1;animation:none}
 html.dark:not(.ios) #homeAlerts .ha-t.is-now{background:var(--paper);color:var(--ink);border:2px solid var(--gold-2,var(--primary))}
 html.dark:not(.ios) #homeAlerts .ha-t.is-now small{color:var(--gold-2,var(--primary))}
 html.dark:not(.ios) #homeAlerts .ha-t.is-now .ha-ic{background:rgba(226,194,127,.16);color:var(--gold-2,#E2C27F)}
+html[data-view]:not([data-view="home"]) #ayCard,html[data-view]:not([data-view="home"]) #homeAlerts{display:none!important}
