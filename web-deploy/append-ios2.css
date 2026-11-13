@@ -129,3 +129,4 @@ html[data-view]:not([data-view="home"]) #ayCard,html[data-view]:not([data-view="
 .bottom-nav.nav5>a:not(.active),.bottom-nav.nav5>.nv-x,.bottom-nav.nav5.st-on>a.active,.bottom-nav.nav5.rd-open>a.active,html:not(.dark) .bottom-nav.nav5>a:not(.active),html:not(.dark) .bottom-nav.nav5>.nv-x{color:var(--nav-off)!important}
 .bottom-nav.nav5.st-on:not(.rd-open)>.nv-x[data-tab="settings"],.bottom-nav.nav5>.nv-radio.rd-on,html:not(.dark) .bottom-nav.nav5.st-on:not(.rd-open)>.nv-x[data-tab="settings"],html:not(.dark) .bottom-nav.nav5>.nv-radio.rd-on{color:var(--primary)!important}
 html.dark:not(.ios) .bottom-nav.nav5.st-on:not(.rd-open)>.nv-x[data-tab="settings"],html.dark:not(.ios) .bottom-nav.nav5>.nv-radio.rd-on{color:var(--gold-2,var(--primary))!important}
+#skyCard{overflow:hidden}

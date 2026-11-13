@@ -47,6 +47,8 @@ const navLit = page => page.evaluate(() => {
 for (const S of SKINS) {
   const { ctx, page, errs } = await open(S.ls);
   const k = S.k;
+  await wait(1500);
+  if (await page.evaluate(() => [...document.querySelectorAll('h1,h2,h3')].some(h => h.offsetWidth && /جهّز وِرد في دقيقة/.test(h.textContent)))) bad(k, 'شاشة «جهّز وِرد في دقيقة» القديمة لسه بتظهر');
   // الرئيسية: ترتيب + رعشة
   await page.evaluate(() => { const m = document.querySelector('main'); new MutationObserver(r => { __qa.moves += r.length; __qa.what = (__qa.what || []).concat(r.map(x => [...x.addedNodes, ...x.removedNodes].map(n => (n.id || n.className || n.nodeName)).join(','))) }).observe(m, { childList: true }) });
   await wait(5000);
@@ -70,8 +72,12 @@ for (const S of SKINS) {
     for (let i = 0; i < nav.items.length; i++) {
       const label = nav.items[i];
       const t0 = Date.now();
+      await page.evaluate(() => { __qa.shifts = 0; __qa.longtask = 0 });
       await page.evaluate(i => { const n = document.querySelector('.bottom-nav.nav5'); [...n.children].filter(c => getComputedStyle(c).display !== 'none' && c.offsetWidth)[i].click() }, i);
       await wait(1200);
+      const jq = await page.evaluate(() => ({ s: __qa.shifts, l: __qa.longtask }));
+      if (jq.s > 0.05) bad(`${k}/nav:${label}`, `رعشة بعد الفتح CLS=${jq.s.toFixed(3)}`);
+      if (jq.l > 400) bad(`${k}/nav:${label}`, `بطء: مهام طويلة ${Math.round(jq.l)}ms`);
       const st = await navLit(page);
       if (st.lit.length !== 1) bad(`${k}/nav:${label}`, `الزرار المنوّر: [${st.lit.join('، ') || 'ولا واحد'}] — ${st.cols} — ${st.cls}`);
       else if (st.lit[0] !== label) bad(`${k}/nav:${label}`, `المنوّر «${st.lit[0]}» بدل «${label}»`);

@@ -30,6 +30,9 @@ function end(){mark();ov&&ov.remove();ov=null;bar&&bar.remove();bar=null;close()
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-su]");if(!b)return;e.preventDefault();var a=b.dataset.su;
  if(a==="go")step(0);else if(a==="next")step(i+1);else if(a==="all")finish();else if(a==="skip"||a==="end")end();
  else if(a==="restore"){mark();ov&&ov.remove();ov=null;R.classList.remove("su-on");window.__openSettingsPage&&__openSettingsPage("st-data")}});
+/* شاشة «جهّز وِرد في دقيقة» القديمة: المعالج حلّ محلها */
+function oldSheet(){[].forEach.call(document.querySelectorAll('[role="dialog"],.wd-sheet,.onb,.sheet,.modal,div'),function(d){if(d.dataset.suOld||d.children.length>40)return;var h=d.querySelector&&d.querySelector("h1,h2,h3,strong");if(!h||!/جهّز وِرد في دقيقة/.test(h.textContent))return;var box=d.closest('[role="dialog"],.wd-sheet,.onb')||d;if(box.dataset.suOld)return;box.dataset.suOld=1;var later=[].find.call(box.querySelectorAll("button"),function(b){return b.textContent.trim()==="بعدين"});later&&later.click();setTimeout(function(){box.remove();document.querySelectorAll(".wd-scrim,.scrim,.backdrop").forEach(function(x){x.remove()});R.classList.remove("ov-lock")},50)})}
+new MutationObserver(function(m){if(m.some(function(r){return r.addedNodes.length}))oldSheet()}).observe(document.body,{childList:true,subtree:false});setTimeout(oldSheet,800);setTimeout(oldSheet,2500);
 window.__openSetup=function(){i=-1;welcome()};
 /* زر لإعادة المعالج من «عن وِرد» */
 new MutationObserver(function(){var p=document.querySelector(".wp-page.sh-page");if(!p||p.querySelector(".su-again")||!p.querySelector("#updChk"))return;var b=document.createElement("button");b.type="button";b.className="su-again";b.textContent="إعادة معالج الإعداد";b.onclick=function(){close();setTimeout(__openSetup,300)};p.querySelector("#updChk").after(b)}).observe(document.body,{childList:true});
