@@ -1,0 +1,23 @@
+/*setup*/
+.su-ov{position:fixed;inset:0;z-index:2147483500;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:32px 28px calc(32px + env(safe-area-inset-bottom,0px));background:var(--bg,#F7F5EF);color:var(--ink);text-align:center}
+.su-ov h1{margin:4px 0 0;font-size:26px;color:var(--ink)}
+.su-ov p{margin:0;max-width:340px;font-size:15px;line-height:1.9;color:var(--muted)}
+.su-logo{display:flex;align-items:center;justify-content:center;width:88px;height:88px;border-radius:24px;background:radial-gradient(circle at 50% 40%,#2A8466,#0F3D2E 55%,#06201A);color:#E2C27F;font-size:30px;font-weight:700;margin-bottom:6px}
+.su-check{display:flex;align-items:center;justify-content:center;width:84px;height:84px;border-radius:50%;background:var(--primary);color:#fff}
+.su-check svg{width:44px;height:44px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.su-main{min-width:220px;padding:14px 22px;border:0;border-radius:16px;background:var(--primary);color:#fff;font:inherit;font-size:16px;font-weight:700;cursor:pointer}
+.su-link{padding:8px 14px;border:0;background:transparent;color:var(--muted);font:inherit;font-size:14px;cursor:pointer}
+.su-dots{display:flex;gap:6px;justify-content:center}
+.su-dots i{width:7px;height:7px;border-radius:4px;background:var(--line)}
+.su-dots i.on{width:18px;background:var(--primary)}
+.su-ov .su-dots{position:absolute;top:calc(20px + env(safe-area-inset-top,0px));left:0;right:0}
+.su-bar{position:fixed;left:0;right:0;bottom:0;z-index:2147483500;display:flex;flex-direction:column;gap:10px;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));background:var(--paper);border-top:1px solid var(--line);box-shadow:0 -6px 20px rgba(0,0,0,.08)}
+.su-tx{display:flex;flex-direction:column;gap:2px}
+.su-tx small{font-size:12px;color:var(--primary);font-weight:700}
+.su-tx b{font-size:16px;color:var(--ink)}
+.su-tx span{font-size:13px;color:var(--muted)}
+.su-btns{display:flex;gap:8px;align-items:center;justify-content:space-between}
+.su-btns .su-main{min-width:0;flex:1;padding:12px}
+html.su-on .bottom-nav.nav5{display:none!important}
+html.su-on .wp-page{padding-bottom:150px!important}
+.su-again{display:block;margin:12px auto 0;padding:10px 16px;border-radius:12px;border:1px solid var(--line);background:transparent;color:var(--ink);font:inherit;cursor:pointer}
