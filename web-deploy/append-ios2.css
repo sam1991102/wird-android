@@ -123,5 +123,5 @@ main>#homeAlerts{order:4}
 main>#quranCard{order:5}
 main>#homeQuick{order:6}
 main>.hero.container,main>#kidsTile,main>#rdTile{display:none!important}
-html:not(.home-more) main>section:not(#skyCard):not(.to):not(.ay):not(#quranCard):not(#homeAlerts):not(#prayer):not(#library):not(#favoritesSection):not(#mushafView):not(#tasbih):not(#stats-keep){display:none!important}
+html:not(.home-more):not([data-view]) main>section:not(#skyCard):not(.to):not(.ay):not(#quranCard):not(#homeAlerts):not(#prayer):not(#library):not(#favoritesSection):not(#mushafView):not(#tasbih):not(#stats-keep),html[data-view="home"]:not(.home-more) main>section:not(#skyCard):not(.to):not(.ay):not(#quranCard):not(#homeAlerts):not(#prayer):not(#library):not(#favoritesSection):not(#mushafView):not(#tasbih):not(#stats-keep){display:none!important}
 }
