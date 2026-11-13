@@ -15,8 +15,8 @@ function closeAll(){openOv().forEach(function(o){var b=o.querySelector("[data-x]
 window.__closeOverlays=closeAll;
 function mushafOpen(){var m=document.querySelector(".mp:not([hidden]),#focus:not([hidden]),.lp-ov:not([hidden])");return!!(m&&getComputedStyle(m).display!=="none")}
 function sync(){R.classList.toggle("nav-off",mushafOpen());var n=document.querySelector(".bottom-nav.nav5");if(n&&n.offsetHeight)R.style.setProperty("--nav-h",n.offsetHeight+"px");if(n){var so=[].some.call(document.querySelectorAll(".st"),function(x){return!x.hidden&&x.offsetHeight>200});n.classList.toggle("st-on",so);R.classList.toggle("st-open",so);var tb=document.querySelector(".topbar");if(tb&&tb.offsetHeight)R.style.setProperty("--tb-h",tb.offsetHeight+"px")}}
-document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest(".bottom-nav.nav5>a,.bottom-nav.nav5>.nv-x");if(!a)return;if(a.__re){a.__re=0;setTimeout(sync,60);return}if(openOv().length){e.preventDefault();e.stopPropagation();closeAll();a.__re=1;setTimeout(function(){a.click()},300);return}setTimeout(sync,60)},true);
-setInterval(sync,400);addEventListener("resize",sync);})();
+document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest(".bottom-nav.nav5>a,.bottom-nav.nav5>.nv-x");if(!a)return;if(a.classList.contains("nv-radio")&&document.querySelector(".wp-page.rd-page"))return;if(a.__re){a.__re=0;setTimeout(sync,60);return}if(openOv().length){e.preventDefault();e.stopPropagation();closeAll();a.__re=1;setTimeout(function(){a.click()},300);return}setTimeout(sync,60)},true);
+setInterval(sync,700);addEventListener("resize",sync);})();
 (function(){function W(ms){return new Promise(function(r){setTimeout(r,ms)})}
 async function page(id){if(!window.__openSettings)return null;__openSettings();await W(250);var st=[].find.call(document.querySelectorAll(".st"),function(x){return!x.hidden});var r=st&&st.querySelector('.sh-row[data-id="'+id+'"]');if(!r)return null;r.click();await W(450);return[].slice.call(document.querySelectorAll(".wp-page.sh-page")).pop()||null}
 window.__openSettingsPage=page;
@@ -44,7 +44,7 @@ var d=document.createElement("div");d.id="homeQuick";
 d.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;var q=b.dataset.q;
 if(q==="tasbih"){window.__wirdGo&&__wirdGo("tasbih")}else if(q==="radio"){window.__openRadio&&__openRadio()}
 else if(q==="qibla"){window.__openQibla&&__openQibla()}
-else if(q==="kids"){var k=document.getElementById("kidsTile");k&&k.click()}
+else if(q==="kids"){var k=document.getElementById("kidsTile");k&&k.click();setTimeout(function(){if(document.querySelector(".wp-page.kd-page"))return;var m=document.querySelector('[aria-label="القائمة"]');m&&m.click();setTimeout(function(){var it=document.querySelector('.dr2 .dr-p [data-n="kids"]');it&&it.click()},350)},450)}
 else{setMore(!R.classList.contains("home-more"));if(R.classList.contains("home-more"))setTimeout(function(){d.scrollIntoView({block:"start",behavior:"smooth"})},60)}});
 a.parentNode.insertBefore(d,a.nextSibling);R.classList.add("home-short");setMore(more())}
 function keep(){build();var d=document.getElementById("homeQuick"),r=document.getElementById("rdTile");if(d&&r&&(d.compareDocumentPosition(r)&Node.DOCUMENT_POSITION_FOLLOWING))r.parentNode.insertBefore(d,r.nextSibling)}
@@ -56,7 +56,7 @@ function hm(h){h=((h%24)+24)%24;var H=Math.floor(h),M=Math.round((h-H)*60);if(M=
 /* 1) الشريط السفلي */
 function nav(){var n=document.querySelector(".bottom-nav.nav5");if(!n)return;var t=n.querySelector('a[data-nav="tasbih"],a[href$="#tasbih"]');if(t)t.style.display="none";if(n.querySelector('.nv-x[data-tab="radio"]'))return;
 var b=document.createElement("button");b.type="button";b.className="nv-x nv-radio";b.dataset.tab="radio";b.innerHTML='<span class="ni" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="12" rx="3"/><path d="M7 8l9-5"/><circle cx="15.5" cy="14" r="2.5"/></svg></span><span class="nt">الإذاعة</span>';
-b.addEventListener("click",function(e){e.preventDefault();e.stopPropagation();window.__closeOverlays&&__closeOverlays();setTimeout(function(){window.__openRadio&&__openRadio()},120)});
+b.addEventListener("click",function(e){e.preventDefault();e.stopPropagation();if(document.querySelector(".wp-page.rd-page"))return;window.__closeOverlays&&__closeOverlays();setTimeout(function(){window.__openRadio&&__openRadio()},120)});
 var anchor=t||n.querySelector('a[data-nav="prayer"],a[href$="#prayer"]');anchor?n.insertBefore(b,anchor.nextSibling):n.appendChild(b)}
 function navState(){var b=document.querySelector(".bottom-nav.nav5 .nv-radio");if(!b)return;var on=!!document.querySelector(".wp-page.rd-page");b.classList.toggle("rd-on",on);var n=b.parentNode;n.classList.toggle("rd-open",on)}
 /* 2) مواعيد أذكار اليوم */
