@@ -112,3 +112,16 @@ html.dark .ha-sun{background:rgba(226,194,127,.16);color:#E2C27F}html.dark .ha-m
 .bottom-nav.nav5.rd-open>a.active{color:var(--muted)!important}
 .bottom-nav.nav5 .nv-radio.rd-on{color:var(--primary)!important}
 .bottom-nav.nav5 .nv-radio .ni svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+/* الرئيسية الجديدة تظهر من أول لحظة (CSS فقط، بدون انتظار JS) */
+@media (max-width:760px){
+main{display:flex;flex-direction:column}
+main>*{order:40}
+main>#skyCard{order:1}
+main>section.to{order:2}
+main>#ayTabs,main>section.ay{order:3}
+main>#homeAlerts{order:4}
+main>#quranCard{order:5}
+main>#homeQuick{order:6}
+main>.hero.container,main>#kidsTile,main>#rdTile{display:none!important}
+html:not(.home-more) main>section:not(#skyCard):not(.to):not(.ay):not(#quranCard):not(#homeAlerts):not(#prayer):not(#library):not(#favoritesSection):not(#mushafView):not(#tasbih):not(#stats-keep){display:none!important}
+}
