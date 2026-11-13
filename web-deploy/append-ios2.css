@@ -53,7 +53,7 @@ html.ios .st-tg input[type=checkbox]:checked{background:var(--primary)}
 /* الإعدادات تغطي الصفحة: ما تحتها لا يتحرك ولا يُرسم */
 html.st-open main>*:not(.st):not(.wp-page):not(.bottom-nav){visibility:hidden}
 html:not(.st-open) .st.hub:not([hidden]){visibility:hidden}
-html.st-open .topbar{position:fixed!important;top:0!important;left:0;right:0;z-index:230!important;transform:none!important}
+html.st-open .topbar{position:sticky!important;top:0!important;z-index:230!important;transform:none!important}
 html.st-open .st.hub{top:var(--tb-h,64px)!important;height:auto!important}
 html.st-open .st.hub>.st-bar [data-x]{visibility:hidden!important;pointer-events:none}
 html.st-open .st.hub>.st-bar{justify-content:flex-start!important;background:transparent!important;border:0!important;box-shadow:none!important}
