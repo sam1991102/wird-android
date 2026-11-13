@@ -79,54 +79,40 @@ html{--mp-paper:#FBF8EF}html.sepia{--mp-paper:#F6EAD0}html.dark{--mp-paper:#0E14
 /* خلفية سادة: إزالة زخرفة المحراب من خلف المحتوى */
 html,html.dark,html.sepia,html.ios{--mihrab:none!important;--orn:none!important}
 body::before,body::after,main::before,main::after{background-image:none!important;-webkit-mask-image:none!important;mask-image:none!important}
-/* رئيسية أقصر (موبايل): كارت اليوم + كمّل وِردك + كمّل القراءة + صف اختصارات، والباقي تحت «المزيد» */
-#homeQuick{display:none}
-@media (max-width:760px){
-html[data-view="home"] #homeQuick,html:not([data-view]) #homeQuick{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:12px 16px}
-#homeQuick button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-height:72px;padding:10px 4px;border-radius:16px;border:1px solid var(--line);background:var(--paper);color:var(--ink);font:inherit;font-size:12px;cursor:pointer}
-#homeQuick .hq-ic{display:flex;width:26px;height:26px;color:var(--primary)}
-html.dark:not(.ios) #homeQuick .hq-ic{color:var(--gold-2)}
-#homeQuick .hq-ic svg{width:26px!important;height:26px!important}
-#homeQuick .hq-ic svg:not(.ph){fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-#homeQuick button:active{background:var(--line-2)}
-html.home-short #kidsTile,html.home-short #rdTile{display:none!important}
-html.home-short:not(.home-more) #homeQuick~section[data-v="home"]{display:none!important}
-}
-/* رئيسية v2 */
-html.home-v2 .hero.container{display:none!important}
+/* الرئيسية */
 .ay-hide{display:none!important}
 .ay-tabs{display:flex;gap:4px;margin:14px 16px 0;padding:4px;border-radius:14px;background:var(--line-2)}
 .ay-tabs button{flex:1;border:0;background:transparent;padding:9px 6px;border-radius:10px;font:inherit;font-size:14px;color:var(--muted);cursor:pointer}
 .ay-tabs button[aria-selected="true"]{background:var(--paper);color:var(--ink);font-weight:700;box-shadow:0 1px 3px rgba(0,0,0,.08)}
-html.ay-tabs-on main>section.ay{margin-top:6px}
-#homeAlerts{margin:14px 16px;padding:4px 0;border-radius:18px;background:var(--paper);border:1px solid var(--line)}
-#homeAlerts .ha-hd{padding:10px 16px 6px;font-size:13px;color:var(--muted)}
-#homeAlerts .ha-row{display:flex;align-items:center;gap:12px;width:100%;padding:10px 16px;border:0;border-top:1px solid var(--line-2);background:transparent;color:var(--ink);font:inherit;text-align:start;cursor:pointer}
-#homeAlerts .ha-ic{flex:none;display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:10px}
-#homeAlerts .ha-ic svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-.ha-sun{background:#F6E7C3;color:#8A6416}.ha-moon{background:#E2E4F4;color:#3E4486}.ha-zz{background:#DDE8F5;color:#2D4B7A}.ha-book{background:#DCEFE5;color:#1F6B52}
-html.dark .ha-sun{background:rgba(226,194,127,.16);color:#E2C27F}html.dark .ha-moon{background:rgba(138,140,245,.16);color:#AEB0FF}html.dark .ha-zz{background:rgba(110,160,220,.16);color:#9DC2EE}html.dark .ha-book{background:rgba(63,178,127,.16);color:#7FD3AE}
-#homeAlerts .ha-tx{flex:1;display:flex;flex-direction:column;gap:2px}
-#homeAlerts .ha-tx b{font-size:15px}#homeAlerts .ha-tx small{font-size:12.5px;color:var(--muted)}
-#homeAlerts .ha-go{color:var(--muted);font-size:20px}
+main>.w-ay{margin-top:6px}
+#homeAlerts{margin:16px}
+#homeAlerts .ha-hd{margin:0 4px 8px;font-size:15px;font-weight:700;color:var(--ink)}
+#homeAlerts .ha-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+#homeAlerts .ha-t{display:flex;flex-direction:column;align-items:center;gap:4px;padding:14px 8px;border-radius:16px;border:1px solid var(--line);background:var(--paper);color:var(--ink);font:inherit;cursor:pointer;text-align:center}
+#homeAlerts .ha-t:active{background:var(--line-2)}
+#homeAlerts .ha-t.is-now{border:2px solid var(--primary);padding:13px 7px}
+#homeAlerts .ha-t b{font-size:15px}
+#homeAlerts .ha-t small{font-size:12px;color:var(--muted)}
+#homeAlerts .ha-t.is-now small{color:var(--primary);font-weight:700}
+#homeAlerts .ha-ic{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:12px;margin-bottom:2px}
+#homeAlerts .ha-ic svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.ha-sun .ha-ic{background:#F6E7C3;color:#8A6416}.ha-moon .ha-ic{background:#E2E4F4;color:#3E4486}.ha-zz .ha-ic{background:#DDE8F5;color:#2D4B7A}.ha-book .ha-ic{background:#DCEFE5;color:#1F6B52}
+html.dark .ha-sun .ha-ic{background:rgba(226,194,127,.16);color:#E2C27F}html.dark .ha-moon .ha-ic{background:rgba(138,140,245,.16);color:#AEB0FF}html.dark .ha-zz .ha-ic{background:rgba(110,160,220,.16);color:#9DC2EE}html.dark .ha-book .ha-ic{background:rgba(63,178,127,.16);color:#8FD9B6}
 .bottom-nav.nav5.rd-open>a.active{color:var(--muted)!important}
 .bottom-nav.nav5 .nv-radio.rd-on{color:var(--primary)!important}
 .bottom-nav.nav5 .nv-radio .ni svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-/* الرئيسية الجديدة تظهر من أول لحظة (CSS فقط، بدون انتظار JS) */
+/* ترتيب الرئيسية من أول رسم، وإخفاء أي قسم قديم */
 @media (max-width:760px){
 main{display:flex;flex-direction:column}
 main>*{order:40}
 main>#skyCard{order:1}
 main>section.to{order:2}
-main>#ayTabs,main>section.ay{order:3}
+main>#ayTabs,main>.w-ay,main>section.ay{order:3}
 main>#homeAlerts{order:4}
 main>#quranCard{order:5}
-main>#homeQuick{order:6}
-main>.hero.container,main>#kidsTile,main>#rdTile{display:none!important}
-html:not([data-view]) main>section:not(#skyCard):not(.to):not(.ay):not(#quranCard):not(#homeAlerts):not(#library):not(#favoritesSection):not(#mushafView):not(#tasbih),html[data-view="home"] main>section:not(#skyCard):not(.to):not(.ay):not(#quranCard):not(#homeAlerts),html:not([data-view]) main>#prayer,html[data-view="home"] main>#prayer{display:none!important}
+html:not([data-view]) main>section:not(#skyCard):not(.to):not(.ay):not(.w-ay):not(#quranCard):not(#homeAlerts):not(#library):not(#favoritesSection):not(#mushafView):not(#tasbih),html[data-view="home"] main>section:not(#skyCard):not(.to):not(.ay):not(.w-ay):not(#quranCard):not(#homeAlerts){display:none!important}
 }
-
-/* لا تظهر الرئيسية إلا بعد اكتمال بنائها (مع احتياط إظهار بعد 1.5ث) */
+main>.hero.container,main>#kidsTile,main>#rdTile{display:none!important}
 @keyframes wHomeIn{to{opacity:1}}
 html:not(.home-v2):not([data-view]) main,html[data-view="home"]:not(.home-v2) main{opacity:0;animation:wHomeIn .2s 1.5s forwards}
 html.home-v2 main{opacity:1;animation:none}

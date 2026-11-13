@@ -34,23 +34,7 @@ function fix(){var k=R.className;if(k!==last){last=k;clr()}if(!R.classList.conta
 var roots=[].slice.call(document.querySelectorAll("main,.wp-page,.st,.wd-sheet,#focus"));roots.forEach(function(rt){if(rt.hidden||!rt.offsetParent&&getComputedStyle(rt).position!=="fixed")return;[].forEach.call(rt.querySelectorAll("*"),function(e){if(seen.has(e)||!e.getClientRects().length)return;seen.add(e);var isSvg=e.tagName.toLowerCase()==="svg";var txt=isSvg||[].some.call(e.childNodes,function(n){return n.nodeType===3&&n.textContent.trim()});if(!txt)return;var cs=getComputedStyle(e);var fg=rgb(isSvg?(cs.stroke!=="none"?cs.stroke:cs.fill):cs.color);if(!fg)return;var bg=bgOf(e);if(!bg||L(bg)>.25)return;if(cr(fg,bg)<3){e.style.setProperty("color","#fff","important");if(isSvg&&cs.stroke!=="none")e.style.setProperty("stroke","#fff","important");e.setAttribute("data-cfix","1")}})})}
 var t,lastRun=0;new MutationObserver(function(){if(t)return;var w=Math.max(250,1500-(Date.now()-lastRun));t=setTimeout(function(){t=0;lastRun=Date.now();fix()},w)}).observe(document.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:["class","hidden"]});setTimeout(fix,800)})();
 /* رئيسية أقصر: صف اختصارات + «المزيد» */
-(function(){var R=document.documentElement,K="wird-home-more";
-var I={tasbih:'<circle cx="12" cy="5" r="2"/><circle cx="18" cy="9" r="2"/><circle cx="18" cy="15" r="2"/><circle cx="12" cy="19" r="2"/><circle cx="6" cy="15" r="2"/><circle cx="6" cy="9" r="2"/>',radio:'<rect x="3" y="8" width="18" height="12" rx="3"/><path d="M7 8l9-5"/><circle cx="15.5" cy="14" r="2.5"/>',qibla:'<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>',kids:'<circle cx="12" cy="12" r="9"/><path d="M9 14.5c1.6 1.6 4.4 1.6 6 0M9 10h.01M15 10h.01"/>',tools:'<rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/>'};
-function more(){try{return localStorage.getItem(K)==="1"}catch(e){return false}}
-function setMore(v){try{localStorage.setItem(K,v?"1":"0")}catch(e){}R.classList.toggle("home-more",v);var b=document.querySelector('#homeQuick [data-q="tools"] .hq-t');if(b)b.textContent=v?"أقل":"المزيد";var m=document.querySelector('#homeQuick [data-q="tools"]');m&&m.setAttribute("aria-expanded",v?"true":"false")}
-function build(){if(document.getElementById("homeQuick"))return;var a=document.getElementById("rdTile")||document.getElementById("kidsTile")||document.getElementById("quranCard");if(!a||!a.parentNode)return;
-var d=document.createElement("div");d.id="homeQuick";
-[["tasbih","السبحة"],["qibla","القبلة"],["kids","الأطفال"],["tools","المزيد"]].forEach(function(x){var b=document.createElement("button");b.type="button";b.dataset.q=x[0];b.innerHTML='<span class="hq-ic"><svg viewBox="0 0 24 24" aria-hidden="true">'+I[x[0]]+'</svg></span><span class="hq-t">'+x[1]+'</span>';d.appendChild(b)});
-d.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;var q=b.dataset.q;
-if(q==="tasbih"){window.__wirdGo&&__wirdGo("tasbih")}else if(q==="radio"){window.__openRadio&&__openRadio()}
-else if(q==="qibla"){window.__openQibla&&__openQibla()}
-else if(q==="kids"){var k=document.getElementById("kidsTile");k&&k.click();setTimeout(function(){if(document.querySelector(".wp-page.kd-page"))return;var m=document.querySelector('[aria-label="القائمة"]');m&&m.click();setTimeout(function(){var it=document.querySelector('.dr2 .dr-p [data-n="kids"]');it&&it.click()},350)},450)}
-else{var m=document.querySelector('[aria-label="القائمة"]');m&&m.click()}});
-a.parentNode.insertBefore(d,a.nextSibling);R.classList.add("home-short");R.classList.remove("home-more")}
-function keep(){build();var d=document.getElementById("homeQuick"),r=document.getElementById("rdTile");if(d&&r&&(d.compareDocumentPosition(r)&Node.DOCUMENT_POSITION_FOLLOWING))r.parentNode.insertBefore(d,r.nextSibling)}
-keep();setTimeout(keep,1200);setTimeout(keep,3500)})();
-
-/* رئيسية جديدة: وِردك اليوم + حديث/آية اليوم + مواعيد الأذكار فوق، والإذاعة في الشريط السفلي بدل السبحة */
+/* الرئيسية: كارت اليوم، آية/حديث اليوم، أذكار اليوم، المصحف — والإذاعة بدل السبحة في الشريط السفلي */
 (function(){var R=document.documentElement,AR="٠١٢٣٤٥٦٧٨٩";function ar(n){return String(n).replace(/\d/g,function(d){return AR[d]})}
 function hm(h){h=((h%24)+24)%24;var H=Math.floor(h),M=Math.round((h-H)*60);if(M===60){H++;M=0}var pm=H>=12,h12=H%12||12;return ar(h12)+":"+ar(String(M).padStart(2,"0"))+(pm?" م":" ص")}
 /* 1) الشريط السفلي */
@@ -59,28 +43,32 @@ var b=document.createElement("button");b.type="button";b.className="nv-x nv-radi
 b.addEventListener("click",function(e){e.preventDefault();e.stopPropagation();if(document.querySelector(".wp-page.rd-page"))return;window.__closeOverlays&&__closeOverlays();setTimeout(function(){window.__openRadio&&__openRadio()},120)});
 var anchor=t||n.querySelector('a[data-nav="prayer"],a[href$="#prayer"]');anchor?n.insertBefore(b,anchor.nextSibling):n.appendChild(b)}
 function navState(){var b=document.querySelector(".bottom-nav.nav5 .nv-radio");if(!b)return;var on=!!document.querySelector(".wp-page.rd-page");b.classList.toggle("rd-on",on);var n=b.parentNode;n.classList.toggle("rd-open",on)}
-/* 2) مواعيد أذكار اليوم */
+/* 2) أذكار اليوم: مربعات */
 function cat(rx){try{return(categories.find(function(c){return rx.test(c.name)})||{}).id}catch(e){return null}}
-function alerts(){if(document.getElementById("homeAlerts"))return null;var d=document.createElement("section");d.id="homeAlerts";d.className="container";d.dataset.v="home";d.setAttribute("aria-label","أذكار اليوم ومواعيدها");return d}
-function fillAlerts(d){var t=null;try{t=prayerDay(0).t}catch(e){}var fri=new Date().getDay()===5;
-var rows=[["morning","أذكار الصباح",t?"بعد الفجر · "+hm(t.fajr):"بعد الفجر","sun",/الصباح/],["evening","أذكار المساء",t?"بعد العصر · "+hm(t.asr):"بعد العصر","moon",/المساء/],["sleep","أذكار النوم","قبل النوم","zz",/النوم/]];
-var ic={sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',moon:'<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>',zz:'<path d="M4 7h6l-6 8h6M14 4h6l-6 7h6"/>',book:'<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/>'};
-var h='<div class="ha-hd">أذكار اليوم</div>';rows.forEach(function(r){var id=cat(r[4])||r[0];h+='<button type="button" class="ha-row" data-cat="'+id+'"><span class="ha-ic ha-'+r[3]+'"><svg viewBox="0 0 24 24" aria-hidden="true">'+ic[r[3]]+'</svg></span><span class="ha-tx"><b>'+r[1]+'</b><small>'+r[2]+'</small></span><span class="ha-go" aria-hidden="true">‹</span></button>'});
-if(fri)h+='<button type="button" class="ha-row" data-sura="18"><span class="ha-ic ha-book"><svg viewBox="0 0 24 24" aria-hidden="true">'+ic.book+'</svg></span><span class="ha-tx"><b>سورة الكهف</b><small>يوم الجمعة</small></span><span class="ha-go" aria-hidden="true">‹</span></button>';
-d.innerHTML=h}
-document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("#homeAlerts .ha-row");if(!b)return;if(b.dataset.sura){window.__openSurahN&&__openSurahN(+b.dataset.sura)}else{try{openFocus(b.dataset.cat)}catch(x){}}});
-/* 3) ترتيب الرئيسية */
-function tabs(list){if(list.length<2||document.getElementById("ayTabs"))return;var w=document.createElement("div");w.id="ayTabs";w.className="container ay-tabs";w.setAttribute("role","tablist");
-list.forEach(function(sec,i){var hh=sec.querySelector("h2,h3,.sec-title,strong");var name=(hh?hh.textContent:"").trim().slice(0,22)||(i?"آية اليوم":"حديث اليوم");var b=document.createElement("button");b.type="button";b.setAttribute("role","tab");b.textContent=name;b.onclick=function(){list.forEach(function(x,k){x.classList.toggle("ay-hide",k!==i)});[].forEach.call(w.children,function(c,k){c.setAttribute("aria-selected",k===i)})};w.appendChild(b)});
+var IC={sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',moon:'<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>',zz:'<path d="M4 7h6l-6 8h6M14 4h6l-6 7h6"/>',book:'<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/>'};
+function now(){var d=new Date();return d.getHours()+d.getMinutes()/60}
+function fillAlerts(d){var t=null;try{t=prayerDay(0).t}catch(e){}var h=now(),cur="";
+if(t){if(h>=t.fajr&&h<t.asr)cur="morning";else if(h>=t.asr&&h<t.isha)cur="evening";else cur="sleep"}
+var items=[["morning","الصباح",t?"بعد الفجر "+hm(t.fajr):"بعد الفجر","sun",/الصباح/],["evening","المساء",t?"بعد العصر "+hm(t.asr):"بعد العصر","moon",/المساء/],["sleep","النوم","قبل النوم","zz",/النوم/]];
+if(new Date().getDay()===5)items.push(["kahf","الكهف","يوم الجمعة","book",null,18]);
+var o='<h2 class="ha-hd">أذكار اليوم</h2><div class="ha-grid">';
+items.forEach(function(r){o+='<button type="button" class="ha-t ha-'+r[3]+(r[0]===cur?' is-now':'')+'"'+(r[5]?' data-sura="'+r[5]+'"':' data-cat="'+(cat(r[4])||r[0])+'"')+'><span class="ha-ic"><svg viewBox="0 0 24 24" aria-hidden="true">'+IC[r[3]]+'</svg></span><b>'+r[1]+'</b><small>'+(r[0]===cur?"وقتها الآن":r[2])+'</small></button>'});
+d.innerHTML=o+'</div>'}
+document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("#homeAlerts .ha-t");if(!b)return;if(b.dataset.sura){window.__openSurahN&&__openSurahN(+b.dataset.sura)}else{try{openFocus(b.dataset.cat)}catch(x){}}});
+/* 3) آية وحديث اليوم في كارت واحد بتبويبين */
+function findAy(main){return[].slice.call(main.children).filter(function(x){if(x.tagName!=="SECTION"||x.id==="homeAlerts")return false;if(x.classList.contains("ay"))return true;var hh=x.querySelector("h2,h3");return!!hh&&/(آية|حديث) اليوم/.test(hh.textContent)})}
+function tabs(list){var w=document.getElementById("ayTabs");if(w||list.length<2)return;w=document.createElement("div");w.id="ayTabs";w.className="container ay-tabs";w.setAttribute("role","tablist");
+list.forEach(function(sec,i){var hh=sec.querySelector("h2,h3");var name=/حديث/.test(hh?hh.textContent:"")?"حديث اليوم":"آية اليوم";var b=document.createElement("button");b.type="button";b.setAttribute("role","tab");b.textContent=name;b.onclick=function(){list.forEach(function(x,k){x.classList.toggle("ay-hide",k!==i)});[].forEach.call(w.children,function(c,k){c.setAttribute("aria-selected",String(k===i))})};w.appendChild(b)});
 list[0].parentNode.insertBefore(w,list[0]);w.firstChild.click()}
-function order(){var hq=document.getElementById("homeQuick");if(!hq)return;var main=hq.parentNode;
-var today=document.querySelector(".today-card");var tsec=today&&(today.closest("main>section")||today);
-var ays=[].slice.call(document.querySelectorAll("main>section.ay")).filter(function(x){return x.dataset.v==="home"||!x.dataset.v});
-var al=document.getElementById("homeAlerts")||alerts();if(al&&!al.dataset.f){fillAlerts(al);al.dataset.f=1}
-var before=document.getElementById("quranCard")||hq;
-[tsec].concat(ays).concat([al]).forEach(function(x){if(x&&x.parentNode===main&&before.parentNode===main&&x!==before)main.insertBefore(x,before);else if(x&&!x.parentNode)main.insertBefore(x,before)});
+/* 4) ترتيب الرئيسية */
+function order(){var main=document.querySelector("main");if(!main)return;
+var today=document.querySelector(".today-card"),tsec=today&&(today.closest("main>section")||null);
+var ays=findAy(main);ays.forEach(function(x){x.classList.add("w-ay")});
+var al=document.getElementById("homeAlerts");if(!al){al=document.createElement("section");al.id="homeAlerts";al.className="container";al.setAttribute("aria-label","أذكار اليوم");fillAlerts(al)}
+var before=document.getElementById("quranCard");
+[tsec].concat(ays).concat([al]).forEach(function(x){if(!x||x===before)return;before&&before.parentNode===main?main.insertBefore(x,before):x.parentNode||main.appendChild(x)});
 tabs(ays);R.classList.add("home-v2")}
 function run(){nav();navState();order()}
 run();if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",run);(function(){var n=0,t=setInterval(function(){run();if(R.classList.contains("home-v2")||++n>40)clearInterval(t)},50)})();setTimeout(run,1200);setTimeout(run,3500);setInterval(function(){navState();nav()},600);
-setInterval(function(){var a=document.getElementById("homeAlerts");if(a){a.removeAttribute("data-f");fillAlerts(a);a.dataset.f=1}},600000);
+setInterval(function(){var a=document.getElementById("homeAlerts");a&&fillAlerts(a)},300000);
 })();
