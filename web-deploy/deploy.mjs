@@ -34,7 +34,7 @@ if (!code || !code.startsWith('const FILES=')) throw new Error('unexpected worke
 
 const cut = code.indexOf(';\nconst ROUTES=');
 const F = JSON.parse(code.slice('const FILES='.length, cut));
-const tail = code.slice(cut);
+let tail = code.slice(cut);
 const log = [];
 const rep = (file, a, b) => {
   const s = F[file][1];
@@ -106,6 +106,17 @@ F['sw.js'][1] = F['sw.js'][1].replace(/wird-v\d+/, 'wird-v' + ver);
 log.push('sw.js: wird-v' + ver);
 console.log(log.join('\n'));
 
+// إشعارات الأذان على الآيفون: أولوية عالية + مدة صلاحية قصيرة (تصل فورًا ولا تُؤجَّل)
+{ const hits = [...tail.matchAll(/["']?TTL["']?\s*:/g)].map(m => m.index);
+  console.log('push: TTL headers found:', hits.length, '| urgency already:', /Urgency/i.test(tail));
+  for (const i of hits.slice(0, 3)) console.log('push ctx:', tail.slice(Math.max(0, i - 160), i + 120).replace(/\s+/g, ' ').replace(/(key|secret|token|private)[^,;]{0,80}/gi, '$1…'));
+  if (hits.length && !/Urgency/i.test(tail)) {
+    tail = tail.replace(/(["']?)TTL\1\s*:/g, (m, q) => `${q}Urgency${q}:"high",${m}`);
+    log.push('push: + Urgency high');
+  }
+  const sch = await cf('/workers/scripts/azkar/schedules').catch(e => ({ err: e.message }));
+  console.log('push: cron schedules =', JSON.stringify(sch && (sch.schedules || sch)));
+}
 const out = 'const FILES=' + JSON.stringify(F) + tail;
 await import('data:text/javascript;base64,' + Buffer.from(out).toString('base64')).catch(e => { if (e instanceof SyntaxError) throw new Error('built code does not parse: ' + e.message); console.log('note:', e.message); });
 console.log('built', out.length, 'bytes');
