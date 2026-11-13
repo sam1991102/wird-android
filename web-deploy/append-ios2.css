@@ -124,3 +124,4 @@ html[data-view]:not([data-view="home"]) #ayCard,html[data-view]:not([data-view="
 html.view-wait main{visibility:hidden}
 @keyframes wViewIn{from{opacity:0}to{opacity:1}}
 html:not(.view-wait) main{animation:wViewIn .16s ease-out}
+#ayCard>*:not(.ay-tabs){padding-inline:0!important;max-width:none!important;width:auto!important}

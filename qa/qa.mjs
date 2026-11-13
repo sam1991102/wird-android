@@ -8,15 +8,15 @@ const issues = [], notes = [];
 const bad = (where, msg) => issues.push(`[${where}] ${msg}`);
 const wait = ms => new Promise(r => setTimeout(r, ms));
 const SKINS = [
-  { k: 'classic-light', ls: { 'wird-skin': 'classic', 'wird-dark': 'false' } },
-  { k: 'classic-dark', ls: { 'wird-skin': 'classic', 'wird-dark': 'true' } },
-  { k: 'creative-light', ls: { 'wird-skin': 'ios', 'wird-dark': 'false' } },
-  { k: 'creative-dark', ls: { 'wird-skin': 'ios', 'wird-dark': 'true' } },
+  { k: 'classic-light', ls: { 'wird-skin': 'classic', 'wird-dark': 'false', 'wird-theme': 'light' } },
+  { k: 'classic-dark', ls: { 'wird-skin': 'classic', 'wird-dark': 'true', 'wird-theme': 'dark' } },
+  { k: 'creative-light', ls: { 'wird-skin': 'ios', 'wird-dark': 'false', 'wird-theme': 'light' } },
+  { k: 'creative-dark', ls: { 'wird-skin': 'ios', 'wird-dark': 'true', 'wird-theme': 'dark' } },
 ];
 const browser = await chromium.launch();
 
 async function open(ls, fresh = false) {
-  const ctx = await browser.newContext({ ...devices['Pixel 7'], locale: 'ar', timezoneId: 'Asia/Riyadh', geolocation: { latitude: 24.71, longitude: 46.67 }, permissions: ['geolocation'] });
+  const ctx = await browser.newContext({ ...devices['Pixel 7'], colorScheme: ls['wird-dark'] === 'true' ? 'dark' : 'light', locale: 'ar', timezoneId: 'Asia/Riyadh', geolocation: { latitude: 24.71, longitude: 46.67 }, permissions: ['geolocation'] });
   await ctx.addInitScript(([ls, fresh]) => {
     if (!fresh) { localStorage.setItem('wird-setup-done', '1'); localStorage.setItem('wird-onboarded', '1'); }
     for (const [k, v] of Object.entries(ls)) localStorage.setItem(k, v);
