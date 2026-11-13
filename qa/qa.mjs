@@ -25,6 +25,7 @@ async function open(ls, fresh = false) {
     try { new PerformanceObserver(l => l.getEntries().forEach(e => __qa.longtask += e.duration)).observe({ type: 'longtask', buffered: true }); } catch (e) {}
   }, [ls, fresh]);
   const page = await ctx.newPage();
+  if (ls['wird-dark'] === 'false') await page.clock.install({ time: new Date('2026-11-14T07:30:00Z') }); // نهار الرياض: الوضع التلقائي فاتح
   const errs = [];
   page.on('pageerror', e => errs.push(String(e.message).slice(0, 200)));
   page.on('console', m => { if (m.type() === 'error') errs.push(m.text().slice(0, 200)) });
