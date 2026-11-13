@@ -129,3 +129,4 @@ for (const S of SKINS) {
 await browser.close();
 const rep = `مشاكل: ${issues.length}\n\n${issues.join('\n')}\n\n--- ملاحظات ---\n${notes.join('\n')}\n`;
 fs.writeFileSync(OUT + 'report.txt', rep); console.log(rep);
+if (issues.length) process.exitCode = 1;
