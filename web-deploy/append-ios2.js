@@ -45,8 +45,8 @@ d.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)re
 if(q==="tasbih"){window.__wirdGo&&__wirdGo("tasbih")}else if(q==="radio"){window.__openRadio&&__openRadio()}
 else if(q==="qibla"){window.__openQibla&&__openQibla()}
 else if(q==="kids"){var k=document.getElementById("kidsTile");k&&k.click();setTimeout(function(){if(document.querySelector(".wp-page.kd-page"))return;var m=document.querySelector('[aria-label="القائمة"]');m&&m.click();setTimeout(function(){var it=document.querySelector('.dr2 .dr-p [data-n="kids"]');it&&it.click()},350)},450)}
-else{setMore(!R.classList.contains("home-more"));if(R.classList.contains("home-more"))setTimeout(function(){d.scrollIntoView({block:"start",behavior:"smooth"})},60)}});
-a.parentNode.insertBefore(d,a.nextSibling);R.classList.add("home-short");setMore(more())}
+else{var m=document.querySelector('[aria-label="القائمة"]');m&&m.click()}});
+a.parentNode.insertBefore(d,a.nextSibling);R.classList.add("home-short");R.classList.remove("home-more")}
 function keep(){build();var d=document.getElementById("homeQuick"),r=document.getElementById("rdTile");if(d&&r&&(d.compareDocumentPosition(r)&Node.DOCUMENT_POSITION_FOLLOWING))r.parentNode.insertBefore(d,r.nextSibling)}
 keep();setTimeout(keep,1200);setTimeout(keep,3500)})();
 
@@ -81,6 +81,6 @@ var before=document.getElementById("quranCard")||hq;
 [tsec].concat(ays).concat([al]).forEach(function(x){if(x&&x.parentNode===main&&before.parentNode===main&&x!==before)main.insertBefore(x,before);else if(x&&!x.parentNode)main.insertBefore(x,before)});
 tabs(ays);R.classList.add("home-v2")}
 function run(){nav();navState();order()}
-run();setTimeout(run,1200);setTimeout(run,3500);setInterval(navState,600);
+run();if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",run);(function(){var n=0,t=setInterval(function(){run();if(R.classList.contains("home-v2")||++n>40)clearInterval(t)},50)})();setTimeout(run,1200);setTimeout(run,3500);setInterval(navState,600);
 setInterval(function(){var a=document.getElementById("homeAlerts");if(a){a.removeAttribute("data-f");fillAlerts(a);a.dataset.f=1}},600000);
 })();

@@ -123,5 +123,10 @@ main>#homeAlerts{order:4}
 main>#quranCard{order:5}
 main>#homeQuick{order:6}
 main>.hero.container,main>#kidsTile,main>#rdTile{display:none!important}
-html:not(.home-more):not([data-view]) main>section:not(#skyCard):not(.to):not(.ay):not(#quranCard):not(#homeAlerts):not(#prayer):not(#library):not(#favoritesSection):not(#mushafView):not(#tasbih):not(#stats-keep),html[data-view="home"]:not(.home-more) main>section:not(#skyCard):not(.to):not(.ay):not(#quranCard):not(#homeAlerts):not(#prayer):not(#library):not(#favoritesSection):not(#mushafView):not(#tasbih):not(#stats-keep){display:none!important}
+html:not([data-view]) main>section:not(#skyCard):not(.to):not(.ay):not(#quranCard):not(#homeAlerts):not(#library):not(#favoritesSection):not(#mushafView):not(#tasbih),html[data-view="home"] main>section:not(#skyCard):not(.to):not(.ay):not(#quranCard):not(#homeAlerts),html:not([data-view]) main>#prayer,html[data-view="home"] main>#prayer{display:none!important}
 }
+
+/* لا تظهر الرئيسية إلا بعد اكتمال بنائها (مع احتياط إظهار بعد 1.5ث) */
+@keyframes wHomeIn{to{opacity:1}}
+html:not(.home-v2):not([data-view]) main,html[data-view="home"]:not(.home-v2) main{opacity:0;animation:wHomeIn .2s 1.5s forwards}
+html.home-v2 main{opacity:1;animation:none}
