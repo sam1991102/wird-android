@@ -92,3 +92,23 @@ html.dark:not(.ios) #homeQuick .hq-ic{color:var(--gold-2)}
 html.home-short #kidsTile,html.home-short #rdTile{display:none!important}
 html.home-short:not(.home-more) #homeQuick~section[data-v="home"]{display:none!important}
 }
+/* رئيسية v2 */
+html.home-v2 .hero.container{display:none!important}
+.ay-hide{display:none!important}
+.ay-tabs{display:flex;gap:4px;margin:14px 16px 0;padding:4px;border-radius:14px;background:var(--line-2)}
+.ay-tabs button{flex:1;border:0;background:transparent;padding:9px 6px;border-radius:10px;font:inherit;font-size:14px;color:var(--muted);cursor:pointer}
+.ay-tabs button[aria-selected="true"]{background:var(--paper);color:var(--ink);font-weight:700;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+html.ay-tabs-on main>section.ay{margin-top:6px}
+#homeAlerts{margin:14px 16px;padding:4px 0;border-radius:18px;background:var(--paper);border:1px solid var(--line)}
+#homeAlerts .ha-hd{padding:10px 16px 6px;font-size:13px;color:var(--muted)}
+#homeAlerts .ha-row{display:flex;align-items:center;gap:12px;width:100%;padding:10px 16px;border:0;border-top:1px solid var(--line-2);background:transparent;color:var(--ink);font:inherit;text-align:start;cursor:pointer}
+#homeAlerts .ha-ic{flex:none;display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:10px}
+#homeAlerts .ha-ic svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.ha-sun{background:#F6E7C3;color:#8A6416}.ha-moon{background:#E2E4F4;color:#3E4486}.ha-zz{background:#DDE8F5;color:#2D4B7A}.ha-book{background:#DCEFE5;color:#1F6B52}
+html.dark .ha-sun{background:rgba(226,194,127,.16);color:#E2C27F}html.dark .ha-moon{background:rgba(138,140,245,.16);color:#AEB0FF}html.dark .ha-zz{background:rgba(110,160,220,.16);color:#9DC2EE}html.dark .ha-book{background:rgba(63,178,127,.16);color:#7FD3AE}
+#homeAlerts .ha-tx{flex:1;display:flex;flex-direction:column;gap:2px}
+#homeAlerts .ha-tx b{font-size:15px}#homeAlerts .ha-tx small{font-size:12.5px;color:var(--muted)}
+#homeAlerts .ha-go{color:var(--muted);font-size:20px}
+.bottom-nav.nav5.rd-open>a.active{color:var(--muted)!important}
+.bottom-nav.nav5 .nv-radio.rd-on{color:var(--primary)!important}
+.bottom-nav.nav5 .nv-radio .ni svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
