@@ -120,7 +120,10 @@ if (DRY) process.exit(0);
     keep_bindings: ['secret_text'],
   })], { type: 'application/json' }));
   fd.append('worker.js', new Blob([out], { type: 'application/javascript+module' }), 'worker.js');
-  await cf('/workers/scripts/azkar', { method: 'PUT', body: fd });
+  for (let a = 1; ; a++) { // Cloudflare يرجع أحيانًا خطأ 10013 مؤقت: نعيد المحاولة
+    try { await cf('/workers/scripts/azkar', { method: 'PUT', body: fd }); break; }
+    catch (e) { if (a >= 5 || !/10013|5\d\d/.test(String(e.message))) throw e; console.log(`worker upload failed (try ${a}): ${e.message.slice(0, 120)} — retrying in ${a * 20}s`); await new Promise(r => setTimeout(r, a * 20000)); }
+  }
   console.log('worker azkar: deployed');
 }
 // 4) Pages wird-azkar
