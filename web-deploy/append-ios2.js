@@ -60,21 +60,29 @@ function findAy(main){var out=[];
 [].forEach.call(main.querySelectorAll('.hadith-day,section.ay,[class*="ayah-day"],[class*="aya-day"],h2,h3,.eyebrow'),function(el){
  if(!el.classList.contains("hadith-day")&&!el.classList.contains("ay")&&!/day/.test(el.className)&&!/^\s*(آية|حديث) اليوم/.test(el.textContent))return;
  var box=/^(H2|H3|P)$/.test(el.tagName)?(el.closest(".card,[class*='-card'],section,aside")||el.parentNode):el;
- if(box===main||box.closest("#homeAlerts,#ayTabs,.today-card,#skyCard,#library,#favoritesSection,#prayer,#surahs,#tasbih,#stats,#mushafView,.wp-page"))return;
+ if(box===main||box.closest("#homeAlerts,#ayCard,.today-card,#skyCard,#library,#favoritesSection,#prayer,#surahs,#tasbih,#stats,#mushafView,.wp-page"))return;
  if(box.parentNode!==main){var top=box.closest("main>*");if(top&&top!==box&&!top.classList.contains("hero")&&!top.querySelector(".today-card"))box=top;else main.appendChild(box)}
  if(out.indexOf(box)<0&&!out.some(function(o){return o.contains(box)}))out.push(box)});
 return out}
-function tabs(list){var w=document.getElementById("ayTabs");if(w||list.length<2)return;w=document.createElement("div");w.id="ayTabs";w.className="container ay-tabs";w.setAttribute("role","tablist");
-list.forEach(function(sec,i){var hh=sec.querySelector("h2,h3");var name=/حديث/.test(hh?hh.textContent:"")?"حديث اليوم":"آية اليوم";var b=document.createElement("button");b.type="button";b.setAttribute("role","tab");b.textContent=name;b.onclick=function(){list.forEach(function(x,k){x.classList.toggle("ay-hide",k!==i)});[].forEach.call(w.children,function(c,k){c.setAttribute("aria-selected",String(k===i))})};w.appendChild(b)});
-list[0].parentNode.insertBefore(w,list[0]);w.firstChild.click()}
+function card(list){var c=document.getElementById("ayCard");if(!c){c=document.createElement("section");c.id="ayCard";c.className="container";c.setAttribute("aria-label","آية وحديث اليوم")}
+if(!list.length)return c;
+list.sort(function(x,y){return isHd(x)-isHd(y)});
+list.forEach(function(x){if(x.parentNode!==c)c.appendChild(x)});
+var w=c.querySelector(".ay-tabs");if(list.length>1&&!w){w=document.createElement("div");w.className="ay-tabs";w.setAttribute("role","tablist");
+ list.forEach(function(sec,i){var b=document.createElement("button");b.type="button";b.setAttribute("role","tab");b.textContent=isHd(sec)?"حديث اليوم":"آية اليوم";
+ b.onclick=function(){list.forEach(function(x,k){x.classList.toggle("ay-hide",k!==i)});[].forEach.call(w.children,function(t,k){t.setAttribute("aria-selected",String(k===i))})};w.appendChild(b)});
+ c.insertBefore(w,c.firstChild);w.firstChild.click()}
+return c}
+function isHd(x){return x.classList.contains("hadith-day")||!!x.querySelector(".hadith-day")||/حديث اليوم/.test((x.querySelector("h2,h3,.eyebrow")||{}).textContent||"")?1:0}
 /* 4) ترتيب الرئيسية */
 function order(){var main=document.querySelector("main");if(!main)return;
-var today=document.querySelector(".today-card"),tsec=today&&(today.closest("main>section")||null);
-var ays=findAy(main);ays.forEach(function(x){x.classList.add("w-ay")});
+var today=document.querySelector(".today-card"),tsec=today&&today.closest("main>*");
+var ays=findAy(main);
+var ac=card(ays);
 var al=document.getElementById("homeAlerts");if(!al){al=document.createElement("section");al.id="homeAlerts";al.className="container";al.setAttribute("aria-label","أذكار اليوم");fillAlerts(al)}
-var before=document.getElementById("quranCard");
-[tsec].concat(ays).concat([al]).forEach(function(x){if(!x||x===before)return;before&&before.parentNode===main?main.insertBefore(x,before):x.parentNode||main.appendChild(x)});
-tabs(ays);R.classList.add("home-v2")}
+var ref=tsec&&tsec.parentNode===main?tsec.nextSibling:main.firstChild;
+[ac,al].forEach(function(x){if(x.nextSibling!==ref||x.parentNode!==main)main.insertBefore(x,ref);ref=x.nextSibling});
+R.classList.add("home-v2")}
 function run(){nav();navState();order()}
 run();if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",run);(function(){var n=0,t=setInterval(function(){run();if(R.classList.contains("home-v2")||++n>40)clearInterval(t)},50)})();setTimeout(run,1200);setTimeout(run,3500);setInterval(function(){navState();nav()},600);
 setInterval(function(){var a=document.getElementById("homeAlerts");a&&fillAlerts(a)},300000);

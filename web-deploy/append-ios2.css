@@ -81,10 +81,11 @@ html,html.dark,html.sepia,html.ios{--mihrab:none!important;--orn:none!important}
 body::before,body::after,main::before,main::after{background-image:none!important;-webkit-mask-image:none!important;mask-image:none!important}
 /* الرئيسية */
 .ay-hide{display:none!important}
-.ay-tabs{display:flex;gap:4px;margin:14px 16px 0;padding:4px;border-radius:14px;background:var(--line-2)}
+#ayCard{margin:14px 16px 0}
+#ayCard>:not(.ay-tabs){margin-left:0!important;margin-right:0!important}
+.ay-tabs{display:flex;gap:4px;margin:0 0 8px;padding:4px;border-radius:14px;background:var(--line-2)}
 .ay-tabs button{flex:1;border:0;background:transparent;padding:9px 6px;border-radius:10px;font:inherit;font-size:14px;color:var(--muted);cursor:pointer}
 .ay-tabs button[aria-selected="true"]{background:var(--paper);color:var(--ink);font-weight:700;box-shadow:0 1px 3px rgba(0,0,0,.08)}
-main>.w-ay{margin-top:6px}
 #homeAlerts{margin:16px}
 #homeAlerts .ha-hd{margin:0 4px 8px;font-size:15px;font-weight:700;color:var(--ink)}
 #homeAlerts .ha-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
@@ -107,10 +108,10 @@ main{display:flex;flex-direction:column}
 main>*{order:40}
 main>#skyCard{order:1}
 main>section.to{order:2}
-main>#ayTabs,main>.w-ay,main>section.ay{order:3}
+main>#ayCard{order:3}
 main>#homeAlerts{order:4}
 main>#quranCard{order:5}
-html:not([data-view]) main>section:not(#skyCard):not(.to):not(.ay):not(.w-ay):not(#quranCard):not(#homeAlerts):not(#library):not(#favoritesSection):not(#mushafView):not(#tasbih),html[data-view="home"] main>section:not(#skyCard):not(.to):not(.ay):not(.w-ay):not(#quranCard):not(#homeAlerts){display:none!important}
+html:not([data-view]) main>section:not(#skyCard):not(.to):not(#ayCard):not(#quranCard):not(#homeAlerts):not(#library):not(#favoritesSection):not(#mushafView):not(#tasbih),html[data-view="home"] main>section:not(#skyCard):not(.to):not(#ayCard):not(#quranCard):not(#homeAlerts){display:none!important}
 }
 main>.hero.container,main>#kidsTile,main>#rdTile{display:none!important}
 @keyframes wHomeIn{to{opacity:1}}
