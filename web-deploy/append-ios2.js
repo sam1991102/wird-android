@@ -54,7 +54,7 @@ keep();setTimeout(keep,1200);setTimeout(keep,3500)})();
 (function(){var R=document.documentElement,AR="٠١٢٣٤٥٦٧٨٩";function ar(n){return String(n).replace(/\d/g,function(d){return AR[d]})}
 function hm(h){h=((h%24)+24)%24;var H=Math.floor(h),M=Math.round((h-H)*60);if(M===60){H++;M=0}var pm=H>=12,h12=H%12||12;return ar(h12)+":"+ar(String(M).padStart(2,"0"))+(pm?" م":" ص")}
 /* 1) الشريط السفلي */
-function nav(){var n=document.querySelector(".bottom-nav.nav5");if(!n)return;var t=n.querySelector('a[data-nav="tasbih"],a[href$="#tasbih"]');if(t)t.style.display="none";if(n.querySelector('.nv-x[data-tab="radio"]'))return;
+function nav(){var n=document.querySelector(".bottom-nav.nav5");if(!n)return;var t=n.querySelector('[data-nav="tasbih"],[href$="#tasbih"],[data-tab="tasbih"]');if(!t)[].forEach.call(n.children,function(c){if(!t&&!c.classList.contains("nv-x")&&(c.textContent||"").trim()==="السبحة")t=c});if(t)t.style.setProperty("display","none","important");if(n.querySelector('.nv-x[data-tab="radio"]'))return;
 var b=document.createElement("button");b.type="button";b.className="nv-x nv-radio";b.dataset.tab="radio";b.innerHTML='<span class="ni" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="12" rx="3"/><path d="M7 8l9-5"/><circle cx="15.5" cy="14" r="2.5"/></svg></span><span class="nt">الإذاعة</span>';
 b.addEventListener("click",function(e){e.preventDefault();e.stopPropagation();if(document.querySelector(".wp-page.rd-page"))return;window.__closeOverlays&&__closeOverlays();setTimeout(function(){window.__openRadio&&__openRadio()},120)});
 var anchor=t||n.querySelector('a[data-nav="prayer"],a[href$="#prayer"]');anchor?n.insertBefore(b,anchor.nextSibling):n.appendChild(b)}
@@ -81,6 +81,6 @@ var before=document.getElementById("quranCard")||hq;
 [tsec].concat(ays).concat([al]).forEach(function(x){if(x&&x.parentNode===main&&before.parentNode===main&&x!==before)main.insertBefore(x,before);else if(x&&!x.parentNode)main.insertBefore(x,before)});
 tabs(ays);R.classList.add("home-v2")}
 function run(){nav();navState();order()}
-run();if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",run);(function(){var n=0,t=setInterval(function(){run();if(R.classList.contains("home-v2")||++n>40)clearInterval(t)},50)})();setTimeout(run,1200);setTimeout(run,3500);setInterval(navState,600);
+run();if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",run);(function(){var n=0,t=setInterval(function(){run();if(R.classList.contains("home-v2")||++n>40)clearInterval(t)},50)})();setTimeout(run,1200);setTimeout(run,3500);setInterval(function(){navState();nav()},600);
 setInterval(function(){var a=document.getElementById("homeAlerts");if(a){a.removeAttribute("data-f");fillAlerts(a);a.dataset.f=1}},600000);
 })();
