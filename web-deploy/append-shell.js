@@ -29,3 +29,6 @@ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.c
 function tidy(){var p=document.getElementById("prayer");if(!p)return;var seen=0;[].forEach.call(p.querySelectorAll("button,a"),function(b){if(!isSet(b))return;if(seen++)b.style.display="none";b.dataset.ptSet=1})}
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("#prayer [data-pt-set],#prayer button,#prayer a");if(!b||!isSet(b))return;e.preventDefault();e.stopImmediatePropagation();window.__openSettingsPage&&__openSettingsPage("st-prayer")},true);
 tidy();setTimeout(tidy,1500);document.addEventListener("click",function(e){if(e.target.closest&&e.target.closest('[href$="#prayer"],[data-tab="prayer"],[data-nav="prayer"]'))setTimeout(tidy,300)},true)})();
+/* تبديل الصفحة: نخفي المحتوى لحظة حتى يكتمل بناؤه ثم يظهر مرة واحدة بدل ما يتزحزح قدامك */
+(function(){var R=document.documentElement,t,last=R.dataset.view;
+new MutationObserver(function(){var v=R.dataset.view;if(v===last)return;last=v;R.classList.add("view-wait");clearTimeout(t);t=setTimeout(function(){R.classList.remove("view-wait")},180)}).observe(R,{attributes:true,attributeFilter:["data-view"]})})();

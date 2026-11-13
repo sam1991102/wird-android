@@ -121,3 +121,6 @@ html[data-view]:not([data-view="home"]) #ayCard,html[data-view]:not([data-view="
 #skyCard{overflow:hidden}
 /* شريط «الصلاة القادمة» يظهر فورًا بدون حركة تزق الصفحة */
 .topbar,.topbar *{transition:none!important;animation:none!important}
+html.view-wait main{visibility:hidden}
+@keyframes wViewIn{from{opacity:0}to{opacity:1}}
+html:not(.view-wait) main{animation:wViewIn .16s ease-out}
