@@ -21,7 +21,7 @@ async function open(ls, fresh = false) {
     if (!fresh) { localStorage.setItem('wird-setup-done', '1'); localStorage.setItem('wird-onboarded', '1'); }
     for (const [k, v] of Object.entries(ls)) localStorage.setItem(k, v);
     window.__qa = { shifts: 0, longtask: 0, moves: 0 };
-    try { new PerformanceObserver(l => l.getEntries().forEach(e => { if (!e.hadRecentInput) __qa.shifts += e.value })).observe({ type: 'layout-shift', buffered: true }); } catch (e) {}
+    try { new PerformanceObserver(l => l.getEntries().forEach(e => { if (e.hadRecentInput) return; __qa.shifts += e.value; (e.sources || []).forEach(x => { const n = x.node; if (n && n.nodeType === 1) (__qa.src = __qa.src || []).push((n.id ? '#' + n.id : n.tagName.toLowerCase() + '.' + String(n.className).split(' ').slice(0, 2).join('.')) + ' ' + Math.round(x.previousRect.y) + '→' + Math.round(x.currentRect.y)) }) })).observe({ type: 'layout-shift', buffered: true }); } catch (e) {}
     try { new PerformanceObserver(l => l.getEntries().forEach(e => __qa.longtask += e.duration)).observe({ type: 'longtask', buffered: true }); } catch (e) {}
   }, [ls, fresh]);
   const page = await ctx.newPage();
@@ -72,11 +72,11 @@ for (const S of SKINS) {
     for (let i = 0; i < nav.items.length; i++) {
       const label = nav.items[i];
       const t0 = Date.now();
-      await page.evaluate(() => { __qa.shifts = 0; __qa.longtask = 0 });
+      await page.evaluate(() => { __qa.shifts = 0; __qa.longtask = 0; __qa.src = [] });
       await page.evaluate(i => { const n = document.querySelector('.bottom-nav.nav5'); [...n.children].filter(c => getComputedStyle(c).display !== 'none' && c.offsetWidth)[i].click() }, i);
       await wait(1200);
-      const jq = await page.evaluate(() => ({ s: __qa.shifts, l: __qa.longtask }));
-      if (jq.s > 0.05) bad(`${k}/nav:${label}`, `رعشة بعد الفتح CLS=${jq.s.toFixed(3)}`);
+      const jq = await page.evaluate(() => ({ s: __qa.shifts, l: __qa.longtask, src: (__qa.src || []).slice(0, 6).join(' ; ') }));
+      if (jq.s > 0.05) bad(`${k}/nav:${label}`, `رعشة بعد الفتح CLS=${jq.s.toFixed(3)} — ${jq.src}`);
       if (jq.l > 400) bad(`${k}/nav:${label}`, `بطء: مهام طويلة ${Math.round(jq.l)}ms`);
       const st = await navLit(page);
       if (st.lit.length !== 1) bad(`${k}/nav:${label}`, `الزرار المنوّر: [${st.lit.join('، ') || 'ولا واحد'}] — ${st.cols} — ${st.cls}`);

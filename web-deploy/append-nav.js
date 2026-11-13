@@ -1,3 +1,4 @@
+
 /*nav2*/(function(){
 /* الشريط السفلي: مصدر واحد لحالة الزر المنوّر، وفتح الصفحات بدون رعشة */
 var R=document.documentElement;

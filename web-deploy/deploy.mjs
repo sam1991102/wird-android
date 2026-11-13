@@ -79,6 +79,9 @@ rep('ui.js', 'var ph=document.createComment("sh");', 'var ph=sec.classList.conta
 upsert('ui.js', '/*icons*/', fs.readFileSync(here + 'append-icons.js', 'utf8'));
 upsert('styles.css', '/*icons*/', fs.readFileSync(here + 'append-icons.css', 'utf8'));
 upsert('ui.js', '/*ios2*/', fs.readFileSync(here + 'append-ios2.js', 'utf8'));
+upsert('ui.js', '/*shell*/', fs.readFileSync(here + 'append-shell.js', 'utf8'));
+upsert('ui.js', '/*contrast*/', fs.readFileSync(here + 'append-contrast.js', 'utf8'));
+upsert('ui.js', '/*home*/', fs.readFileSync(here + 'append-home.js', 'utf8'));
 upsert('styles.css', '/*ios2*/', fs.readFileSync(here + 'append-ios2.css', 'utf8'));
 upsert('ui.js', '/*radio*/', fs.readFileSync(here + 'append-radio.js', 'utf8'));
 upsert('styles.css', '/*radio*/', fs.readFileSync(here + 'append-radio.css', 'utf8'));

@@ -1,3 +1,4 @@
+
 /*setup*/(function(){
 /* معالج الإعداد الأول: يمرّ على صفحات الإعدادات الحقيقية بالترتيب */
 var R=document.documentElement,K="wird-setup-done";
