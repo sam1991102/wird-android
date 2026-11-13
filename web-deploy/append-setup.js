@@ -21,10 +21,11 @@ function welcome(){var onb=document.getElementById("onb");if(onb)onb.hidden=true
 function finish(){bar&&bar.remove();bar=null;close();
  var A=!!window.__WIRD_NATIVE;
  screen(dots(N-1)+'<div class="su-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><h1>جاهز</h1><p>'+(A?"لضمان وصول الأذان في وقته على أندرويد، اسمح بالإشعارات والمنبّهات الدقيقة، وأوقف توفير البطارية لوِرد من صفحة الأذان.":"تم حفظ إعداداتك. تقبّل الله منك.")+'</p><button type="button" class="su-main" data-su="end">ابدأ وِردك</button>')}
-function step(k){i=k;if(k>=STEPS.length){finish();return}ov&&ov.remove();ov=null;close();
+function step(k){i=k;if(k>=STEPS.length){finish();return}ov&&ov.remove();ov=null;[].forEach.call(document.querySelectorAll(".wp-page.sh-page,.wp-page.nt-page"),function(x){x.remove()});
  var s=STEPS[k];if(!bar){bar=el("","su-bar");document.body.appendChild(bar)}
  bar.innerHTML=dots(k+1)+'<div class="su-row"><div class="su-tx"><small>الخطوة '+ar(k+1)+" من "+ar(STEPS.length)+"</small><b>"+s.t+"</b><span>"+s.s+'</span></div></div><div class="su-btns"><button type="button" class="su-link" data-su="all">إنهاء</button><button type="button" class="su-main" data-su="next">'+(k===STEPS.length-1?"إنهاء الإعداد":"التالي")+"</button></div>";
- setTimeout(function(){window.__openSettingsPage&&__openSettingsPage(s.id)},250)}
+ go(s.id)}
+function go(id){var hub=[].find.call(document.querySelectorAll(".st"),function(x){return!x.hidden}),row=hub&&hub.querySelector('.sh-row[data-id="'+id+'"]');if(row){row.click();return}window.__openSettingsPage&&__openSettingsPage(id)}
 function end(){mark();ov&&ov.remove();ov=null;bar&&bar.remove();bar=null;close();R.classList.remove("su-on");window.__wirdGo&&__wirdGo("home")}
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-su]");if(!b)return;e.preventDefault();var a=b.dataset.su;
  if(a==="go")step(0);else if(a==="next")step(i+1);else if(a==="all")finish();else if(a==="skip"||a==="end")end();

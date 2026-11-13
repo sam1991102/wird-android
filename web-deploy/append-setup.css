@@ -21,3 +21,6 @@
 html.su-on .bottom-nav.nav5{display:none!important}
 html.su-on .wp-page{padding-bottom:150px!important}
 .su-again{display:block;margin:12px auto 0;padding:10px 16px;border-radius:12px;border:1px solid var(--line);background:transparent;color:var(--ink);font:inherit;cursor:pointer}
+html.su-on .wp-page,html.su-on .st{transition:none!important;animation:none!important}
+html.su-on .st:not([hidden]){visibility:hidden}
+html.su-on .wp-page{visibility:visible}

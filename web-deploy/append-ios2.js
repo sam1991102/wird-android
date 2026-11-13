@@ -80,8 +80,8 @@ var today=document.querySelector(".today-card"),tsec=today&&today.closest("main>
 var ac0=document.getElementById("ayCard"),ays=ac0&&ac0.children.length>1?[]:findAy(main);
 var ac=card(ays);
 var al=document.getElementById("homeAlerts");if(!al){al=document.createElement("section");al.id="homeAlerts";al.className="container";al.dataset.v="home";al.setAttribute("aria-label","أذكار اليوم");fillAlerts(al)}
-var ref=tsec&&tsec.parentNode===main?tsec.nextSibling:main.firstChild;
-[ac,al].forEach(function(x){if(x.nextSibling!==ref||x.parentNode!==main)main.insertBefore(x,ref);ref=x.nextSibling});
+var prev=tsec&&tsec.parentNode===main?tsec:null;
+[ac,al].forEach(function(x){var want=prev?prev.nextSibling:main.firstChild;if(x!==want)main.insertBefore(x,want);prev=x});
 R.classList.add("home-v2")}
 function run(){nav();navState();order()}
 run();if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",run);(function(){var n=0,t=setInterval(function(){run();if(R.classList.contains("home-v2")||++n>40)clearInterval(t)},50)})();setTimeout(run,1200);setTimeout(run,3500);setInterval(function(){navState();nav()},1500);
