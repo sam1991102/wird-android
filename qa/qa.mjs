@@ -87,6 +87,8 @@ for (const S of SKINS) {
       else if (st.lit[0] !== label) bad(`${k}/nav:${label}`, `المنوّر «${st.lit[0]}» بدل «${label}»`);
       const covered = await page.evaluate(() => [...document.querySelectorAll('.wp-page,.st:not([hidden]),.mp')].some(e => e.offsetWidth && e.getBoundingClientRect().height > innerHeight * .6));
       if (label !== 'الرئيسية' && !covered) { if (await vis(page, '#ayCard')) bad(`${k}/nav:${label}`, 'كارت الآية والحديث ظاهر برا الرئيسية'); if (await vis(page, '#homeAlerts')) bad(`${k}/nav:${label}`, 'أذكار اليوم ظاهرة برا الرئيسية') }
+      if (label === 'المواقيت' && !(await vis(page, '#ptTomorrow'))) bad(k + '/prayer', 'مواقيت الغد مش ظاهرة');
+      if (label === 'المصحف') { const f = await page.evaluate(() => { const v = document.getElementById('mushafView'); return v ? [...v.children].filter(c => c.offsetHeight).slice(0, 2).map(c => c.textContent.trim().slice(0, 30)).join(' | ') : '' }); if (!/القراءة/.test(f)) bad(k + '/mushaf', 'زر القراءة مش في أول الصفحة: ' + f) }
       if (label === 'المواقيت') { const n = await page.evaluate(() => [...document.querySelectorAll('#prayer button,#prayer a')].filter(b => b.offsetWidth && /إعداد|ضبط/.test((b.getAttribute('aria-label') || '') + b.textContent)).length); if (n > 1) bad(k + '/prayer', `${n} أزرار إعدادات`) }
       await shot(page, `${k}-02-nav-${i}`);
       await page.evaluate(() => window.__closeOverlays && __closeOverlays()); await wait(400);
