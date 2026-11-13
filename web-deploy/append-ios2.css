@@ -62,3 +62,17 @@ html.st-open .st.hub>.st-bar [data-x]{visibility:hidden!important;pointer-events
 html.st-open .st.hub>.st-bar{justify-content:flex-start!important;background:transparent!important;border:0!important;box-shadow:none!important}
 html.st-open .st.hub>.st-bar #stT{font-size:28px!important;font-weight:700!important}
 @media (min-width:761px){html.st-open .bottom-nav.nav5{z-index:240!important}html.st-open .st.hub{right:104px!important}.bottom-nav.nav5>.nv-x{min-height:68px}}
+/* المصحف بدون إطار: الصفحة تملأ الشاشة مثل تطبيقات المصاحف */
+html{--mp-paper:#FBF8EF}html.sepia{--mp-paper:#F6EAD0}html.dark{--mp-paper:#0E1412}html.ios:not(.dark){--mp-paper:#FDFBF5}html.ios.dark{--mp-paper:#0A1020}
+@media (max-width:760px){
+.mp{background:var(--mp-paper)!important}
+.mp .mp-stage{padding:0!important;background:transparent!important}
+.mp .mp-book{padding:0!important;margin:0 auto!important;width:100%!important;max-width:none!important;background:transparent!important;border:0!important;box-shadow:none!important;border-radius:0!important}
+.mp .mp-page{border:0!important;border-radius:0!important;box-shadow:none!important;outline:0!important;margin:0!important;width:100%!important;max-width:none!important;padding:4px 10px 8px!important;background:var(--mp-paper)!important;background-image:none!important}
+.mp .mp-page::before{display:none!important}
+.mp .mp-page:not(.mp-out)::after{display:none!important}
+.mp .mp-head{border:0!important;background:transparent!important;padding:2px 4px 6px!important;margin:0!important}
+.mp .mp-bar,.mp .mp-foot{background:var(--mp-paper)!important;border:0!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+.mp .mp-bar{padding-top:6px!important;padding-bottom:6px!important}
+.mp .mp-foot{padding-top:6px!important;padding-bottom:max(6px,env(safe-area-inset-bottom,0px))!important}
+}
