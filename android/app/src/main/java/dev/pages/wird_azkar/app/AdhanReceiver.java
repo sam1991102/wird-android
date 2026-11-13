@@ -25,6 +25,7 @@ public class AdhanReceiver extends BroadcastReceiver {
                 || Intent.ACTION_TIMEZONE_CHANGED.equals(action)
                 || "android.app.action.SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED".equals(action)) {
             AdhanStore.armAll(c);
+            AdhanStore.extendIfNeeded(c);
             return;
         }
 
@@ -34,8 +35,9 @@ public class AdhanReceiver extends BroadcastReceiver {
         try { ev = new JSONObject(raw); } catch (Exception e) { return; }
         String kind = ev.optString("kind", "notif");
         WirdWidget.refreshAll(c);
-
-        if (kind.equals("adhan") || kind.equals("alarm")) {
+        AdhanStore.extendIfNeeded(c);
+        boolean quiet = kind.equals("adhan") && AdhanStore.respectSilent(c) && AdhanStore.phoneSilent(c);
+        if (!quiet && (kind.equals("adhan") || kind.equals("alarm"))) {
             Intent svc = new Intent(c, AdhanService.class);
             svc.putExtra("ev", raw);
             try {

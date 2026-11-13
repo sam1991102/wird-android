@@ -16,12 +16,25 @@ public class MainActivity extends BridgeActivity {
         AdhanStore.ensureChannels(this);
         AdhanStore.armAll(this);
         WidgetData.refreshAll(this);
+        lockScreen(getIntent());
         goTo(getIntent(), 2500);
+    }
+
+    /** الظهور فوق شاشة القفل لمنبّه الفجر فقط، لا لباقي التطبيق. */
+    private void lockScreen(Intent i) {
+        boolean alarm = i != null && i.getBooleanExtra("wird_alarm", false);
+        try {
+            if (android.os.Build.VERSION.SDK_INT >= 27) { setShowWhenLocked(alarm); setTurnScreenOn(alarm); }
+            else if (alarm) getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED | android.view.WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+            else getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED | android.view.WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+        } catch (Exception ignored) {}
+        if (i != null) i.removeExtra("wird_alarm");
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        lockScreen(intent);
         goTo(intent, 0);
     }
 

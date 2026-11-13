@@ -221,4 +221,67 @@ public final class AdhanStore {
             return Integer.toHexString(s.hashCode());
         }
     }
+
+    /* ---------- تجديد ذاتي: الأذان يستمر حتى لو لم يُفتح التطبيق ---------- */
+    private static long dayNum(long t, java.util.TimeZone tz) { return (long) Math.floor((t + tz.getOffset(t)) / 86400000.0); }
+
+    /** لو قاربت مواعيد الأذان/المنبه المخزّنة على الانتهاء، يولّد ١٤ يومًا إضافية بنفس نمط آخر أسبوع ومن حساب المواقيت المحلي. */
+    static void extendIfNeeded(Context c) {
+        try {
+            JSONArray events = load(c);
+            JSONObject P = WidgetData.prayer(c);
+            java.util.TimeZone tz = java.util.TimeZone.getTimeZone(P.optString("tz", "Asia/Riyadh"));
+            long now = System.currentTimeMillis(), maxT = 0;
+            for (int k = 0; k < events.length(); k++) {
+                JSONObject ev = events.optJSONObject(k);
+                if (ev == null) continue;
+                String kind = ev.optString("kind");
+                if (kind.equals("adhan") || kind.equals("alarm")) maxT = Math.max(maxT, ev.optLong("t", 0));
+            }
+            if (maxT == 0 || maxT - now > 5L * 86400000L) return; // لا يوجد أذان مفعّل، أو ما زال الرصيد كافيًا
+            long today = dayNum(now, tz), last = dayNum(maxT, tz);
+            if (last < today - 30) return; // بيانات قديمة جدًا: ننتظر فتح التطبيق
+            JSONArray out = new JSONArray();
+            for (int k = 0; k < events.length(); k++) { // نحتفظ بآخر ٨ أيام فقط كقالب + القادم
+                JSONObject ev = events.optJSONObject(k);
+                if (ev != null && dayNum(ev.optLong("t", 0), tz) >= Math.min(last, today) - 8) out.put(ev);
+            }
+            long start = Math.max(last, today - 1);
+            for (int n = 1; n <= 14; n++) {
+                long tgt = start + n, src = tgt;
+                while (src > last) src -= 7;       // نفس يوم الأسبوع (الجمعة تبقى جمعة)
+                if (src < last - 6) continue;
+                PrayerCalc.Day ds = PrayerCalc.day(P, (int) (src - today)), dt = PrayerCalc.day(P, (int) (tgt - today));
+                int idx = 0;
+                for (int k = 0; k < events.length(); k++) {
+                    JSONObject ev = events.optJSONObject(k);
+                    if (ev == null) continue;
+                    String kind = ev.optString("kind");
+                    if (!(kind.equals("adhan") || kind.equals("alarm"))) continue;
+                    long t = ev.optLong("t", 0);
+                    if (dayNum(t, tz) != src) continue;
+                    int best = -1; long bd = Long.MAX_VALUE;
+                    for (int q = 0; q < 6; q++) { long d = Math.abs(t - ds.t[q]); if (d < bd) { bd = d; best = q; } }
+                    long nt = bd <= 90 * 60000L ? dt.t[best] + (t - ds.t[best]) : t + (tgt - src) * 86400000L;
+                    if (nt <= now) continue;
+                    JSONObject cp = new JSONObject(ev.toString());
+                    cp.put("t", nt);
+                    cp.put("id", 1000000 + (int) (tgt % 1000) * 100 + (idx++ % 100));
+                    cp.put("gen", true);
+                    out.put(cp);
+                }
+            }
+            save(c, out);
+            armAll(c);
+        } catch (Exception ignored) {}
+    }
+
+    static boolean respectSilent(Context c) { return prefs(c).getBoolean("respectSilent", false); }
+    static void setRespectSilent(Context c, boolean v) { prefs(c).edit().putBoolean("respectSilent", v).apply(); }
+    static boolean phoneSilent(Context c) {
+        try {
+            android.media.AudioManager am = (android.media.AudioManager) c.getSystemService(Context.AUDIO_SERVICE);
+            return am.getRingerMode() != android.media.AudioManager.RINGER_MODE_NORMAL;
+        } catch (Exception e) { return false; }
+    }
 }

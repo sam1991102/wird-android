@@ -88,11 +88,18 @@ rep('index.html', '<script id="wird-native">', '<script>try{localStorage.getItem
 rep('ui.js', '(st.s==="night"?moonSVG(d):', '(st.s==="night"?moonSVG(((Date.now()/864e5-10962.76)%29.530589+29.530589)%29.530589):');
 upsert('ui.js', '/*nshare*/', fs.readFileSync(here + 'append-share.js', 'utf8'));
 append('ui.js', '/*sh-seg*/', fs.readFileSync(here + 'append-seg.js', 'utf8'));
-append('ui.js', '/*w-ongoing*/', fs.readFileSync(here + 'append-ongoing.js', 'utf8'));
+upsert('ui.js', '/*w-ongoing*/', fs.readFileSync(here + 'append-ongoing.js', 'utf8'));
 append('styles.css', '/*st-hub*/', fs.readFileSync(here + 'append-styles.css', 'utf8'));
 // إصدار الكاش
 const m = F['sw.js'][1].match(/wird-v(\d+)/);
 const ver = Math.max(+m[1] + 1, 287);
+// سياسة الخصوصية: قسم تطبيق أندرويد والخدمات الخارجية
+{ const k = F['privacy.html'] ? 'privacy.html' : null;
+  if (k && !F[k][1].includes('id="android-app"')) {
+    const sec = fs.readFileSync(here + 'privacy-android.html', 'utf8');
+    const h = F[k][1], at = h.includes('</main>') ? '</main>' : h.includes('</article>') ? '</article>' : '</body>';
+    F[k][1] = h.replace(at, sec + at); log.push('privacy.html: + android section');
+  } else log.push('privacy.html: ' + (k ? 'already' : 'not in worker files (skipped)')); }
 F['sw.js'][1] = F['sw.js'][1].replace(/wird-v\d+/, 'wird-v' + ver);
 log.push('sw.js: wird-v' + ver);
 console.log(log.join('\n'));

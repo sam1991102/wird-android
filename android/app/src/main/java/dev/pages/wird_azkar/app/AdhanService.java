@@ -78,7 +78,8 @@ public class AdhanService extends Service {
         open.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         String url = current.optString("url", "/");
         open.setData(Uri.parse(AdhanStore.absolute(url)));
-        PendingIntent openPi = PendingIntent.getActivity(this, 11, open,
+        open.putExtra("wird_alarm", isAlarm);
+        PendingIntent openPi = PendingIntent.getActivity(this, isAlarm ? 14 : 11, open,
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
         Intent stop = new Intent(this, AdhanService.class).setAction(ACT_STOP);
