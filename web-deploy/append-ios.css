@@ -53,3 +53,4 @@ html.ios.dark .topbar,html.ios.dark .bottom-nav.nav5{background:#131B2E!importan
 html.ios:not(.dark) .tb-logo{filter:brightness(0) saturate(100%) invert(9%) sepia(30%) saturate(2000%) hue-rotate(200deg)}
 html.ios body,html.ios main{color:var(--ink)}
 html.ios #skyCard .sk-wd,html.ios #skyCard .sk-city,html.ios #skyCard .sk-hj,html.ios #skyCard .sk-hy,html.ios #skyCard .sk-gr,html.ios #skyCard .sk-gy,html.ios #skyCard .sk-dhikr,html.ios #skyCard .sk-period,html.ios #skyCard .sk-np,html.ios #skyCard .sk-cd,html.ios #skyCard .sk-label{color:#fff!important}html.ios #skyCard .sk-city,html.ios #skyCard .sk-hy,html.ios #skyCard .sk-gy,html.ios #skyCard .sk-period{color:rgba(255,255,255,.72)!important}
+html.ios .today-card .btn-ghost,html.ios .today-card .btn-ghost *{color:#1E3A8A!important;stroke:currentColor}html.ios.dark .today-card .btn-ghost,html.ios.dark .today-card .btn-ghost *{color:#fff!important}
