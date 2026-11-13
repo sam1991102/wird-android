@@ -4,6 +4,7 @@ var R={"home": "<path d=\"M219.31,108.68l-80-80a16,16,0,0,0-22.62,0l-80,80A15.87
 function svg(p){return '<svg class="ph" viewBox="0 0 256 256" aria-hidden="true">'+p+'</svg>'}
 function draw(){
  document.querySelectorAll(".dr2 .dr-i2[data-n]").forEach(function(b){var k=b.dataset.n,ic=b.querySelector(".dr-ic");if(!ic||!F[k]||ic.dataset.ph===k)return;ic.innerHTML=svg(F[k]);ic.dataset.ph=k});
+ document.querySelectorAll(".l2-shb").forEach(function(b){if(b.dataset.ph)return;var t=b.textContent,k=/الحج/.test(t)?"hajj":/الرقية/.test(t)?"ruqya":/الأطفال/.test(t)?"kids":/أسماء/.test(t)?"names":/تعليم/.test(t)?"learn":/أدوات/.test(t)?"tools":/الأحاديث/.test(t)?"hadith":/ردي الخاص/.test(t)?"bm":null;var o=b.querySelector("svg");if(k&&o&&F[k])o.outerHTML=svg(F[k]);b.dataset.ph=1});
  var s=document.querySelector(".dr2 .dr-search");if(s&&!s.dataset.ph){var o=s.querySelector("svg");if(o){o.outerHTML=svg(R.search)}s.dataset.ph=1}
  document.querySelectorAll(".bottom-nav.nav5>[data-tab]").forEach(function(a){var k=a.dataset.tab,ni=a.querySelector(".ni");if(!ni||!R[k])return;var so=a.parentNode.classList.contains("st-on");var on=a.classList.contains("nv-x")?so:(!so&&(a.classList.contains("active")||a.hasAttribute("aria-current")));var w=on?"f":"r";if(ni.dataset.ph===k+w)return;ni.innerHTML=svg(on?F[k]:R[k]);ni.dataset.ph=k+w})}
 var mo=new MutationObserver(function(){clearTimeout(mo.t);mo.t=setTimeout(draw,0)});mo.observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:["class","aria-current"]});draw();
