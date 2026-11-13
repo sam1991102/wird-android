@@ -35,12 +35,12 @@ html:not(.nav-off) .wp-page,html:not(.nav-off) .st,html:not(.nav-off) .wd-sheet:
 html:not(.nav-off) .wp-page,html:not(.nav-off) .st{height:auto!important;max-height:none!important}
 .wd-sheet.dr2{z-index:2147483300!important}
 }
-.bottom-nav.nav5.st-on>a.active{color:var(--muted)!important}.bottom-nav.nav5.st-on>a.active .nt{font-weight:400}.bottom-nav.nav5.st-on>.nv-x{color:var(--primary)!important}.bottom-nav.nav5.st-on>.nv-x .nt{font-weight:600}
+.bottom-nav.nav5.st-on>a.active{color:var(--muted)!important}.bottom-nav.nav5.st-on>a.active .nt{font-weight:400}.bottom-nav.nav5.st-on:not(.rd-open)>.nv-x[data-tab="settings"]{color:var(--primary)!important}.bottom-nav.nav5.st-on:not(.rd-open)>.nv-x[data-tab="settings"] .nt{font-weight:600}
 html:not(.dark) .dr2 .wd-x,html:not(.dark) .dr2 [data-x]{color:var(--ink)!important;background:var(--paper)!important;border:.5px solid var(--line)!important}
 html:not(.dark) .dr2 .wd-x svg,html:not(.dark) .dr2 [data-x] svg{stroke:currentColor!important}
 html:not(.dark) .dr2 .dr-np small,html:not(.dark) .dr2 .dr-brand small,html:not(.dark) .dr2 .dr-ft,html:not(.dark) .dr2 .dr-ft a,html:not(.dark) .dr2 .dr-ver{color:color-mix(in srgb,var(--ink) 60%,transparent)!important}
 html:not(.dark) .bottom-nav.nav5>a:not(.active),html:not(.dark) .bottom-nav.nav5>.nv-x{color:color-mix(in srgb,var(--ink) 58%,transparent)!important}
-html:not(.dark) .bottom-nav.nav5.st-on>.nv-x{color:var(--primary)!important}
+html:not(.dark) .bottom-nav.nav5.st-on:not(.rd-open)>.nv-x[data-tab="settings"]{color:var(--primary)!important}
 html .bottom-nav.nav5,html.ios .bottom-nav.nav5,html.ios.dark .bottom-nav.nav5,html.ios.sepia .bottom-nav.nav5,html.sepia .bottom-nav.nav5,html.dark .bottom-nav.nav5{background:var(--paper)!important}
 html.ios .topbar .icon-btn{color:var(--primary)!important;background:transparent!important;border-color:transparent!important}
 html.ios .topbar .icon-btn svg{stroke:currentColor!important;color:currentColor!important}
@@ -102,7 +102,8 @@ html.dark .ha-sun .ha-ic{background:rgba(226,194,127,.16);color:#E2C27F}html.dar
 #homeAlerts .ha-t.is-now small{color:rgba(255,255,255,.85);font-weight:700}
 #homeAlerts .ha-t.is-now .ha-ic{background:rgba(255,255,255,.18);color:#fff}
 .bottom-nav.nav5.rd-open>a.active{color:var(--muted)!important}
-.bottom-nav.nav5 .nv-radio.rd-on{color:var(--primary)!important}
+.bottom-nav.nav5 .nv-radio.rd-on,html:not(.dark) .bottom-nav.nav5>.nv-radio.rd-on{color:var(--primary)!important}
+.bottom-nav.nav5.rd-open>.nv-x[data-tab="settings"]{color:color-mix(in srgb,var(--ink) 58%,transparent)!important}
 .bottom-nav.nav5 .nv-radio .ni svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 /* ترتيب الرئيسية من أول رسم، وإخفاء أي قسم قديم */
 @media (max-width:760px){

@@ -84,7 +84,7 @@ var prev=tsec&&tsec.parentNode===main?tsec:null;
 [ac,al].forEach(function(x){var want=prev?prev.nextSibling:main.firstChild;if(x!==want)main.insertBefore(x,want);prev=x});
 R.classList.add("home-v2")}
 function run(){nav();navState();order()}
-run();if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",run);(function(){var n=0,t=setInterval(function(){run();if(R.classList.contains("home-v2")||++n>40)clearInterval(t)},50)})();setTimeout(run,1200);setTimeout(run,3500);setInterval(function(){navState();nav()},1500);
+run();if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",run);(function(){var n=0,t=setInterval(function(){run();if(R.classList.contains("home-v2")||++n>40)clearInterval(t)},50)})();setTimeout(run,1200);setTimeout(run,3500);setInterval(function(){navState();nav()},1500);new MutationObserver(navState).observe(document.body,{childList:true});document.addEventListener("click",function(){setTimeout(navState,80);setTimeout(navState,400)},true);
 setInterval(function(){var a=document.getElementById("homeAlerts");a&&fillAlerts(a)},300000);
 })();
 /* المواقيت: زر إعدادات واحد يفتح «مواقيت الصلاة» مباشرة */
