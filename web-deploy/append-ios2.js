@@ -87,3 +87,8 @@ function run(){nav();navState();order()}
 run();if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",run);(function(){var n=0,t=setInterval(function(){run();if(R.classList.contains("home-v2")||++n>40)clearInterval(t)},50)})();setTimeout(run,1200);setTimeout(run,3500);setInterval(function(){navState();nav()},1500);
 setInterval(function(){var a=document.getElementById("homeAlerts");a&&fillAlerts(a)},300000);
 })();
+/* المواقيت: زر إعدادات واحد يفتح «مواقيت الصلاة» مباشرة */
+(function(){function isSet(b){var t=((b.getAttribute("aria-label")||"")+" "+(b.title||"")+" "+b.textContent).trim();return /إعداد|ضبط/.test(t)}
+function tidy(){var p=document.getElementById("prayer");if(!p)return;var seen=0;[].forEach.call(p.querySelectorAll("button,a"),function(b){if(!isSet(b))return;if(seen++)b.style.display="none";b.dataset.ptSet=1})}
+document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("#prayer [data-pt-set],#prayer button,#prayer a");if(!b||!isSet(b))return;e.preventDefault();e.stopImmediatePropagation();window.__openSettingsPage&&__openSettingsPage("st-prayer")},true);
+tidy();setTimeout(tidy,1500);document.addEventListener("click",function(e){if(e.target.closest&&e.target.closest('[href$="#prayer"],[data-tab="prayer"],[data-nav="prayer"]'))setTimeout(tidy,300)},true)})();
