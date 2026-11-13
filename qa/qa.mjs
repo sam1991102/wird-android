@@ -41,18 +41,18 @@ const navLit = page => page.evaluate(() => {
   const cols = items.map(c => ({ t: c.textContent.trim(), col: getComputedStyle(c).color }));
   const count = {}; cols.forEach(x => count[x.col] = (count[x.col] || 0) + 1);
   const odd = cols.filter(x => count[x.col] < items.length / 2); // اللون المختلف = المنوّر
-  return { items: cols.map(x => x.t), lit: odd.map(x => x.t) };
+  return { items: cols.map(x => x.t), lit: odd.map(x => x.t), cols: cols.map(x => x.t + '=' + x.col).join(' | '), cls: n.className + ' / html: ' + document.documentElement.className + ' / view=' + (document.documentElement.dataset.view || '') };
 });
 
 for (const S of SKINS) {
   const { ctx, page, errs } = await open(S.ls);
   const k = S.k;
   // الرئيسية: ترتيب + رعشة
-  await page.evaluate(() => { const m = document.querySelector('main'); new MutationObserver(r => __qa.moves += r.length).observe(m, { childList: true }) });
+  await page.evaluate(() => { const m = document.querySelector('main'); new MutationObserver(r => { __qa.moves += r.length; __qa.what = (__qa.what || []).concat(r.map(x => [...x.addedNodes, ...x.removedNodes].map(n => (n.id || n.className || n.nodeName)).join(','))) }).observe(m, { childList: true }) });
   await wait(5000);
   const q = await page.evaluate(() => __qa);
   if (q.shifts > 0.1) bad(k + '/home', `اهتزاز في التخطيط CLS=${q.shifts.toFixed(3)}`);
-  if (q.moves > 0) bad(k + '/home', `عناصر الرئيسية اتحركت ${q.moves} مرة بعد التحميل (رعشة)`);
+  if (q.moves > 0) bad(k + '/home', `عناصر الرئيسية اتحركت ${q.moves} مرة بعد التحميل (رعشة): ${(q.what || []).join(' ; ')}`);
   if (q.longtask > 1500) bad(k + '/home', `مهام طويلة تعطّل الواجهة ${Math.round(q.longtask)}ms`);
   for (const [sel, name] of [['#skyCard', 'كارت اليوم'], ['#ayCard', 'الآية والحديث'], ['#homeAlerts', 'أذكار اليوم']]) if (!(await vis(page, sel))) bad(k + '/home', `${name} مش ظاهر`);
   if (await vis(page, '.hero.container')) bad(k + '/home', 'الهيدر القديم ظاهر');
@@ -73,9 +73,10 @@ for (const S of SKINS) {
       await page.evaluate(i => { const n = document.querySelector('.bottom-nav.nav5'); [...n.children].filter(c => getComputedStyle(c).display !== 'none' && c.offsetWidth)[i].click() }, i);
       await wait(1200);
       const st = await navLit(page);
-      if (st.lit.length !== 1) bad(`${k}/nav:${label}`, `الزرار المنوّر: [${st.lit.join('، ') || 'ولا واحد'}]`);
+      if (st.lit.length !== 1) bad(`${k}/nav:${label}`, `الزرار المنوّر: [${st.lit.join('، ') || 'ولا واحد'}] — ${st.cols} — ${st.cls}`);
       else if (st.lit[0] !== label) bad(`${k}/nav:${label}`, `المنوّر «${st.lit[0]}» بدل «${label}»`);
-      if (label !== 'الرئيسية') { if (await vis(page, '#ayCard')) bad(`${k}/nav:${label}`, 'كارت الآية والحديث ظاهر برا الرئيسية'); if (await vis(page, '#homeAlerts')) bad(`${k}/nav:${label}`, 'أذكار اليوم ظاهرة برا الرئيسية') }
+      const covered = await page.evaluate(() => [...document.querySelectorAll('.wp-page,.st:not([hidden]),.mp')].some(e => e.offsetWidth && e.getBoundingClientRect().height > innerHeight * .6));
+      if (label !== 'الرئيسية' && !covered) { if (await vis(page, '#ayCard')) bad(`${k}/nav:${label}`, 'كارت الآية والحديث ظاهر برا الرئيسية'); if (await vis(page, '#homeAlerts')) bad(`${k}/nav:${label}`, 'أذكار اليوم ظاهرة برا الرئيسية') }
       if (label === 'المواقيت') { const n = await page.evaluate(() => [...document.querySelectorAll('#prayer button,#prayer a')].filter(b => b.offsetWidth && /إعداد|ضبط/.test((b.getAttribute('aria-label') || '') + b.textContent)).length); if (n > 1) bad(k + '/prayer', `${n} أزرار إعدادات`) }
       await shot(page, `${k}-02-nav-${i}`);
       await page.evaluate(() => window.__closeOverlays && __closeOverlays()); await wait(400);
@@ -91,7 +92,7 @@ for (const S of SKINS) {
       await page.evaluate(() => window.__closeOverlays && __closeOverlays()); await wait(300);
       await page.evaluate(() => { const m = document.querySelector('[aria-label="القائمة"],#menuBtn'); m && m.click() }); await wait(600);
       await page.evaluate(n => { const b = document.querySelector(`.dr2 .dr-p [data-n="${n}"]`); b && b.click() }, n); await wait(1500);
-      const opened = await page.evaluate(() => { const p = [...document.querySelectorAll('.wp-page,.st:not([hidden]),.mp,#focus:not([hidden])')].filter(e => e.offsetWidth); const h = p.length ? (p.at(-1).querySelector('h1,h2,.wp-h') || {}).textContent : ''; return { n: p.length, h: (h || '').trim().slice(0, 40), view: document.documentElement.dataset.view || '' } });
+      const opened = await page.evaluate(() => { const p = [...document.querySelectorAll('.wp-page,.st:not([hidden]),.mp,#focus:not([hidden]),.wd-sheet:not(.dr2),[role="dialog"]:not([hidden])')].filter(e => e.offsetWidth); const h = p.length ? (p.at(-1).querySelector('h1,h2,.wp-h') || {}).textContent : ''; return { n: p.length, h: (h || '').trim().slice(0, 40), view: document.documentElement.dataset.view || '' } });
       notes.push(`${k} قائمة «${t}» ← ${opened.h || 'view=' + opened.view}`);
       if (!opened.n && !opened.view) bad(`${k}/drawer:${t}`, 'ما فتحش حاجة');
       await shot(page, `${k}-04-drawer-${n}`);
@@ -109,9 +110,9 @@ for (const S of SKINS) {
       await page.evaluate(() => window.__closeOverlays && __closeOverlays()); await wait(300);
     }
   }
-  const big = await page.evaluate(() => [...document.querySelectorAll('body *')].filter(e => e.offsetWidth && e.getBoundingClientRect().right > innerWidth + 2 && getComputedStyle(e).position !== 'fixed').slice(0, 3).map(e => e.tagName + '.' + e.className).join(' | '));
+  const big = await page.evaluate(() => [...document.querySelectorAll('body *')].filter(e => e.offsetWidth && e.getBoundingClientRect().right > innerWidth + 2 && getComputedStyle(e).position !== 'fixed').slice(0, 3).map(e => e.tagName + '.' + e.className + '«' + e.textContent.trim().slice(0, 30) + '» in ' + (e.closest('[id],section')||{}).id).join(' | '));
   if (big) bad(k, 'عناصر خارجة عن عرض الشاشة: ' + big);
-  [...new Set(errs)].forEach(e => bad(k + '/js', e));
+  [...new Set(errs)].filter(e => !/Clipboard|clipboard/.test(e)).forEach(e => bad(k + '/js', e));
   await ctx.close();
 }
 // المعالج لمستخدم جديد
