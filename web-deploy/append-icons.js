@@ -8,5 +8,5 @@ function draw(){
  document.querySelectorAll(".bottom-nav.nav5 .nv-radio .ni").forEach(function(ic){if(ic.dataset.ph||!F.radio)return;var on=ic.parentNode.classList.contains("rd-on");ic.innerHTML=svg(on?F.radio:(R.radio||F.radio));ic.dataset.ph=1});
  var s=document.querySelector(".dr2 .dr-search");if(s&&!s.dataset.ph){var o=s.querySelector("svg");if(o){o.outerHTML=svg(R.search)}s.dataset.ph=1}
  document.querySelectorAll(".bottom-nav.nav5>[data-tab]").forEach(function(a){var k=a.dataset.tab,ni=a.querySelector(".ni");if(!ni||!R[k])return;var so=a.parentNode.classList.contains("st-on");var on=a.classList.contains("nv-x")?so:(!so&&(a.classList.contains("active")||a.hasAttribute("aria-current")));var w=on?"f":"r";if(ni.dataset.ph===k+w)return;ni.innerHTML=svg(on?F[k]:R[k]);ni.dataset.ph=k+w})}
-var mo=new MutationObserver(function(){clearTimeout(mo.t);mo.t=setTimeout(draw,150)});mo.observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:["class","aria-current"]});draw();
+var mo=new MutationObserver(function(){cancelAnimationFrame(mo.t);mo.t=requestAnimationFrame(draw)});mo.observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:["class","aria-current"]});draw();
 })();
