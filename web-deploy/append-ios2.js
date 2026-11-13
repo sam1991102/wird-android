@@ -33,3 +33,19 @@ var last="",seen=new WeakSet();function clr(){seen=new WeakSet();[].forEach.call
 function fix(){var k=R.className;if(k!==last){last=k;clr()}if(!R.classList.contains("ios")){[].forEach.call(document.querySelectorAll("[data-cfix]"),function(e){e.style.removeProperty("color");e.style.removeProperty("stroke");e.removeAttribute("data-cfix")});return}
 var roots=[].slice.call(document.querySelectorAll("main,.wp-page,.st,.wd-sheet,#focus"));roots.forEach(function(rt){if(rt.hidden||!rt.offsetParent&&getComputedStyle(rt).position!=="fixed")return;[].forEach.call(rt.querySelectorAll("*"),function(e){if(seen.has(e)||!e.getClientRects().length)return;seen.add(e);var isSvg=e.tagName.toLowerCase()==="svg";var txt=isSvg||[].some.call(e.childNodes,function(n){return n.nodeType===3&&n.textContent.trim()});if(!txt)return;var cs=getComputedStyle(e);var fg=rgb(isSvg?(cs.stroke!=="none"?cs.stroke:cs.fill):cs.color);if(!fg)return;var bg=bgOf(e);if(!bg||L(bg)>.25)return;if(cr(fg,bg)<3){e.style.setProperty("color","#fff","important");if(isSvg&&cs.stroke!=="none")e.style.setProperty("stroke","#fff","important");e.setAttribute("data-cfix","1")}})})}
 var t,lastRun=0;new MutationObserver(function(){if(t)return;var w=Math.max(250,1500-(Date.now()-lastRun));t=setTimeout(function(){t=0;lastRun=Date.now();fix()},w)}).observe(document.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:["class","hidden"]});setTimeout(fix,800)})();
+/* رئيسية أقصر: صف اختصارات + «المزيد» */
+(function(){var R=document.documentElement,K="wird-home-more";
+var I={radio:'<rect x="3" y="8" width="18" height="12" rx="3"/><path d="M7 8l9-5"/><circle cx="15.5" cy="14" r="2.5"/>',qibla:'<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>',kids:'<circle cx="12" cy="12" r="9"/><path d="M9 14.5c1.6 1.6 4.4 1.6 6 0M9 10h.01M15 10h.01"/>',tools:'<rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/>'};
+function more(){try{return localStorage.getItem(K)==="1"}catch(e){return false}}
+function setMore(v){try{localStorage.setItem(K,v?"1":"0")}catch(e){}R.classList.toggle("home-more",v);var b=document.querySelector('#homeQuick [data-q="tools"] .hq-t');if(b)b.textContent=v?"أقل":"المزيد";var m=document.querySelector('#homeQuick [data-q="tools"]');m&&m.setAttribute("aria-expanded",v?"true":"false")}
+function build(){if(document.getElementById("homeQuick"))return;var a=document.getElementById("rdTile")||document.getElementById("kidsTile")||document.getElementById("quranCard");if(!a||!a.parentNode)return;
+var d=document.createElement("div");d.id="homeQuick";
+[["radio","الإذاعة"],["qibla","القبلة"],["kids","الأطفال"],["tools","المزيد"]].forEach(function(x){var b=document.createElement("button");b.type="button";b.dataset.q=x[0];b.innerHTML='<span class="hq-ic"><svg viewBox="0 0 24 24" aria-hidden="true">'+I[x[0]]+'</svg></span><span class="hq-t">'+x[1]+'</span>';d.appendChild(b)});
+d.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;var q=b.dataset.q;
+if(q==="radio"){window.__openRadio&&__openRadio()}
+else if(q==="qibla"){window.__openQibla&&__openQibla()}
+else if(q==="kids"){var k=document.getElementById("kidsTile");k&&k.click()}
+else{setMore(!R.classList.contains("home-more"));if(R.classList.contains("home-more"))setTimeout(function(){d.scrollIntoView({block:"start",behavior:"smooth"})},60)}});
+a.parentNode.insertBefore(d,a.nextSibling);R.classList.add("home-short");setMore(more())}
+function keep(){build();var d=document.getElementById("homeQuick"),r=document.getElementById("rdTile");if(d&&r&&(d.compareDocumentPosition(r)&Node.DOCUMENT_POSITION_FOLLOWING))r.parentNode.insertBefore(d,r.nextSibling)}
+keep();setTimeout(keep,1200);setTimeout(keep,3500)})();

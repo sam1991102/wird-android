@@ -76,3 +76,19 @@ html{--mp-paper:#FBF8EF}html.sepia{--mp-paper:#F6EAD0}html.dark{--mp-paper:#0E14
 .mp .mp-bar{padding-top:6px!important;padding-bottom:6px!important}
 .mp .mp-foot{padding-top:6px!important;padding-bottom:max(6px,env(safe-area-inset-bottom,0px))!important}
 }
+/* خلفية سادة: إزالة زخرفة المحراب من خلف المحتوى */
+html,html.dark,html.sepia,html.ios{--mihrab:none!important;--orn:none!important}
+body::before,body::after,main::before,main::after{background-image:none!important;-webkit-mask-image:none!important;mask-image:none!important}
+/* رئيسية أقصر (موبايل): كارت اليوم + كمّل وِردك + كمّل القراءة + صف اختصارات، والباقي تحت «المزيد» */
+#homeQuick{display:none}
+@media (max-width:760px){
+html[data-view="home"] #homeQuick,html:not([data-view]) #homeQuick{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:12px 16px}
+#homeQuick button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-height:72px;padding:10px 4px;border-radius:16px;border:1px solid var(--line);background:var(--paper);color:var(--ink);font:inherit;font-size:12px;cursor:pointer}
+#homeQuick .hq-ic{display:flex;width:26px;height:26px;color:var(--primary)}
+html.dark:not(.ios) #homeQuick .hq-ic{color:var(--gold-2)}
+#homeQuick .hq-ic svg{width:26px!important;height:26px!important}
+#homeQuick .hq-ic svg:not(.ph){fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#homeQuick button:active{background:var(--line-2)}
+html.home-short #kidsTile,html.home-short #rdTile{display:none!important}
+html.home-short:not(.home-more) #homeQuick~section[data-v="home"]{display:none!important}
+}
