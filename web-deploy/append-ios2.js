@@ -56,7 +56,14 @@ items.forEach(function(r){o+='<button type="button" class="ha-t ha-'+r[3]+(r[0]=
 d.innerHTML=o+'</div>'}
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("#homeAlerts .ha-t");if(!b)return;if(b.dataset.sura){window.__openSurahN&&__openSurahN(+b.dataset.sura)}else{try{openFocus(b.dataset.cat)}catch(x){}}});
 /* 3) آية وحديث اليوم في كارت واحد بتبويبين */
-function findAy(main){return[].slice.call(main.children).filter(function(x){if(x.tagName!=="SECTION"||x.id==="homeAlerts")return false;if(x.classList.contains("ay"))return true;var hh=x.querySelector("h2,h3");return!!hh&&/(آية|حديث) اليوم/.test(hh.textContent)})}
+function findAy(main){var out=[];
+[].forEach.call(main.querySelectorAll('.hadith-day,section.ay,[class*="ayah-day"],[class*="aya-day"],h2,h3,.eyebrow'),function(el){
+ if(!el.classList.contains("hadith-day")&&!el.classList.contains("ay")&&!/day/.test(el.className)&&!/^\s*(آية|حديث) اليوم/.test(el.textContent))return;
+ var box=/^(H2|H3|P)$/.test(el.tagName)?(el.closest(".card,[class*='-card'],section,aside")||el.parentNode):el;
+ if(box===main||box.closest("#homeAlerts,#ayTabs,.today-card,#skyCard,#library,#favoritesSection,#prayer,#surahs,#tasbih,#stats,#mushafView,.wp-page"))return;
+ if(box.parentNode!==main){var top=box.closest("main>*");if(top&&top!==box&&!top.classList.contains("hero")&&!top.querySelector(".today-card"))box=top;else main.appendChild(box)}
+ if(out.indexOf(box)<0&&!out.some(function(o){return o.contains(box)}))out.push(box)});
+return out}
 function tabs(list){var w=document.getElementById("ayTabs");if(w||list.length<2)return;w=document.createElement("div");w.id="ayTabs";w.className="container ay-tabs";w.setAttribute("role","tablist");
 list.forEach(function(sec,i){var hh=sec.querySelector("h2,h3");var name=/حديث/.test(hh?hh.textContent:"")?"حديث اليوم":"آية اليوم";var b=document.createElement("button");b.type="button";b.setAttribute("role","tab");b.textContent=name;b.onclick=function(){list.forEach(function(x,k){x.classList.toggle("ay-hide",k!==i)});[].forEach.call(w.children,function(c,k){c.setAttribute("aria-selected",String(k===i))})};w.appendChild(b)});
 list[0].parentNode.insertBefore(w,list[0]);w.firstChild.click()}
