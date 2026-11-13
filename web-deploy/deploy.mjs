@@ -55,7 +55,7 @@ const upsert = (file, mark, text) => {
   const re = /\n\/\*[a-z0-9-]+\*\//g; re.lastIndex = i + mark.length; const mm = re.exec(s); const end = mm ? mm.index : s.length;
   const old = s.slice(start, end);
   if (old.trim() === text.trim()) return log.push(`${file}: ${mark} same`);
-  F[file][1] = s.slice(0, start) + text.replace(/\n$/, '') + s.slice(end); log.push(`${file}: ~ ${mark}`);
+  F[file][1] = s.slice(0, start) + text.replace(/\n$/, '') + s.slice(end); log.push(`${file}: ~ ${mark} (${old.trim().length} -> ${text.trim().length}, at ${i}, count ${s.split(mark).length - 1})`);
 };
 
 // 2) التعديلات
