@@ -35,10 +35,10 @@ public class MainActivity extends BridgeActivity {
         }
         if (path == null) return;
         i.removeExtra("wird_path");
-        final String p = path.replace("'", "");
+        final String q = org.json.JSONObject.quote(path); // نص JS آمن (يمنع حقن كود عبر Intent)
         WebView wv = getBridge() != null ? getBridge().getWebView() : null;
         if (wv == null) return;
-        String js = "(function(){var p='" + p + "';var h=p.indexOf('#')>=0?p.slice(p.indexOf('#')):'';var b=p.split('#')[0]||'/';"
+        String js = "(function(){var p=" + q + ";var h=p.indexOf('#')>=0?p.slice(p.indexOf('#')):'';var b=p.split('#')[0]||'/';"
                 + "if(location.pathname===b&&h){if(location.hash===h)dispatchEvent(new HashChangeEvent('hashchange'));else location.hash=h;}"
                 + "else location.href=b+(b.indexOf('?')<0?'?app=android':'')+h;})()";
         wv.postDelayed(() -> wv.evaluateJavascript(js, null), delay);

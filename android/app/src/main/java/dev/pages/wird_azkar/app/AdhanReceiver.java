@@ -38,8 +38,12 @@ public class AdhanReceiver extends BroadcastReceiver {
         if (kind.equals("adhan") || kind.equals("alarm")) {
             Intent svc = new Intent(c, AdhanService.class);
             svc.putExtra("ev", raw);
-            if (Build.VERSION.SDK_INT >= 26) c.startForegroundService(svc); else c.startService(svc);
-            return;
+            try {
+                if (Build.VERSION.SDK_INT >= 26) c.startForegroundService(svc); else c.startService(svc);
+                return;
+            } catch (Exception e) {
+                // النظام منع تشغيل الخدمة من الخلفية (منبه غير دقيق على أندرويد 12+): نكمل بإشعار عادي بدل الانهيار
+            }
         }
 
         // plain reminder (azkar, khatma, fasting …)
