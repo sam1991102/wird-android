@@ -104,6 +104,8 @@ upsert('ui.js', '/*laps*/', fs.readFileSync(here + 'append-laps.js', 'utf8'));
 upsert('styles.css', '/*laps*/', fs.readFileSync(here + 'append-laps.css', 'utf8'));
 upsert('ui.js', '/*setup*/', fs.readFileSync(here + 'append-setup.js', 'utf8'));
 upsert('styles.css', '/*setup*/', fs.readFileSync(here + 'append-setup.css', 'utf8'));
+upsert('ui.js', '/*nav2*/', fs.readFileSync(here + 'append-nav.js', 'utf8'));
+upsert('styles.css', '/*nav2*/', fs.readFileSync(here + 'append-nav.css', 'utf8'));
 F['sw.js'][1] = F['sw.js'][1].replace(/wird-v\d+/, 'wird-v' + ver);
 log.push('sw.js: wird-v' + ver);
 console.log(log.join('\n'));

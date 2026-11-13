@@ -24,10 +24,7 @@ html.ios .dr-logo{filter:brightness(0)}html.ios.dark .dr-logo{filter:brightness(
 .bottom-nav.nav5 .ni{position:static!important;transform:none!important;width:28px!important;height:26px!important;margin:0!important;padding:0!important;border-radius:0!important;background:none!important;box-shadow:none!important;display:flex;align-items:center;justify-content:center;color:inherit!important}
 .bottom-nav.nav5 .ni svg{width:25px!important;height:25px!important;stroke:currentColor!important;color:currentColor!important;stroke-width:1.7}
 .bottom-nav.nav5 .nt{position:static!important;font-size:10px!important;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
-.bottom-nav.nav5>.active,.bottom-nav.nav5>[aria-current]{color:var(--primary)!important}
-.bottom-nav.nav5>.active .nt,.bottom-nav.nav5>[aria-current] .nt{font-weight:600}
 .bottom-nav.nav5>.active::before,.bottom-nav.nav5>.active::after,.bottom-nav.nav5>[aria-current]::before{display:none!important}
-.bottom-nav.nav5>.active .ni svg{stroke-width:2.1}
 @media (max-width:760px){
 .bottom-nav.nav5{position:fixed!important;left:0!important;right:0!important;bottom:0!important;margin:0!important;width:auto!important;max-width:none!important;border-radius:0!important;box-shadow:none!important;border:0!important;border-top:.5px solid var(--line)!important;padding:6px 4px max(6px,env(safe-area-inset-bottom,0px))!important;z-index:2147483100!important;-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%)}
 html.nav-off .bottom-nav.nav5{display:none!important}
@@ -35,12 +32,9 @@ html:not(.nav-off) .wp-page,html:not(.nav-off) .st,html:not(.nav-off) .wd-sheet:
 html:not(.nav-off) .wp-page,html:not(.nav-off) .st{height:auto!important;max-height:none!important}
 .wd-sheet.dr2{z-index:2147483300!important}
 }
-.bottom-nav.nav5.st-on>a.active{color:var(--muted)!important}.bottom-nav.nav5.st-on>a.active .nt{font-weight:400}.bottom-nav.nav5.st-on:not(.rd-open)>.nv-x[data-tab="settings"]{color:var(--primary)!important}.bottom-nav.nav5.st-on:not(.rd-open)>.nv-x[data-tab="settings"] .nt{font-weight:600}
 html:not(.dark) .dr2 .wd-x,html:not(.dark) .dr2 [data-x]{color:var(--ink)!important;background:var(--paper)!important;border:.5px solid var(--line)!important}
 html:not(.dark) .dr2 .wd-x svg,html:not(.dark) .dr2 [data-x] svg{stroke:currentColor!important}
 html:not(.dark) .dr2 .dr-np small,html:not(.dark) .dr2 .dr-brand small,html:not(.dark) .dr2 .dr-ft,html:not(.dark) .dr2 .dr-ft a,html:not(.dark) .dr2 .dr-ver{color:color-mix(in srgb,var(--ink) 60%,transparent)!important}
-html:not(.dark) .bottom-nav.nav5>a:not(.active),html:not(.dark) .bottom-nav.nav5>.nv-x{color:color-mix(in srgb,var(--ink) 58%,transparent)!important}
-html:not(.dark) .bottom-nav.nav5.st-on:not(.rd-open)>.nv-x[data-tab="settings"]{color:var(--primary)!important}
 html .bottom-nav.nav5,html.ios .bottom-nav.nav5,html.ios.dark .bottom-nav.nav5,html.ios.sepia .bottom-nav.nav5,html.sepia .bottom-nav.nav5,html.dark .bottom-nav.nav5{background:var(--paper)!important}
 html.ios .topbar .icon-btn{color:var(--primary)!important;background:transparent!important;border-color:transparent!important}
 html.ios .topbar .icon-btn svg{stroke:currentColor!important;color:currentColor!important}
@@ -101,9 +95,6 @@ html.dark .ha-sun .ha-ic{background:rgba(226,194,127,.16);color:#E2C27F}html.dar
 #homeAlerts .ha-t.is-now{background:var(--primary);border-color:var(--primary);color:#fff}
 #homeAlerts .ha-t.is-now small{color:rgba(255,255,255,.85);font-weight:700}
 #homeAlerts .ha-t.is-now .ha-ic{background:rgba(255,255,255,.18);color:#fff}
-.bottom-nav.nav5.rd-open>a.active{color:var(--muted)!important}
-.bottom-nav.nav5 .nv-radio.rd-on,html:not(.dark) .bottom-nav.nav5>.nv-radio.rd-on{color:var(--primary)!important}
-.bottom-nav.nav5.rd-open>.nv-x[data-tab="settings"]{color:color-mix(in srgb,var(--ink) 58%,transparent)!important}
 .bottom-nav.nav5 .nv-radio .ni svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 /* ترتيب الرئيسية من أول رسم، وإخفاء أي قسم قديم */
 @media (max-width:760px){
@@ -124,9 +115,4 @@ html.dark:not(.ios) #homeAlerts .ha-t.is-now{background:var(--paper);color:var(-
 html.dark:not(.ios) #homeAlerts .ha-t.is-now small{color:var(--gold-2,var(--primary))}
 html.dark:not(.ios) #homeAlerts .ha-t.is-now .ha-ic{background:rgba(226,194,127,.16);color:var(--gold-2,#E2C27F)}
 html[data-view]:not([data-view="home"]) #ayCard,html[data-view]:not([data-view="home"]) #homeAlerts{display:none!important}
-/* الشريط السفلي: لون واحد لكل الأزرار غير النشطة، وزر واحد فقط منوّر */
-.bottom-nav.nav5{--nav-off:color-mix(in srgb,var(--ink) 58%,transparent)}
-.bottom-nav.nav5>a:not(.active),.bottom-nav.nav5>.nv-x,.bottom-nav.nav5.st-on>a.active,.bottom-nav.nav5.rd-open>a.active,html:not(.dark) .bottom-nav.nav5>a:not(.active),html:not(.dark) .bottom-nav.nav5>.nv-x{color:var(--nav-off)!important}
-.bottom-nav.nav5.st-on:not(.rd-open)>.nv-x[data-tab="settings"],.bottom-nav.nav5>.nv-radio.rd-on,html:not(.dark) .bottom-nav.nav5.st-on:not(.rd-open)>.nv-x[data-tab="settings"],html:not(.dark) .bottom-nav.nav5>.nv-radio.rd-on{color:var(--primary)!important}
-html.dark:not(.ios) .bottom-nav.nav5.st-on:not(.rd-open)>.nv-x[data-tab="settings"],html.dark:not(.ios) .bottom-nav.nav5>.nv-radio.rd-on{color:var(--gold-2,var(--primary))!important}
 #skyCard{overflow:hidden}
