@@ -119,3 +119,5 @@ html.dark:not(.ios) #homeAlerts .ha-t.is-now small{color:var(--gold-2,var(--prim
 html.dark:not(.ios) #homeAlerts .ha-t.is-now .ha-ic{background:rgba(226,194,127,.16);color:var(--gold-2,#E2C27F)}
 html[data-view]:not([data-view="home"]) #ayCard,html[data-view]:not([data-view="home"]) #homeAlerts{display:none!important}
 #skyCard{overflow:hidden}
+/* شريط «الصلاة القادمة» يظهر فورًا بدون حركة تزق الصفحة */
+.topbar,.topbar *{transition:none!important;animation:none!important}
