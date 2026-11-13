@@ -3,9 +3,13 @@
 var AR="٠١٢٣٤٥٦٧٨٩";function toEn(s){return String(s).replace(/[٠-٩]/g,function(d){return AR.indexOf(d)})}function ar(n){return String(n).replace(/\d/g,function(d){return AR[d]})}
 /* 1) الضغط على عدّاد الأشواط لا يرجع الصفحة لأولها */
 var keep=null;
-document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest(".wp-lap,.wp-lr,.wp-chk,.wp-page [data-tab],.wp-page .tl-b");if(!b)return;var p=b.closest(".wp-page");if(!p)return;
-var h=p.querySelector(".wp-h h1");keep={t:h?h.textContent:"",y:p.scrollTop,at:Date.now()}},true);
-new MutationObserver(function(ms){if(!keep||Date.now()-keep.at>1500)return;ms.forEach(function(m){[].forEach.call(m.addedNodes,function(n){if(!n.classList||!n.classList.contains("wp-page"))return;var h=n.querySelector(".wp-h h1");if(keep&&h&&h.textContent===keep.t){n.classList.add("in","wp-noanim");var y=keep.y;n.scrollTop=y;requestAnimationFrame(function(){n.scrollTop=y;setTimeout(function(){n.scrollTop=y;n.classList.remove("wp-noanim")},60)});keep=null}})})}).observe(document.body,{childList:true});
+function scroller(p){var best=p,bt=p.scrollTop;[].forEach.call(p.querySelectorAll("*"),function(e){if(e.scrollTop>bt){best=e;bt=e.scrollTop}});return best}
+function restore(n){if(!keep)return;var k=keep;function go(){var el=n;if(k.cls&&k.cls!==n.className){var c=n.querySelector("."+k.cls.trim().split(/\s+/).join("."));if(c)el=c}el.scrollTop=k.y;if(k.win)window.scrollTo(0,k.win)}
+n.classList.add("in","wp-noanim");go();requestAnimationFrame(go);[40,120,250,500].forEach(function(t){setTimeout(go,t)});setTimeout(function(){n.classList.remove("wp-noanim")},600)}
+document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest(".wp-lap,.wp-lr,.wp-chk,.wp-page [data-tab],.wp-page .tl-b,.wp-page button");if(!b||b.closest(".lp-ov"))return;var p=b.closest(".wp-page");if(!p)return;
+var sc=scroller(p);keep={y:sc.scrollTop,cls:sc===p?"":sc.className,win:window.scrollY,at:Date.now(),old:p};
+setTimeout(function(){if(keep&&keep.old&&document.body.contains(keep.old)){keep=null}},700)},true);
+new MutationObserver(function(ms){if(!keep||Date.now()-keep.at>1500)return;ms.forEach(function(m){[].forEach.call(m.addedNodes,function(n){if(keep&&n.classList&&n.classList.contains("wp-page")&&n!==keep.old){restore(n);keep=null}})})}).observe(document.body,{childList:true});
 /* 2) وضع العدّ بملء الشاشة */
 function info(box){var lab=[].find.call(box.querySelectorAll("*"),function(e){return!e.children.length&&/[0-9٠-٩]+\s*\/\s*[0-9٠-٩]+/.test(e.textContent)});var m=lab?toEn(lab.textContent).match(/(\d+)\s*\/\s*(\d+)/):null;var li=box.closest("li")||box.parentElement;var t=li?(li.querySelector("strong,b,h3,h4")||{}).textContent||"":"";var all=li?li.textContent:"";return{n:m?+m[1]:0,tot:m?+m[2]:7,title:(t||"الأشواط").trim(),sai:/سعي|الصفا|المروة/.test(t+" "+all)&&!/طواف/.test(t)}}
 var ov,wake,cur;
