@@ -139,10 +139,14 @@ if (DRY) process.exit(0);
 }
 // 4) Pages wird-azkar
 {
-  const fd = new FormData();
-  fd.append('manifest', fs.readFileSync(here + 'assets.json', 'utf8'));
-  fd.append('branch', 'main');
-  fd.append('_worker.js', new Blob([out], { type: 'application/javascript+module' }), '_worker.js');
-  const r = await cf('/pages/projects/wird-azkar/deployments', { method: 'POST', body: fd });
+  let r;
+  for (let a = 1; ; a++) { // نعيد المحاولة عند أعطال Cloudflare المؤقتة (503 / 10013)
+    const fd = new FormData();
+    fd.append('manifest', fs.readFileSync(here + 'assets.json', 'utf8'));
+    fd.append('branch', 'main');
+    fd.append('_worker.js', new Blob([out], { type: 'application/javascript+module' }), '_worker.js');
+    try { r = await cf('/pages/projects/wird-azkar/deployments', { method: 'POST', body: fd }); break; }
+    catch (e) { if (a >= 5 || !/10013|5\d\d|upstream/.test(String(e.message))) throw e; console.log(`pages upload failed (try ${a}): ${e.message.slice(0, 120)} — retrying in ${a * 20}s`); await new Promise(z => setTimeout(z, a * 20000)); }
+  }
   console.log('pages: deployed', r.url || r.id);
 }
