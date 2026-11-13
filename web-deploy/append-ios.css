@@ -19,7 +19,6 @@ html.ios .sk-bg *{color:#fff}html.ios .sk-next{color:#fff!important;background:r
 html.ios .dy-card,html.ios .daily-card,html.ios .stat,html.ios #quranCard,html.ios #kidsTile,html.ios #nextd{border:0!important;box-shadow:none!important;border-radius:14px!important}
 html.ios .bottom-nav{background:rgba(249,249,249,.86)!important;-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);border-top:.5px solid var(--line)!important;box-shadow:none!important}
 html.ios.dark .bottom-nav{background:rgba(22,22,24,.86)!important}
-html.ios .bottom-nav [aria-current],html.ios .bottom-nav .on,html.ios .bottom-nav .active{color:var(--primary)!important}
 html.ios body::before,html.ios body::after{display:none}
 .skin-seg{display:flex;gap:6px;margin-top:6px}.skin-seg button{flex:1;padding:9px 0;border-radius:12px;border:1px solid var(--line);background:var(--paper-2);color:var(--ink);font:inherit;cursor:pointer}.skin-seg button[aria-checked=true]{background:var(--primary);color:#fff;border-color:transparent}
 /* نمط أبل: عناوين كبيرة، مفاتيح iOS، أزرار مقسومة */

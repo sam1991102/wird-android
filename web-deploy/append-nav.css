@@ -1,8 +1,8 @@
 /*nav2*/
-html body .bottom-nav.nav5>a,html body .bottom-nav.nav5>.nv-x{color:color-mix(in srgb,var(--ink) 55%,transparent)!important}
-html body .bottom-nav.nav5>a .nt,html body .bottom-nav.nav5>.nv-x .nt{font-weight:400}
-html body .bottom-nav.nav5>.is-lit{color:var(--primary)!important}
+html body .bottom-nav.nav5.nav5>a,html body .bottom-nav.nav5.nav5>.nv-x{color:color-mix(in srgb,var(--ink) 55%,transparent)!important}
+html body .bottom-nav.nav5.nav5>a .nt,html body .bottom-nav.nav5.nav5>.nv-x .nt{font-weight:400}
+html body .bottom-nav.nav5.nav5>.is-lit{color:var(--primary)!important}
 html.dark:not(.ios) body .bottom-nav.nav5>.is-lit{color:var(--gold-2,var(--primary))!important}
-html body .bottom-nav.nav5>.is-lit .nt{font-weight:700}
-html body .bottom-nav.nav5>.is-lit .ni svg{stroke-width:2.1}
+html body .bottom-nav.nav5.nav5>.is-lit .nt{font-weight:700}
+html body .bottom-nav.nav5.nav5>.is-lit .ni svg{stroke-width:2.1}
 html.nav-fast *,html.nav-fast *::before,html.nav-fast *::after{transition:none!important;animation:none!important}

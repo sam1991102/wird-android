@@ -116,7 +116,7 @@ for (const S of SKINS) {
       await page.evaluate(() => window.__closeOverlays && __closeOverlays()); await wait(300);
     }
   }
-  const big = await page.evaluate(() => [...document.querySelectorAll('body *')].filter(e => e.offsetWidth && e.getBoundingClientRect().right > innerWidth + 2 && getComputedStyle(e).position !== 'fixed').slice(0, 3).map(e => e.tagName + '.' + e.className + '«' + e.textContent.trim().slice(0, 30) + '» in ' + (e.closest('[id],section')||{}).id).join(' | '));
+  const big = await page.evaluate(() => [...document.querySelectorAll('body *')].filter(e => { if (!e.offsetWidth || e.getBoundingClientRect().right <= innerWidth + 2 || getComputedStyle(e).position === 'fixed') return false; for (let a = e.parentElement; a && a !== document.body; a = a.parentElement) { const o = getComputedStyle(a).overflowX; if (o !== 'visible' && a.getBoundingClientRect().right <= innerWidth + 2) return false } return true }).slice(0, 3).map(e => e.tagName + '.' + e.className + '«' + e.textContent.trim().slice(0, 30) + '» in ' + (e.closest('[id],section')||{}).id).join(' | '));
   if (big) bad(k, 'عناصر خارجة عن عرض الشاشة: ' + big);
   [...new Set(errs)].filter(e => !/Clipboard|clipboard/.test(e)).forEach(e => bad(k + '/js', e));
   await ctx.close();

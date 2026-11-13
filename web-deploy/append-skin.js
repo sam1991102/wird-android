@@ -9,4 +9,4 @@ new MutationObserver(add).observe(document.body,{childList:true,subtree:false});
 })();
 (function(){var R=document.documentElement;function btn(t){var s=document.getElementById("st-look");if(!s)return null;return[].find.call(s.querySelectorAll("button"),function(b){return b.textContent.trim()===t})}
 function fix(){var p=btn("ورقي");if(p)p.classList.add("m-sepia");if(R.classList.contains("ios")&&R.classList.contains("sepia")){var l=btn("فاتح");if(l){l.click()}else{R.classList.remove("sepia");try{localStorage.setItem("wird-sepia","false")}catch(e){}}}}
-setInterval(fix,500);fix()})();
+new MutationObserver(fix).observe(document.body,{childList:true});new MutationObserver(fix).observe(R,{attributes:true,attributeFilter:["class"]});fix()})();
