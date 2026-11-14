@@ -1,0 +1,75 @@
+
+
+(function(){
+ const T=m=>typeof toast==="function"&&toast(m);const esc=t=>String(t).replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[m]);
+ const short=k=>{const Q=window.__QARI||{};const n=(Q[k]&&Q[k][0])||"القارئ";const mj=/\(/.test(n);const base=n.replace(/\s*\(.*$/,"").trim();const w=base.split(" ");const s=/^عبد\s/.test(base)?w.slice(0,2).join(" "):w[w.length-1];return s+(mj?" مجوّد":"")};
+ const pick=()=>{const Q=window.__QARI;if(!Q)return;const cur=window.__qk?__qk():"ar.alafasy";document.querySelectorAll(".qr-sheet").forEach(x=>x.remove());const s=document.createElement("div");s.className="wd-sheet qr-sheet";s.setAttribute("role","dialog");s.setAttribute("aria-modal","true");
+  s.innerHTML='<div class="wd-card"><button type="button" class="wd-x" data-x aria-label="إغلاق">×</button><div class="tl-h">اختر القارئ</div><div class="qr-list">'+Object.entries(Q).map(([k,v])=>'<button type="button" class="qr-i'+(k===cur?" on":"")+'" data-k="'+k+'"><span>'+esc(v[0])+'</span>'+(k===cur?'<b>✓</b>':'')+'</button>').join("")+'</div></div>';
+  s.addEventListener("click",e=>{if(e.target===s||e.target.closest("[data-x]")){s.hidden=true;setTimeout(()=>s.remove(),50);return}const b=e.target.closest("[data-k]");if(!b)return;try{localStorage.setItem("wird-qari",JSON.stringify(b.dataset.k))}catch(x){}s.hidden=true;setTimeout(()=>s.remove(),50);const sel=document.getElementById("qariSel");if(sel)sel.value=b.dataset.k;document.querySelectorAll(".r-qari span").forEach(x=>x.textContent=short(b.dataset.k));window.__mpReplay&&__mpReplay();T("القارئ: "+Q[b.dataset.k][0])});document.body.appendChild(s)};
+ window.__pickQari=pick;
+ const add=()=>{const p=document.querySelector(".mp .r-play");if(!p||p.parentElement.querySelector(".r-qari"))return;const b=document.createElement("button");b.type="button";b.className="r-qari";b.setAttribute("aria-label","اختيار القارئ");b.innerHTML='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3z"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span>'+esc(short(window.__qk?__qk():"ar.alafasy"))+'</span>';b.onclick=e=>{e.stopPropagation();pick()};p.after(b)};
+ add();new MutationObserver(()=>{clearTimeout(add.t);add.t=setTimeout(add,150)}).observe(document.body,{childList:true,subtree:true});
+})();
+
+(function(){
+ const T=m=>typeof toast==="function"&&toast(m);const ar=__ar;
+ const J=(k,v)=>{try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||"null");localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}};
+ const AS=()=>Object.assign({on:false,off:0,after:0},J("wird-alarm")||{});
+ const fajrAt=k=>{try{const d=prayerDay(k);const {t,L}=d;const base=Date.UTC(L.y,L.m-1,L.d);return Math.round(base+(t.fajr-L.off)*3600e3)}catch(e){return NaN}};
+ window.__alarmEvents=days=>{const s=AS();if(!s.on)return[];const out=[];for(let k=0;k<(days||7);k++){const f=fajrAt(k);if(!isFinite(f))continue;out.push({t:f-s.off*60e3,title:"⏰ منبّه الفجر",body:s.off?"باقي "+ar(s.off)+" دقيقة على أذان الفجر — قم وتوضّأ":"حان وقت صلاة الفجر — الصلاة خير من النوم",tag:"alarm-fajr",url:"/?alarm=1#prayer"});if(s.after>0)out.push({t:f+s.after*60e3,title:"⏰ تذكير: صلاة الفجر",body:"مضى "+ar(s.after)+" دقيقة على أذان الفجر — لا تفوّتك الصلاة قبل الشروق",tag:"alarm-fajr2",url:"/?alarm=1#prayer"})}return out};
+ const resync=()=>{try{window.__wirdPush&&__wirdPush.sync&&__wirdPush.sync()}catch(e){}};
+ /* شاشة المنبّه */
+ let au=null,ctx=null,osc=null,snzT=null;
+ const stopSound=()=>{try{au&&au.pause()}catch(e){}try{osc&&osc.stop()}catch(e){}osc=null;try{navigator.vibrate&&navigator.vibrate(0)}catch(e){}};
+ const beep=()=>{try{ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();const o=ctx.createOscillator(),g=ctx.createGain();o.type="sine";o.frequency.value=880;g.gain.value=0;o.connect(g);g.connect(ctx.destination);const t=ctx.currentTime;for(let i=0;i<600;i++){g.gain.setValueAtTime(.25,t+i*1.2);g.gain.setValueAtTime(0,t+i*1.2+.5)}o.start();osc=o}catch(e){}};
+ const play=()=>{let src="";try{const S=JSON.parse(localStorage.getItem("wird-push")||"{}");const A=window.__ADHANS||{};src=(A[S.sound]&&A[S.sound].u)||""}catch(e){}if(src){au=au||new Audio();au.src=src;au.loop=true;return au.play().catch(()=>{beep();return Promise.reject()})}beep();return Promise.resolve()};
+ const showAlarm=()=>{if(document.querySelector(".al-ov"))return;const o=document.createElement("div");o.className="al-ov wd-sheet";o.setAttribute("role","alertdialog");o.setAttribute("aria-modal","true");const now=new Date();
+  o.innerHTML='<div class="al-in"><div class="al-time">'+ar(now.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"}))+'</div><div class="al-t">منبّه الفجر</div><p class="al-p">الصلاة خير من النوم</p><button type="button" class="btn al-play" hidden>تشغيل الصوت</button><button type="button" class="btn al-up">استيقظت ✓</button><button type="button" class="btn btn-ghost al-snz">غفوة ١٠ دقائق</button></div>';
+  document.body.appendChild(o);try{navigator.vibrate&&navigator.vibrate([800,300,800,300,800,300,800])}catch(e){}
+  play().catch(()=>{o.querySelector(".al-play").hidden=false});
+  o.querySelector(".al-play").onclick=e=>{e.target.hidden=true;play()};
+  o.querySelector(".al-up").onclick=()=>{stopSound();o.remove();T("تقبّل الله صلاتك")};
+  o.querySelector(".al-snz").onclick=()=>{stopSound();o.remove();clearTimeout(snzT);snzT=setTimeout(showAlarm,10*60e3);try{navigator.serviceWorker.ready.then(r=>r.pushManager.getSubscription()).then(s=>s&&fetch("/api/alarm/snooze",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({endpoint:s.endpoint,min:10})}))}catch(e){}T("سيرنّ المنبّه بعد ١٠ دقائق")}};
+ window.__showAlarm=showAlarm;
+ if(/[?&]alarm=1/.test(location.search)){try{const u=new URL(location.href);u.searchParams.delete("alarm");history.replaceState(history.state,"",u.pathname+u.search+u.hash)}catch(e){}setTimeout(showAlarm,600)}
+ /* داخل التطبيق: إن كان مفتوحًا وقت المنبّه */
+ let fired=J("wird-alarm-fired")||0;setInterval(()=>{const s=AS();if(!s.on)return;const now=Date.now();for(const f of [fajrAt(0)-s.off*60e3].concat(s.after>0?[fajrAt(0)+s.after*60e3]:[])){if(now>=f&&now-f<90e3&&fired!==f){fired=f;J("wird-alarm-fired",f);showAlarm();break}}},15e3);
+ navigator.serviceWorker&&navigator.serviceWorker.addEventListener("message",e=>{if(e.data&&e.data.type==="alarm")showAlarm()});
+ /* الإعدادات */
+ const addSet=()=>{const ad=document.querySelector("#st-adhan");if(!ad||document.querySelector("#st-alarm"))return;const s=AS();const sec=document.createElement("section");sec.className="st-sec";sec.id="st-alarm";
+  sec.innerHTML='<h2><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="7.5"/><path d="M12 9.5V13l2.2 1.6M4.5 5.5 7 3.5M19.5 5.5 17 3.5"/></svg>منبّه الفجر</h2><p class="st-note">ينبّهك بإشعار مستمر يهتز حتى تستيقظ، مع زر غفوة. ويرنّ بصوت الأذان المختار إذا كان التطبيق مفتوحًا. يحتاج تفعيل الإشعارات.</p><div class="st-row"><div class="st-l"><strong>تفعيل منبّه الفجر</strong></div><div class="st-c"><label class="st-sw"><input type="checkbox" id="alOn"'+(s.on?" checked":"")+'><span></span></label></div></div><div class="st-row"><div class="st-l"><strong>موعد التنبيه</strong></div><div class="st-c"><select id="alOff">'+[[0,"عند أذان الفجر"],[10,"قبل الأذان بـ١٠ دقائق"],[20,"قبل الأذان بـ٢٠ دقيقة"],[30,"قبل الأذان بنصف ساعة"],[45,"قبل الأذان بـ٤٥ دقيقة"],[60,"قبل الأذان بساعة (قيام الليل)"]].map(([v,l])=>'<option value="'+v+'"'+(s.off===v?" selected":"")+'>'+l+'</option>').join("")+'</select></div></div><div class="st-row"><div class="st-l"><strong>تنبيه ثانٍ بعد الأذان</strong><small>إن لم تستيقظ من الأول</small></div><div class="st-c"><select id="alAfter">'+[[0,"بدون"],[10,"بعد الأذان بـ١٠ دقائق"],[15,"بعد الأذان بـ١٥ دقيقة"],[20,"بعد الأذان بـ٢٠ دقيقة"],[30,"بعد الأذان بنصف ساعة"]].map(([v,l])=>'<option value="'+v+'"'+(s.after===v?" selected":"")+'>'+l+'</option>').join("")+'</select></div></div><div class="st-row"><div class="st-c"><button type="button" class="btn btn-ghost btn-sm" id="alTest">تجربة المنبّه</button></div></div>';
+  const after=document.querySelector("#st-dr")||ad;after.after(sec);
+  sec.addEventListener("change",e=>{const s=AS();if(e.target.id==="alOn"){s.on=e.target.checked;J("wird-alarm",s);resync();if(s.on){const p=window.__wirdPush&&__wirdPush.state&&__wirdPush.state();T(p&&!p.on?"فعّل الإشعارات أولًا من قسم الأذان والتنبيهات":"تم تفعيل منبّه الفجر")}else T("تم إيقاف منبّه الفجر")}else if(e.target.id==="alOff"||e.target.id==="alAfter"){s[e.target.id==="alOff"?"off":"after"]=+e.target.value;J("wird-alarm",s);resync();T("تم الحفظ")}});
+  sec.querySelector("#alTest").onclick=()=>showAlarm()};
+ addSet();new MutationObserver(()=>{clearTimeout(addSet.t);addSet.t=setTimeout(addSet,150)}).observe(document.body,{childList:true,subtree:true});
+})();
+
+(function(){
+ const $=s=>document.querySelector(s),T=m=>typeof toast==="function"&&toast(m);
+ const I=p=>'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+p+'</svg>';
+ const IC={qibla:'<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/>',hijri:'<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>',alarm:'<circle cx="12" cy="13" r="7.5"/><path d="M12 9.5V13l2.2 1.6M4.5 5.5 7 3.5M19.5 5.5 17 3.5"/>',khatma:'<path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="m9.5 11 2 2 3.5-4"/>',bm:'<path d="M6 3.5h12V21l-6-4-6 4z"/>',hajj:'<path d="M4 7.5 12 4l8 3.5v10L12 21l-8-3.5z"/><path d="M4 7.5 12 11l8-3.5M12 11v10"/>',names:'<path d="M12 3.5 14.4 9l5.9.5-4.5 3.9 1.4 5.8L12 16.1l-5.2 3.1 1.4-5.8L3.7 9.5 9.6 9z"/>'};
+ const openAlarm=()=>{window.__openSettingsPage&&__openSettingsPage("st-alarm")};window.__openAlarm=openAlarm;
+ const goKh=()=>{__wirdGo("mushaf");setTimeout(()=>{const k=$("#mushafView .kh");k&&k.scrollIntoView({block:"start",behavior:"smooth"})},300)};
+ const chip=(k,l,fn)=>{const b=document.createElement("button");b.type="button";b.className="sc-chip";b.dataset.k=k;b.innerHTML='<span>'+I(IC[k])+'</span><b>'+l+'</b>';b.onclick=fn;return b};
+ const run=()=>{
+  /* ١) الرئيسية */
+  const main=$("main");const td=$(".tools-day"),hp=$("#homePlus");if(main&&td&&hp&&!td.dataset.re){td.dataset.re=1;td.innerHTML='<div class="sc-row"></div>';const r=td.querySelector(".sc-row");r.append(chip("qibla","القبلة",()=>__openQibla()),chip("hijri","التقويم",()=>__openHijri()),chip("alarm","منبّه الفجر",openAlarm),chip("khatma","الختمة",goKh));hp.after(td)}
+  const dotd=[...document.querySelectorAll('main > section[data-v="home"]')].find(s=>!s.classList.contains("ayah-day")&&!s.classList.contains("tools-day")&&!s.classList.contains("hero")&&s.id!=="homePlus"&&s.id!=="stats"&&/ذكر اليوم/.test(s.textContent.slice(0,40)));const hd=$(".hadith-day");if(dotd&&hd&&!dotd.dataset.re){dotd.dataset.re=1;hd.after(dotd)}
+  /* ٢) المواقيت: القبلة والتقويم */
+  const pa=$("#prayer .pl-actions");if(pa&&!$("#prayer .pr-tools")){const w=document.createElement("div");w.className="pr-tools";w.append(chip("qibla","اتجاه القبلة",()=>__openQibla()),chip("hijri","التقويم الهجري",()=>__openHijri()),chip("alarm","منبّه الفجر",openAlarm));pa.after(w)}
+  /* المصحف: آياتي المحفوظة */
+  const ma=$("#mushafView .mv-actions");if(ma&&!$("#mushafView .mv-bm")){const b=document.createElement("button");b.type="button";b.className="mv-bm";b.innerHTML='<span class="mv-bm-ic">'+I(IC.bm)+'</span><span class="mv-bm-t"><b>آياتي المحفوظة</b><small>الآيات التي حفظتها وملاحظاتك عليها</small></span><span class="mv-bm-a">‹</span>';b.onclick=()=>__openBookmarks();ma.after(b)}
+  /* الأذكار: الحج والأسماء */
+  const li=$("#library .lib-intro");if(li&&!$("#library .lib-more")){const w=document.createElement("div");w.className="pr-tools lib-more";w.append(chip("hajj","الحج والعمرة",()=>__openHajj()),chip("names","أسماء الله الحسنى",()=>__openNames()));li.after(w)}
+  /* ٤) الشريط العلوي */
+  ["settingsBtn","installBtn"].forEach(id=>{const b=document.getElementById(id);if(b)b.classList.add("tb-hide")});
+  /* ١) الإعدادات */
+  const st=$(".st");if(st){const ad=$("#st-adhan");if(ad&&!ad.dataset.re){ad.dataset.re=1;const h=ad.querySelector("h2");if(h)h.lastChild.textContent="التنبيهات";}
+   if(ad){const seq=["st-alarm","st-dr","st-fast"].map(id=>document.getElementById(id)).filter(Boolean);seq.forEach(s=>s.classList.add("st-sub"));const cur=[...ad.children].filter(x=>seq.includes(x));if(cur.length!==seq.length||cur.some((x,i)=>x!==seq[i])||seq.some(s=>s.nextElementSibling&&!seq.includes(s.nextElementSibling)))seq.forEach(s=>ad.appendChild(s));
+    if(!$("#st-fast")){const o=(()=>{try{return Object.assign({on:false,mt:1,white:1,big:1},JSON.parse(localStorage.getItem("wird-hijri")||"{}"))}catch(e){return{on:false,mt:1,white:1,big:1}}})();const s=document.createElement("section");s.className="st-sec st-sub";s.id="st-fast";s.innerHTML='<h2>تذكير الصيام</h2><p class="st-note">إشعار مساء اليوم السابق.</p>'+[["on","تفعيل تذكير الصيام"],["mt","الإثنين والخميس"],["white","الأيام البيض"],["big","عرفة وعاشوراء وتاسوعاء"]].map(([k,l])=>'<div class="st-row"><div class="st-l"><strong>'+l+'</strong></div><div class="st-c"><label class="st-sw"><input type="checkbox" data-hf="'+k+'"'+(o[k]?" checked":"")+'><span></span></label></div></div>').join("");s.addEventListener("change",e=>{const k=e.target.dataset.hf;if(!k)return;let o={};try{o=Object.assign({on:false,mt:1,white:1,big:1},JSON.parse(localStorage.getItem("wird-hijri")||"{}"))}catch(x){}o[k]=k==="on"?e.target.checked:(e.target.checked?1:0);localStorage.setItem("wird-hijri",JSON.stringify(o));try{__wirdPush.sync()}catch(x){}T("تم الحفظ")});ad.appendChild(s)}}
+   const rm=$("#st-remind");if(rm)rm.hidden=true;
+   const order=["st-adhan","st-prayer","st-qari","st-look","st-data","st-about"];const box=ad&&ad.parentElement;if(box&&!box.dataset.re){box.dataset.re=1;order.forEach(id=>{const s=document.getElementById(id);if(s&&s.parentElement===box)box.appendChild(s)})}
+   const q=$("#st-qari h2");if(q&&q.textContent!=="المصحف والقارئ")q.textContent="المصحف والقارئ"}
+ };
+ run();new MutationObserver(()=>{clearTimeout(run.t);run.t=setTimeout(run,120)}).observe(document.body,{childList:true,subtree:true});
+})();

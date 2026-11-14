@@ -1,0 +1,2 @@
+
+(()=>{const l=document.getElementById("adhkarList");if(!l)return;new MutationObserver(ms=>{for(const m of ms){const t=m.target;if(m.attributeName==="class"&&t.classList.contains("dhikr-card")&&t.classList.contains("done")&&!(m.oldValue||"").includes("done")){t.classList.remove("just-done");void t.offsetWidth;t.classList.add("just-done");setTimeout(()=>t.classList.remove("just-done"),900)}}}).observe(l,{subtree:true,attributes:true,attributeFilter:["class"],attributeOldValue:true})})();

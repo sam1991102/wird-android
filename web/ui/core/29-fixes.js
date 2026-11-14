@@ -1,0 +1,74 @@
+
+;(function(){
+/* ===== إصلاحات عامة (v189–v191) ===== */
+var p=location.pathname.replace(/^\/|\/$/g,'');var M={ruqya:'__openRuqya',names:'__openNames'};
+if(M[p])setTimeout(function(){if(!document.querySelector('.wp-page')&&typeof window[M[p]]==='function')window[M[p]]()},900);
+var f=document.getElementById('bkFile');if(f&&!f.getAttribute('aria-label'))f.setAttribute('aria-label','اختيار ملف النسخة الاحتياطية');
+try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persisted().then(function(x){if(!x)navigator.storage.persist()})}catch(e){}
+function fri(){var s=document.getElementById("season");if(!s||s.hidden||!/الجمعة/.test(s.textContent))return;try{var d=prayerDay(0);var n=new Date();var h=n.getHours()+n.getMinutes()/60;if(n.getDay()===5&&h>=d.t.maghrib)s.hidden=true}catch(e){}}
+setTimeout(fri,1500);setInterval(fri,6e4);
+})();
+;(function(){
+/* ===== وِرد — إضافات v192: الاستكمال • الوضع الهادئ • ثيمات الوقت • صفحة الاختبار ===== */
+var J=function(k,d){try{var v=JSON.parse(localStorage.getItem(k));return v==null?d:v}catch(e){return d}},SV=function(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+var ar=__ar;
+var T=function(m){try{toast(m)}catch(e){}};
+function today(){var d=new Date();return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()}
+/* ---------- ١) التكملة من آخر مكان ---------- */
+var o0=window.openFocus,r0=window.renderFocus,c0=window.closeFocus,restoring=false;
+if(typeof r0==="function"){window.renderFocus=function(){var x=r0.apply(this,arguments);paintCalm();return x}}
+if(typeof o0==="function"){window.openFocus=function(cat){var a0=J("wird-resume",{});restoring=true;var x;try{x=o0.apply(this,arguments)}finally{restoring=false}try{var a=a0;var s=a.d===today()?a[cat]:null;if(!window.__wirdTesting&&F&&F.cat===cat&&typeof s==="number"&&s>F.i&&s<F.list.length){F.i=s;restoring=true;renderFocus();restoring=false;T("تابعت من حيث توقفت — "+ar(s+1)+" من "+ar(F.list.length))}}catch(e){restoring=false}return x}}
+if(typeof c0==="function"){window.closeFocus=function(){var x=c0.apply(this,arguments);setTimeout(chip,50);return x}}
+function chip(){var hs=document.getElementById("heroStart");if(!hs)return;var old=document.getElementById("resumeChip");var a=J("wird-resume",{});var best=null;if(a.d===today())Object.keys(a).forEach(function(k){if(k==="d"||k==="all"||k==="mine")return;var n=0,p=0;try{n=catItems(k).length;p=catPct(k)}catch(e){}if(n&&p<100&&a[k]>0&&a[k]<n&&(!best||a[k]/n>best.i/best.n))best={k:k,i:a[k],n:n,p:p}});
+ if(!best){old&&old.remove();return}var nm="";try{nm=catName(best.k)}catch(e){nm=best.k}var html='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.3-5.6M4 4v4h4"/></svg><span>أكمل '+nm+' — '+ar(best.i+1)+' من '+ar(best.n)+'</span>';
+ if(!old){old=document.createElement("button");old.type="button";old.id="resumeChip";old.className="resume-chip";var box=hs.closest(".hero-actions")||hs.parentElement;box.parentElement.insertBefore(old,box.nextSibling);old.addEventListener("click",function(){openFocus(old.dataset.k)})}old.dataset.k=best.k;old.innerHTML=html}
+function savePos(){try{if(window.__wirdTesting||!F||!F.list||!F.cat||document.getElementById("focus").hidden)return;var a=J("wird-resume",{});if(a.d!==today())a={d:today()};if(a[F.cat]!==F.i){a[F.cat]=F.i;SV("wird-resume",a)}}catch(e){}}
+(function w(){var p=document.getElementById("fPos");if(!p)return setTimeout(w,500);new MutationObserver(savePos).observe(p,{childList:true,characterData:true,subtree:true})})();
+setTimeout(chip,1500);document.addEventListener("visibilitychange",function(){if(!document.hidden)chip()});
+/* ---------- ٢) وضع القراءة الهادئة ---------- */
+function calmOn(){return document.documentElement.classList.contains("calm")}
+function setCalm(v){document.documentElement.classList.toggle("calm",!!v);SV("wird-calm",v?1:0);paintCalm()}
+function paintCalm(){var f=document.getElementById("focus");if(!f)return;var top=f.querySelector(".focus-top");if(top&&!document.getElementById("fCalm")){var b=document.createElement("button");b.type="button";b.id="fCalm";b.className="icon-btn";b.setAttribute("aria-label","وضع القراءة الهادئة");b.title="وضع القراءة الهادئة";b.innerHTML='<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>';var cl=document.getElementById("fClose");top.insertBefore(b,cl?cl.nextSibling:top.firstChild);b.addEventListener("click",function(){setCalm(!calmOn());T(calmOn()?"وضع هادئ — اضغط على الذكر للعدّ":"عدت إلى الوضع العادي")})}var cb=document.getElementById("fCalm");if(cb)cb.setAttribute("aria-pressed",calmOn()?"true":"false")}
+if(J("wird-calm",0))document.documentElement.classList.add("calm");
+/* ---------- ٣) ثيمات حسب وقت الصلاة ---------- */
+var TP={fajr:"#1c3a52",duha:"#1d5a6e",day:"#0f3d2e",asr:"#6a4a14",maghrib:"#5a2a3c",night:"#0c2230"};
+function period(){try{var t=prayerDay(0).t,h=__nowH();if(h>=t.fajr&&h<t.sunrise)return"fajr";if(h>=t.sunrise&&h<t.dhuhr)return"duha";if(h>=t.dhuhr&&h<t.asr)return"day";if(h>=t.asr&&h<t.maghrib)return"asr";if(h>=t.maghrib&&h<t.isha+.5)return"maghrib";return"night"}catch(e){return"day"}}
+function theme(){var on=1;var r=document.documentElement;if(!on){r.removeAttribute("data-tp");return}var p=period();if(r.getAttribute("data-tp")!==p){r.setAttribute("data-tp",p);var m=document.querySelector('meta[name="theme-color"]');}}
+theme();setInterval(theme,6e4);document.addEventListener("visibilitychange",function(){if(!document.hidden)theme()});
+/* خيارات داخل قسم «المظهر» الأصلي + تشغيل تبويبات الإعدادات */
+function stUI(){var lk=document.getElementById("st-look");if(!lk||document.getElementById("tpOn"))return;var w=document.createElement("div");w.id="stLook";w.innerHTML='<span id="tpOn" hidden></span><label class="st-row st-tg"><span><b>وضع القراءة الهادئة</b><small>نص أكبر بدون أزرار — اضغط على الذكر للعدّ</small></span><input type="checkbox" id="calmOn"'+(calmOn()?" checked":"")+'></label>';lk.appendChild(w);w.querySelector("#calmOn").onchange=function(){setCalm(this.checked)}}
+function stTabs(){var st=document.querySelector(".st");if(!st)return;var nav=st.querySelector(".st-tabs"),body=st.querySelector(".st-body");if(!nav||!body||nav.dataset.ok)return;nav.dataset.ok=1;var L=[].slice.call(nav.querySelectorAll("a[href^='#']"));
+ var ALT={"#st-remind":["#st-dr","#st-alarm","#st-fast"]};function tgt(a){var h=a.getAttribute("href"),t=body.querySelector(h);if(t&&t.offsetParent)return t;var L2=ALT[h]||[];for(var i=0;i<L2.length;i++){var x=body.querySelector(L2[i]);if(x&&x.offsetParent)return x}return t}
+ function mark(a){L.forEach(function(x){var on=x===a;x.classList.toggle("on",on);if(on){x.setAttribute("aria-current","true");try{x.scrollIntoView({inline:"center",block:"nearest"})}catch(e){}}else x.removeAttribute("aria-current")})}
+ var lock=0;L.forEach(function(a){a.addEventListener("click",function(e){var t=tgt(a);if(!t)return;e.preventDefault();e.stopImmediatePropagation();var y=t.getBoundingClientRect().top-body.getBoundingClientRect().top+body.scrollTop-8;lock=Date.now();body.scrollTop=Math.max(0,y);mark(a)},true)});
+ body.addEventListener("scroll",function(){if(Date.now()-lock<900)return;var bt=body.getBoundingClientRect().top,cur=null;L.forEach(function(a){var t=tgt(a);if(t&&t.getBoundingClientRect().top-bt<=60)cur=a});if(!cur&&L.length)cur=L[0];if(body.scrollTop+body.clientHeight>=body.scrollHeight-4){var vis=L.filter(function(a){var t=tgt(a);return t&&t.getBoundingClientRect().top<bt+body.clientHeight});cur=vis[vis.length-1]||cur}mark(cur)},{passive:true});mark(L[0])}
+new MutationObserver(function(){if(document.getElementById("st-look")&&!document.getElementById("tpOn"))stUI();stTabs()}).observe(document.body,{childList:true,subtree:true});
+/* ---------- ٤) صفحة الاختبار التلقائي /test ---------- */
+var ERR=window.__wirdErrors||(window.__wirdErrors=[]);addEventListener("error",function(e){ERR.push(String(e.message||e))});addEventListener("unhandledrejection",function(e){ERR.push("promise: "+String(e.reason))});
+async function selfTest(){window.__wirdTesting=1;try{return await runTest()}finally{window.__wirdTesting=0}}
+async function runTest(){var out=[];function ok(n,c,d){out.push({n:n,ok:!!c,d:d||""})}
+ var G=["openFocus","closeFocus","renderFocus","catItems","catPct","catName","prayerDay","fmtT","__openTools","__openHajj","__openRuqya","__openNames","__openSettings","__openDrawer","__wirdSetup","__shareImg","__hijriEvents"];
+ var TY={openFocus:typeof openFocus,closeFocus:typeof closeFocus,renderFocus:typeof renderFocus,catItems:typeof catItems,catPct:typeof catPct,catName:typeof catName,prayerDay:typeof prayerDay,fmtT:typeof fmtT};var gm=G.filter(function(g){return (TY[g]||typeof window[g])!=="function"});ok("الدوال الأساسية موجودة ("+ar(G.length)+")",!gm.length,gm.join("، "));
+ try{ok("الأذكار محمّلة",adhkar.length>150,ar(adhkar.length)+" ذكر");var bad=adhkar.filter(function(a){return !a.text||!a.source||!(a.repeat>0)});ok("كل ذكر له نص ومصدر وعدد",!bad.length,bad.slice(0,5).map(function(a){return a.id}).join("، "))}catch(e){ok("الأذكار محمّلة",false,e.message)}
+ var cats=[];try{cats=categories.map(function(c){return c.id}).filter(function(c){return c!=="all"&&c!=="mine"})}catch(e){}
+ var ce=[];cats.forEach(function(c){try{if(!catItems(c).length)ce.push(c+" فاضي");openFocus(c);if(document.getElementById("focus").hidden)ce.push(c+" مافتحش");closeFocus(true)}catch(e){ce.push(c+": "+e.message)}});ok("كل الأقسام تفتح في القراءة المتتابعة",!ce.length,ce.length?ce.join("، "):ar(cats.length)+" قسم");
+ try{var d=prayerDay(0).t;var seq=[d.fajr,d.sunrise,d.dhuhr,d.asr,d.maghrib,d.isha];var inc=seq.every(function(v,i){return isFinite(v)&&(i===0||v>seq[i-1])});ok("مواقيت اليوم مرتّبة ومنطقية",inc,["fajr","dhuhr","maghrib"].map(function(k){return fmtT(d[k])}).join(" • "))}catch(e){ok("مواقيت اليوم",false,e.message)}
+ var pe=[];["streak","challenge","summary","mood","plan","sleep","imsak","mosque","zakat","qada","rahim"].forEach(function(t){try{__openTools();var b=document.querySelector('#tools [data-t="'+t+'"]');b.click();var p=document.querySelector(".tl-page:not(#selfTest)");if(!p||p.id==="tools")pe.push(t)}catch(e){pe.push(t+": "+e.message)}});document.querySelectorAll(".tl-page:not(#selfTest)").forEach(function(p){p.remove()});ok("أدوات المسلم الـ١١ تفتح",!pe.length,pe.join("، "));
+ ["__openHajj","__openRuqya","__openNames"].forEach(function(g){try{window[g]();var p=document.querySelector(".wp-page:not(.tl-page),.nm-sheet");ok("صفحة "+({__openHajj:"الحج والعمرة",__openRuqya:"الرقية",__openNames:"الأسماء الحسنى"})[g]+" تفتح",!!p);document.querySelectorAll(".wp-page:not(#selfTest),.nm-sheet").forEach(function(x){x.remove()})}catch(e){ok("صفحة "+g,false,e.message)}});
+ try{var ev=__hijriEvents(7)||[];ok("التذكيرات المجدولة تتولّد",Array.isArray(ev),ar(ev.length)+" تذكير خلال ٧ أيام")}catch(e){ok("التذكيرات",false,e.message)}
+ var ids={};document.querySelectorAll("[id]").forEach(function(e){ids[e.id]=(ids[e.id]||0)+1});var dup=Object.keys(ids).filter(function(k){return ids[k]>1});ok("مافيش عناصر مكررة الاسم",!dup.length,dup.join("، "));
+ var A=["/","/styles.css","/app.js","/ui.js","/data.js","/quran.js","/sw.js","/manifest.webmanifest","/gulzar.woff2","/og/site.jpg","/og/morning.jpg","/badge-96.png","/icon-512.png","/logo-word.png","/privacy","/tools","/ruqya","/names","/sitemap.xml","/robots.txt","/.well-known/assetlinks.json"];
+ var fa=[];await Promise.all(A.map(function(u){return fetch(u,{cache:"no-store"}).then(function(r){if(r.status!==200)fa.push(u+" ("+r.status+")")}).catch(function(){fa.push(u+" (لا اتصال)")})}));ok("كل الملفات والروابط المهمة تعمل",!fa.length,fa.length?fa.join("، "):ar(A.length)+" رابط");
+ try{var reg=await navigator.serviceWorker.getRegistration();ok("العمل بدون إنترنت مفعّل",!!(reg&&reg.active),(await caches.keys()).join("، "))}catch(e){ok("العمل بدون إنترنت",false,e.message)}
+ ok("مساحة الحفظ شغّالة",(function(){try{localStorage.setItem("__t","1");localStorage.removeItem("__t");return true}catch(e){return false}})());
+ ok("مافيش أخطاء برمجية من وقت الفتح",!ERR.length,ERR.slice(0,5).join(" | "));
+ try{var OKF=/^(Tajawal|Amiri|Amiri Quran|WirdNast|qcf\d+)$/,bf={};document.querySelectorAll("body *").forEach(function(e){if(!e.getClientRects().length)return;if(![].some.call(e.childNodes,function(n){return n.nodeType===3&&n.textContent.trim()}))return;var f=getComputedStyle(e).fontFamily.split(",")[0].replace(/"/g,"").trim();if(!OKF.test(f))bf[f]=(bf[f]||0)+1});var bk=Object.keys(bf);ok("كل النصوص بخطوط التطبيق الأربعة",!bk.length,bk.map(function(k){return k+" ("+ar(bf[k])+")"}).join("، "))}catch(e){}
+ try{var dm=[];[].forEach.call(document.styleSheets,function(s){try{[].forEach.call(s.cssRules,function r(x){if(x.cssRules&&!x.selectorText){[].forEach.call(x.cssRules,r);return}if(x.selectorText&&x.style&&/font-family/.test(x.style.cssText)&&!/var\(--font|inherit|unset|initial/.test(x.style.fontFamily))dm.push(x.selectorText)})}catch(e){}});ok("الخطوط كلها من متغيّرات التصميم",!dm.length,ar(dm.length)+" قاعدة خارج النظام")}catch(e){}
+ try{var lat=[];document.querySelectorAll("main *,.wp-page *").forEach(function(e){if(!e.getClientRects().length||e.closest("input,svg,[dir=ltr],.ltr"))return;[].forEach.call(e.childNodes,function(n){if(n.nodeType===3&&/[0-9]/.test(n.textContent)&&/[؀-ۿ]/.test(n.textContent))lat.push(n.textContent.trim().slice(0,20))})});ok("الأرقام عربية في النصوص",!lat.length,lat.slice(0,4).join(" | "))}catch(e){}
+ document.documentElement.classList.toggle("wp-open",!!document.querySelector(".wp-page"));return out}
+window.__wirdSelfTest=selfTest;
+async function testPage(){var p=document.createElement("div");p.className="wp-page tl-page";p.id="selfTest";p.innerHTML='<header class="wp-h"><button type="button" class="wp-back" aria-label="رجوع">→</button><div><h1>فحص وِرد</h1><p>جارٍ الفحص…</p></div></header><div class="wp-body"></div>';document.body.appendChild(p);document.documentElement.classList.add("wp-open");p.querySelector(".wp-back").onclick=function(){location.href="/"};
+ var r=await selfTest();var bad=r.filter(function(x){return!x.ok}).length;p.querySelector(".wp-h p").textContent=bad?("فيه "+ar(bad)+" مشكلة من "+ar(r.length)+" فحص"):("كل الفحوصات سليمة ("+ar(r.length)+")");
+ p.querySelector(".wp-body").innerHTML='<section class="wp-card st-res">'+r.map(function(x){return'<div class="st-r'+(x.ok?"":" bad")+'"><i>'+(x.ok?"✓":"✗")+'</i><span><b>'+x.n+'</b>'+(x.d?'<small>'+String(x.d).replace(/[<>&]/g,"")+'</small>':"")+'</span></div>'}).join("")+'</section><p class="wp-note">'+new Date().toLocaleString("ar-EG")+'</p>'}
+if(location.pathname.replace(/^\/|\/$/g,"")==="test")setTimeout(testPage,2500);
+})();
