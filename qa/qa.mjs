@@ -136,7 +136,11 @@ for (const S of SKINS) {
   await shot(page, 'reader-1');
   const outline = await page.evaluate(() => { const root = document.querySelector('.mp') || document.querySelector('[class*="reader"]'); if (!root) return 'no .mp'; const walk = (e, d) => d > 4 ? '' : '  '.repeat(d) + e.tagName.toLowerCase() + (e.id ? '#' + e.id : '') + (e.className && typeof e.className === 'string' ? '.' + e.className.trim().split(/\s+/).join('.') : '') + (e.children.length ? '' : ' «' + e.textContent.trim().slice(0, 25) + '»') + (e.getAttribute('aria-label') ? ' [' + e.getAttribute('aria-label') + ']' : '') + '\n' + [...e.children].slice(0, 12).map(c => walk(c, d + 1)).join(''); return walk(root, 0) });
   notes.push('READER:\n' + outline);
-  await page.mouse.click(195, 420); await wait(800); await shot(page, 'reader-2-tap');
+  await page.evaluate(() => { const p = document.querySelector('.mp .mp-head'); p && p.click() }); await wait(500); await shot(page, 'reader-2-imm');
+  if (!(await page.evaluate(() => document.querySelector('.mp')?.classList.contains('mp-imm')))) bad('reader', 'اللمسة على المكان الفاضي ما خبّتش الشريطين');
+  await page.evaluate(() => { const p = document.querySelector('.mp .mp-head'); p && p.click() }); await wait(400);
+  await page.evaluate(() => { const b = document.querySelector('.mp .mp-nt'); b && b.click() }); await wait(500); await shot(page, 'reader-3-night');
+  if (!(await page.evaluate(() => document.querySelector('.mp')?.classList.contains('mp-night')))) bad('reader', 'زر الوضع الليلي مش شغال');
   const ls = await page.evaluate(() => Object.keys(localStorage).join(' '));
   notes.push('LS: ' + ls);
   notes.push('GLOBALS: ' + Object.keys(await page.evaluate(() => { const o = {}; for (const k in window) if (/adhan|notif|azan|prayer|mushaf|qari/i.test(k)) o[k] = 1; return o })).join(' '));
