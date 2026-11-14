@@ -147,6 +147,17 @@ for (const S of SKINS) {
   notes.push('GLOBALS: ' + Object.keys(await page.evaluate(() => { const o = {}; for (const k in window) if (/adhan|notif|azan|prayer|mushaf|qari/i.test(k)) o[k] = 1; return o })).join(' '));
   await ctx.close();
 }
+// تقرير شاشة الأذكار بخط كبير
+{
+  const { ctx, page } = await open(SKINS[0].ls);
+  await wait(1500);
+  await page.evaluate(() => { try { const c = (window.categories || []).find(c => /الصباح/.test(c.name)); openFocus(c ? c.id : 'morning') } catch (e) {} }); await wait(1500);
+  for (let i = 0; i < 4; i++) { await page.evaluate(() => { const b = [...document.querySelectorAll('#focus button')].find(b => /^أ\+?$/.test(b.textContent.trim()) || /حجم|تكبير/.test(b.getAttribute('aria-label') || '')); b && b.click() }); await wait(300) }
+  await wait(1500); await shot(page, 'focus-big');
+  const fo = await page.evaluate(() => { const root = document.getElementById('focus'); if (!root) return 'no #focus'; const walk = (e, d) => d > 5 ? '' : '  '.repeat(d) + e.tagName.toLowerCase() + (e.id ? '#' + e.id : '') + (typeof e.className === 'string' && e.className.trim() ? '.' + e.className.trim().split(/\s+/).join('.') : '') + ' ' + Math.round(e.getBoundingClientRect().top) + '/' + Math.round(e.getBoundingClientRect().height) + ' ' + getComputedStyle(e).display + '/' + getComputedStyle(e).overflowY + '/' + getComputedStyle(e).justifyContent + (e.children.length ? '' : ' «' + e.textContent.trim().slice(0, 20) + '»') + (e.getAttribute('aria-label') ? ' [' + e.getAttribute('aria-label') + ']' : '') + '\n' + [...e.children].slice(0, 14).map(c => walk(c, d + 1)).join(''); return walk(root, 0) });
+  notes.push('FOCUS:\n' + fo);
+  await ctx.close();
+}
 // المعالج لمستخدم جديد
 {
   const { ctx, page, errs } = await open({}, true);
