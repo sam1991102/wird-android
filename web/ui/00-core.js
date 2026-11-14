@@ -826,7 +826,7 @@ document.addEventListener("change",e=>{if(e.target&&/city|method|asr/i.test(e.ta
 
 (()=>{"use strict";
 const $=s=>document.querySelector(s);
-const openAdhanSettings=()=>{if(!window.__openSettings)return;__openSettings();let n=0;const t=setInterval(()=>{const s=document.querySelector("#st-adhan");if(s||++n>20){clearInterval(t);s&&s.scrollIntoView({block:"start"})}},60)};
+const openAdhanSettings=()=>{window.__openSettingsPage&&__openSettingsPage("st-adhan")};
 window.__openAdhanSettings=openAdhanSettings;
 /* بطاقة التنبيهات في تبويب المواقيت */
 const pc=$("#prayer .prayer-card"),acts=$("#prayer .pl-actions");
@@ -879,7 +879,7 @@ sec.addEventListener("click",e=>{const b=e.target.closest("[data-hp]");if(!b)ret
  if(k==="prayer")go("prayer");else if(k==="tasbih")go("tasbih");
  else if(k==="mushaf"){const p=parseInt(String(localStorage.getItem("wird-mushaf-page")||"").replace(/\D/g,""),10);window.__openPage&&__openPage(p>=1&&p<=604?p:1)}
  else if(k==="qibla"){go("prayer");setTimeout(()=>{const q=$("#qiblaBtn");q&&q.click()},250)}
- else if(k==="mine"){go("library");setTimeout(()=>{try{setCategory("mine")}catch(x){}},120)}});
+ else if(k==="mine"){go("library");setCategory("mine")}});
 /* ---- آية اليوم ---- */
 const AY=[[2,152,"البقرة"],[2,186,"البقرة"],[13,28,"الرعد"],[94,6,"الشرح"],[65,3,"الطلاق"],[3,139,"آل عمران"],[39,53,"الزمر"],[40,60,"غافر"],[33,41,"الأحزاب"],[2,153,"البقرة"],[9,51,"التوبة"],[12,87,"يوسف"],[20,25,"طه"],[21,87,"الأنبياء"],[3,8,"آل عمران"],[2,201,"البقرة"],[14,7,"إبراهيم"],[50,16,"ق"],[8,46,"الأنفال"],[29,69,"العنكبوت"],[30,21,"الروم"],[67,2,"الملك"],[16,128,"النحل"],[2,45,"البقرة"],[7,56,"الأعراف"],[93,5,"الضحى"],[42,19,"الشورى"]];
 const day=Math.floor((Date.now()+3*3600e3)/864e5),[s,a,sn]=AY[day%AY.length];
@@ -992,7 +992,7 @@ const hp=$("#hpPage");const upd=window.__khTile=()=>{const k=load();if(hp&&k&&k.
    else if(b.dataset.hd==="copy"){typeof copyText==="function"?copyText(msg):navigator.clipboard&&navigator.clipboard.writeText(msg);typeof toast==="function"&&toast("تم النسخ")}
    else{if(navigator.share)navigator.share({text:msg+"\n"+location.origin}).catch(()=>{});else{navigator.clipboard&&navigator.clipboard.writeText(msg);typeof toast==="function"&&toast("تم النسخ")}}});
   return true};
- if(!mk()){let k=0;const t=setInterval(()=>{if(mk()||++k>40)clearInterval(t)},150)}
+ if(!mk())__wWait(mk,()=>{})
 })();
 
 (function(){
@@ -1114,7 +1114,7 @@ const hp=$("#hpPage");const upd=window.__khTile=()=>{const k=load();if(hp&&k&&k.
   ls("wird-perm","1")};
  window.__wirdPerms=perms;
  window.addEventListener("appinstalled",()=>ls("wird-installed","1"));
- if(sa&&!ls("wird-perm"))setTimeout(()=>{if(!document.querySelector("#onb:not([hidden])"))perms();else{const t=setInterval(()=>{if(!document.querySelector("#onb:not([hidden])")){clearInterval(t);perms()}},1500)}},1800);
+ if(sa&&!ls("wird-perm"))setTimeout(()=>{if(!document.querySelector("#onb:not([hidden])"))perms();else{const o=document.querySelector("#onb");new MutationObserver((r,mo)=>{if(o.hidden){mo.disconnect();perms()}}).observe(o,{attributes:true,attributeFilter:["hidden"]})}},1800);
  /* ===== دعوة التثبيت (آيفون وأندرويد) ===== */
  if(sa)return;let bip=null;window.addEventListener("beforeinstallprompt",e=>{bip=e});
  const snooze=+(ls("wird-inst-snz")||0);const visits=(+(ls("wird-visits")||0))+1;ls("wird-visits",String(visits));
@@ -1196,7 +1196,7 @@ const hp=$("#hpPage");const upd=window.__khTile=()=>{const k=load();if(hp&&k&&k.
  const mk=()=>{const after=document.querySelector(".hadith-day")||document.querySelector(".ayah-day");if(!after||document.querySelector(".tools-day"))return!!after;const h=hj(new Date());const sec=document.createElement("section");sec.className="container section tools-day";sec.dataset.v="home";
   sec.innerHTML='<div class="tl-grid"><button type="button" class="tl-tile" data-t="h"><span class="tl-ic">🌙</span><b>التقويم الهجري</b><small>'+ar(h.d)+' '+HM[h.m-1]+'</small></button><button type="button" class="tl-tile" data-t="q"><span class="tl-ic">🧭</span><b>اتجاه القبلة</b><small>بالبوصلة</small></button><button type="button" class="tl-tile" data-t="d"><span class="tl-ic">🤲</span><b>الأدعية</b><small>من القرآن والسنة</small></button></div>';
   after.after(sec);sec.addEventListener("click",e=>{const b=e.target.closest("[data-t]");if(!b)return;({h:hijriSheet,q:qiblaSheet,d:duaSheet})[b.dataset.t]()});return true};
- if(!mk()){let k=0;const t=setInterval(()=>{if(mk()||++k>40)clearInterval(t)},150)}
+ if(!mk())__wWait(mk,()=>{})
 })();
 
 (function(){
@@ -1230,7 +1230,7 @@ const hp=$("#hpPage");const upd=window.__khTile=()=>{const k=load();if(hp&&k&&k.
    if(b.dataset.sura){closeAll();window.__openSurahN&&__openSurahN(+b.dataset.sura)}
    else if(b.dataset.dh){const id=+b.dataset.dh,d=adhkar.find(x=>x.id===id);closeAll();if(d)setTimeout(()=>{try{openFocus(d.cat);const k=F.list.findIndex(x=>x.id===id);if(k>=0){F.i=k;renderFocus()}}catch(x){}},80)}
    else if(b.dataset.go){closeAll();setTimeout(()=>go(b.dataset.go),80)}
-   else if(b.dataset.quran){const q=inp.value.trim();closeAll();setTimeout(()=>{window.__openMushaf&&__openMushaf();let k=0;const t=setInterval(()=>{const i=document.querySelector(".mi-search input");if(i&&i.offsetParent!==null){clearInterval(t);i.value=q;i.dispatchEvent(new Event("input",{bubbles:true}))}else if(++k>30)clearInterval(t)},120)},80)}})};
+   else if(b.dataset.quran){const q=inp.value.trim();closeAll();setTimeout(()=>{window.__openMushaf&&__openMushaf();__wWait(()=>{const i=document.querySelector(".mi-search input");return i&&i.offsetParent!==null&&i},i=>{i.value=q;i.dispatchEvent(new Event("input",{bubbles:true}))})},80)}})};
  window.__openSearch=searchSheet;
  /* ===== القائمة الجانبية ===== */
  const go=k=>{const W=window.__wirdGo;({home:()=>W&&W("home"),library:()=>W&&W("library"),mushaf:()=>W&&W("mushaf"),tasbih:()=>W&&W("tasbih"),prayer:()=>W&&W("prayer"),hijri:()=>window.__openHijri&&__openHijri(),qibla:()=>window.__openQibla&&__openQibla(),duas:()=>window.__openDuas&&__openDuas(),hajj:hajjSheet,search:searchSheet,set:()=>window.__openSettings&&__openSettings(),adhan:()=>window.__openAdhanSettings&&__openAdhanSettings(),install:()=>window.__wirdInstall&&__wirdInstall(),update:()=>{window.__openSettings&&__openSettings();setTimeout(()=>{const b=document.getElementById("updChk");if(b){b.scrollIntoView({block:"center"});b.click()}},400)},share:()=>{if(navigator.share)navigator.share({title:"وِرد",text:"📿 وِرد — أذكار الصباح والمساء والقرآن ومواقيت الصلاة وتنبيه الأذان. مجاني وبدون إعلانات، افتح الرابط وثبّته على شاشتك:",url:"https://wird-azkar.pages.dev/?i=1"}).catch(()=>{});else{navigator.clipboard&&navigator.clipboard.writeText("https://wird-azkar.pages.dev");T("تم نسخ الرابط")}}}[k]||(()=>{}))()};
@@ -1361,12 +1361,12 @@ const hp=$("#hpPage");const upd=window.__khTile=()=>{const k=load();if(hp&&k&&k.
  setTimeout(show,fromShare?2500:9000);
 })();
 
-(function(){const go=()=>{window.__wirdGo&&__wirdGo("library");let k=0;const t=setInterval(()=>{const ch=document.querySelector('#library [data-cat="quran"]');if(ch){clearInterval(t);ch.click();ch.scrollIntoView({block:"nearest",inline:"center"})}else if(++k>20)clearInterval(t)},120)};window.__openDuas=go;
+(function(){const go=()=>{window.__wirdGo&&__wirdGo("library");setCategory("quran");scrollTo({top:0,behavior:"instant"})};window.__openDuas=go;
  /* ===== المظهر حسب الجهاز ===== */
  const R=document.documentElement,mq=matchMedia("(prefers-color-scheme: dark)");const ls=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);v===null?localStorage.removeItem(k):localStorage.setItem(k,v)}catch(e){}};
  if(!ls("wird-theme-v2")){ls("wird-theme-mode","auto");ls("wird-dark",null);ls("wird-sepia",null);ls("wird-theme-v2","1")}let mode=ls("wird-theme-mode")||"auto";if(!ls("wird-theme-mode"))ls("wird-theme-mode","auto");
  const meta=()=>{const m=document.querySelector('meta[name="theme-color"]');if(m)m.content=R.classList.contains("dark")?"#0b1310":"#0f3d2e"};
- const sysDark=()=>{try{const t=prayerDay(0).t,h=__nowH();if(isFinite(t.sunrise)&&isFinite(t.maghrib))return!(h>=t.sunrise&&h<t.maghrib)}catch(e){}return typeof window.__sysDark==="boolean"?window.__sysDark:mq.matches};setInterval(()=>applyAuto(),60000);const applyAuto=()=>{if(ls("wird-theme-mode")!=="auto")return;R.classList.remove("sepia");R.classList.toggle("dark",sysDark());meta()};applyAuto();try{mq.addEventListener("change",applyAuto)}catch(e){mq.addListener&&mq.addListener(applyAuto)}addEventListener("sysdark",applyAuto);document.addEventListener("visibilitychange",()=>{if(!document.hidden)applyAuto()});addEventListener("pageshow",applyAuto);setTimeout(applyAuto,600);setTimeout(applyAuto,2000);
+ const sysDark=()=>{try{const t=prayerDay(0).t,h=__nowH();if(isFinite(t.sunrise)&&isFinite(t.maghrib))return!(h>=t.sunrise&&h<t.maghrib)}catch(e){}return typeof window.__sysDark==="boolean"?window.__sysDark:mq.matches};setInterval(()=>applyAuto(),60000);const applyAuto=()=>{if(ls("wird-theme-mode")!=="auto")return;R.classList.remove("sepia");R.classList.toggle("dark",sysDark());meta()};applyAuto();try{mq.addEventListener("change",applyAuto)}catch(e){mq.addListener&&mq.addListener(applyAuto)}addEventListener("sysdark",applyAuto);document.addEventListener("visibilitychange",()=>{if(!document.hidden)applyAuto()});addEventListener("pageshow",applyAuto);
  const seg=()=>{const s=document.querySelector('#st-look .st-seg');if(!s||s.querySelector('[data-v="auto"]'))return;const b=document.createElement("button");b.type="button";b.setAttribute("role","radio");b.dataset.v="auto";b.className="st-auto";b.textContent="تلقائي";s.insertBefore(b,s.firstChild);
   const mark=()=>{const auto=ls("wird-theme-mode")==="auto";s.querySelectorAll("button").forEach(x=>x.setAttribute("aria-checked",x===b?String(auto):(auto?"false":x.getAttribute("aria-checked"))))};
   b.addEventListener("click",e=>{e.stopPropagation();ls("wird-theme-mode","auto");ls("wird-dark",null);ls("wird-sepia",null);applyAuto();s.querySelectorAll("button").forEach(x=>x.setAttribute("aria-checked",String(x===b)));typeof toast==="function"&&toast("تلقائي: فاتح من الشروق للمغرب، وليلي بعد المغرب")});
@@ -1421,7 +1421,7 @@ const hp=$("#hpPage");const upd=window.__khTile=()=>{const k=load();if(hp&&k&&k.
  const $=s=>document.querySelector(s),T=m=>typeof toast==="function"&&toast(m);
  const I=p=>'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+p+'</svg>';
  const IC={qibla:'<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/>',hijri:'<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>',alarm:'<circle cx="12" cy="13" r="7.5"/><path d="M12 9.5V13l2.2 1.6M4.5 5.5 7 3.5M19.5 5.5 17 3.5"/>',khatma:'<path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="m9.5 11 2 2 3.5-4"/>',bm:'<path d="M6 3.5h12V21l-6-4-6 4z"/>',hajj:'<path d="M4 7.5 12 4l8 3.5v10L12 21l-8-3.5z"/><path d="M4 7.5 12 11l8-3.5M12 11v10"/>',names:'<path d="M12 3.5 14.4 9l5.9.5-4.5 3.9 1.4 5.8L12 16.1l-5.2 3.1 1.4-5.8L3.7 9.5 9.6 9z"/>'};
- const openAlarm=()=>{window.__openAdhanSettings&&__openAdhanSettings();let k=0;const t=setInterval(()=>{const s=$("#st-alarm");if(s){clearInterval(t);s.scrollIntoView({block:"start"});s.classList.add("st-flash");setTimeout(()=>s.classList.remove("st-flash"),1600)}else if(++k>25)clearInterval(t)},100)};window.__openAlarm=openAlarm;
+ const openAlarm=()=>{window.__openSettingsPage&&__openSettingsPage("st-alarm")};window.__openAlarm=openAlarm;
  const goKh=()=>{__wirdGo("mushaf");setTimeout(()=>{const k=$("#mushafView .kh");k&&k.scrollIntoView({block:"start",behavior:"smooth"})},300)};
  const chip=(k,l,fn)=>{const b=document.createElement("button");b.type="button";b.className="sc-chip";b.dataset.k=k;b.innerHTML='<span>'+I(IC[k])+'</span><b>'+l+'</b>';b.onclick=fn;return b};
  const run=()=>{
@@ -1497,7 +1497,7 @@ document.addEventListener("visibilitychange",function(){if(!document.hidden&&P.c
 async function get(){if(!want||document.hidden)return;nat(true);try{if("wakeLock"in navigator&&!lock){lock=await navigator.wakeLock.request("screen");lock.addEventListener("release",function(){lock=null})}}catch(e){}}
 function rel(){nat(false);try{lock&&lock.release()}catch(e){}lock=null}
 function chk(){var v=document.documentElement.dataset.view||document.body.dataset.view||"";var on=v==="mushaf"||[].some.call(document.querySelectorAll(".mp-page"),function(p){var r=p.getBoundingClientRect();return p.offsetParent&&r.bottom>0&&r.top<innerHeight});if(on!==want){want=on;on?get():rel()}}
-new MutationObserver(chk).observe(document.documentElement,{attributes:true,attributeFilter:["data-view","class"]});document.addEventListener("visibilitychange",function(){if(!document.hidden&&want)get()});setInterval(chk,2500);setTimeout(chk,800);window.__wakeState=function(){return{want:want,lock:!!lock}}})();
+new MutationObserver(chk).observe(document.documentElement,{attributes:true,attributeFilter:["data-view","class"]});document.addEventListener("visibilitychange",function(){if(!document.hidden&&want)get()});setInterval(function(){if(!document.hidden)chk()},2500);setTimeout(chk,800);window.__wakeState=function(){return{want:want,lock:!!lock}}})();
 ;(function(){var P={istighfar:'<path d="M12 3c2.8 3.4 5 6.3 5 9.2A5 5 0 0 1 12 17a5 5 0 0 1-5-4.8C7 9.3 9.2 6.4 12 3z"/><path d="M5 20.5h14"/><path d="M10 13.2a2.2 2.2 0 0 0 2 1.8"/>',fadail:'<circle cx="12" cy="4.5" r="1.6"/><circle cx="7" cy="7" r="1.6"/><circle cx="17" cy="7" r="1.6"/><circle cx="5.5" cy="12" r="1.6"/><circle cx="18.5" cy="12" r="1.6"/><circle cx="7.5" cy="16.5" r="1.6"/><circle cx="16.5" cy="16.5" r="1.6"/><path d="M12 18v4M10.5 22h3"/>',rizq:'<path d="M12 21V9"/><path d="M12 9c0-3 2-5 4-5 0 3-2 5-4 5zM12 9c0-3-2-5-4-5 0 3 2 5 4 5z"/><path d="M12 14c0-2.4 2-4 4-4 0 2.4-2 4-4 4zM12 14c0-2.4-2-4-4-4 0 2.4 2 4 4 4z"/><path d="M12 19c0-2.4 2-4 4-4 0 2.4-2 4-4 4zM12 19c0-2.4-2-4-4-4 0 2.4 2 4 4 4z"/>',ilm:'<path d="M3 5.5c3-1 6-1 9 1v13c-3-2-6-2-9-1z"/><path d="M21 5.5c-3-1-6-1-9 1v13c3-2 6-2 9-1z"/>'};
 function fix(){for(var k in P)document.querySelectorAll('[data-cat="'+k+'"] svg').forEach(function(s){if(s.dataset.fx==="2")return;s.dataset.fx="2";s.innerHTML=P[k]})}fix();new MutationObserver(function(){clearTimeout(fix.t);fix.t=setTimeout(fix,120)}).observe(document.body,{childList:true,subtree:true});
 function daily(){var act=document.querySelector(".daily-card .card-actions");if(!act||document.getElementById("imgDaily"))return;
@@ -1687,7 +1687,7 @@ function iq(){var el=document.getElementById("iqLine");var d;try{d=prayerDay(0)}
  if(!el){el=document.createElement("div");el.id="iqLine";el.className="iq-line";card.after(el)}el.textContent=txt;tb(txt)}
 function tb(t){var s=document.querySelector(".tb-strip");if(!s)return;var x=s.querySelector(".tb-iq");if(!t){if(x)x.remove();s.classList.remove("iq-on");return}if(!x){x=document.createElement("span");x.className="tb-iq";s.appendChild(x)}x.textContent=t;s.classList.add("iq-on")}
 function iqUI(){var sec=document.getElementById("st-prayer");if(!sec||document.getElementById("iqBox"))return;var q=IQ();var b=document.createElement("div");b.id="iqBox";b.className="st-row iq-box";b.innerHTML='<div class="st-l"><strong>وقت الإقامة بعد الأذان</strong><small class="st-hint">يظهر عدّاد تنازلي للإقامة بعد كل أذان</small></div><div class="iq-g">'+PR.map(function(p){return'<label>'+NM[p]+'<select data-p="'+p+'">'+[0,5,10,15,20,25,30,35,40].map(function(m){return'<option value="'+m+'"'+(m===q[p]?" selected":"")+'>'+(m?ar(m)+" د":"إيقاف")+'</option>'}).join("")+'</select></label>'}).join("")+'</div>';sec.appendChild(b);b.addEventListener("change",function(e){var p=e.target.dataset.p;if(!p)return;var o=IQ();o[p]=+e.target.value;SV("wird-iqama",o);iq()})}
-function run(){mark();iqUI()}run();setInterval(iq,1000);
+function run(){mark();iqUI()}run();setInterval(function(){if(!document.hidden)iq()},1000);
 var L=document.getElementById("prayerList");if(L)new MutationObserver(function(){clearTimeout(run.t);run.t=setTimeout(mark,50)}).observe(L,{childList:true});
 new MutationObserver(function(){clearTimeout(iqUI.t);iqUI.t=setTimeout(iqUI,250)}).observe(document.body,{childList:true,subtree:false});
 })();
@@ -2015,7 +2015,7 @@ function paint(){var el=build();if(!el)return;var st=state(),d=hijriDay();el.dat
   var gp=new Intl.DateTimeFormat("ar-EG",{day:"numeric",month:"long",year:"numeric",timeZone:z}).formatToParts(now);el.querySelector(".sk-gr").textContent=gv(gp,"day")+" "+gv(gp,"month");el.querySelector(".sk-gy").textContent=gv(gp,"year")}catch(e){}
  var ch=document.querySelector(".tb-strip .tp-chip b");el.querySelector(".sk-period").textContent=ch?ch.textContent:"";
  var n=next();if(n){el.querySelector(".sk-np").textContent=PN[n.k]+" بعد";el.querySelector(".sk-cd").textContent=fmt(n.left)}}
-paint();if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",paint);setInterval(paint,1000);document.addEventListener("visibilitychange",function(){if(!document.hidden){last="";paint()}});
+paint();if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",paint);/* كارت السماء في الرئيسية بس: مفيش داعي يتحسب كل ثانية وهو مش ظاهر */setInterval(function(){if(!document.hidden&&(document.documentElement.dataset.view||"home")==="home")paint()},1000);document.addEventListener("visibilitychange",function(){if(!document.hidden){last="";paint()}});
 window.__skyCard=paint;})();
 
 
@@ -2030,7 +2030,7 @@ function today(){var h=document.getElementById("todayDate");if(!h)return;var ks=
 /* ٣) إخفاء شريط الصلاة القادمة في الرئيسية طالما بطاقة السماء ظاهرة */
 function watch(){var c=document.getElementById("skyCard"),H=document.documentElement;if(!c)return;var on=c.offsetParent!==null;var r=c.getBoundingClientRect();var tb=document.querySelector(".topbar");var top=tb?tb.getBoundingClientRect().bottom:0;H.classList.toggle("sky-vis",on&&r.bottom>top+70&&r.top<innerHeight)}addEventListener("scroll",function(){watch()},{passive:true});addEventListener("hashchange",function(){setTimeout(watch,50)});
 function tick(){phrase();today();watch()}
-tick();setInterval(tick,1000);document.addEventListener("visibilitychange",function(){if(!document.hidden)tick()});
+tick();setInterval(function(){if(!document.hidden&&(document.documentElement.dataset.view||"home")==="home")tick()},1000);document.addEventListener("visibilitychange",function(){if(!document.hidden)tick()});
 })();
 
 

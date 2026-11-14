@@ -5,7 +5,9 @@ var toEn=__en;var ar=__ar;
 var keep=null;
 function scroller(p){var best=p,bt=p.scrollTop;[].forEach.call(p.querySelectorAll("*"),function(e){if(e.scrollTop>bt){best=e;bt=e.scrollTop}});return best}
 function restore(n){if(!keep)return;var k=keep;function go(){var el=n;if(k.cls&&k.cls!==n.className){var c=n.querySelector("."+k.cls.trim().split(/\s+/).join("."));if(c)el=c}el.scrollTop=k.y;if(k.win)window.scrollTo(0,k.win)}
-n.classList.add("in","wp-noanim");go();requestAnimationFrame(go);[40,120,250,500].forEach(function(t){setTimeout(go,t)});setTimeout(function(){n.classList.remove("wp-noanim")},600)}
+n.classList.add("in","wp-noanim");go();requestAnimationFrame(go);
+/* المحتوى ممكن يكبر بعد الرسم: نرجّع المكان كل ما الحجم يتغيّر، لمدة قصيرة بس */
+var ro=window.ResizeObserver?new ResizeObserver(go):null;if(ro)ro.observe(n);setTimeout(function(){ro&&ro.disconnect();n.classList.remove("wp-noanim")},600)}
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest(".wp-lap,.wp-lr,.wp-chk,.wp-page [data-tab],.wp-page .tl-b,.wp-page button");if(!b||b.closest(".lp-ov")||b.classList.contains("wp-back"))return;var p=b.closest(".wp-page");if(!p)return;
 var sc=scroller(p);keep={y:sc.scrollTop,cls:sc===p?"":sc.className,win:window.scrollY,at:Date.now(),old:p,pc:p.className.replace(/\b(in|wp-noanim)\b/g,"").trim()};
 setTimeout(function(){if(keep&&keep.old&&document.body.contains(keep.old)){keep=null}},700)},true);
