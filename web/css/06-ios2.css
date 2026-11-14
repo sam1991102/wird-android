@@ -103,13 +103,15 @@ html[data-view]:not([data-view="home"]) #ayCard,html[data-view]:not([data-view="
 #skyCard{overflow:hidden}
 /* شريط «الصلاة القادمة» يظهر فورًا بدون حركة تزق الصفحة */
 .topbar,.topbar *{transition:none!important;animation:none!important}
-html.view-wait main{visibility:hidden}
-@keyframes wViewIn{from{opacity:0}to{opacity:1}}
-html:not(.view-wait) main{animation:wViewIn .16s ease-out}
+
+
+
 #ayCard>*:not(.ay-tabs){padding-inline:0!important;max-width:none!important;width:auto!important}
 /* مع فتح الإعدادات: شريط «الصلاة القادمة» يختفي في نفس اللحظة فلا يتحرك شيء بعدها */
-html.st-open .topbar *:has(>.tb-np),html.st-open .topbar>*:has(.tb-np){display:none!important}
+
 /* صفوف الإعدادات اللي فيها قائمة اختيار: العنوان فوق والقائمة تحته بعرض كامل */
 .wp-page .st-row:has(select){flex-direction:column!important;align-items:stretch!important;gap:8px}
 .wp-page .st-row:has(select) select{width:100%!important;max-width:none!important}
 .wp-page .st-row:has(select) .st-l{max-width:none!important}
+/* تبديل الصفحة: المحتوى يظهر بعد ما يثبت (شوف shell) */
+html.w-settle main>*{visibility:hidden}

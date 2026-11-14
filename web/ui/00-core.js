@@ -561,7 +561,7 @@ grid.addEventListener("click",e=>{const t=e.target.closest("[data-tile]");if(!t)
 back.addEventListener("click",()=>{search.value="";search.dispatchEvent(new Event("input"));mode("grid");scrollTo({top:0,behavior:"instant"})});
 const orig=setCategory;window.setCategory=setCategory=function(...a){const r=orig.apply(this,a);if(R.dataset.lib==="grid")mode("list");return r};
 search.addEventListener("input",()=>{if(search.value.trim())mode("list")});
-document.addEventListener("click",e=>{if(e.target.closest('.bottom-nav a[data-nav="library"]'))setTimeout(()=>{search.value="";mode("grid")},0)},true);
+document.addEventListener("click",e=>{if(e.target.closest('.bottom-nav a[data-nav="library"],.bottom-nav.nav5 [data-tab="library"]')){search.value="";mode("grid")}},true);
 mode(slugFromPath()?"list":"grid");
 document.addEventListener("visibilitychange",()=>{if(!document.hidden&&R.dataset.lib==="grid")renderGrid()});
 const f=document.getElementById("focus");if(f)new MutationObserver(()=>{if(f.hidden&&R.dataset.lib==="grid")renderGrid()}).observe(f,{attributes:true,attributeFilter:["hidden"]});

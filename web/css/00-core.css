@@ -186,7 +186,7 @@ html[data-view]:not([data-view="prayer"]) main>section[data-v="prayer"],
 html[data-view]:not([data-view="tasbih"]) main>section[data-v="tasbih"],
 html[data-view]:not([data-view="home"]) .footer{display:none}
 html[data-view]:not([data-view="home"]) main{padding-top:14px;min-height:calc(100vh - 140px)}
-main>section[data-v]{animation:viewIn .22s ease-out}
+main>section[data-v]{animation:none}
 .bottom-nav a.active{color:var(--muted)}
 html[data-view="home"] .bottom-nav a[data-nav="home"],html[data-view="library"] .bottom-nav a[data-nav="library"],html[data-view="tasbih"] .bottom-nav a[data-nav="tasbih"],html[data-view="prayer"] .bottom-nav a[data-nav="prayer"]{color:var(--primary)}
 html.dark[data-view="home"] .bottom-nav a[data-nav="home"],html.dark[data-view="library"] .bottom-nav a[data-nav="library"],html.dark[data-view="tasbih"] .bottom-nav a[data-nav="tasbih"],html.dark[data-view="prayer"] .bottom-nav a[data-nav="prayer"]{color:var(--gold-2)}
@@ -967,14 +967,14 @@ main small,.kh small,.hero small{font-size:max(.8em,12px)!important}main h2{line
 .tb-strip svg{color:var(--gold-3);flex:none}
 .tb-strip .next-pill{all:unset;align-items:center;gap:6px;font-size:var(--t-sm);font-weight:600;color:var(--on-dark);cursor:pointer}
 .tb-strip .next-pill .dot{display:none}
-html[data-view="prayer"] .tb-strip,html.tb-scrolled .tb-strip{opacity:0}
+html.tb-scrolled .tb-strip{opacity:0}
 @media(min-width:900px){.tb-row{padding-inline:24px}}
 .tb-logo{width:auto;display:block;filter:drop-shadow(0 1px 0 rgba(0,0,0,.25))}
 
 .tb-row .tb-date{font-size:var(--t-2xs);letter-spacing:0;color:rgba(244,236,216,.78)}
 .tb-strip .next-pill{display:none!important}
 .tb-strip{height:34px!important;gap:6px!important;padding:0 12px;font-size:var(--t-sm)!important;background:rgba(0,0,0,.22)!important}
-html[data-view="prayer"] .tb-strip,html.tb-scrolled .tb-strip{height:0!important;padding:0}
+html.tb-scrolled .tb-strip{height:0!important;padding:0}
 .tb-np{display:inline-flex;align-items:center;gap:8px;white-space:nowrap;min-width:0}
 .tb-np-k{color:rgba(244,236,216,.7);font-size:var(--t-xs)}
 .tb-np-n{color:var(--gold-3);font-size:15px;font-weight:800}
@@ -1264,7 +1264,6 @@ html.tb-scrolled .tb-strip{height:34px!important;opacity:1!important;padding:0 1
 /* ترتيب الرئيسية (v227) */
 .tb-date{display:none!important}
 #greetTitle{display:none!important}
-html.sky-vis .tb-strip{height:0!important;opacity:0!important;padding:0!important;overflow:hidden}
 .tb-strip{transition:height .25s ease,opacity .25s ease}
 .sk-meta{align-items:center}.sk-dhikr{font-family:var(--font-deco);font-size:20px;line-height:1.4;opacity:1}
 #todayDate.td-prog{font-size:var(--t-lg);line-height:1.6}

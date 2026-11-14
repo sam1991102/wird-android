@@ -27,9 +27,10 @@ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.c
 function tidy(){var p=document.getElementById("prayer");if(!p)return;var seen=0;[].forEach.call(p.querySelectorAll("button,a"),function(b){if(!isSet(b))return;if(seen++)b.style.display="none";b.dataset.ptSet=1})}
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("#prayer [data-pt-set],#prayer button,#prayer a");if(!b||!isSet(b))return;e.preventDefault();e.stopImmediatePropagation();window.__openSettingsPage&&__openSettingsPage("st-prayer")},true);
 tidy();setTimeout(tidy,1500);document.addEventListener("click",function(e){if(e.target.closest&&e.target.closest('[href$="#prayer"],[data-tab="prayer"],[data-nav="prayer"]'))setTimeout(tidy,300)},true)})();
-/* تبديل الصفحة: نخفي المحتوى لحظة حتى يكتمل بناؤه ثم يظهر مرة واحدة بدل ما يتزحزح قدامك */
-(function(){var R=document.documentElement,t,last=R.dataset.view;
-new MutationObserver(function(){var v=R.dataset.view;if(v===last)return;last=v;R.classList.add("view-wait");clearTimeout(t);t=setTimeout(function(){R.classList.remove("view-wait")},180)}).observe(R,{attributes:true,attributeFilter:["data-view"]})})();
 /* إخفاء شارة «إسناده ضعيف» الحمراء فقط (يبقى سطر التخريج كما هو) */
 (function(){var q=0;function hide(){q=0;[].forEach.call(document.querySelectorAll("#focus span,#focus b,#focus em,#focus div,.wp-page span,.wp-page b,.wp-page div"),function(e){if(e.children.length===0&&e.dataset.wNoGrade!=="1"&&/^\s*إسناده\s+ضعيف\s*$/.test(e.textContent)){e.dataset.wNoGrade="1";e.style.display="none"}})}
-__wOnDom(hide)})();
+__wOnDom(hide)})();/* تبديل الصفحة بدون رعشة: المحتوى الجديد يفضل مخفي لحد ما شكله يثبت (فريمين ورا بعض من غير تغيير، أول زيارة للصفحة بتستنى ١٢٠ ملّي ثانية لأن بعض الصفحات بتتبني على دفعات، بحد أقصى ثلث ثانية) وبعدين يظهر مرة واحدة — من غير حركة ولا وميض */
+(function(){var R=document.documentElement,last=R.dataset.view,id=0,seen={};seen[last||"home"]=1;
+function size(){var m=document.querySelector("main");if(!m)return"";var s=m.scrollHeight+"|";for(var c=m.firstElementChild,n=0;c&&n<12;c=c.nextElementSibling,n++)if(c.offsetHeight)s+=c.offsetHeight+",";return s}
+new MutationObserver(function(){var v=R.dataset.view;if(v===last)return;last=v;var my=++id,t0=performance.now(),prev="",same=0,first=!seen[v]||v==="library";seen[v]=1;R.classList.add("w-settle");
+ (function tick(){if(my!==id)return;var s=size();same=s===prev?same+1:0;prev=s;var dt=performance.now()-t0;if((same>=2&&(!first||dt>=120))||dt>320){R.classList.remove("w-settle");return}requestAnimationFrame(tick)})()}).observe(R,{attributes:true,attributeFilter:["data-view"]})})();

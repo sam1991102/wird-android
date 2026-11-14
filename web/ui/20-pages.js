@@ -17,7 +17,8 @@ function tomorrow(){var p=document.getElementById("prayer");if(!p)return;var t;t
  var box=document.getElementById("ptTomorrow");if(!box){var isha=p.querySelector(".isha:not(.adj-row)");if(!isha)return;var list=isha.parentElement;if(!list)return;box=document.createElement("div");box.id="ptTomorrow";box.className="pt-tm";list.after(box)}
  var o='<h3>مواقيت الغد</h3><div class="pt-tm-g">';NAMES.forEach(function(n){if(t[n[0]]!=null)o+='<div><span>'+n[1]+'</span><b>'+t12(t[n[0]])+'</b></div>'});box.innerHTML=o+"</div>"}
 function run(){mushaf();var v=R.dataset.view;if(v==="prayer")tomorrow()}
-function soon(){[0,120,400,1000].forEach(function(t){setTimeout(run,t)})}
+/* يشتغل قبل ما الصفحة تترسم (مش بعدها) عشان ما يحرّكش الكروت قدام المستخدم */
+function soon(){run();var v=document.getElementById("mushafView");if(v&&!v.dataset.wObs){v.dataset.wObs=1;new MutationObserver(run).observe(v,{childList:true})}requestAnimationFrame(run)}
 new MutationObserver(soon).observe(R,{attributes:true,attributeFilter:["data-view"]});soon();
 window.__wPagesDiag=function(){var o={};try{o.pd1=!!prayerDay(1).t}catch(e){o.pd1="err:"+e.message}["mushafView","prayer"].forEach(function(id){var v=document.getElementById(id);o[id]=v?[].map.call(v.querySelectorAll("*"),function(e){return e.children.length<4&&e.textContent.trim().length<40&&/القراءة|العشاء/.test(e.textContent)?e.tagName+"."+e.className+"<"+(e.parentElement.className||e.parentElement.tagName):null}).filter(Boolean).slice(0,6).join(" ; "):"none"});return JSON.stringify(o)};
 })();
