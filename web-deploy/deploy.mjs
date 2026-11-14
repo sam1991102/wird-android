@@ -83,6 +83,7 @@ upsert('ui.js', '/*shell*/', fs.readFileSync(here + 'append-shell.js', 'utf8'));
 upsert('ui.js', '/*contrast*/', fs.readFileSync(here + 'append-contrast.js', 'utf8'));
 upsert('ui.js', '/*home*/', fs.readFileSync(here + 'append-home.js', 'utf8'));
 upsert('ui.js', '/*dayarc*/', fs.readFileSync(here + 'append-dayarc.js', 'utf8'));
+upsert('ui.js', '/*focus*/', fs.readFileSync(here + 'append-focus.js', 'utf8'));
 upsert('styles.css', '/*ios2*/', fs.readFileSync(here + 'append-ios2.css', 'utf8'));
 upsert('ui.js', '/*radio*/', fs.readFileSync(here + 'append-radio.js', 'utf8'));
 upsert('styles.css', '/*radio*/', fs.readFileSync(here + 'append-radio.css', 'utf8'));
@@ -115,6 +116,7 @@ upsert('styles.css', '/*pages*/', fs.readFileSync(here + 'append-pages.css', 'ut
 upsert('ui.js', '/*reader*/', fs.readFileSync(here + 'append-reader.js', 'utf8'));
 upsert('styles.css', '/*reader*/', fs.readFileSync(here + 'append-reader.css', 'utf8'));
 upsert('styles.css', '/*dayarc*/', fs.readFileSync(here + 'append-dayarc.css', 'utf8'));
+upsert('styles.css', '/*focus*/', fs.readFileSync(here + 'append-focus.css', 'utf8'));
 F['sw.js'][1] = F['sw.js'][1].replace(/wird-v\d+/, 'wird-v' + ver);
 log.push('sw.js: wird-v' + ver);
 console.log(log.join('\n'));

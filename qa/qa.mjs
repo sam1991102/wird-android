@@ -151,11 +151,13 @@ for (const S of SKINS) {
 {
   const { ctx, page } = await open(SKINS[0].ls);
   await wait(1500);
-  await page.evaluate(() => { try { const c = (window.categories || []).find(c => /الصباح/.test(c.name)); openFocus(c ? c.id : 'morning') } catch (e) {} }); await wait(1500);
+  await page.evaluate(() => { const b = document.querySelector('#homeAlerts .da-lb[data-k="morning"]') || document.querySelector('#homeAlerts .da-go'); b && b.click() }); await wait(1500);
   for (let i = 0; i < 4; i++) { await page.evaluate(() => { const b = [...document.querySelectorAll('#focus button')].find(b => /^أ\+?$/.test(b.textContent.trim()) || /حجم|تكبير/.test(b.getAttribute('aria-label') || '')); b && b.click() }); await wait(300) }
   await wait(1500); await shot(page, 'focus-big');
   const fo = await page.evaluate(() => { const root = document.getElementById('focus'); if (!root) return 'no #focus'; const walk = (e, d) => d > 5 ? '' : '  '.repeat(d) + e.tagName.toLowerCase() + (e.id ? '#' + e.id : '') + (typeof e.className === 'string' && e.className.trim() ? '.' + e.className.trim().split(/\s+/).join('.') : '') + ' ' + Math.round(e.getBoundingClientRect().top) + '/' + Math.round(e.getBoundingClientRect().height) + ' ' + getComputedStyle(e).display + '/' + getComputedStyle(e).overflowY + '/' + getComputedStyle(e).justifyContent + (e.children.length ? '' : ' «' + e.textContent.trim().slice(0, 20) + '»') + (e.getAttribute('aria-label') ? ' [' + e.getAttribute('aria-label') + ']' : '') + '\n' + [...e.children].slice(0, 14).map(c => walk(c, d + 1)).join(''); return walk(root, 0) });
-  notes.push('FOCUS:\n' + fo);
+  notes.push('FOCUS:\n' + fo.split('\n').slice(0, 25).join('\n'));
+  const fl = await page.evaluate(() => { const f = document.getElementById('focus'), st = document.getElementById('fStage'), t = document.getElementById('fText'); if (!f || !st || !t) return 'no-focus'; return { long: f.classList.contains('f-long'), textTop: Math.round(t.getBoundingClientRect().top - st.getBoundingClientRect().top), acts: getComputedStyle(document.getElementById('fActs')).display } });
+  if (fl === 'no-focus') bad('focus', 'شاشة الأذكار ما فتحتش'); else if (fl.long && fl.textTop < -2) bad('focus', 'أول النص مقصوص من فوق ' + JSON.stringify(fl)); else notes.push('FOCUS-CHECK ' + JSON.stringify(fl));
   await ctx.close();
 }
 // المعالج لمستخدم جديد

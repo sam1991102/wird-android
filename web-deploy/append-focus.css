@@ -1,0 +1,22 @@
+
+/*focus*/
+/* ١) لو النص أطول من المساحة يبدأ من أوله، ولو أقصر يفضل في النص */
+#fStage{justify-content:flex-start!important;position:relative;overflow-y:auto!important;overscroll-behavior:contain;scrollbar-width:none}
+#fStage::-webkit-scrollbar{display:none}
+#fStage>#fText{margin-top:auto}
+#fStage>#fSrc{margin-bottom:auto}
+/* ٢) حواف ناعمة + «باقي النص» */
+#fStage.f-fade-b{-webkit-mask-image:linear-gradient(#000 82%,transparent);mask-image:linear-gradient(#000 82%,transparent)}
+#fStage.f-fade-t{-webkit-mask-image:linear-gradient(transparent,#000 12%);mask-image:linear-gradient(transparent,#000 12%)}
+#fStage.f-fade-t.f-fade-b{-webkit-mask-image:linear-gradient(transparent,#000 12%,#000 82%,transparent);mask-image:linear-gradient(transparent,#000 12%,#000 82%,transparent)}
+#focus .f-more{position:relative;margin:-40px auto 4px;align-self:center;display:none;align-items:center;gap:4px;padding:6px 14px;border:0;border-radius:20px;background:rgba(0,0,0,.35);color:#fff;font:inherit;font-size:13px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);z-index:2;flex:none}
+#focus .f-more svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+#focus.f-has-more .f-more{display:inline-flex}
+/* ٣) الأزرار تتلم في «⋯» لما الذكر طويل */
+#focus .focus-bottom{position:relative}
+#focus .f-dots{display:none;position:absolute;left:0;top:50%;transform:translateY(-50%)}
+#focus.f-long .f-dots{display:grid}
+#focus .f-dots svg{width:22px;height:22px;fill:currentColor}
+#focus.f-long #fActs{display:none!important}
+#focus.f-long.f-acts-open #fActs{display:flex!important;position:absolute;left:12px;right:12px;bottom:calc(150px + env(safe-area-inset-bottom,0px));z-index:5;padding:10px;border-radius:20px;background:rgba(20,18,14,.82);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 10px 30px rgba(0,0,0,.3)}
+#focus.f-long .focus-hint{display:none}
