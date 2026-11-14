@@ -32,3 +32,6 @@ tidy();setTimeout(tidy,1500);document.addEventListener("click",function(e){if(e.
 /* تبديل الصفحة: نخفي المحتوى لحظة حتى يكتمل بناؤه ثم يظهر مرة واحدة بدل ما يتزحزح قدامك */
 (function(){var R=document.documentElement,t,last=R.dataset.view;
 new MutationObserver(function(){var v=R.dataset.view;if(v===last)return;last=v;R.classList.add("view-wait");clearTimeout(t);t=setTimeout(function(){R.classList.remove("view-wait")},180)}).observe(R,{attributes:true,attributeFilter:["data-view"]})})();
+/* إخفاء شارة «إسناده ضعيف» الحمراء فقط (يبقى سطر التخريج كما هو) */
+(function(){var q=0;function hide(){q=0;[].forEach.call(document.querySelectorAll("#focus span,#focus b,#focus em,#focus div,.wp-page span,.wp-page b,.wp-page div"),function(e){if(e.children.length===0&&e.dataset.wNoGrade!=="1"&&/^\s*إسناده\s+ضعيف\s*$/.test(e.textContent)){e.dataset.wNoGrade="1";e.style.display="none"}})}
+new MutationObserver(function(){if(!q)q=requestAnimationFrame(hide)}).observe(document.body,{childList:true,subtree:true});hide()})();
