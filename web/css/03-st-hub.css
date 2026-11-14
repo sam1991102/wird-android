@@ -10,3 +10,7 @@
 .sh-page .nt-body>.st-sec{border:0!important;background:none!important;box-shadow:none!important;padding:0!important;max-width:none}
 .sh-page .prayer-settings,.sh-page .st-sub{margin-top:0!important;padding-top:0!important;border-top:0!important}
 .sh-page .st-prayer-slot>.prayer-settings{margin-top:4px!important}
+@media (min-width:761px){.bottom-nav.nav5::after{display:none!important}.sh-page .wp-body{max-width:720px;margin-inline:auto;width:100%;box-sizing:border-box}}
+@media (min-width:761px){html body .bottom-nav.nav5::after{display:none!important}}
+.sh-page .prayer-settings{grid-template-columns:minmax(0,1fr)!important}
+@media (min-width:761px){html.st-open .wp-page.sh-page,html.st-open .wp-page.nt-page:not(.rd-tab){right:104px!important}}
