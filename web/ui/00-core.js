@@ -175,8 +175,6 @@ document.addEventListener("click",e=>{const b=e.target.closest("[data-mushaf]");
 window.__openMushaf=openIdx;window.__openSurahN=openSurahN;
 if(location.hash==="#mushaf")setTimeout(()=>openIdx(),300);
 })();
-document.querySelector('.bottom-nav [data-mushaf]')?.addEventListener("click",e=>e.preventDefault());
-document.querySelector('.bottom-nav [data-wird]')?.addEventListener("click",e=>{e.preventDefault();setCategory("mine");document.getElementById("library").scrollIntoView({behavior:"smooth"})});
 (()=>{"use strict";
 const MORE='<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h.01M12 12h.01M19 12h.01" stroke-width="3"/></svg>';
 function decorate(root){root.querySelectorAll(".dhikr-actions").forEach(a=>{const ex=a.querySelector(".act-extra");if(ex){a.querySelectorAll(":scope>[data-copy],:scope>[data-share],:scope>[data-img]").forEach(b=>ex.append(b));return}
@@ -195,16 +193,12 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape")document.querySelect
 const R=document.documentElement,mq={matches:true,addEventListener(){},addListener(){}};
 const secs=[...document.querySelectorAll("main>section")];
 secs.forEach(s=>{const id=s.id;s.dataset.v=id==="library"||id==="favoritesSection"?"library":id==="prayer"?"prayer":id==="tasbih"?"tasbih":"home"});
-function mark(v){document.querySelectorAll(".bottom-nav a").forEach(a=>a.classList.toggle("active",a.dataset.nav===v&&!a.hasAttribute("data-wird")||(v==="mine"&&a.hasAttribute("data-wird"))))}
-function setView(v,top=true){if(R.dataset.view===v)return;R.dataset.view=v;mark(v);if(top&&mq.matches)scrollTo({top:0,behavior:"instant"})}
+function setView(v,top=true){if(R.dataset.view===v)return;R.dataset.view=v;if(top&&mq.matches)scrollTo({top:0,behavior:"instant"})}
 window.__setView=setView;R.dataset.view="home";
 const orig=Element.prototype.scrollIntoView;
 Element.prototype.scrollIntoView=function(...a){if(mq.matches){const s=this.closest&&this.closest("main>section[data-v]");if(s&&s.dataset.v!==R.dataset.view){setView(s.dataset.v,false);s.hidden=s.id==="favoritesSection"?s.hidden:false}}return orig.apply(this,a)};
-document.addEventListener("click",e=>{if(!mq.matches)return;const a=e.target.closest(".bottom-nav a[data-nav]:not([data-mushaf]),.bottom-nav a[data-wird]");
- if(a){e.preventDefault();e.stopImmediatePropagation();if(a.hasAttribute("data-wird")){setView("library");setCategory("mine");mark("mine");return}setView(a.dataset.nav);scrollTo({top:0,behavior:"instant"});return}
- const l=e.target.closest('a[href^="#"]');if(l&&!l.closest(".bottom-nav")){const t=document.querySelector(l.getAttribute("href"));const s=t&&t.closest("main>section[data-v]");if(s&&s.dataset.v!==R.dataset.view){e.preventDefault();setView(s.dataset.v,false);orig.call(t,{behavior:"smooth"})}}},true);
+document.addEventListener("click",e=>{if(!mq.matches)return;const l=e.target.closest('a[href^="#"]');if(l&&!l.closest(".bottom-nav")){const t=document.querySelector(l.getAttribute("href"));const s=t&&t.closest("main>section[data-v]");if(s&&s.dataset.v!==R.dataset.view){e.preventDefault();setView(s.dataset.v,false);orig.call(t,{behavior:"smooth"})}}},true);
 if(mq.matches&&slugFromPath())setView("library",false);
-mark("home");
 })();
 document.addEventListener("click",async e=>{const b=e.target.closest("[data-share]");if(!b)return;const d=adhkar.find(x=>x.id===+b.dataset.share);if(!d)return;e.stopImmediatePropagation();e.preventDefault();
  const url=location.origin+"/d/"+d.id,text=d.text+(d.source?"\n\n— "+d.source:"");
@@ -561,7 +555,7 @@ grid.addEventListener("click",e=>{const t=e.target.closest("[data-tile]");if(!t)
 back.addEventListener("click",()=>{search.value="";search.dispatchEvent(new Event("input"));mode("grid");scrollTo({top:0,behavior:"instant"})});
 const orig=setCategory;window.setCategory=setCategory=function(...a){const r=orig.apply(this,a);if(R.dataset.lib==="grid")mode("list");return r};
 search.addEventListener("input",()=>{if(search.value.trim())mode("list")});
-document.addEventListener("click",e=>{if(e.target.closest('.bottom-nav a[data-nav="library"],.bottom-nav.nav5 [data-tab="library"]')){search.value="";mode("grid")}},true);
+document.addEventListener("click",e=>{if(e.target.closest('.bottom-nav.nav5 [data-tab="library"]')){search.value="";mode("grid")}},true);
 mode(slugFromPath()?"list":"grid");
 document.addEventListener("visibilitychange",()=>{if(!document.hidden&&R.dataset.lib==="grid")renderGrid()});
 const f=document.getElementById("focus");if(f)new MutationObserver(()=>{if(f.hidden&&R.dataset.lib==="grid")renderGrid()}).observe(f,{attributes:true,attributeFilter:["hidden"]});
@@ -575,7 +569,7 @@ history.replaceState=function(s,t,u){const h=history.state;if(s&&!s.w&&h&&h.w)re
 const R=document.documentElement,mq={matches:true,addEventListener(){},addListener(){}},$=s=>document.querySelector(s);
 const ar=n=>String(n).replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]);
 const icon=n=>{try{return ic(n)}catch(e){return ""}};
-const main=$("main"),oldNav=$(".bottom-nav");if(!main||!oldNav||$(".nav5"))return;
+const main=$("main");if(!main||$(".nav5"))return;
 // الشريط السفلي: صفحات (روابط) + الإذاعة والإعدادات (أزرار تفتح صفحات فوقية). السبحة موجودة في القائمة الجانبية.
 const TABS=[["home","الرئيسية","home"],["library","الأذكار","list"],["mushaf","المصحف","quran"],["radio","الإذاعة","radio",1],["prayer","المواقيت","clock"],["settings","الإعدادات","settings",1]];
 const nav=document.createElement("nav");nav.className="bottom-nav nav5";nav.setAttribute("aria-label","التنقل الرئيسي");
@@ -583,7 +577,7 @@ nav.innerHTML=TABS.map(([v,t,i,btn])=>btn?`<button type="button" class="nv-x${v=
 nav.addEventListener("click",e=>{const b=e.target.closest(".nv-x");if(!b)return;e.preventDefault();
  if(b.dataset.tab==="settings"){window.__openSettings&&__openSettings();return}
  if(document.querySelector(".wp-page.rd-page"))return;window.__closeOverlays&&__closeOverlays();setTimeout(()=>window.__openRadio&&__openRadio(),120)});
-oldNav.classList.add("nav-old");oldNav.setAttribute("aria-hidden","true");oldNav.after(nav);
+(document.querySelector("footer")||main).after(nav);
 const pageNow=()=>{const v=parseInt(String(localStorage.getItem("wird-mushaf-page")||"").replace(/\D/g,""),10);return v>=1&&v<=604?v:1};
 const mv=document.createElement("section");mv.id="mushafView";mv.className="container mv";mv.dataset.v="mushaf";
 mv.innerHTML=`<header class="vh-head"><h2>المصحف الشريف</h2><p>صفحات مصحف المدينة كما تعرفها، أو اختر سورة.</p></header>
