@@ -8,6 +8,9 @@ on:
         description: 'تجربة بدون نشر (yes/no)'
         default: 'no'
 
+permissions:
+  contents: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -20,3 +23,10 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         run: node web-deploy/deploy.mjs ${{ github.event.inputs.dry == 'yes' && '--dry' || '' }}
+      - name: Save site source snapshot (branch site-source)
+        if: always()
+        run: |
+          [ -d site-source ] || { echo "no snapshot"; exit 0; }
+          cd site-source && git init -q && git checkout -q -b site-source && git add -A
+          git -c user.name=wird-deploy -c user.email=deploy@users.noreply.github.com commit -qm "Site source snapshot ${{ github.run_id }}"
+          git push -qf "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" site-source

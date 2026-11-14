@@ -34,6 +34,7 @@ if (!code || !code.startsWith('const FILES=')) throw new Error('unexpected worke
 
 const cut = code.indexOf(';\nconst ROUTES=');
 const F = JSON.parse(code.slice('const FILES='.length, cut));
+const ORIG = JSON.parse(JSON.stringify(F)); // نسخة الموقع كما هو قبل أي تعديل
 let tail = code.slice(cut);
 const log = [];
 const rep = (file, a, b) => {
@@ -137,6 +138,30 @@ console.log(log.join('\n'));
 const out = 'const FILES=' + JSON.stringify(F) + tail;
 await import('data:text/javascript;base64,' + Buffer.from(out).toString('base64')).catch(e => { if (e instanceof SyntaxError) throw new Error('built code does not parse: ' + e.message); console.log('note:', e.message); });
 console.log('built', out.length, 'bytes');
+
+// نسخة من ملفات الموقع (قبل وبعد التعديلات) تُحفظ في فرع site-source — بدون كود الـ worker ولا أي أسرار
+{
+  const root = here + '../site-source/';
+  const SECRET = /-----BEGIN [A-Z ]*PRIVATE KEY-----|\bsk_(live|test)_|\bghp_[A-Za-z0-9]{20,}|CLOUDFLARE_API_TOKEN|"privateKey"\s*:|\bVAPID_PRIVATE/;
+  const skipped = [];
+  const dump = (dir, files) => {
+    const index = {};
+    for (const [name, v] of Object.entries(files)) {
+      const [type, body] = Array.isArray(v) ? v : ['', v];
+      const text = typeof body === 'string' ? body : JSON.stringify(body);
+      if (SECRET.test(text)) { skipped.push(dir + name); continue; }
+      const path = root + dir + name.replace(/^\/+/, '').replace(/\.\.+/g, '_');
+      fs.mkdirSync(path.slice(0, path.lastIndexOf('/') + 1), { recursive: true });
+      fs.writeFileSync(path, text);
+      index[name] = { type, bytes: text.length };
+    }
+    fs.writeFileSync(root + dir + '_index.json', JSON.stringify(index, null, 1));
+  };
+  fs.rmSync(root, { recursive: true, force: true });
+  dump('original/', ORIG);
+  dump('live/', F);
+  console.log('snapshot: site-source written', skipped.length ? '(skipped for safety: ' + skipped.join(', ') + ')' : '');
+}
 if (DRY) process.exit(0);
 
 // 3) Worker azkar
