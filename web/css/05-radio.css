@@ -23,3 +23,12 @@
 .rd-bp,.rd-bo{width:38px;height:38px;border-radius:50%;border:0;background:var(--primary);color:#fff;font-size:14px;cursor:pointer}.rd-bo{background:transparent;color:var(--muted);font-size:20px}
 
 html[data-view]:not([data-view="home"]) #rdTile{display:none!important}
+
+/* الإذاعة كتبويب أساسي: نفس شكل الأذكار والمصحف */
+.wp-page.rd-tab{bottom:var(--nav-h,64px)!important;background:var(--bg,#F7F5EF)!important;animation:none!important;transform:none!important;box-shadow:none!important}
+.rd-tab .rd-top{padding:18px 20px 6px;text-align:start}
+.rd-tab .rd-top h1{margin:0;font-size:30px;line-height:1.3;color:var(--primary);font-weight:800}
+.rd-tab .rd-top p{margin:4px 0 0;font-size:14px;color:var(--muted)}
+.rd-tab .rd-fl{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:14px;background:#0F2A22;color:#E2C27F;font-size:0}
+html.ios .rd-tab .rd-fl{background:#1E3A8A;color:#F2CF83}
+.rd-tab .rd-fl svg{width:24px;height:24px}
