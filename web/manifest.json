@@ -144,7 +144,7 @@
   },
   {
    "name": "kids/kaaba.png",
-   "type": "image/png"
+   "type": "image/webp"
   },
   {
    "name": "kids/fil.png",
@@ -152,11 +152,11 @@
   },
   {
    "name": "kids/desert.png",
-   "type": "image/png"
+   "type": "image/webp"
   },
   {
    "name": "kids/rug.png",
-   "type": "image/png"
+   "type": "image/webp"
   },
   {
    "name": "kids/water.png",
@@ -164,35 +164,35 @@
   },
   {
    "name": "kids/mosque.png",
-   "type": "image/png"
+   "type": "image/webp"
   },
   {
    "name": "kids/f2.png",
-   "type": "image/png"
+   "type": "image/webp"
   },
   {
    "name": "kids/f3.png",
-   "type": "image/png"
+   "type": "image/webp"
   },
   {
    "name": "kids/f4.png",
-   "type": "image/png"
+   "type": "image/webp"
   },
   {
    "name": "kids/f5.png",
-   "type": "image/png"
+   "type": "image/webp"
   },
   {
    "name": "kids/y1.png",
-   "type": "image/png"
+   "type": "image/webp"
   },
   {
    "name": "kids/y4.png",
-   "type": "image/png"
+   "type": "image/webp"
   },
   {
    "name": "kids/w8.png",
-   "type": "image/png"
+   "type": "image/webp"
   }
  ],
  "ui": [
