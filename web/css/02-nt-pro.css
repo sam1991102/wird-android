@@ -46,3 +46,9 @@ html.dark .nt-play:not(.on){background:#22322b}
 .nt-all{width:100%;margin-top:22px}
 
 .nt-grid>.nt-card:last-child:nth-child(odd){grid-column:1/-1;min-height:auto;flex-direction:row;align-items:center}.nt-grid>.nt-card:last-child:nth-child(odd) .nt-sw{position:static;margin-inline-start:auto}
+/* مفتاح «الصلاة القادمة على شاشة القفل» بنفس شكل باقي المفاتيح (كان checkbox عادي) */
+input.og-sw{appearance:none;-webkit-appearance:none;margin:0;width:46px;height:28px;border-radius:999px;background:var(--paper-2,#e9e4d8);position:relative;cursor:pointer;flex:none;transition:background .2s}
+input.og-sw::before{content:"";position:absolute;top:3px;right:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:right .2s}
+input.og-sw:checked{background:var(--gold-2,#d8b86c)}input.og-sw:checked::before{right:21px}
+html.dark input.og-sw:not(:checked){background:#2a3a33}
+input.og-sw:focus-visible{outline:2px solid var(--gold-2,#d8b86c);outline-offset:2px}

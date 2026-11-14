@@ -10,3 +10,7 @@
 
 /* الإبداعي الفاتح: شريط «الصلاة القادمة» بنفس لون الشريط العلوي بدل الرمادي */
 html.ios:not(.dark) .tb-strip{background:rgba(30,58,138,.06)!important;border-top:1px solid rgba(15,27,51,.06)}
+/* مساحة لمس كافية (٤٤ بكسل تقريبًا) للأزرار الصغيرة، من غير ما شكلها يتغيّر */
+.geo-x,.wp-reset{position:relative;min-width:36px;min-height:36px}
+.geo-x::after,.wp-reset::after,.footer a::after{content:"";position:absolute;inset:-8px}
+.footer a{position:relative;display:inline-block;padding:6px 2px}

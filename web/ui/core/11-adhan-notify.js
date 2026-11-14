@@ -130,7 +130,7 @@ function paint(sec){
   sec.querySelector("#azTest").disabled=!(S.on&&perm==="granted");
 }
 function inject(){
-  const ov=document.querySelector(".st");if(!ov||ov.querySelector("#st-adhan"))return;
+  const ov=document.querySelector(".st");if(!ov||document.getElementById("st-adhan"))return;/* ممكن يكون منقول لصفحته، فالفحص على الصفحة كلها */
   const body=ov.querySelector(".st-body");if(!body)return;
   body.insertAdjacentHTML("afterbegin",html());
   const tabs=ov.querySelector(".st-tabs");tabs&&tabs.insertAdjacentHTML("afterbegin",'<a href="#st-adhan">الأذان</a>');

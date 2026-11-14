@@ -17,7 +17,7 @@ function build(){rd=document.createElement("div");rd.className="reader";rd.setAt
  try{const q=localStorage.getItem("wird-qs");if(q)rd.style.setProperty("--qs",q)}catch(e){}}
 function setPlay(on){const b=rd.querySelector(".r-play");b.classList.toggle("on",on);b.setAttribute("aria-label",on?"إيقاف التلاوة":"استماع");b.querySelector("path").setAttribute("d",on?"M7 5h4v14H7zM13 5h4v14h-4z":"M8 5v14l11-7z")}
 let last;
-async function open(k,from){last=from;try{await loadData()}catch(e){toast&&toast("تعذّر تحميل السورة، أعد المحاولة");return}if(!rd)build();cur=k;const S=SURAHS[k];
+async function open(k,from){last=from;try{await loadData()}catch(e){toast&&toast("تعذّر تحميل السورة، أعد المحاولة");return}const S=SURAHS[k];if(!S)return;if(!rd)build();cur=k;
  rd.querySelector(".reader-title strong").textContent=S.name;rd.querySelector(".reader-title small").textContent=S.when+" · "+(n=>n+(n>=3&&n<=10?" آيات":" آية"))(S.a.length);rd.setAttribute("aria-label",S.name);
  rd.querySelector(".mushaf").innerHTML=S.a.map((t,i)=>'<span class="ayah">'+t.replace(/[<>&]/g,"")+' <span class="ayah-n" aria-label="آية '+(i+1)+'">\uFD3F'+AR(i+1)+'\uFD3E</span></span> ').join("");
  if(audio&&!audio.paused&&audio.dataset.s!==k){audio.pause();setPlay(false)}else if(audio)setPlay(!audio.paused);
