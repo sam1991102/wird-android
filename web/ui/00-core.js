@@ -576,9 +576,13 @@ const R=document.documentElement,mq={matches:true,addEventListener(){},addListen
 const ar=n=>String(n).replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]);
 const icon=n=>{try{return ic(n)}catch(e){return ""}};
 const main=$("main"),oldNav=$(".bottom-nav");if(!main||!oldNav||$(".nav5"))return;
-const TABS=[["home","الرئيسية","home"],["library","الأذكار","list"],["mushaf","المصحف","quran"],["tasbih","السبحة","tasbih"],["prayer","المواقيت","clock"]];
+// الشريط السفلي: صفحات (روابط) + الإذاعة والإعدادات (أزرار تفتح صفحات فوقية). السبحة موجودة في القائمة الجانبية.
+const TABS=[["home","الرئيسية","home"],["library","الأذكار","list"],["mushaf","المصحف","quran"],["radio","الإذاعة","radio",1],["prayer","المواقيت","clock"],["settings","الإعدادات","settings",1]];
 const nav=document.createElement("nav");nav.className="bottom-nav nav5";nav.setAttribute("aria-label","التنقل الرئيسي");
-nav.innerHTML=TABS.map(([v,t,i])=>`<a href="${v==="home"?"/":"/#"+v}" data-tab="${v}"><span class="ni" aria-hidden="true">${icon(i)}</span><span class="nt">${t}</span></a>`).join("");
+nav.innerHTML=TABS.map(([v,t,i,btn])=>btn?`<button type="button" class="nv-x${v==="radio"?" nv-radio":""}" data-tab="${v}"><span class="ni" aria-hidden="true">${icon(i)}</span><span class="nt">${t}</span></button>`:`<a href="${v==="home"?"/":"/#"+v}" data-tab="${v}"><span class="ni" aria-hidden="true">${icon(i)}</span><span class="nt">${t}</span></a>`).join("");
+nav.addEventListener("click",e=>{const b=e.target.closest(".nv-x");if(!b)return;e.preventDefault();
+ if(b.dataset.tab==="settings"){window.__openSettings&&__openSettings();return}
+ if(document.querySelector(".wp-page.rd-page"))return;window.__closeOverlays&&__closeOverlays();setTimeout(()=>window.__openRadio&&__openRadio(),120)});
 oldNav.classList.add("nav-old");oldNav.setAttribute("aria-hidden","true");oldNav.after(nav);
 const pageNow=()=>{const v=parseInt(String(localStorage.getItem("wird-mushaf-page")||"").replace(/\D/g,""),10);return v>=1&&v<=604?v:1};
 const mv=document.createElement("section");mv.id="mushafView";mv.className="container mv";mv.dataset.v="mushaf";

@@ -1,5 +1,5 @@
 // روبوت فحص الموقع الحي: لقطات + تقرير مشاكل
-import { chromium, devices } from 'playwright';
+const { chromium, devices } = await import(process.env.PW || 'playwright');
 import fs from 'fs';
 const SITE = process.env.SITE || 'https://wird-azkar.pages.dev/';
 const OUT = new URL('./out/', import.meta.url).pathname;
@@ -13,7 +13,7 @@ const SKINS = [
   { k: 'creative-light', ls: { 'wird-skin': 'ios', 'wird-dark': 'false', 'wird-theme': 'light' } },
   { k: 'creative-dark', ls: { 'wird-skin': 'ios', 'wird-dark': 'true', 'wird-theme': 'dark' } },
 ];
-const browser = await chromium.launch();
+const browser = await chromium.launch(process.env.CHROME ? { executablePath: process.env.CHROME } : {});
 
 async function open(ls, fresh = false) {
   const ctx = await browser.newContext({ ...devices['Pixel 7'], colorScheme: ls['wird-dark'] === 'true' ? 'dark' : 'light', locale: 'ar', timezoneId: 'Asia/Riyadh', geolocation: { latitude: 24.71, longitude: 46.67 }, permissions: ['geolocation'] });
