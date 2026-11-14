@@ -9,8 +9,6 @@ var STEPS=[
  {id:"st-dr",t:"تذكير بالذكر",s:"كم مرة يذكّرك وِرد بالذكر خلال اليوم"},
  {id:"st-qari",t:"القرآن والقارئ",s:"اختر صوت التلاوة واتجاه تقليب الصفحات"},
  {id:"st-look",t:"المظهر",s:"النمط والوضع الليلي وحجم الخط والأرقام"}];
-/* نعرض فقط الخطوات اللي صفحتها موجودة على الجهاز ده (منبّه الفجر مثلًا على أندرويد بس) */
-function avail(){return STEPS.filter(function(x){return x.id==="notif"||!!document.getElementById(x.id)})}
 var N=STEPS.length+2,ov=null,bar=null,i=-1;
 function ar(n){return String(n).replace(/\d/g,function(d){return"٠١٢٣٤٥٦٧٨٩"[d]})}
 function done(){try{return localStorage.getItem(K)==="1"}catch(e){return true}}
@@ -19,7 +17,7 @@ function el(h,c){var d=document.createElement("div");d.className=c;d.innerHTML=h
 function close(){var p=document.querySelectorAll(".wp-page.sh-page,.wp-page.nt-page");[].forEach.call(p,function(x){x.remove()});window.__closeOverlays&&__closeOverlays()}
 function dots(k){var h="";for(var j=0;j<N;j++)h+='<i class="'+(j<=k?"on":"")+'"></i>';return'<div class="su-dots" aria-hidden="true">'+h+"</div>"}
 function screen(html){ov&&ov.remove();ov=el(html,"su-ov");ov.setAttribute("role","dialog");ov.setAttribute("aria-modal","true");document.body.appendChild(ov);R.classList.add("su-on")}
-function welcome(){STEPS=avail();N=STEPS.length+2;var onb=document.getElementById("onb");if(onb)onb.hidden=true;
+function welcome(){var onb=document.getElementById("onb");if(onb)onb.hidden=true;
  screen(dots(0)+'<div class="su-logo">وِرد</div><h1>أهلًا بك في وِرد</h1><p>دقيقة واحدة نجهّز فيها المواقيت والأذان والتذكيرات على مقاسك. كل اختيار يمكنك تغييره لاحقًا من الإعدادات.</p><button type="button" class="su-main" data-su="go">ابدأ الإعداد</button><button type="button" class="su-link" data-su="restore">عندي نسخة احتياطية</button><button type="button" class="su-link" data-su="skip">تخطَّ الآن</button>')}
 function finish(){bar&&bar.remove();bar=null;close();
  var A=!!window.__WIRD_NATIVE;
@@ -28,7 +26,9 @@ function step(k){i=k;if(k>=STEPS.length){finish();return}ov&&ov.remove();ov=null
  var s=STEPS[k];if(!bar){bar=el("","su-bar");document.body.appendChild(bar)}
  bar.innerHTML=dots(k+1)+'<div class="su-row"><div class="su-tx"><small>الخطوة '+ar(k+1)+" من "+ar(STEPS.length)+"</small><b>"+s.t+"</b><span>"+s.s+'</span></div></div><div class="su-btns"><button type="button" class="su-link" data-su="all">إنهاء</button><button type="button" class="su-main" data-su="next">'+(k===STEPS.length-1?"إنهاء الإعداد":"التالي")+"</button></div>";
  go(s.id)}
-function go(id){var hub=[].find.call(document.querySelectorAll(".st"),function(x){return!x.hidden}),row=hub&&hub.querySelector('.sh-row[data-id="'+id+'"]');if(row){row.click();return}window.__openSettingsPage&&__openSettingsPage(id)}
+/* يفتح صفحة الخطوة من الإعدادات؛ لو الصفحة مش موجودة على الجهاز ده (منبّه الفجر على أندرويد بس مثلًا) يعدّيها */
+function go(id){var tries=0;(function t(){var hub=[].find.call(document.querySelectorAll(".st"),function(x){return!x.hidden&&x.offsetHeight}),row=hub&&hub.querySelector('.sh-row[data-id="'+id+'"]');
+ if(row){row.click();return}if(!hub&&tries===0&&window.__openSettings){tries++;__openSettings();setTimeout(t,350);return}step(i+1)})()}
 function end(){mark();ov&&ov.remove();ov=null;bar&&bar.remove();bar=null;close();R.classList.remove("su-on");window.__wirdGo&&__wirdGo("home")}
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-su]");if(!b)return;e.preventDefault();var a=b.dataset.su;
  if(a==="go")step(0);else if(a==="next")step(i+1);else if(a==="all")finish();else if(a==="skip"||a==="end")end();

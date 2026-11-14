@@ -159,6 +159,7 @@ for (const S of SKINS) {
     ids = await page.$$eval('.sh-row[data-id]', r => [...new Set(r.map(x => x.dataset.id))]);
     notes.push(`${k} sweep pages: ${ids.join(',') || 'NONE'}`);
     if (!ids.length) bad(k + '/sweep', 'ما لقيتش صفحات الإعدادات للفحص');
+    for (const need of ['notif', 'st-prayer', 'st-adhan', 'st-dr', 'st-remind', 'st-look', 'st-qari', 'st-data', 'st-about']) if (!ids.includes(need)) bad(k + '/settings', 'صف ناقص من الإعدادات: ' + need);
     await ctx.close();
   }
   for (const id of ids) {
