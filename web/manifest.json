@@ -217,9 +217,7 @@
   "19-home.js",
   "20-pages.js",
   "21-reader.js",
-  "22-dayarc.js",
   "23-focus.js",
-  "24-skynext.js",
   "25-polish.js"
  ],
  "css": [
@@ -236,9 +234,8 @@
   "10-nav2.css",
   "11-pages.css",
   "12-reader.css",
-  "13-dayarc.css",
+  "13-home.css",
   "14-focus.css",
-  "15-skynext.css",
   "16-polish.css"
  ]
 }
