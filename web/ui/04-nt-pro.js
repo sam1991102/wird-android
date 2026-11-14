@@ -39,5 +39,5 @@ function detail(k){var P=PRS.find(function(x){return x[0]===k}),pg=page("صلا�
 window.__openNotif=openMain;
 function entry(){var sec=document.getElementById("st-adhan");if(!sec||sec.querySelector(".nt-entry"))return;var st=sec.querySelector("#azStatus");var a=document.createElement("button");a.type="button";a.className="nt-entry";a.innerHTML='<span class="nt-ic" style="--c:#d8b86c"><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10 21h4"/></svg></span><span class="nt-tx"><b>إعدادات الإشعارات</b><small>أذان وتنبيه وإقامة لكل صلاة، وتذكيرات الأذكار</small></span><span class="nt-ch">‹</span>';a.onclick=openMain;(st||sec.firstElementChild).after(a);
  ["#azPre"].forEach(function(q){var r=sec.querySelector(q);r&&r.closest(".st-row")&&(r.closest(".st-row").hidden=true)});var ch=sec.querySelector("[data-pr]");ch&&ch.closest(".st-row")&&(ch.closest(".st-row").hidden=true);var oc=sec.querySelector('[data-o="morning"]');oc&&oc.closest(".st-row")&&(oc.closest(".st-row").hidden=true);var sd=sec.querySelector("#azSound");if(sd){var l=sd.closest(".st-row")&&sd.closest(".st-row").querySelector("strong");if(l)l.textContent="الصوت الافتراضي"}}
-new MutationObserver(function(){clearTimeout(entry.t);entry.t=setTimeout(entry,0)}).observe(document.body,{childList:true,subtree:true});entry();
+__wOnDom(entry);
 })();

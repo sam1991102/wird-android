@@ -17,5 +17,5 @@ var d=document.createElement("div");d.className="sh-list sl-box";d.style.margin=
 d.innerHTML='<label class="sh-row" style="cursor:pointer"><span class="nt-ic" style="--c:#8a8cf5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h4l5 4V6L8 10H4zM17 9l4 6M21 9l-4 6"/></svg></span><span class="sh-tx"><b>احترام الوضع الصامت</b><small>إذا كان الهاتف صامتًا أو هزّازًا يظهر إشعار الصلاة بدون صوت الأذان</small></span><input type="checkbox" style="width:46px;height:26px;accent-color:#d8b86c"></label>';
 var c=d.querySelector("input");c.checked=onS();c.onchange=function(){try{localStorage.setItem(KS,c.checked?"1":"0")}catch(e){}pushS();try{toast(c.checked?"لن يُرفع الأذان والهاتف صامت":"سيُرفع الأذان حتى والهاتف صامت")}catch(e){}};
 og.parentNode.insertBefore(d,og.nextSibling)}
-new MutationObserver(function(){document.querySelectorAll(".nt-page").forEach(function(pg){add(pg);addS(pg)})}).observe(document.body,{childList:true});
+__wOnDom(function(){document.querySelectorAll(".nt-page").forEach(function(pg){add(pg);addS(pg)})});
 })();

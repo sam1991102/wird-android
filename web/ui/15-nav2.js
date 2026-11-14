@@ -9,7 +9,7 @@ function current(){if(document.querySelector(".wp-page.rd-page"))return"radio";i
 function paint(k){var n=bar();if(!n)return;if(n.dataset.lit===k&&n.querySelector(".is-lit"))return;n.dataset.lit=k;[].forEach.call(n.children,function(c){var on=key(c)===k;c.classList.toggle("is-lit",on);on?c.setAttribute("aria-current","page"):c.removeAttribute("aria-current")})}
 var q=0;function update(){if(q)return;q=requestAnimationFrame(function(){q=0;paint(current())})}
 new MutationObserver(update).observe(R,{attributes:true,attributeFilter:["data-view"]});
-new MutationObserver(update).observe(document.body,{childList:true});
+__wOnDom(update);
 document.addEventListener("click",function(e){var c=e.target.closest&&e.target.closest(".bottom-nav.nav5>*");if(!c)return;var k=key(c);
  if(k==="radio"&&document.querySelector(".wp-page.rd-page"))return;if(k==="settings"&&settingsOpen()&&!document.querySelector(".wp-page"))return;
  /* أي صفحة مفتوحة تُقفل فورًا بدون حركة، ثم يكمل الضغط طبيعي */

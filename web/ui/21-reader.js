@@ -11,5 +11,5 @@ function setup(mp){if(mp.dataset.wRd)return;mp.dataset.wRd=1;mp.classList.toggle
   rep?bar.insertBefore(b,rep):bar.appendChild(b)}
  mp.addEventListener("click",function(e){var t=e.target;if(t.closest("button,input,label,a,.mp-bar,.mp-foot,[role=button]"))return;var line=t.closest(".mp-lines");if(line&&t!==line&&t.textContent.trim())return;mp.classList.toggle("mp-imm")});}
 function scan(){var mp=document.querySelector(".mp");if(mp)setup(mp)}
-new MutationObserver(scan).observe(document.body,{childList:true});scan();
+__wOnDom(scan);
 })();

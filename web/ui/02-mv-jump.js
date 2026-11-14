@@ -19,6 +19,6 @@ function ui(){var v=document.getElementById("mushafView");if(!v||document.getEle
  ref.parentElement.insertBefore(f,ref);var inp=f.querySelector("input"),msg=f.querySelector(".mv-jm");
  inp.addEventListener("input",async function(){var r=await resolve(inp.value);msg.textContent=!inp.value.trim()?"":r&&r.err?r.err:r?r.l+" ← صفحة "+ar(r.p):"";msg.classList.toggle("err",!!(r&&r.err))});
  f.addEventListener("submit",async function(e){e.preventDefault();var r=await resolve(inp.value);if(!r||r.err){msg.textContent=r?r.err:"اكتب رقم صفحة أو اسم سورة";msg.classList.add("err");return}inp.blur();window.__openPage&&window.__openPage(r.p)})}
-new MutationObserver(function(){clearTimeout(ui.t);ui.t=setTimeout(ui,0)}).observe(document.body,{childList:true,subtree:true});ui();
+__wOnDom(ui);
 window.__mvResolve=resolve;
 })();

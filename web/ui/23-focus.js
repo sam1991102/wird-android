@@ -18,5 +18,5 @@ function bind(){var e=els();if(!e||e.f.dataset.wFx)return;e.f.dataset.wFx=1;
  new MutationObserver(later).observe(e.f,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:["class","style","hidden"]});
  document.addEventListener("click",function(ev){if(!ev.target.closest("#fActs,.f-dots"))e.f.classList.remove("f-acts-open")});
  addEventListener("resize",later);later()}
-new MutationObserver(bind).observe(document.body,{childList:true});bind();
+__wOnDom(bind);
 })();

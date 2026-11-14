@@ -7,8 +7,8 @@ r.innerHTML='<div class="st-l"><strong>نمط التصميم</strong><small>«إ
 var h=s.querySelector(".st-row");h?s.insertBefore(r,h):s.appendChild(r);set(get())}
 /* الضغط بالتفويض على مستوى الصفحة: يشتغل حتى لو صفحة الإعدادات نسخة من القسم الأصلي */
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest(".skin-seg [data-skin]");if(b){e.preventDefault();set(b.dataset.skin)}});
-new MutationObserver(add).observe(document.body,{childList:true,subtree:false});add();
+__wOnDom(add);
 })();
 (function(){var R=document.documentElement;function btn(t){var s=document.getElementById("st-look");if(!s)return null;return[].find.call(s.querySelectorAll("button"),function(b){return b.textContent.trim()===t})}
 function fix(){var p=btn("ورقي");if(p)p.classList.add("m-sepia");if(R.classList.contains("ios")&&R.classList.contains("sepia")){var l=btn("فاتح");if(l){l.click()}else{R.classList.remove("sepia");try{localStorage.setItem("wird-sepia","false")}catch(e){}}}}
-new MutationObserver(fix).observe(document.body,{childList:true});new MutationObserver(fix).observe(R,{attributes:true,attributeFilter:["class"]});fix()})();
+__wOnDom(fix);new MutationObserver(fix).observe(R,{attributes:true,attributeFilter:["class"]});fix()})();

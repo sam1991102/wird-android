@@ -4,7 +4,7 @@
 (function(){
 var RAD='<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="12" rx="3"/><path d="M7 8l9-5"/><circle cx="15.5" cy="14" r="2.5"/><path d="M6.5 12.5h4M6.5 15.5h4"/></svg>';
 function drawer(){var d=document.querySelector(".dr2 .dr-p");if(!d||d.querySelector('[data-n="radio"]'))return;var k=d.querySelector('[data-n="kids"]');if(!k)return;var r=document.createElement("button");r.type="button";r.className="dr-i2";r.dataset.n="radio";r.innerHTML='<span class="dr-ic">'+RAD+'</span><span class="dr-l">إذاعة القرآن الكريم</span>';r.onclick=function(e){e.stopPropagation();var x=document.querySelector(".dr2 [data-x]");x&&x.click();setTimeout(function(){window.__openRadio&&__openRadio()},200)};k.parentNode.insertBefore(r,k)}
-new MutationObserver(drawer).observe(document.body,{childList:true});document.addEventListener("click",function(e){if(e.target.closest&&e.target.closest("#menuBtn,[data-n],.dr-x"))[0,60,300,800].forEach(function(t){setTimeout(drawer,t)})},true);drawer();
+__wOnDom(drawer);document.addEventListener("click",function(e){if(e.target.closest&&e.target.closest("#menuBtn,[data-n],.dr-x"))[0,60,300,800].forEach(function(t){setTimeout(drawer,t)})},true);drawer();
 })();
 /* «الإعدادات» صفحة فوقية وليست view: لو اتضبطت كـ view نرجع للرئيسية */
 (function(){var R=document.documentElement;function g(){if(R.dataset.view==="settings"&&window.__setView)__setView("home",false)}new MutationObserver(g).observe(R,{attributes:true,attributeFilter:["data-view"]});g()})();
@@ -32,4 +32,4 @@ tidy();setTimeout(tidy,1500);document.addEventListener("click",function(e){if(e.
 new MutationObserver(function(){var v=R.dataset.view;if(v===last)return;last=v;R.classList.add("view-wait");clearTimeout(t);t=setTimeout(function(){R.classList.remove("view-wait")},180)}).observe(R,{attributes:true,attributeFilter:["data-view"]})})();
 /* إخفاء شارة «إسناده ضعيف» الحمراء فقط (يبقى سطر التخريج كما هو) */
 (function(){var q=0;function hide(){q=0;[].forEach.call(document.querySelectorAll("#focus span,#focus b,#focus em,#focus div,.wp-page span,.wp-page b,.wp-page div"),function(e){if(e.children.length===0&&e.dataset.wNoGrade!=="1"&&/^\s*إسناده\s+ضعيف\s*$/.test(e.textContent)){e.dataset.wNoGrade="1";e.style.display="none"}})}
-new MutationObserver(function(){if(!q)q=requestAnimationFrame(hide)}).observe(document.body,{childList:true,subtree:true});hide()})();
+__wOnDom(hide)})();

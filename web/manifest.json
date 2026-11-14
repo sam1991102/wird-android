@@ -197,6 +197,7 @@
  ],
  "ui": [
   "00-core.js",
+  "00b-dom.js",
   "01-mv-tidy.js",
   "02-mv-jump.js",
   "03-mp-hint.js",

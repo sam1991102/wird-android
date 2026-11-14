@@ -53,6 +53,6 @@ function openPage(){var el=document.createElement("div");el.className="wp-page t
 window.__openRadio=openPage;
 /* مداخل: كارت في الرئيسية بعد بطاقة القرآن، وزر في تبويب المصحف */
 function entries(){if(document.getElementById("rdTile"))return;var k=document.getElementById("kidsTile")||document.getElementById("quranCard");if(!k)return;var t=document.createElement("button");t.type="button";t.id="rdTile";t.className="kd-tile container rd-home";t.innerHTML='<span class="kd-art rd-art"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="8" width="18" height="12" rx="3"/><path d="M7 8l9-5"/><circle cx="15.5" cy="14" r="2.5"/><path d="M6.5 12.5h4M6.5 15.5h4"/></svg></span><span><b>إذاعة القرآن الكريم</b><small>مكة · القاهرة · السعودية · القرّاء · السيرة</small></span>';t.onclick=openPage;k.after(t)}
-new MutationObserver(entries).observe(document.body,{childList:true});entries();setTimeout(entries,1500);
+__wOnDom(entries);entries();setTimeout(entries,1500);
 setInterval(function(){if(sleepAt)render()},30000);
 })();

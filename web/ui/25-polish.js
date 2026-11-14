@@ -16,6 +16,6 @@ function prayer(){var card=document.querySelector("#prayer .prayer-card"),head=c
  var cd=document.getElementById("countdown");if(cd&&/[٠-٩]/.test(cd.textContent))[].forEach.call(document.querySelectorAll("#prayerList li *"),function(e){if(!e.children.length&&/\d/.test(e.textContent))e.textContent=ar(e.textContent)})}
 var q=0;function run(){q=0;tiles();if((document.documentElement.dataset.view||"")==="prayer")prayer()}
 function later(){if(!q)q=requestAnimationFrame(run)}
-new MutationObserver(later).observe(document.body,{childList:true,subtree:true});new MutationObserver(later).observe(document.documentElement,{attributes:true,attributeFilter:["data-view"]});
+__wOnDom(later);new MutationObserver(later).observe(document.documentElement,{attributes:true,attributeFilter:["data-view"]});
 setInterval(function(){if(!document.hidden&&document.documentElement.dataset.view==="prayer")prayer()},30000);run();
 })();
