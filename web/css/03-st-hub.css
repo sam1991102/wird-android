@@ -14,3 +14,5 @@
 @media (min-width:761px){html body .bottom-nav.nav5::after{display:none!important}}
 .sh-page .prayer-settings{grid-template-columns:minmax(0,1fr)!important}
 @media (min-width:761px){html.st-open .wp-page.sh-page,html.st-open .wp-page.nt-page:not(.rd-tab){right:104px!important}}
+/* صف فيه أزرار اختيار كتير (الوضع): العنوان فوق والأزرار تحته لو المساحة ضيقة */
+.sh-page .st-row:has(.st-seg){flex-wrap:wrap;row-gap:10px}.sh-page .st-row .st-c:has(.st-seg){max-width:100%}

@@ -59,3 +59,5 @@ html.ios .l2-all,html.ios .wp-share,html.ios .adj-b,html.ios .tl-q button,html.i
 html.ios .wp-prog i b,html.ios .wp-dots i.on,html.ios .al-up,html.ios #heroStart>span[aria-hidden]{background:var(--primary)!important}
 html.ios .tl-m.on,html.ios .tl-tbl tr.t td{background:color-mix(in srgb,var(--primary) 12%,transparent)!important;border-color:var(--primary)!important}
 html.ios body::before,html.ios body::after,html.ios main::before{background-image:none!important}
+/* أسطح «البطل» الغامقة (رأس الصفحات، كارت الذكر الحالي، أيقونات الأدوات): ثابتة في الفاتح والليلي، ونصها ذهبي فاتح بدل الأزرق */
+html.ios,html.ios.dark{--hero-a:#2A4AA3;--hero-b:#14275E;--on-hero-acc:#F2CF83}
