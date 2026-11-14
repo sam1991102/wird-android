@@ -127,6 +127,21 @@ for (const S of SKINS) {
   [...new Set(errs)].filter(e => !/Clipboard|clipboard/.test(e)).forEach(e => bad(k + '/js', e));
   await ctx.close();
 }
+// تقرير مكونات شاشة القراءة وصفحة المواقيت (للتطوير)
+{
+  const { ctx, page } = await open(SKINS[0].ls);
+  await wait(1500);
+  await page.evaluate(() => { const a = document.querySelector('.bottom-nav.nav5 [data-tab="mushaf"]'); a && a.click() }); await wait(1200);
+  await page.evaluate(() => { const b = document.querySelector('.mv-card.mv-primary'); b && b.click() }); await wait(3000);
+  await shot(page, 'reader-1');
+  const outline = await page.evaluate(() => { const root = document.querySelector('.mp') || document.querySelector('[class*="reader"]'); if (!root) return 'no .mp'; const walk = (e, d) => d > 4 ? '' : '  '.repeat(d) + e.tagName.toLowerCase() + (e.id ? '#' + e.id : '') + (e.className && typeof e.className === 'string' ? '.' + e.className.trim().split(/\s+/).join('.') : '') + (e.children.length ? '' : ' «' + e.textContent.trim().slice(0, 25) + '»') + (e.getAttribute('aria-label') ? ' [' + e.getAttribute('aria-label') + ']' : '') + '\n' + [...e.children].slice(0, 12).map(c => walk(c, d + 1)).join(''); return walk(root, 0) });
+  notes.push('READER:\n' + outline);
+  await page.mouse.click(195, 420); await wait(800); await shot(page, 'reader-2-tap');
+  const ls = await page.evaluate(() => Object.keys(localStorage).join(' '));
+  notes.push('LS: ' + ls);
+  notes.push('GLOBALS: ' + Object.keys(await page.evaluate(() => { const o = {}; for (const k in window) if (/adhan|notif|azan|prayer|mushaf|qari/i.test(k)) o[k] = 1; return o })).join(' '));
+  await ctx.close();
+}
 // المعالج لمستخدم جديد
 {
   const { ctx, page, errs } = await open({}, true);
