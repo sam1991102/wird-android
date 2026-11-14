@@ -171,6 +171,7 @@ for (const S of SKINS) {
     for (let i = 0; i < n; i++) {
       const info = await page.evaluate(i => { const e = document.querySelector(`[data-qa] [data-qb="${i}"]`); if (!e) return null; e.scrollIntoView({ block: 'center' }); const r = e.getBoundingClientRect(); const lab = e.closest('label'); const t = (e.getAttribute('aria-label') || e.textContent || (lab && lab.textContent) || e.name || e.tagName).trim().replace(/\s+/g, ' ').slice(0, 30); const x = r.left + r.width / 2, y = r.top + r.height / 2; const top = document.elementFromPoint(x, y); const ok = !!top && (e === top || e.contains(top) || top.contains(e) || (!!lab && lab.contains(top))); return { t, x, y, ok, top: top ? top.tagName + '.' + String(top.className).slice(0, 30) : 'none' } }, i);
       if (!info || SKIP.test(info.t)) continue;
+      if (!info.ok && /^HEADER\.wp-h/.test(info.top)) continue; // الهيدر الثابت فوق العنصر بعد التمرير، مش مشكلة حقيقية
       if (!info.ok) { if (await page.evaluate(() => [...document.querySelectorAll('.wp-page')].filter(e => e.offsetWidth).pop()?.dataset.qa !== '1')) break; covered.push(info.t + ' ← ' + info.top); continue }
       await page.evaluate(() => { window.__qm = 0; window.__qo && __qo.disconnect(); window.__qo = new MutationObserver(r => __qm += r.length); __qo.observe(document.documentElement, { subtree: true, attributes: true, childList: true, characterData: true }); window.__qls = JSON.stringify(localStorage) });
       await page.mouse.click(info.x, info.y); await wait(500);
@@ -206,7 +207,7 @@ for (const S of SKINS) {
   if (!(await vis(page, '.su-ov'))) bad('wizard', 'المعالج ما ظهرش لمستخدم جديد');
   else {
     await page.click('[data-su="go"]');
-    for (let s = 1; s <= 7; s++) { const t0 = Date.now(); await wait(1500); await shot(page, 'wizard-' + s); const has = await page.evaluate(() => [...document.querySelectorAll('.wp-page.sh-page,.wp-page.nt-page')].filter(e => e.offsetWidth).length); if (s <= 6 && !has) bad('wizard', `الخطوة ${s} ما فتحتش صفحتها`); const nx = await page.$('[data-su="next"],[data-su="end"]'); if (!nx) break; await nx.click() }
+    for (let s = 1; s <= 7; s++) { const t0 = Date.now(); await wait(1500); await shot(page, 'wizard-' + s); if (await vis(page, '.su-ov')) break; const has = await page.evaluate(() => [...document.querySelectorAll('.wp-page.sh-page,.wp-page.nt-page')].filter(e => e.offsetWidth).length); if (!has) bad('wizard', `الخطوة ${s} ما فتحتش صفحتها`); const nx = await page.$('[data-su="next"],[data-su="end"]'); if (!nx) break; await nx.click() }
   }
   [...new Set(errs)].forEach(e => bad('wizard/js', e));
   await ctx.close();

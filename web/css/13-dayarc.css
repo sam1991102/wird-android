@@ -22,12 +22,12 @@ html.ios #homeAlerts{--da-bg1:#0E1A3D;--da-bg2:#1E3A8A;--da-gold:#F2CF83}
 .da-st:focus-visible .da-dot{stroke:#fff;stroke-width:2.5}
 @keyframes daPulse{0%,100%{transform:scale(1);stroke-opacity:.45}50%{transform:scale(1.12);stroke-opacity:.12}}
 @media (prefers-reduced-motion:reduce){.da-st.is-now .da-halo{animation:none}}
-.da-labels{position:relative;height:40px;margin-top:2px}
+.da-labels{position:relative;margin-top:2px}
 .da-lb{position:absolute;top:0;transform:translateX(-50%);white-space:nowrap;display:flex;flex-direction:column;align-items:center;gap:1px;padding:4px 2px;border:0;background:none;color:var(--da-ink);font:inherit;cursor:pointer}
 .da-lb b{font-size:14px;font-weight:600}
 .da-lb small{font-size:11.5px;color:var(--da-mute)}
 .da-lb.is-now b,.da-lb.is-now small{color:var(--da-gold);font-weight:700}
-.da-go{position:relative;display:block;width:100%;margin-top:10px;padding:12px;border:0;border-radius:16px;background:var(--da-gold);color:#1A1405;font:inherit;font-size:15px;font-weight:700;cursor:pointer}
+.da-go{position:relative;display:block;width:100%;padding:12px;border:0;border-radius:16px;background:var(--da-gold);color:#1A1405;font:inherit;font-size:15px;font-weight:700;cursor:pointer}
 .da-go:active{transform:scale(.98)}
 .da-go{margin-top:18px}
 .da-labels{height:36px}
