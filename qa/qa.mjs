@@ -173,9 +173,10 @@ for (const S of SKINS) {
       if (!info.ok) { covered.push(info.t + ' ← ' + info.top); continue }
       await page.evaluate(() => { window.__qm = 0; window.__qo && __qo.disconnect(); window.__qo = new MutationObserver(r => __qm += r.length); __qo.observe(document.documentElement, { subtree: true, attributes: true, childList: true, characterData: true }); window.__qls = JSON.stringify(localStorage) });
       await page.mouse.click(info.x, info.y); await wait(500);
-      const ch = await page.evaluate(() => ({ m: __qm, ls: JSON.stringify(localStorage) !== __qls }));
+      const ch = await page.evaluate(() => typeof __qm === 'undefined' ? { reload: true } : ({ m: __qm, ls: JSON.stringify(localStorage) !== __qls })).catch(() => ({ reload: true }));
+      if (ch.reload) { notes.push(`${k}/${id}: «${info.t}» أعاد تحميل الصفحة`); await wait(1500); break }
       if (!ch.m && !ch.ls) dead.push(info.t);
-      if (!(await page.evaluate(() => !!document.querySelector('[data-qa]')))) break;
+      if (!(await page.evaluate(() => !!document.querySelector('[data-qa]')).catch(() => false))) break;
     }
     notes.push(`${k}/${id}: ${n} عناصر`);
     if (covered.length) bad(`${k}/${id}`, 'أزرار مغطّية مش بتتضغط: ' + covered.join(' | '));
