@@ -61,7 +61,8 @@ for (const S of SKINS) {
   if (q.longtask > 1500) bad(k + '/home', `مهام طويلة تعطّل الواجهة ${Math.round(q.longtask)}ms`);
   for (const [sel, name] of [['#skyCard', 'كارت اليوم'], ['#ayCard', 'الآية والحديث'], ['#homeAlerts', 'أذكار اليوم']]) if (!(await vis(page, sel))) bad(k + '/home', `${name} مش ظاهر`);
   if (await vis(page, '.hero.container')) bad(k + '/home', 'الهيدر القديم ظاهر');
-  const order = await page.evaluate(() => ['#skyCard', '#ayCard', '#homeAlerts', '#quranCard'].map(s => { const e = document.querySelector(s); return e ? Math.round(e.getBoundingClientRect().top + scrollY) : -1 }));
+  if (!(await vis(page, '#homeAlerts .da-svg'))) bad(k + '/home', 'مسار اليوم مش مرسوم');
+  const order = await page.evaluate(() => ['#skyCard', '#homeAlerts', '#ayCard', '#quranCard'].map(s => { const e = document.querySelector(s); return e ? Math.round(e.getBoundingClientRect().top + scrollY) : -1 }));
   if (order.some((v, i) => i && v >= 0 && order[i - 1] >= 0 && v < order[i - 1])) bad(k + '/home', 'ترتيب الرئيسية غلط ' + order.join(','));
   const ayTabs = await page.$$eval('#ayCard .ay-tabs button', b => b.map(x => x.textContent.trim()));
   notes.push(`${k} تبويبات: ${ayTabs.join(' / ') || 'لا يوجد'}`);
