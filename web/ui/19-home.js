@@ -1,8 +1,8 @@
 
 /*home*/
 /* الرئيسية: كارت اليوم، آية/حديث اليوم، أذكار اليوم، المصحف */
-(function(){var R=document.documentElement,AR="٠١٢٣٤٥٦٧٨٩";function ar(n){return String(n).replace(/\d/g,function(d){return AR[d]})}
-function hm(h){h=((h%24)+24)%24;var H=Math.floor(h),M=Math.round((h-H)*60);if(M===60){H++;M=0}var pm=H>=12,h12=H%12||12;return ar(h12)+":"+ar(String(M).padStart(2,"0"))+(pm?" م":" ص")}
+(function(){var R=document.documentElement;var ar=__ar;
+var hm=__t12;
 
 /* 3) آية وحديث اليوم في كارت واحد بتبويبين */
 function findAy(main){var out=[];
@@ -42,13 +42,13 @@ run();var M=document.querySelector("main");M&&new MutationObserver(later).observ
 /* ── أذكار اليوم: مسار الشمس ── */(function(){
 /* أذكار اليوم «مسار اليوم»: قوس الشمس من الفجر للعشاء وعليه محطات الأذكار */
 var R=document.documentElement,DUHA="<g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\"><path d=\"M17 12a5 5 0 1 1-10 0a5 5 0 0 1 10 0Z\"/><path stroke-linecap=\"round\" d=\"M12 2v1.5m0 17V22m7.07-2.929l-1.06-1.06M5.99 5.989L4.928 4.93M22 12h-1.5m-17 0H2m17.071-7.071l-1.06 1.06M5.99 18.011l-1.06 1.06\"/></g>",NS="http://www.w3.org/2000/svg",IC={"sun": "<g fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-width=\"1.5\"><path stroke-linejoin=\"round\" d=\"M9.5 6.5C9.992 5.994 11.3 4 12 4m2.5 2.5C14.008 5.994 12.7 4 12 4m0 0v6\"/><path d=\"M18.363 10.636L16.95 12.05M3 17h2m.637-6.364L7.05 12.05M21 17h-2m2 3H3m13-3a4 4 0 0 0-8 0\"/></g>", "moon": "<g fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-width=\"1.5\"><path stroke-linejoin=\"round\" d=\"M9.5 7.5c.492.506 1.8 2.5 2.5 2.5m2.5-2.5c-.492.506-1.8 2.5-2.5 2.5m0 0V4\"/><path d=\"M18.363 10.636L16.95 12.05M3 17h2m.637-6.364L7.05 12.05M21 17h-2m2 3H3m13-3a4 4 0 0 0-8 0\"/></g>", "zz": "<path fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\" d=\"M21.5 14.078A8.557 8.557 0 0 1 9.922 2.5C5.668 3.497 2.5 7.315 2.5 11.873a9.627 9.627 0 0 0 9.627 9.627c4.558 0 8.376-3.168 9.373-7.422\"/>", "book": "<path fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\" d=\"m19.648 5.437l-.659-1.043c-.364-.577-.546-.866-.785-.892c-.238-.027-.505.247-1.038.795c-1.722 1.77-3.444 1.508-5.166 4.691c-1.722-3.183-3.444-2.921-5.166-4.691c-.533-.548-.8-.822-1.038-.795c-.239.026-.421.315-.785.892l-.658 1.043c-.255.402-.382.604-.347.816c.034.212.217.357.584.647l6.182 4.898c.591.468.887.702 1.228.702s.637-.234 1.228-.702L19.41 6.9c.367-.29.55-.435.584-.647c.035-.212-.092-.414-.346-.816M22 8.5l-16 12v-4.696M2 8.5l16 12v-4.696\"/>"};
-function ar(n){return String(n).replace(/\d/g,function(d){return"٠١٢٣٤٥٦٧٨٩"[d]})}
-function hm(h){h=((h%24)+24)%24;var H=Math.floor(h),M=Math.round((h-H)*60);if(M===60){H++;M=0}var pm=H>=12,h12=H%12||12;return ar(h12)+":"+ar(String(M).padStart(2,"0"))+(pm?" م":" ص")}
+var ar=__ar;
+var hm=__t12;
 var W=340,H=132,P0=[322,112],C=[170,-26],P2=[18,112];
 function pt(t){var u=1-t;return[u*u*P0[0]+2*u*t*C[0]+t*t*P2[0],u*u*P0[1]+2*u*t*C[1]+t*t*P2[1]]}
 function arc(a,b){var d="",n=40;for(var i=0;i<=n;i++){var p=pt(a+(b-a)*i/n);d+=(i?"L":"M")+p[0].toFixed(1)+" "+p[1].toFixed(1)}return d}
 function cat(rx){try{return(categories.find(function(c){return rx.test(c.name)})||{}).id}catch(e){return null}}
-function hours(){var d=new Date();return d.getHours()+d.getMinutes()/60}
+function hours(){return __nowH()}
 function render(box){if(!box)return;var t=null;try{t=prayerDay(0).t}catch(e){}
  if(!t){box.innerHTML="";return}
  var span=t.isha-t.fajr,pos=function(h){return Math.max(0,Math.min(1,(h-t.fajr)/span))},now=hours();
@@ -78,12 +78,10 @@ render(document.getElementById("homeAlerts"));setInterval(tick,60000);document.a
 
 /* ── كارت اليوم: ميعاد الصلاة القادمة ── */(function(){
 /* كارت اليوم: ميعاد الصلاة القادمة نفسه بخط كبير، وتحت اسمها «بعد كذا» */
-var AR="٠١٢٣٤٥٦٧٨٩",P=[["fajr","الفجر"],["dhuhr","الظهر"],["asr","العصر"],["maghrib","المغرب"],["isha","العشاء"]];
-function ar(x){return String(x).replace(/\d/g,function(d){return AR[d]})}
-function clock(h){h=((h%24)+24)%24;var H=Math.floor(h),M=Math.round((h-H)*60);if(M===60){H=(H+1)%24;M=0}return{t:ar((H%12||12)+":"+(M<10?"0":"")+M),p:H<12?"ص":"م"}}
-function next(){var t,tm;try{t=prayerDay(0).t}catch(e){return null}if(!t)return null;var d=new Date(),now=d.getHours()+d.getMinutes()/60+d.getSeconds()/3600;
- for(var i=0;i<P.length;i++)if(t[P[i][0]]!=null&&t[P[i][0]]>now)return{n:P[i][1],at:t[P[i][0]],left:t[P[i][0]]-now};
- try{tm=prayerDay(1).t}catch(e){}if(!tm)return null;return{n:"الفجر",at:tm.fajr,left:tm.fajr+24-now}}
+var P=[["fajr","الفجر"],["dhuhr","الظهر"],["asr","العصر"],["maghrib","المغرب"],["isha","العشاء"]];
+var ar=__ar;
+function clock(h){var s=__t12(h).split(" ");return{t:s[0],p:s[1]}}
+function next(){return __nextPrayer()}
 function left(h){var s=Math.max(0,Math.round(h*3600));if(s<60)return"بعد "+ar(s)+" ثانية";var m=Math.ceil(s/60);if(m<60)return"بعد "+ar(m)+" دقيقة";var H=Math.floor(m/60),M=m%60;return"بعد "+ar(H)+" س"+(M?" "+ar(M)+" د":"")}
 var last="";
 function paint(){var box=document.querySelector("#skyCard .sk-next");if(!box)return;var x=next();if(!x)return;

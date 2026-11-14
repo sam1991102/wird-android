@@ -1,6 +1,6 @@
 
 /*laps*/(function(){var R=document.documentElement;
-var AR="٠١٢٣٤٥٦٧٨٩";function toEn(s){return String(s).replace(/[٠-٩]/g,function(d){return AR.indexOf(d)})}function ar(n){return String(n).replace(/\d/g,function(d){return AR[d]})}
+var toEn=__en;var ar=__ar;
 /* 1) الضغط على عدّاد الأشواط لا يرجع الصفحة لأولها */
 var keep=null;
 function scroller(p){var best=p,bt=p.scrollTop;[].forEach.call(p.querySelectorAll("*"),function(e){if(e.scrollTop>bt){best=e;bt=e.scrollTop}});return best}

@@ -10,7 +10,7 @@ var STEPS=[
  {id:"st-qari",t:"القرآن والقارئ",s:"اختر صوت التلاوة واتجاه تقليب الصفحات"},
  {id:"st-look",t:"المظهر",s:"النمط والوضع الليلي وحجم الخط والأرقام"}];
 var N=STEPS.length+2,ov=null,bar=null,i=-1;
-function ar(n){return String(n).replace(/\d/g,function(d){return"٠١٢٣٤٥٦٧٨٩"[d]})}
+var ar=__ar;
 function done(){try{return localStorage.getItem(K)==="1"}catch(e){return true}}
 function mark(){try{localStorage.setItem(K,"1");localStorage.setItem("wird-onboarded","1")}catch(e){}}
 function el(h,c){var d=document.createElement("div");d.className=c;d.innerHTML=h;return d}

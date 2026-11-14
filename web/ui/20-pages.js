@@ -1,9 +1,9 @@
 
 /*pages*/(function(){
 /* المصحف: «أكمل القراءة» أولًا. المواقيت: مواقيت الغد تحت جدول اليوم */
-var R=document.documentElement,AR="٠١٢٣٤٥٦٧٨٩";
-function ar(x){return String(x).replace(/\d/g,function(d){return AR[d]})}
-function t12(h){h=((h%24)+24)%24;var H=Math.floor(h),M=Math.round((h-H)*60);if(M===60){H++;M=0}var p=H<12?"ص":"م",h12=H%12||12;return ar(h12+":"+(M<10?"0":"")+M)+" "+p}
+var R=document.documentElement;
+var ar=__ar;
+var t12=__t12;
 function byText(root,rx,sel){return[].find.call(root.querySelectorAll(sel||"button,a,[role=button],.card,div"),function(e){return e.children.length<8&&rx.test(e.textContent)})}
 function mushaf(){var v=document.getElementById("mushafView");if(!v)return;
  var start=v.querySelector(".mv-card.mv-primary"),acts=start&&start.closest(".mv-actions");if(!acts)return;

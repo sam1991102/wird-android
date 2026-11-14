@@ -33,7 +33,7 @@ function retry(){if(state==="idle"||!cur)return;var s=st(cur);tries++;if(tries>6
 function stopAudio(){if(A){try{A.pause();A.removeAttribute("src");A.load()}catch(e){}}}
 function stop(){stopAudio();state="idle";cur=null;setSleep(0);render()}
 function setSleep(m){clearTimeout(sleepT);sleepAt=0;if(m>0){sleepAt=Date.now()+m*60000;sleepT=setTimeout(function(){stop();toastx("توقفت الإذاعة (مؤقت النوم)")},m*60000)}render()}
-var AR=function(n){return String(n).replace(/\d/g,function(d){return"٠١٢٣٤٥٦٧٨٩"[d]})};
+var AR=__ar;
 /* شريط التشغيل المصغّر */
 var bar=document.createElement("div");bar.className="rd-bar";bar.hidden=true;bar.innerHTML='<button type="button" class="rd-bp" aria-label="إيقاف">■</button><div class="rd-bt"><b></b><small></small></div><button type="button" class="rd-bo" aria-label="فتح الإذاعة">‹</button>';
 bar.querySelector(".rd-bp").onclick=stop;bar.querySelector(".rd-bo").onclick=function(){openPage()};
