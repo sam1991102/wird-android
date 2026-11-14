@@ -219,7 +219,8 @@
   "21-reader.js",
   "22-dayarc.js",
   "23-focus.js",
-  "24-skynext.js"
+  "24-skynext.js",
+  "25-polish.js"
  ],
  "css": [
   "00-core.css",
@@ -237,6 +238,7 @@
   "12-reader.css",
   "13-dayarc.css",
   "14-focus.css",
-  "15-skynext.css"
+  "15-skynext.css",
+  "16-polish.css"
  ]
 }
