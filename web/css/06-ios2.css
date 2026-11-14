@@ -113,5 +113,4 @@ html[data-view]:not([data-view="home"]) #ayCard,html[data-view]:not([data-view="
 .wp-page .st-row:has(select){flex-direction:column!important;align-items:stretch!important;gap:8px}
 .wp-page .st-row:has(select) select{width:100%!important;max-width:none!important}
 .wp-page .st-row:has(select) .st-l{max-width:none!important}
-/* تبديل الصفحة: المحتوى يظهر بعد ما يثبت (شوف shell) */
-html.w-settle main>*{visibility:hidden}
+#library .l2-sh{min-height:var(--l2sh,0)}

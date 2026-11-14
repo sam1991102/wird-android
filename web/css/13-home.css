@@ -19,7 +19,7 @@ html.ios #homeAlerts{--da-bg1:#0E1A3D;--da-bg2:#1E3A8A;--da-gold:#F2CF83}
 .da-st.is-past{opacity:.55}
 .da-st.is-now{color:#1A1405}
 .da-st.is-now .da-dot{fill:var(--da-gold);stroke:none}
-.da-st.is-now .da-halo{stroke:var(--da-gold);stroke-opacity:.45;stroke-width:2;animation:daPulse 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.da-st.is-now .da-halo{stroke:var(--da-gold);stroke-opacity:.45;stroke-width:2;animation:none;transform-box:fill-box;transform-origin:center}
 .da-st:focus-visible .da-dot{stroke:#fff;stroke-width:2.5}
 @keyframes daPulse{0%,100%{transform:scale(1);stroke-opacity:.45}50%{transform:scale(1.12);stroke-opacity:.12}}
 @media (prefers-reduced-motion:reduce){.da-st.is-now .da-halo{animation:none}}
