@@ -29,3 +29,6 @@ html.ios #homeAlerts{--da-bg1:#0E1A3D;--da-bg2:#1E3A8A;--da-gold:#F2CF83}
 .da-lb.is-now b,.da-lb.is-now small{color:var(--da-gold);font-weight:700}
 .da-go{position:relative;display:block;width:100%;margin-top:10px;padding:12px;border:0;border-radius:16px;background:var(--da-gold);color:#1A1405;font:inherit;font-size:15px;font-weight:700;cursor:pointer}
 .da-go:active{transform:scale(.98)}
+.da-go{margin-top:18px}
+.da-labels{height:36px}
+.da-go.is-note{font-size:13px;font-weight:600}
