@@ -148,6 +148,42 @@ for (const S of SKINS) {
   notes.push('GLOBALS: ' + Object.keys(await page.evaluate(() => { const o = {}; for (const k in window) if (/adhan|notif|azan|prayer|mushaf|qari/i.test(k)) o[k] = 1; return o })).join(' '));
   await ctx.close();
 }
+// مسح كل زر في صفحات الإعدادات لكل مظهر: هل الزر قابل للضغط فعلاً؟ وهل بيعمل أي حاجة؟
+const SKIP = /حذف|مسح|إعادة ضبط|تصفير|استيراد|تصدير|نسخة|مشاركة|شارك|تثبيت|إلغاء الاشتراك|تسجيل|إرسال|تواصل|الخصوصية|تحقق من التحديث|إعادة معالج/;
+for (const S of SKINS) {
+  const k = S.k;
+  let ids = [];
+  {
+    const { ctx, page } = await open(S.ls); await wait(1500);
+    await page.evaluate(() => window.__openSettings && __openSettings()); await wait(900);
+    ids = await page.$$eval('.sh-row[data-id]', r => [...new Set(r.map(x => x.dataset.id))]);
+    notes.push(`${k} sweep pages: ${ids.join(',') || 'NONE'}`);
+    if (!ids.length) bad(k + '/sweep', 'ما لقيتش صفحات الإعدادات للفحص');
+    await ctx.close();
+  }
+  for (const id of ids) {
+    const { ctx, page } = await open(S.ls); await wait(1300);
+    await page.evaluate(id => window.__openSettingsPage && __openSettingsPage(id), id); await wait(1500);
+    const n = await page.evaluate(() => { const p = [...document.querySelectorAll('.wp-page.sh-page,.wp-page.nt-page')].filter(e => e.offsetWidth).pop(); if (!p) return -1; p.dataset.qa = 1; const els = [...p.querySelectorAll('button,[role=switch],[role=button],input[type=checkbox],input[type=radio],label.switch')].filter(e => { const r = e.getBoundingClientRect(); return r.width > 8 && r.height > 8 && getComputedStyle(e).visibility !== 'hidden' && !e.closest('.wp-back,.wp-h') }); els.forEach((e, i) => e.dataset.qb = i); return els.length });
+    if (n < 0) { bad(`${k}/${id}`, 'الصفحة ما فتحتش'); await ctx.close(); continue }
+    const dead = [], covered = [];
+    for (let i = 0; i < n; i++) {
+      const info = await page.evaluate(i => { const e = document.querySelector(`[data-qa] [data-qb="${i}"]`); if (!e) return null; e.scrollIntoView({ block: 'center' }); const r = e.getBoundingClientRect(); const lab = e.closest('label'); const t = (e.getAttribute('aria-label') || e.textContent || (lab && lab.textContent) || e.name || e.tagName).trim().replace(/\s+/g, ' ').slice(0, 30); const x = r.left + r.width / 2, y = r.top + r.height / 2; const top = document.elementFromPoint(x, y); const ok = !!top && (e === top || e.contains(top) || top.contains(e) || (!!lab && lab.contains(top))); return { t, x, y, ok, top: top ? top.tagName + '.' + String(top.className).slice(0, 30) : 'none' } }, i);
+      if (!info || SKIP.test(info.t)) continue;
+      if (!info.ok) { covered.push(info.t + ' ← ' + info.top); continue }
+      await page.evaluate(() => { window.__qm = 0; window.__qo && __qo.disconnect(); window.__qo = new MutationObserver(r => __qm += r.length); __qo.observe(document.documentElement, { subtree: true, attributes: true, childList: true, characterData: true }); window.__qls = JSON.stringify(localStorage) });
+      await page.mouse.click(info.x, info.y); await wait(500);
+      const ch = await page.evaluate(() => ({ m: __qm, ls: JSON.stringify(localStorage) !== __qls }));
+      if (!ch.m && !ch.ls) dead.push(info.t);
+      if (!(await page.evaluate(() => !!document.querySelector('[data-qa]')))) break;
+    }
+    notes.push(`${k}/${id}: ${n} عناصر`);
+    if (covered.length) bad(`${k}/${id}`, 'أزرار مغطّية مش بتتضغط: ' + covered.join(' | '));
+    if (dead.length) bad(`${k}/${id}`, 'أزرار مش بتعمل حاجة: ' + dead.join(' | '));
+    await shot(page, `${k}-07-btn-${id}`);
+    await ctx.close();
+  }
+}
 // تقرير شاشة الأذكار بخط كبير
 {
   const { ctx, page } = await open(SKINS[0].ls);
