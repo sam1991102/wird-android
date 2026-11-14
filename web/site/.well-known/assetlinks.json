@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "dev.pages.wird_azkar.app",
+      "sha256_cert_fingerprints": [
+        "A8:46:D9:82:03:CA:D0:03:80:D1:97:C9:1A:7E:56:DA:05:C1:DC:C2:EF:23:1B:C7:F3:48:F2:45:81:A4:3A:D5"
+      ]
+    }
+  }
+]

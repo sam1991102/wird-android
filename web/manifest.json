@@ -1,0 +1,243 @@
+{
+ "files": [
+  {
+   "name": "manifest.webmanifest",
+   "type": "application/manifest+json"
+  },
+  {
+   "name": "icon.svg",
+   "type": "image/svg+xml"
+  },
+  {
+   "name": "robots.txt",
+   "type": "text/plain; charset=utf-8"
+  },
+  {
+   "name": "sitemap.xml",
+   "type": "application/xml; charset=utf-8"
+  },
+  {
+   "name": "index.html",
+   "type": "text/html; charset=utf-8"
+  },
+  {
+   "name": "about.html",
+   "type": "text/html; charset=utf-8"
+  },
+  {
+   "name": "contact.html",
+   "type": "text/html; charset=utf-8"
+  },
+  {
+   "name": "privacy.html",
+   "type": "text/html; charset=utf-8"
+  },
+  {
+   "name": "404.html",
+   "type": "text/html; charset=utf-8"
+  },
+  {
+   "name": "styles.css",
+   "type": "text/css; charset=utf-8",
+   "parts": "css"
+  },
+  {
+   "name": "app.js",
+   "type": "application/javascript; charset=utf-8"
+  },
+  {
+   "name": "sw.js",
+   "type": "application/javascript; charset=utf-8"
+  },
+  {
+   "name": "data.js",
+   "type": "application/javascript; charset=utf-8"
+  },
+  {
+   "name": "icon-192.png",
+   "type": "image/png"
+  },
+  {
+   "name": "icon-512.png",
+   "type": "image/png"
+  },
+  {
+   "name": "icon-maskable-512.png",
+   "type": "image/png"
+  },
+  {
+   "name": "apple-touch-icon.png",
+   "type": "image/png"
+  },
+  {
+   "name": "fonts/amiri-arabic-400-normal.woff2",
+   "type": "font/woff2"
+  },
+  {
+   "name": "fonts/amiri-arabic-700-normal.woff2",
+   "type": "font/woff2"
+  },
+  {
+   "name": "fonts/tajawal-arabic-400-normal.woff2",
+   "type": "font/woff2"
+  },
+  {
+   "name": "fonts/tajawal-arabic-700-normal.woff2",
+   "type": "font/woff2"
+  },
+  {
+   "name": "fonts/tajawal-arabic-800-normal.woff2",
+   "type": "font/woff2"
+  },
+  {
+   "name": "fonts/tajawal-latin-400-normal.woff2",
+   "type": "font/woff2"
+  },
+  {
+   "name": "fonts/tajawal-latin-700-normal.woff2",
+   "type": "font/woff2"
+  },
+  {
+   "name": "fonts/tajawal-latin-800-normal.woff2",
+   "type": "font/woff2"
+  },
+  {
+   "name": "ui.js",
+   "type": "application/javascript; charset=utf-8",
+   "parts": "js"
+  },
+  {
+   "name": "quran.js",
+   "type": "application/javascript; charset=utf-8"
+  },
+  {
+   "name": "googlef3721f9d7a3c9b82.html",
+   "type": "text/html; charset=utf-8"
+  },
+  {
+   "name": "fonts/amiri-quran-arabic-400-normal.woff2",
+   "type": "font/woff2"
+  },
+  {
+   "name": ".well-known/assetlinks.json",
+   "type": "application/json"
+  },
+  {
+   "name": "b7e4c1a9d2f84e6a9c3b5d7e1f2a4c6e.txt",
+   "type": "text/plain; charset=utf-8"
+  },
+  {
+   "name": "logo-word.png",
+   "type": "image/png"
+  },
+  {
+   "name": "gulzar.woff2",
+   "type": "font/woff2"
+  },
+  {
+   "name": "nawawi.json",
+   "type": "application/json; charset=utf-8"
+  },
+  {
+   "name": "qudsi.json",
+   "type": "application/json; charset=utf-8"
+  },
+  {
+   "name": "kids/kaaba.png",
+   "type": "image/png"
+  },
+  {
+   "name": "kids/fil.png",
+   "type": "image/png"
+  },
+  {
+   "name": "kids/desert.png",
+   "type": "image/png"
+  },
+  {
+   "name": "kids/rug.png",
+   "type": "image/png"
+  },
+  {
+   "name": "kids/water.png",
+   "type": "image/png"
+  },
+  {
+   "name": "kids/mosque.png",
+   "type": "image/png"
+  },
+  {
+   "name": "kids/f2.png",
+   "type": "image/png"
+  },
+  {
+   "name": "kids/f3.png",
+   "type": "image/png"
+  },
+  {
+   "name": "kids/f4.png",
+   "type": "image/png"
+  },
+  {
+   "name": "kids/f5.png",
+   "type": "image/png"
+  },
+  {
+   "name": "kids/y1.png",
+   "type": "image/png"
+  },
+  {
+   "name": "kids/y4.png",
+   "type": "image/png"
+  },
+  {
+   "name": "kids/w8.png",
+   "type": "image/png"
+  }
+ ],
+ "ui": [
+  "00-core.js",
+  "01-mv-tidy.js",
+  "02-mv-jump.js",
+  "03-mp-hint.js",
+  "04-nt-pro.js",
+  "05-st-hub.js",
+  "06-w-mirror.js",
+  "07-w-ongoing.js",
+  "08-sh-seg.js",
+  "09-skin-ios.js",
+  "10-radio.js",
+  "11-ios2.js",
+  "12-icons.js",
+  "13-nshare.js",
+  "14-laps.js",
+  "15-nav2.js",
+  "16-setup.js",
+  "17-shell.js",
+  "18-contrast.js",
+  "19-home.js",
+  "20-pages.js",
+  "21-reader.js",
+  "22-dayarc.js",
+  "23-focus.js",
+  "24-skynext.js"
+ ],
+ "css": [
+  "00-core.css",
+  "01-mv-tidy.css",
+  "02-nt-pro.css",
+  "03-st-hub.css",
+  "04-skin-ios.css",
+  "05-radio.css",
+  "06-ios2.css",
+  "07-icons.css",
+  "08-laps.css",
+  "09-setup.css",
+  "10-nav2.css",
+  "11-pages.css",
+  "12-reader.css",
+  "13-dayarc.css",
+  "14-focus.css",
+  "15-skynext.css"
+ ]
+}

@@ -1,0 +1,49 @@
+
+/*dayarc*/
+#homeAlerts{margin:14px 16px 0;--da-bg1:#0F2A22;--da-bg2:#1B4536;--da-gold:#E2C27F;--da-ink:#F4EFE2;--da-mute:rgba(244,239,226,.62)}
+html.ios #homeAlerts{--da-bg1:#0E1A3D;--da-bg2:#1E3A8A;--da-gold:#F2CF83}
+.da-card{position:relative;overflow:hidden;padding:14px 14px 14px;border-radius:24px;color:var(--da-ink);background:linear-gradient(160deg,var(--da-bg2),var(--da-bg1) 70%)}
+.da-card::before{content:"";position:absolute;inset:auto -30% -60% -30%;height:120%;background:radial-gradient(closest-side,rgba(226,194,127,.16),transparent);pointer-events:none}
+.da-hd{position:relative;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.da-hd h2{margin:0;font-size:16px;font-weight:700;color:var(--da-ink)}
+.da-kahf{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:20px;border:1px solid rgba(226,194,127,.45);background:rgba(226,194,127,.12);color:var(--da-gold);font:inherit;font-size:13px;cursor:pointer}
+.da-kahf svg{width:16px;height:16px}
+.da-svg{position:relative;display:block;width:100%;height:auto;margin:4px 0 0;overflow:visible}
+.da-track{fill:none;stroke:rgba(244,239,226,.22);stroke-width:2;stroke-dasharray:3 6;stroke-linecap:round}
+.da-done{fill:none;stroke:var(--da-gold);stroke-width:3;stroke-linecap:round}
+.da-sun{fill:#fff;filter:drop-shadow(0 0 6px rgba(255,236,190,.9))}
+.da-st{cursor:pointer;color:var(--da-ink);outline:none}
+.da-dot{fill:rgba(244,239,226,.12);stroke:rgba(244,239,226,.35);stroke-width:1.5;transition:fill .2s}
+.da-halo{fill:none;stroke:none}
+.da-st.is-past{opacity:.55}
+.da-st.is-now{color:#1A1405}
+.da-st.is-now .da-dot{fill:var(--da-gold);stroke:none}
+.da-st.is-now .da-halo{stroke:var(--da-gold);stroke-opacity:.45;stroke-width:2;animation:daPulse 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.da-st:focus-visible .da-dot{stroke:#fff;stroke-width:2.5}
+@keyframes daPulse{0%,100%{transform:scale(1);stroke-opacity:.45}50%{transform:scale(1.12);stroke-opacity:.12}}
+@media (prefers-reduced-motion:reduce){.da-st.is-now .da-halo{animation:none}}
+.da-labels{position:relative;height:40px;margin-top:2px}
+.da-lb{position:absolute;top:0;transform:translateX(-50%);white-space:nowrap;display:flex;flex-direction:column;align-items:center;gap:1px;padding:4px 2px;border:0;background:none;color:var(--da-ink);font:inherit;cursor:pointer}
+.da-lb b{font-size:14px;font-weight:600}
+.da-lb small{font-size:11.5px;color:var(--da-mute)}
+.da-lb.is-now b,.da-lb.is-now small{color:var(--da-gold);font-weight:700}
+.da-go{position:relative;display:block;width:100%;margin-top:10px;padding:12px;border:0;border-radius:16px;background:var(--da-gold);color:#1A1405;font:inherit;font-size:15px;font-weight:700;cursor:pointer}
+.da-go:active{transform:scale(.98)}
+.da-go{margin-top:18px}
+.da-labels{height:36px}
+.da-go.is-note{font-size:13px;font-weight:600}
+/* السماء الحية: لون الكارت يتبع وقت اليوم */
+.da-card.sky-dawn{background:linear-gradient(180deg,#7FB6E0 0%,#F3C6A5 75%,#F9DFC5 100%);--da-ink:#2A2033;--da-mute:rgba(42,32,51,.6);--da-gold:#B5531C}
+.sky-dawn .da-track{stroke:rgba(42,32,51,.28)}
+.sky-dawn .da-dot{fill:rgba(255,255,255,.5);stroke:rgba(42,32,51,.22)}
+.sky-dawn .da-done{stroke:#E58A3C}
+.sky-dawn .da-st.is-now .da-dot{fill:#F2A65A}.sky-dawn .da-st.is-now .da-halo{stroke:#F2A65A}
+.sky-dawn .da-go{background:#2A2033;color:#FBE7CF}
+.sky-dawn .da-kahf{border-color:rgba(42,32,51,.3);background:rgba(255,255,255,.35);color:#2A2033}
+.sky-dawn::before{display:none}
+.da-card.sky-sunset{background:linear-gradient(180deg,#3B2A5C 0%,#B4486B 55%,#F08A4B 100%);--da-gold:#FFD9A0}
+.sky-sunset .da-go{background:#FFE2B8;color:#3B1E2E}
+.da-card.sky-night{background:radial-gradient(120% 90% at 70% 0%,#24305E 0%,#0B1230 60%,#070B1E 100%)}
+.sky-night::before{display:none}
+.sky-night::after{content:"";position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(1.2px 1.2px at 20% 30%,#fff9,transparent),radial-gradient(1px 1px at 65% 18%,#fff8,transparent),radial-gradient(1.4px 1.4px at 82% 40%,#fffa,transparent),radial-gradient(1px 1px at 38% 12%,#fff7,transparent),radial-gradient(1px 1px at 10% 55%,#fff6,transparent),radial-gradient(1px 1px at 52% 34%,#fff5,transparent)}
+.da-card>*{position:relative;z-index:1}
