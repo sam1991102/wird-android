@@ -607,7 +607,7 @@ const cur=()=>{const l=R.dataset.lib||"grid";return {w:1,v:R.dataset.view||"home
 const unrest=()=>setTimeout(()=>{restoring--},0);
 const urlFor=s=>s.v==="library"&&s.lib==="list"&&s.cat&&!["all","mine"].includes(s.cat)?"/"+s.cat:(s.v==="home"?"/":"/#"+s.v);
 const push=()=>{if(restoring)return;const s=cur();const h=history.state;if(h&&h.w&&!h.ov&&h.v===s.v&&h.lib===s.lib&&h.cat===s.cat)return;_ps(s,"",urlFor(s))};
-const mark=()=>{const v=R.dataset.view||"home";nav.querySelectorAll("[data-tab]").forEach(a=>{const on=a.dataset.tab===v;a.classList.toggle("active",on);on?a.setAttribute("aria-current","page"):a.removeAttribute("aria-current")})};
+const mark=()=>{};/* حالة الزر المنوّر في ui/15-nav2.js وحده */
 const toGrid=()=>{if(R.dataset.lib==="list"&&libBack){restoring++;libBack.click();unrest()}};
 function go(v){
  if(!mq.matches){const t=v==="home"?$("#top"):v==="mushaf"?mv:document.getElementById(v);t&&t.scrollIntoView({behavior:"smooth"});return}
