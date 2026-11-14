@@ -32,3 +32,18 @@ html.ios #homeAlerts{--da-bg1:#0E1A3D;--da-bg2:#1E3A8A;--da-gold:#F2CF83}
 .da-go{margin-top:18px}
 .da-labels{height:36px}
 .da-go.is-note{font-size:13px;font-weight:600}
+/* السماء الحية: لون الكارت يتبع وقت اليوم */
+.da-card.sky-dawn{background:linear-gradient(180deg,#7FB6E0 0%,#F3C6A5 75%,#F9DFC5 100%);--da-ink:#2A2033;--da-mute:rgba(42,32,51,.6);--da-gold:#B5531C}
+.sky-dawn .da-track{stroke:rgba(42,32,51,.28)}
+.sky-dawn .da-dot{fill:rgba(255,255,255,.5);stroke:rgba(42,32,51,.22)}
+.sky-dawn .da-done{stroke:#E58A3C}
+.sky-dawn .da-st.is-now .da-dot{fill:#F2A65A}.sky-dawn .da-st.is-now .da-halo{stroke:#F2A65A}
+.sky-dawn .da-go{background:#2A2033;color:#FBE7CF}
+.sky-dawn .da-kahf{border-color:rgba(42,32,51,.3);background:rgba(255,255,255,.35);color:#2A2033}
+.sky-dawn::before{display:none}
+.da-card.sky-sunset{background:linear-gradient(180deg,#3B2A5C 0%,#B4486B 55%,#F08A4B 100%);--da-gold:#FFD9A0}
+.sky-sunset .da-go{background:#FFE2B8;color:#3B1E2E}
+.da-card.sky-night{background:radial-gradient(120% 90% at 70% 0%,#24305E 0%,#0B1230 60%,#070B1E 100%)}
+.sky-night::before{display:none}
+.sky-night::after{content:"";position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(1.2px 1.2px at 20% 30%,#fff9,transparent),radial-gradient(1px 1px at 65% 18%,#fff8,transparent),radial-gradient(1.4px 1.4px at 82% 40%,#fffa,transparent),radial-gradient(1px 1px at 38% 12%,#fff7,transparent),radial-gradient(1px 1px at 10% 55%,#fff6,transparent),radial-gradient(1px 1px at 52% 34%,#fff5,transparent)}
+.da-card>*{position:relative;z-index:1}
