@@ -29,6 +29,7 @@ public class AdhanReceiver extends BroadcastReceiver {
             return;
         }
 
+        if (WNotify.ACT_LATER.equals(intent.getAction())) { WNotify.scheduleLater(c, intent); return; }
         String raw = intent.getStringExtra("ev");
         if (raw == null) return;
         JSONObject ev;
@@ -60,8 +61,12 @@ public class AdhanReceiver extends BroadcastReceiver {
                 .setContentText(ev.optString("body", ""))
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(ev.optString("body", "")))
                 .setColor(0xFFC49A4B)
+                .setLargeIcon(WNotify.largeIcon(c, ev))
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_REMINDER)
                 .setAutoCancel(true)
-                .setContentIntent(pi);
+                .setContentIntent(pi)
+                .addAction(0, "ذكّرني بعد ١٥ دقيقة", WNotify.laterIntent(c, raw, ev.optInt("id", 1)));
         NotificationManager nm = (NotificationManager) c.getSystemService(Context.NOTIFICATION_SERVICE);
         nm.notify(ev.optInt("id", 1), b.build());
     }

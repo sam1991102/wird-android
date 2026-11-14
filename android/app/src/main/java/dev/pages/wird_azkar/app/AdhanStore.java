@@ -26,7 +26,7 @@ public final class AdhanStore {
     static final String KEY_EVENTS = "events";
     static final String CH_ADHAN = "wird_adhan_v1";
     static final String CH_ALARM = "wird_alarm_v1";
-    static final String CH_GENERAL = "wird_general_v1";
+    static final String CH_GENERAL = "wird_general_v2";
     static final String CH_PLAYING = "wird_playing_v1";
     static final String BASE = "https://wird-azkar.pages.dev";
 
@@ -56,7 +56,7 @@ public final class AdhanStore {
         alarm.setBypassDnd(true);
         alarm.setLockscreenVisibility(android.app.Notification.VISIBILITY_PUBLIC);
 
-        NotificationChannel general = new NotificationChannel(CH_GENERAL, "الأذكار والتذكيرات", NotificationManager.IMPORTANCE_DEFAULT);
+        NotificationChannel general = new NotificationChannel(CH_GENERAL, "الأذكار والتذكيرات", NotificationManager.IMPORTANCE_HIGH);
         general.setDescription("أذكار الصباح والمساء والتذكيرات");
         general.setSound(android.provider.Settings.System.DEFAULT_NOTIFICATION_URI, aa);
 
@@ -66,6 +66,7 @@ public final class AdhanStore {
         nm.createNotificationChannel(adhan);
         nm.createNotificationChannel(alarm);
         nm.createNotificationChannel(general);
+        try { nm.deleteNotificationChannel("wird_general_v1"); } catch (Exception ignored) {}
         nm.createNotificationChannel(playing);
     }
 

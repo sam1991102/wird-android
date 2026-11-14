@@ -88,6 +88,7 @@ public class AdhanService extends Service {
         NotificationCompat.Builder b = new NotificationCompat.Builder(this, isAlarm ? AdhanStore.CH_ALARM : AdhanStore.CH_ADHAN)
                 .setSmallIcon(R.drawable.ic_stat_wird)
                 .setColor(0xFFC49A4B)
+                .setLargeIcon(WNotify.largeIcon(this, current))
                 .setContentTitle(current.optString("title", "حان وقت الصلاة"))
                 .setContentText(current.optString("body", ""))
                 .setPriority(NotificationCompat.PRIORITY_MAX)
