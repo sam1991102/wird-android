@@ -61,6 +61,10 @@ for (const S of SKINS) {
   if (q.longtask > 1500) bad(k + '/home', `مهام طويلة تعطّل الواجهة ${Math.round(q.longtask)}ms`);
   for (const [sel, name] of [['#skyCard', 'كارت اليوم'], ['#ayCard', 'الآية والحديث'], ['#homeAlerts', 'أذكار اليوم']]) if (!(await vis(page, sel))) bad(k + '/home', `${name} مش ظاهر`);
   if (await vis(page, '.hero.container')) bad(k + '/home', 'الهيدر القديم ظاهر');
+  const broken = await page.evaluate(() => [...document.images].filter(i => i.complete && i.offsetWidth && !i.naturalWidth).map(i => i.getAttribute('src')).slice(0, 5));
+  if (broken.length) bad(k + '/home', 'صور مكسورة: ' + broken.join(' , '));
+  const fonts = await page.evaluate(async () => { await document.fonts.ready; return [...document.fonts].filter(f => f.status === 'error').map(f => f.family).slice(0, 5) });
+  if (fonts.length) bad(k + '/home', 'خطوط فشلت في التحميل: ' + [...new Set(fonts)].join(' , '));
   if (!(await vis(page, '#homeAlerts .da-svg'))) bad(k + '/home', 'مسار اليوم مش مرسوم');
   if (!(await vis(page, '#skyCard .sk-x'))) bad(k + '/home', 'ميعاد الصلاة مش ظاهر في كارت اليوم: ' + await page.evaluate(() => { const s = document.getElementById('skyCard'); return s ? [...s.querySelectorAll('*')].filter(e => /بعد/.test(e.textContent) && e.children.length < 4).map(e => e.tagName + '.' + e.className).slice(0, 5).join(' ; ') : 'no skyCard' }));
   const order = await page.evaluate(() => ['#skyCard', '#homeAlerts', '#ayCard', '#quranCard'].map(s => { const e = document.querySelector(s); return e ? Math.round(e.getBoundingClientRect().top + scrollY) : -1 }));

@@ -8,8 +8,7 @@ http.createServer((q, s) => {
   if (!p) p = 'index.html';
   let f = F[p] || F[p + '.html'] || (!p.includes('.') && F['index.html']);
   if (!f) { s.writeHead(404); return s.end('not found') }
-  const [type, body] = f;
-  const bin = /^(image\/(png|jpeg|webp|gif)|font\/|application\/(octet|font))/.test(type);
+  const [type, body, bin] = f;
   s.writeHead(200, { 'content-type': type, 'cache-control': 'no-store' });
   s.end(bin ? Buffer.from(body, 'base64') : body);
 }).listen(PORT, () => console.log('wird local on http://localhost:' + PORT));

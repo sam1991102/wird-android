@@ -48,9 +48,13 @@ const F = build();
 const missing = Object.keys(LIVE).filter(k => !(k in F));
 if (missing.length) throw new Error('files on the live site are missing from web/: ' + missing.join(', '));
 
+// حماية: أي صورة أو خط لازم يتعلّم إنه بايتات، وإلا هيوصل للمستخدم نص مكسور
+const badBin = Object.keys(F).filter(k => /^(image\/(png|jpe?g|webp|gif)|font\/)/.test(F[k][0]) && F[k][2] !== 1);
+if (badBin.length) throw new Error('binary files without the binary flag: ' + badBin.join(', '));
+
 // 3) المقارنة مع المنشور: أي ملف اتغيّر؟ (sw.js بنقارنه من غير رقم الإصدار)
 const strip = s => s.replace(/wird-v\d+/g, 'wird-v');
-const changed = Object.keys(F).filter(k => !LIVE[k] || LIVE[k][0] !== F[k][0] || strip(LIVE[k][1]) !== strip(F[k][1]));
+const changed = Object.keys(F).filter(k => !LIVE[k] || LIVE[k][0] !== F[k][0] || strip(LIVE[k][1]) !== strip(F[k][1]) || !!LIVE[k][2] !== !!F[k][2]);
 const added = Object.keys(F).filter(k => !LIVE[k]);
 console.log(changed.length ? 'changed: ' + changed.map(k => `${k} (${LIVE[k] ? LIVE[k][1].length : 0} → ${F[k][1].length})`).join(', ') : 'identical to the live site');
 if (added.length) console.log('new files: ' + added.join(', '));

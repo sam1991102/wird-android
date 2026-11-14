@@ -5,13 +5,16 @@ import fs from 'node:fs';
 const W = new URL('.', import.meta.url).pathname;
 const read = p => fs.readFileSync(W + p, 'utf8');
 
+export const isBin = t => /^(image\/(png|jpe?g|webp|gif|x-icon|vnd\.microsoft\.icon)|font\/|application\/(octet-stream|font|x-font))/.test(t);
+
 export function build() {
   const m = JSON.parse(read('manifest.json'));
   const F = {};
   for (const f of m.files) {
     if (f.name === 'ui.js') F[f.name] = [f.type, m.ui.map(p => read('ui/' + p)).join('')];
     else if (f.name === 'styles.css') F[f.name] = [f.type, m.css.map(p => read('css/' + p)).join('')];
-    else F[f.name] = [f.type, read('site/' + f.name)];
+    // الصور والخطوط محفوظة base64؛ العنصر التالت (1) بيقول للـ Worker يفكّها لبايتات قبل ما يبعتها
+    else F[f.name] = isBin(f.type) ? [f.type, read('site/' + f.name), 1] : [f.type, read('site/' + f.name)];
   }
   return F;
 }
