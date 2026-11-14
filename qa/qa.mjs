@@ -62,6 +62,7 @@ for (const S of SKINS) {
   for (const [sel, name] of [['#skyCard', 'كارت اليوم'], ['#ayCard', 'الآية والحديث'], ['#homeAlerts', 'أذكار اليوم']]) if (!(await vis(page, sel))) bad(k + '/home', `${name} مش ظاهر`);
   if (await vis(page, '.hero.container')) bad(k + '/home', 'الهيدر القديم ظاهر');
   if (!(await vis(page, '#homeAlerts .da-svg'))) bad(k + '/home', 'مسار اليوم مش مرسوم');
+  if (!(await vis(page, '#skyCard .sk-x'))) bad(k + '/home', 'ميعاد الصلاة مش ظاهر في كارت اليوم: ' + await page.evaluate(() => { const s = document.getElementById('skyCard'); return s ? [...s.querySelectorAll('*')].filter(e => /بعد/.test(e.textContent) && e.children.length < 4).map(e => e.tagName + '.' + e.className).slice(0, 5).join(' ; ') : 'no skyCard' }));
   const order = await page.evaluate(() => ['#skyCard', '#homeAlerts', '#ayCard', '#quranCard'].map(s => { const e = document.querySelector(s); return e ? Math.round(e.getBoundingClientRect().top + scrollY) : -1 }));
   if (order.some((v, i) => i && v >= 0 && order[i - 1] >= 0 && v < order[i - 1])) bad(k + '/home', 'ترتيب الرئيسية غلط ' + order.join(','));
   const ayTabs = await page.$$eval('#ayCard .ay-tabs button', b => b.map(x => x.textContent.trim()));
