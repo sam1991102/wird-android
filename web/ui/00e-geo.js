@@ -5,13 +5,15 @@ var G=window.Capacitor&&Capacitor.Plugins&&Capacitor.Plugins.WirdGeo;
 if(!window.__WIRD_NATIVE||!G||!navigator.geolocation)return;
 var busy=null;
 function err(code,msg){var e={code:code,message:msg,PERMISSION_DENIED:1,POSITION_UNAVAILABLE:2,TIMEOUT:3};return e}
-function ask(msg,fn){setTimeout(function(){if(window.confirm(msg))fn()},50)}
+function ask(msg,fn){setTimeout(function(){(window.__wConfirm?__wConfirm:function(m){return Promise.resolve(confirm(m))})(msg,{ok:"افتح الإعدادات",cancel:"لاحقًا"}).then(function(y){y&&fn()})},50)}
 function get(){if(busy)return busy;busy=G.get().then(function(r){busy=null;return r},function(e){busy=null;throw e});return busy}
 navigator.geolocation.getCurrentPosition=function(ok,fail){
+ /* رسالة فتح الإعدادات تظهر بس لو المستخدم هو اللي ضغط، مش في التحديث التلقائي في الخلفية */
+ var user=!navigator.userActivation||navigator.userActivation.isActive;
  get().then(function(r){ok&&ok({coords:{latitude:r.lat,longitude:r.lng,accuracy:r.acc,altitude:null,altitudeAccuracy:null,heading:null,speed:null},timestamp:r.t||Date.now()})},
  function(e){var c=e&&e.code;
-  if(c==="off"){ask("خدمة الموقع (GPS) مقفولة في الموبايل.\nتفتح الإعدادات وتشغّلها؟",function(){G.openSettings()});fail&&fail(err(2,"off"))}
-  else if(c==="denied"){G.state().then(function(s){if(s.perm==="denied")ask("إذن الموقع مرفوض لـ«وِرد».\nتفتح إعدادات التطبيق وتسمح بالموقع؟",function(){G.openAppSettings()})}).catch(function(){});fail&&fail(err(1,"denied"))}
+  if(c==="off"){user&&ask("خدمة الموقع (GPS) مقفولة في الموبايل.\nتفتح الإعدادات وتشغّلها؟",function(){G.openSettings()});fail&&fail(err(2,"off"))}
+  else if(c==="denied"){user&&G.state().then(function(s){if(s.perm==="denied")ask("إذن الموقع مرفوض لـ«وِرد».\nتفتح إعدادات التطبيق وتسمح بالموقع؟",function(){G.openAppSettings()})}).catch(function(){});fail&&fail(err(1,"denied"))}
   else fail&&fail(err(3,(e&&e.message)||"timeout"))})};
 navigator.geolocation.watchPosition=function(ok,fail,o){navigator.geolocation.getCurrentPosition(ok,fail,o);return 1};
 navigator.geolocation.clearWatch=function(){};

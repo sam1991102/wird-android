@@ -4,7 +4,12 @@
  const T=m=>typeof toast==="function"&&toast(m);const ar=__ar;
  const J=(k,v)=>{try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||"null");localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}};
  const esc=t=>String(t).replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[m]);
- const open=(cls,html)=>{document.querySelectorAll(".wd-sheet."+cls).forEach(x=>x.remove());const s=document.createElement("div");s.className="wd-sheet tl-sheet "+cls;s.setAttribute("role","dialog");s.setAttribute("aria-modal","true");s.innerHTML='<div class="wd-card tl-card"><button type="button" class="wd-x" data-x aria-label="إغلاق">×</button>'+html+'</div>';s.addEventListener("click",e=>{if(e.target===s||e.target.closest("[data-x]")){s.hidden=true;s.dispatchEvent(new Event("tlclose"));setTimeout(()=>s.remove(),50)}});document.body.appendChild(s);return s};
+ const PG={"hj-sheet":"تقويم أم القرى وأيامه المميزة","qb-sheet":"اتجاه الكعبة من مكانك","nm-sheet":"تسعة وتسعون اسمًا ومعانيها","bm-sheet":"الآيات اللي حفظتها من المصحف"};
+ /* المحتوى اللي بيتقري بيفتح صفحة كاملة بنفس شكل باقي الصفحات؛ البحث يفضل لوحة سريعة */
+ const open=(cls,html)=>{if(PG[cls]&&window.__wPage){document.querySelectorAll(".wp-page."+cls).forEach(x=>x.remove());
+   const m=html.match(/^<div class="tl-h">([^<]*)<\/div>/);const title=m?m[1]:"";const body=m?html.slice(m[0].length):html;let s=null;
+   const pg=__wPage({title:title,sub:PG[cls],cls:"tl-pg "+cls,html:'<div class="tl-pg-b">'+body+'</div>',onClose:()=>{s&&s.dispatchEvent(new Event("tlclose"))}});s=pg.el;return s}
+  document.querySelectorAll(".wd-sheet."+cls).forEach(x=>x.remove());const s=document.createElement("div");s.className="wd-sheet tl-sheet "+cls;s.setAttribute("role","dialog");s.setAttribute("aria-modal","true");s.innerHTML='<div class="wd-card tl-card"><button type="button" class="wd-x" data-x aria-label="إغلاق">×</button>'+html+'</div>';s.addEventListener("click",e=>{if(e.target===s||e.target.closest("[data-x]")){s.hidden=true;s.dispatchEvent(new Event("tlclose"));setTimeout(()=>s.remove(),50)}});document.body.appendChild(s);return s};
  /* ===== هجري ===== */
  const HF=new Intl.DateTimeFormat("en-u-ca-islamic-umalqura-nu-latn",{day:"numeric",month:"numeric",year:"numeric"});
  const hj=d=>{const p={};HF.formatToParts(d).forEach(x=>p[x.type]=x.value);return{d:+p.day,m:+p.month,y:parseInt(p.year)}};
@@ -51,7 +56,12 @@
 
 (function(){
  const T=m=>typeof toast==="function"&&toast(m);const esc=t=>String(t).replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[m]);
- const open=(cls,html)=>{document.querySelectorAll(".wd-sheet."+cls).forEach(x=>x.remove());const s=document.createElement("div");s.className="wd-sheet tl-sheet "+cls;s.setAttribute("role","dialog");s.setAttribute("aria-modal","true");s.innerHTML='<div class="wd-card tl-card"><button type="button" class="wd-x" data-x aria-label="إغلاق">×</button>'+html+'</div>';s.addEventListener("click",e=>{if(e.target===s||e.target.closest("[data-x]")){s.hidden=true;setTimeout(()=>s.remove(),50)}});document.body.appendChild(s);return s};
+ const PG={"hj-sheet":"تقويم أم القرى وأيامه المميزة","qb-sheet":"اتجاه الكعبة من مكانك","nm-sheet":"تسعة وتسعون اسمًا ومعانيها","bm-sheet":"الآيات اللي حفظتها من المصحف"};
+ /* المحتوى اللي بيتقري بيفتح صفحة كاملة بنفس شكل باقي الصفحات؛ البحث يفضل لوحة سريعة */
+ const open=(cls,html)=>{if(PG[cls]&&window.__wPage){document.querySelectorAll(".wp-page."+cls).forEach(x=>x.remove());
+   const m=html.match(/^<div class="tl-h">([^<]*)<\/div>/);const title=m?m[1]:"";const body=m?html.slice(m[0].length):html;let s=null;
+   const pg=__wPage({title:title,sub:PG[cls],cls:"tl-pg "+cls,html:'<div class="tl-pg-b">'+body+'</div>',onClose:()=>{s&&s.dispatchEvent(new Event("tlclose"))}});s=pg.el;return s}
+  document.querySelectorAll(".wd-sheet."+cls).forEach(x=>x.remove());const s=document.createElement("div");s.className="wd-sheet tl-sheet "+cls;s.setAttribute("role","dialog");s.setAttribute("aria-modal","true");s.innerHTML='<div class="wd-card tl-card"><button type="button" class="wd-x" data-x aria-label="إغلاق">×</button>'+html+'</div>';s.addEventListener("click",e=>{if(e.target===s||e.target.closest("[data-x]")){s.hidden=true;setTimeout(()=>s.remove(),50)}});document.body.appendChild(s);return s};
  const closeAll=()=>document.querySelectorAll(".wd-sheet").forEach(s=>{s.hidden=true;setTimeout(()=>s.remove(),50)});
  /* ===== الحج والعمرة ===== */
  
@@ -90,7 +100,12 @@
 (function(NAMES,RUM){
  const T=m=>typeof toast==="function"&&toast(m);const ar=__ar;const esc=t=>String(t).replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[m]);
  const J=(k,v)=>{try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||"null");localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}};
- const open=(cls,html)=>{document.querySelectorAll(".wd-sheet."+cls).forEach(x=>x.remove());const s=document.createElement("div");s.className="wd-sheet tl-sheet "+cls;s.setAttribute("role","dialog");s.setAttribute("aria-modal","true");s.innerHTML='<div class="wd-card tl-card"><button type="button" class="wd-x" data-x aria-label="إغلاق">×</button>'+html+'</div>';s.addEventListener("click",e=>{if(e.target===s||e.target.closest("[data-x]")){s.hidden=true;s.dispatchEvent(new Event("tlclose"));setTimeout(()=>s.remove(),50)}});document.body.appendChild(s);return s};
+ const PG={"hj-sheet":"تقويم أم القرى وأيامه المميزة","qb-sheet":"اتجاه الكعبة من مكانك","nm-sheet":"تسعة وتسعون اسمًا ومعانيها","bm-sheet":"الآيات اللي حفظتها من المصحف"};
+ /* المحتوى اللي بيتقري بيفتح صفحة كاملة بنفس شكل باقي الصفحات؛ البحث يفضل لوحة سريعة */
+ const open=(cls,html)=>{if(PG[cls]&&window.__wPage){document.querySelectorAll(".wp-page."+cls).forEach(x=>x.remove());
+   const m=html.match(/^<div class="tl-h">([^<]*)<\/div>/);const title=m?m[1]:"";const body=m?html.slice(m[0].length):html;let s=null;
+   const pg=__wPage({title:title,sub:PG[cls],cls:"tl-pg "+cls,html:'<div class="tl-pg-b">'+body+'</div>',onClose:()=>{s&&s.dispatchEvent(new Event("tlclose"))}});s=pg.el;return s}
+  document.querySelectorAll(".wd-sheet."+cls).forEach(x=>x.remove());const s=document.createElement("div");s.className="wd-sheet tl-sheet "+cls;s.setAttribute("role","dialog");s.setAttribute("aria-modal","true");s.innerHTML='<div class="wd-card tl-card"><button type="button" class="wd-x" data-x aria-label="إغلاق">×</button>'+html+'</div>';s.addEventListener("click",e=>{if(e.target===s||e.target.closest("[data-x]")){s.hidden=true;s.dispatchEvent(new Event("tlclose"));setTimeout(()=>s.remove(),50)}});document.body.appendChild(s);return s};
  /* ===== تحليلات Cloudflare (بلا كوكيز) ===== */
  try{if(RUM&&!document.querySelector("script[data-cf-beacon]")){const sc=document.createElement("script");sc.defer=true;sc.src="https://static.cloudflareinsights.com/beacon.min.js";sc.setAttribute("data-cf-beacon",JSON.stringify({token:RUM,spa:true}));document.head.appendChild(sc)}}catch(e){}
  /* ===== أسماء الله الحسنى ===== */

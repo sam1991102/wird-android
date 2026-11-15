@@ -40,7 +40,7 @@ box.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return
  const k=load();if(!k)return;const p=plan(k);
  if(b.dataset.k==="read"){window.__openPage&&__openPage(Math.min(TOT,k.pos+1))}
  else if(b.dataset.k==="mark"){k.pos=Math.max(k.pos,p.to);if(k.pos>=TOT)k.count=(k.count||0)+1;save(k);render();resync();toast("تقبّل الله")}
- else if(b.dataset.k==="stop"){if(confirm("إلغاء الختمة الحالية؟")){save(null);render();resync()}}
+ else if(b.dataset.k==="stop"){(window.__wConfirm?__wConfirm:function(m){return Promise.resolve(confirm(m))})("إلغاء الختمة الحالية؟\nهيتمسح تقدّمك في الختمة دي.",{ok:"إلغاء الختمة",cancel:"رجوع",danger:true}).then(y=>{if(y){save(null);render();resync()}})}
  else if(b.dataset.k==="new"){const c=k.count||1;save(null);render();const s=load();}});
 /* تتبّع تلقائي: عند إغلاق صفحة المصحف نحدّث آخر صفحة مقروءة */
 let wasOpen=false;

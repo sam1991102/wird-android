@@ -34,7 +34,7 @@ ov.innerHTML='<div class="lp-top"><button type="button" class="lp-x" aria-label=
 '<button type="button" class="lp-tap" aria-label="اضغط لعدّ شوط"><svg viewBox="0 0 260 260" aria-hidden="true"><circle cx="130" cy="130" r="118" class="lp-bg"/><circle cx="130" cy="130" r="118" class="lp-arc" transform="rotate(-90 130 130)" stroke-dasharray="741.4" stroke-dashoffset="741.4"/></svg><span class="lp-in"><span class="lp-n">٠</span><span class="lp-of">من ٧</span></span></button>'+
 '<div class="lp-dots"></div><p class="lp-s"></p><p class="lp-hint">اضغط في أي مكان على الدائرة بعد كل شوط</p><button type="button" class="lp-undo">تراجع عن آخر شوط</button>';
 document.body.appendChild(ov);
-ov.querySelector(".lp-x").onclick=close;ov.querySelector(".lp-tap").onclick=tap;ov.querySelector(".lp-undo").onclick=undo;ov.querySelector(".lp-reset").onclick=function(){if(confirm("إعادة العدّ من الصفر؟"))reset()}}
+ov.querySelector(".lp-x").onclick=close;ov.querySelector(".lp-tap").onclick=tap;ov.querySelector(".lp-undo").onclick=undo;ov.querySelector(".lp-reset").onclick=function(){(window.__wConfirm?__wConfirm:function(m){return Promise.resolve(confirm(m))})("إعادة العدّ من الصفر؟",{ok:"إعادة العدّ",danger:true}).then(function(y){y&&reset()})}}
 ov.hidden=false;R.classList.add("lp-open");lock();render()}
 document.addEventListener("visibilitychange",function(){if(!document.hidden&&ov&&!ov.hidden)lock()});
 function addBtns(){[].forEach.call(document.querySelectorAll(".wp-page .wp-laps"),function(box,i){if(box.querySelector(".lp-open-b"))return;var b=document.createElement("button");b.type="button";b.className="lp-open-b";b.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>وضع العدّ بملء الشاشة';

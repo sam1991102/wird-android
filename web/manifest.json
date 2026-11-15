@@ -197,6 +197,7 @@
  ],
  "ui": [
   "00b-dom.js",
+  "00g-ui.js",
   "00c-bg-audio.js",
   "00d-qlocal.js",
   "00e-geo.js",

@@ -35,7 +35,7 @@ function build(){ov=document.createElement("div");ov.className="st";ov.setAttrib
   const a=e.target.closest(".st-tabs a");if(a){e.preventDefault();ov.querySelector(a.getAttribute("href")).scrollIntoView({behavior:"smooth",block:"start"})}});
  ov.querySelector("#stVib").onchange=e=>{put("wird-vib",e.target.checked?"1":"0")};
  ov.querySelector(".st-add").onclick=addAll;
- ov.querySelector(".st-reset").onclick=()=>{if(!confirm("سيُحذف كل العدّ والإحصائيات من هذا الجهاز. متأكد؟"))return;Object.keys(localStorage).filter(k=>/^wird-(day|progress|history|tasbih|counter)$/.test(k)).forEach(k=>localStorage.removeItem(k));location.reload()};
+ ov.querySelector(".st-reset").onclick=()=>{(window.__wConfirm?__wConfirm:function(m){return Promise.resolve(confirm(m))})("حذف كل العدّ والإحصائيات؟\nهيتمسحوا من الجهاز ده ومش هتقدر ترجّعهم.",{ok:"حذف",danger:true}).then(y=>{if(!y)return;Object.keys(localStorage).filter(k=>/^wird-(day|progress|history|tasbih|counter)$/.test(k)).forEach(k=>localStorage.removeItem(k));location.reload()})};
  document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!ov.hidden)close()})}
 function apply(g,v){if(g==="theme"){const tb=document.getElementById("themeBtn");for(let i=0;i<3&&themeNow()!==v;i++)tb&&tb.click()}
  else if(g==="size"){window.__setFS&&window.__setFS(+v)}

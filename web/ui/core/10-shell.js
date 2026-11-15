@@ -60,7 +60,7 @@ sub.querySelector(".sb-back").addEventListener("click",backFromList);
 new MutationObserver(ms=>{mark();if(ms.some(m=>m.attributeName==="data-lib"))syncTitle();
  if(ms.some(m=>m.attributeName==="data-view"&&R.dataset.view==="mushaf"))updMv();
  push()}).observe(R,{attributes:true,attributeFilter:["data-view","data-lib"]});
-const OV="#focus,.mp,.reader,.st,.qx,.sheet,.ig-sheet,.install-sheet,.adhan-ov,.wd-sheet,.wp-page";
+const OV="#focus,.mp,.reader,.st,.qx,.sheet,.ig-sheet,.install-sheet,.adhan-ov,.wd-sheet,.wp-page,.w-dlg";
 const vis=el=>{if(!el.isConnected||el.hidden||!el.getClientRects().length)return false;const s=getComputedStyle(el);return s.visibility!=="hidden"&&s.display!=="none"&&(s.animationName!=="none"||+s.opacity>0.05)&&s.pointerEvents!=="none"};
 const openOv=()=>[...document.querySelectorAll(OV)].filter(el=>vis(el)&&!el.parentElement.closest(OV));
 const closeOv=el=>{const b=el.querySelector("#fClose,[data-x],.close,[aria-label='إغلاق'],[aria-label='رجوع']");if(b)b.click();else el.hidden=true};
