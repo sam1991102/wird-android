@@ -60,12 +60,12 @@ public class WidgetConfigActivity extends Activity {
         TextView title = t("إعدادات الويدجت", 20, FG, true);
         title.setPadding(dp(20), dp(16), dp(20), dp(4));
         root.addView(title);
-        TextView sub = t(new String[]{"الصلاة القادمة", "المواقيت", "الويدجت الشامل", "ذكر", "المصحف والختمة"}[type], 13, MUTED, false);
+        TextView sub = t(new String[]{"الصلاة القادمة", "المواقيت", "الويدجت الشامل", "ذكر", "المصحف والختمة", "اليوم والمواقيت"}[type], 13, MUTED, false);
         sub.setPadding(dp(20), 0, dp(20), dp(10));
         root.addView(sub);
 
         preview = new FrameLayout(this);
-        int h = type == WidgetRender.FULL ? 330 : type == WidgetRender.NEXT || type == WidgetRender.MUSHAF ? 170 : 130;
+        int h = type == WidgetRender.FULL ? 330 : type == WidgetRender.NEXT || type == WidgetRender.MUSHAF || type == WidgetRender.DAY ? 170 : 130;
         LinearLayout.LayoutParams pl = new LinearLayout.LayoutParams(type == WidgetRender.NEXT || type == WidgetRender.MUSHAF ? dp(190) : ViewGroup.LayoutParams.MATCH_PARENT, dp(h));
         pl.gravity = Gravity.CENTER_HORIZONTAL;
         pl.setMargins(dp(20), dp(4), dp(20), dp(12));
@@ -116,6 +116,7 @@ public class WidgetConfigActivity extends Activity {
             sw(c3, "إظهار ص / م", cfg.ampm, v -> cfg.ampm = v);
         }
         if (type == WidgetRender.NEXT || type == WidgetRender.FULL) sw(c3, "العدّاد والوقت المنقضي", cfg.timer, v -> cfg.timer = v);
+        if (type == WidgetRender.DAY) sw(c3, "الوقت الباقي على الصلاة القادمة", cfg.timer, v -> cfg.timer = v);
         if (type == WidgetRender.TIMES || type == WidgetRender.FULL) sw(c3, "وقت الشروق", cfg.sunrise, v -> cfg.sunrise = v);
         if (type == WidgetRender.FULL) {
             sw(c3, "منتصف الليل والثلث الأخير", cfg.extra, v -> cfg.extra = v);

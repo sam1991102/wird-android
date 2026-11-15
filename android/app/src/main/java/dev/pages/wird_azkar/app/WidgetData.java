@@ -14,7 +14,7 @@ import org.json.JSONObject;
 
 /** بيانات الويدجت: نسخة من مفاتيح الويب (wird-prayer، المصحف، الختمة) + إعدادات كل ويدجت. */
 final class WidgetData {
-    static final Class<?>[] PROVIDERS = {WirdWidget.class, WTimesWidget.class, WFullWidget.class, WDhikrWidget.class, WMushafWidget.class};
+    static final Class<?>[] PROVIDERS = {WirdWidget.class, WTimesWidget.class, WFullWidget.class, WDhikrWidget.class, WMushafWidget.class, WDayWidget.class};
     static final String[] MIRROR = {"wird-prayer", "wird-mushaf-page", "wird-mushaf-sura", "wird-last-surah", "wird-khatma"};
 
     static SharedPreferences p(Context c) { return c.getSharedPreferences("wird_widget", Context.MODE_PRIVATE); }
@@ -41,10 +41,10 @@ final class WidgetData {
     /** ألوان الخلفية (0 = تلقائي حسب وضع الجهاز). */
     static final int[] BG = {AUTO, 0xFF0F2A22, 0xFF000000, 0xFF1B2340, 0xFF3A2350, 0xFF4A1622, 0xFF12355B, 0xFFF3EBDD, 0xFFFFFFFF};
     static final String[] BG_N = {"تلقائي", "أخضر", "أسود", "كحلي", "بنفسجي", "عنابي", "أزرق", "رملي", "أبيض"};
-    static final int[] AC = {AUTO, 0xFFE2C27F, 0xFF3FB27F, 0xFF4AA3DF, 0xFFF0A03C, 0xFFE06C9F, 0xFF8A8CF5, 0xFFFFFFFF};
+    static final int[] AC = {AUTO, 0xFFE2C27F, 0xFF3FB27F, 0xFF4AA3DF, 0xFFF0A03C, 0xFFE06C9F, 0xFF8A8CF5, 0xFFFFFFFF, 0xFFE8836B};
     static final String[] FONT_N = {"خط الجهاز", "تجوّل", "المراعي", "أميري"};
     static final String[] FONT_K = {"", "tajawal", "almarai", "amiri"};
-    static final String[] AC_N = {"حسب النمط", "ذهبي", "أخضر", "أزرق", "برتقالي", "وردي", "بنفسجي", "أبيض"};
+    static final String[] AC_N = {"حسب النمط", "ذهبي", "أخضر", "أزرق", "برتقالي", "وردي", "بنفسجي", "أبيض", "مرجاني"};
 
     static final class Cfg {
         int alpha = 96, bg = 0, ac = 0, text = 0, size = 1, style = 0, grad = 0, sheen = 35, font = 1;

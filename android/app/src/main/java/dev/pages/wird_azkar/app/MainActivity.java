@@ -108,6 +108,8 @@ public class MainActivity extends BridgeActivity {
     public void onResume() {
         super.onResume();
         pushSystemTheme();
+        /* شاومي وغيرها بيمسحوا الإشعار الثابت ومنبّهات التحديث لما التطبيق يتقفل من «التطبيقات الأخيرة»: نرجّعهم كل ما يتفتح */
+        WidgetData.refreshAll(this);
     }
 
     @Override

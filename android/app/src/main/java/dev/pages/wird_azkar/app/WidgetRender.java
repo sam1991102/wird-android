@@ -18,7 +18,7 @@ import java.util.TimeZone;
 
 /** يرسم الويدجتات الخمس حسب إعدادات كل واحدة. */
 final class WidgetRender {
-    static final int NEXT = 0, TIMES = 1, FULL = 2, DHIKR = 3, MUSHAF = 4;
+    static final int NEXT = 0, TIMES = 1, FULL = 2, DHIKR = 3, MUSHAF = 4, DAY = 5;
 
     static final String[] DHIKR_LIST = {
         "سبحان الله وبحمده، سبحان الله العظيم",
@@ -53,11 +53,12 @@ final class WidgetRender {
             case FULL: return R.layout.w_full;
             case DHIKR: return R.layout.w_dhikr;
             case MUSHAF: return R.layout.w_mushaf;
+            case DAY: return R.layout.w_day;
             default: return R.layout.widget_wird;
         }
     }
 
-    static final int[][] SIZE = {{170, 170}, {320, 90}, {320, 330}, {320, 120}, {170, 170}};
+    static final int[][] SIZE = {{170, 170}, {320, 90}, {320, 330}, {320, 120}, {170, 170}, {320, 160}};
 
     static int layoutFor(Context c, int type, WidgetData.Cfg g) {
         if (Build.VERSION.SDK_INT >= 26 && g.font > 0 && g.font < WidgetData.FONT_K.length) {
@@ -89,6 +90,7 @@ final class WidgetRender {
             case FULL: full(c, v, g); break;
             case DHIKR: dhikr(c, v, g, id); break;
             case MUSHAF: mushaf(c, v, g); break;
+            case DAY: day(c, v, g, wDp, hDp); break;
             default: next(c, v, g);
         }
         String path = type == DHIKR ? "/#library" : type == MUSHAF ? "/#mushaf" : "/#prayer";
@@ -112,6 +114,19 @@ final class WidgetRender {
         elapsed(v, g, c, pv.t, 11 * s);
         show(v, R.id.w_hijri, g.hijri);
         if (g.hijri) tx(v, R.id.w_hijri, hijri(P, g), g.muted(c), 11 * s);
+    }
+
+    private static void day(Context c, RemoteViews v, WidgetData.Cfg g, int wDp, int hDp) {
+        float s = g.scale();
+        int foot = g.timer ? Math.round(34 * s) : 0;
+        v.setImageViewBitmap(R.id.w_art, WidgetDay.art(c, g, Math.max(120, wDp - 28), Math.max(60, hDp - 18 - foot)));
+        show(v, R.id.w_foot, g.timer);
+        if (!g.timer) return;
+        JSONObject P = WidgetData.prayer(c);
+        Nx n = nextOf(P);
+        tx(v, R.id.w_nlbl, "باقي على " + name(n.k, n.fri), g.accent(c), 15 * s);
+        timer(v, g, c, n.t, 16 * s);
+        v.setTextColor(R.id.w_timer, g.accent(c));
     }
 
     private static void times(Context c, RemoteViews v, WidgetData.Cfg g) {

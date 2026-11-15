@@ -260,7 +260,8 @@
   "23-focus.js",
   "25-polish.js",
   "34-ratb.js",
-  "35-view-guard.js"
+  "35-view-guard.js",
+  "36-oem.js"
  ],
  "css": [
   "00-core.css",

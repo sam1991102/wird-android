@@ -105,3 +105,12 @@ html.rt-on .sk-dhikr{display:none}
 .sh-row.st-upd.is-ready .upd-k{font-size:.8rem;font-weight:700;padding:4px 12px;border-radius:999px;background:var(--primary);color:#fff;opacity:1}
 @keyframes wSpin{to{transform:rotate(360deg)}}
 @media (prefers-reduced-motion:reduce){.sh-row.st-upd.is-busy .nt-ic svg{animation:none}}
+/* بطاقة «التشغيل التلقائي» (شاومي وغيرها) */
+.oem-card{margin:0 0 14px;padding:14px 16px;border-radius:16px;background:color-mix(in srgb,var(--gold) 12%,var(--card));border:1px solid color-mix(in srgb,var(--gold) 35%,transparent)}
+.oem-card b{display:block;font-size:1rem;color:var(--ink)}
+.oem-card p{margin:6px 0 0;font-size:.9rem;line-height:1.8;color:var(--ink-2,var(--muted))}
+.oem-b{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.oem-b button{min-height:44px;padding:0 16px;border-radius:12px;font:inherit;font-weight:700;font-size:.92rem;cursor:pointer}
+.oem-go{border:0;background:var(--primary);color:#fff}
+.oem-done{border:1px solid var(--line);background:transparent;color:var(--ink)}
+.oem-b button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
