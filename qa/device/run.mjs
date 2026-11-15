@@ -54,12 +54,13 @@ const online = async () => { for (let i = 0; i < 20; i++) { if (/bytes from|1 re
 
 try {
   adb('wait-for-device'); adb('shell settings put global window_animation_scale 0', true); adb('shell settings put global transition_animation_scale 0', true); adb('shell settings put global animator_duration_scale 0', true);
-  res('emulator online', await online());
+  res('emulator has internet', await online() || /200|301|302/.test(adb('shell curl -s -o /dev/null -w %{http_code} https://wird-azkar.pages.dev/', true)));
 
   // ١) النسخة القديمة (بتفتح الموقع من الإنترنت) + بيانات تجربة
   adb(`install -r -g ${OLD}`);
   adb(`shell pm grant ${PKG} android.permission.POST_NOTIFICATIONS`, true);
-  let u = await launch();
+  let u = await launch(); await snap('old-launched');
+  res('device still connected', /device/.test(adb('get-state', true)), adb('get-state', true));
   res('old app opens the live site', /wird-azkar\.pages\.dev/.test(u), u);
   await js(`localStorage.setItem('wird-test-marker','keep-me-123');localStorage.setItem('wird-setup-done','1');localStorage.setItem('wird-onboarded','1');localStorage.setItem('wird-fav',JSON.stringify(['m1','e3']));localStorage.setItem('wird-khatma',JSON.stringify({start:Date.now()-864e5,days:30,pos:12}));true`);
   const before = await js(`JSON.stringify({m:localStorage.getItem('wird-test-marker'),n:localStorage.length})`);
