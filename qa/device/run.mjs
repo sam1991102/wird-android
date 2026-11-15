@@ -15,7 +15,7 @@ const res = (name, pass, detail = '') => { rows.push({ name, pass, detail }); co
 const snap = async name => { shot++; const f = `${String(shot).padStart(2, '0')}-${name}.png`; sh(`adb exec-out screencap -p > ${OUT}/${f}`, true); return f };
 
 // ── DevTools: نلاقي الـ WebView بتاع التطبيق ونفتح اتصال
-let ws = null, mid = 0; const pend = new Map(); const pageErrors = [];
+let ws = null, mid = 0; const pend = new Map(); const pageErrors = [], dialogs = [];
 async function connect() {
   if (ws) try { ws.close() } catch (e) { }
   ws = null;
@@ -31,8 +31,12 @@ async function connect() {
         if (pg) {
           ws = new WebSocket(pg.webSocketDebuggerUrl);
           await new Promise((ok, no) => { ws.onopen = ok; ws.onerror = no });
-          ws.onmessage = m => { const d = JSON.parse(m.data); if (d.id && pend.has(d.id)) { pend.get(d.id)(d); pend.delete(d.id) } else if (d.method === 'Runtime.exceptionThrown') pageErrors.push(d.params.exceptionDetails.exception?.description?.split('\n')[0] || d.params.exceptionDetails.text) };
-          await cdp('Runtime.enable');
+          ws.onmessage = m => { const d = JSON.parse(m.data); if (d.id && pend.has(d.id)) { pend.get(d.id)(d); pend.delete(d.id) } else if (d.method === 'Runtime.exceptionThrown') pageErrors.push(d.params.exceptionDetails.exception?.description?.split('\n')[0] || d.params.exceptionDetails.text)
+            // نوافذ confirm/alert بتجمّد الصفحة: نسجّل نصها ونقفلها
+            else if (d.method === 'Page.javascriptDialogOpening') { dialogs.push(d.params.type + ': ' + d.params.message.replace(/\s+/g, ' ').slice(0, 120)); const id = ++mid; ws.send(JSON.stringify({ id, method: 'Page.handleJavaScriptDialog', params: { accept: false } })) } };
+          await cdp('Runtime.enable'); await cdp('Page.enable');
+          // لو فيه نافذة مفتوحة من قبل ما نتصل
+          { const id = ++mid; ws.send(JSON.stringify({ id, method: 'Page.handleJavaScriptDialog', params: { accept: false } })) }
           return pg.url;
         }
       } catch (e) { }
@@ -120,6 +124,7 @@ try {
 
   // ٧) أخطاء
   res('no JavaScript errors in the app', pageErrors.length === 0, pageErrors.slice(0, 5).join(' | '));
+  res('no blocking confirm/alert dialogs', dialogs.length === 0, [...new Set(dialogs)].join(' | '));
   const crash = adb('logcat -b crash -d', true).trim();
   res('no native crashes (logcat crash buffer)', !/FATAL EXCEPTION|AndroidRuntime/.test(crash), crash.split('\n').slice(0, 6).join(' / '));
 } catch (e) {
