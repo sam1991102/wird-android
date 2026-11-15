@@ -26,7 +26,12 @@ function build(){ov=document.createElement("div");ov.className="st";ov.setAttrib
   '<h3>السنن</h3>'+row("صيام الاثنين والخميس",sw("rm_mt",r("mt",0)),"تذكير مساء الأحد والأربعاء")+row("الأيام البيض",sw("rm_w",r("w",0)),"١٣ و١٤ و١٥ من كل شهر هجري")+row("سورة الكهف يوم الجمعة",sw("rm_k",r("k",1)))+row("سورة الملك قبل النوم",sw("rm_mu",r("mu",0)))+row("الثلث الأخير من الليل",sw("rm_q",r("q",0)),"يُحسب يوميًا من المغرب إلى الفجر")+
   '<button type="button" class="btn btn-primary st-add">أضف إلى التقويم</button>')+
  sec("data",I.db,"البيانات",'<div class="st-backup-slot"></div>'+row("مسح التقدّم",'<button type="button" class="btn btn-ghost st-reset">مسح</button>',"يحذف العدّ والإحصائيات من هذا الجهاز"))+
- sec("about",I.info,"عن وِرد",'<p class="st-note">وِرد رفيق يومي للأذكار والقرآن ومواقيت الصلاة. مجاني بلا إعلانات ولا حسابات، وكل بياناتك تبقى على جهازك.</p><div class="st-links"><a href="/about.html">عن الموقع</a><a href="/privacy.html">الخصوصية</a><a href="/contact.html">تواصل معنا</a></div><p class="st-ver">الإصدار '+AR(41)+'</p>')+'</div>';
+ sec("about",I.info,"عن وِرد",'<div class="ab-hero"><img class="ab-ic" src="/icon-512.png" alt="" width="84" height="84"><h3 class="ab-nm">وِرد</h3><p class="ab-tg">أذكارك ووِردك من القرآن ومواقيت الصلاة</p><p class="st-ver ab-ver">الإصدار '+AR(41)+'</p></div>'+
+  '<blockquote class="ab-hd"><p>«لا يزالُ لسانُك رطبًا من ذكرِ الله»</p><cite>رواه الترمذي وابن ماجه</cite></blockquote>'+
+  '<h3 class="ab-h">مبادئ وِرد</h3><ul class="ab-pr"><li><b>مجاني بالكامل</b><span>بلا إعلانات ولا اشتراكات</span></li><li><b>من غير حساب</b><span>تبدأ على طول من غير تسجيل</span></li><li><b>تقدّمك على جهازك</b><span>العدّ والختمة والإعدادات ما بتتبعتش لأي سيرفر</span></li><li><b>المصادر موثّقة</b><span>كل ذكر وحديث مكتوب مصدره</span></li></ul>'+
+  '<h3 class="ab-h">المصادر</h3><ul class="ab-src"><li><b>نص المصحف وخطوطه</b><span>مصحف المدينة النبوية من مجمع الملك فهد لطباعة المصحف الشريف، عن طريق <bdi data-latin dir="ltr">quran.com</bdi></span></li><li><b>التفسير الميسر</b><span>من مجمع الملك فهد، عن طريق <bdi data-latin dir="ltr">quran.com</bdi></span></li><li><b>التلاوات</b><span>عن طريق <bdi data-latin dir="ltr">islamic.network</bdi> و<bdi data-latin dir="ltr">quran.com</bdi></span></li><li><b>الإذاعات</b><span>روابط البث المباشر من <bdi data-latin dir="ltr">mp3quran.net</bdi> وغيره</span></li><li><b>مواقيت الصلاة</b><span>بتتحسب على جهازك بالمعادلات الفلكية وطريقة الحساب اللي تختارها</span></li></ul>'+
+  '<div class="ab-act"><button type="button" class="btn btn-primary ab-share">شارك وِرد</button><div class="st-links"><a href="/privacy.html">سياسة الخصوصية</a><a href="/contact.html">تواصل معنا</a><a href="/about.html">عن الموقع</a></div></div>'+
+  '<p class="ab-dua">لا تنسونا من صالح دعائكم</p>')+'</div>';
  document.body.append(ov);
  const ps=document.getElementById("prayerSettings");if(ps){ov.querySelector(".st-prayer-slot").append(ps);ps.hidden=false;ps.classList.add("st-inner")}
  const bk=document.querySelector(".backup");if(bk){ov.querySelector(".st-backup-slot").append(bk)}
@@ -35,6 +40,9 @@ function build(){ov=document.createElement("div");ov.className="st";ov.setAttrib
   const a=e.target.closest(".st-tabs a");if(a){e.preventDefault();ov.querySelector(a.getAttribute("href")).scrollIntoView({behavior:"smooth",block:"start"})}});
  ov.querySelector("#stVib").onchange=e=>{put("wird-vib",e.target.checked?"1":"0")};
  ov.querySelector(".st-add").onclick=addAll;
+ ov.querySelector(".ab-share").onclick=async()=>{const u="https://wird-azkar.pages.dev",t="وِرد: أذكار وقرآن ومواقيت الصلاة، مجاني من غير إعلانات";
+  try{if(navigator.share){await navigator.share({title:"وِرد",text:t,url:u});return}}catch(e){if(e&&e.name==="AbortError")return}
+  try{await navigator.clipboard.writeText(t+"\n"+u);toast("اتنسخ رابط وِرد، ابعته لمين ما تحب")}catch(e){toast(u)}};
  ov.querySelector(".st-reset").onclick=()=>{(window.__wConfirm?__wConfirm:function(m){return Promise.resolve(confirm(m))})("حذف كل العدّ والإحصائيات؟\nهيتمسحوا من الجهاز ده ومش هتقدر ترجّعهم.",{ok:"حذف",danger:true}).then(y=>{if(!y)return;Object.keys(localStorage).filter(k=>/^wird-(day|progress|history|tasbih|counter)$/.test(k)).forEach(k=>localStorage.removeItem(k));location.reload()})};
  document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!ov.hidden)close()})}
 function apply(g,v){if(g==="theme"){const tb=document.getElementById("themeBtn");for(let i=0;i<3&&themeNow()!==v;i++)tb&&tb.click()}

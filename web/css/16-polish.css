@@ -80,3 +80,22 @@ html.rt-on .sk-dhikr{display:none}
 @media (prefers-reduced-motion:reduce){.w-dlg{animation:none}.w-dlg.out{transition:none}}
 /* أدوات اتحوّلت من لوحة لصفحة كاملة: نفس هوامش جسم الصفحات */
 .tl-pg .tl-pg-b{max-width:640px;margin:0 auto;padding:4px 2px 24px}
+/* صفحة «عن وِرد» */
+#st-about .ab-hero{display:flex;flex-direction:column;align-items:center;text-align:center;gap:2px;padding:6px 0 4px}
+#st-about .ab-ic{width:84px;height:84px;border-radius:26%;box-shadow:0 8px 22px rgba(15,61,46,.28);margin-bottom:8px}
+#st-about .ab-nm{margin:0;font:700 1.6rem/1.3 Amiri,var(--font-quran,serif);color:var(--ink)}
+#st-about .ab-tg{margin:0;font-size:.92rem;color:var(--ink-2,var(--muted))}
+#st-about .ab-ver{margin:4px 0 0;font-size:.8rem;color:var(--ink-2,var(--muted))}
+#st-about .ab-hd{margin:14px 0 6px;padding:14px 12px;border-block:1px solid var(--line);text-align:center}
+#st-about .ab-hd p{margin:0;font:700 1.25rem/1.7 Amiri,var(--font-quran,serif);color:var(--ink)}
+#st-about .ab-hd cite{font-style:normal;font-size:.78rem;color:var(--ink-2,var(--muted))}
+#st-about .ab-h{margin:18px 0 8px;font-size:.95rem;color:var(--ink)}
+#st-about .ab-pr,#st-about .ab-src{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+#st-about .ab-pr li,#st-about .ab-src li{display:flex;flex-direction:column;gap:1px;padding:10px 0;border-bottom:1px solid var(--line)}
+#st-about .ab-pr li:last-child,#st-about .ab-src li:last-child{border-bottom:0}
+#st-about .ab-pr b,#st-about .ab-src b{font-size:.95rem;color:var(--ink)}
+#st-about .ab-pr span,#st-about .ab-src span{font-size:.85rem;line-height:1.7;color:var(--ink-2,var(--muted))}
+#st-about .ab-act{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:18px}
+#st-about .ab-share{min-width:200px;min-height:48px}
+#st-about .ab-dua{margin:16px 0 4px;text-align:center;font:400 1rem/1.7 Amiri,var(--font-quran,serif);color:var(--ink-2,var(--muted))}
+#st-about bdi[data-latin]{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:.92em}

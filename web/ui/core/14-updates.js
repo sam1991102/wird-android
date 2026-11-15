@@ -29,10 +29,11 @@
  const ver=()=>caches.keys().then(k=>{const v=k.map(x=>(x.match(/^wird-v(\d+)$/)||[])[1]).filter(Boolean).map(Number);return v.length?Math.max(...v):0}).catch(()=>0);
  const ready=r=>new Promise(res=>{const w=r.installing||r.waiting;if(!w)return res(false);if(w.state==="installed"||w.state==="activated")return res(true);w.addEventListener("statechange",()=>{if(w.state==="installed"||w.state==="activated")res(true);if(w.state==="redundant")res(false)});setTimeout(()=>res(!!r.waiting),20000)});
  navigator.serviceWorker.getRegistration().then(r=>{if(r&&r.waiting&&navigator.serviceWorker.controller&&window.__wirdUpd)__wirdUpd()});
- const add=()=>{const ab=document.querySelector("#st-about");if(!ab||ab.querySelector(".st-upd"))return;
+ const add=()=>{const ab=document.querySelector(".st .sh-hub");if(!ab||ab.querySelector(".st-upd"))return;
   const row=document.createElement("div");row.className="st-row st-upd";row.innerHTML='<div class="st-l"><strong>تحديث التطبيق</strong><small class="upd-s">اضغط للتحقق من وجود إصدار أحدث</small></div><div class="st-c"><button type="button" class="btn btn-ghost" id="updChk">تحقّق من التحديث</button></div>';
-  const vp=ab.querySelector(".st-ver");if(!ab.querySelector(".st-cred")){const cr=document.createElement("p");cr.className="st-note st-cred";cr.style.fontSize=".8rem";cr.textContent="التلاوة: مشاري العفاسي عبر islamic.network، والتفسير الميسر عبر quran.com.";ab.insertBefore(cr,vp||null)}ab.insertBefore(row,vp||null);
-  ver().then(v=>{if(v&&vp)vp.textContent="الإصدار "+ar((1+Math.floor(Math.max(0,v-131)/10))+"."+(Math.max(0,v-131)%10))});
+  /* «تحديث التطبيق» مجموعة لوحدها في آخر صفحة الإعدادات الرئيسية، فوق رقم الإصدار */
+  const vp=ab.querySelector(".sh-ver");const g=document.createElement("div");g.className="sh-g sh-upd";g.innerHTML='<h2>التحديث</h2>';const box=document.createElement("div");box.className="sh-list";box.appendChild(row);g.appendChild(box);ab.insertBefore(g,vp||null);
+  ver().then(v=>{if(!v)return;const t="الإصدار "+ar((1+Math.floor(Math.max(0,v-131)/10))+"."+(Math.max(0,v-131)%10));if(vp)vp.textContent=t;document.querySelectorAll("#st-about .st-ver").forEach(x=>x.textContent=t)});
   row.querySelector("#updChk").onclick=async e=>{const b=e.currentTarget,s=row.querySelector(".upd-s");b.disabled=true;s.textContent="جارٍ التحقق…";
    try{const r=await navigator.serviceWorker.getRegistration();if(!r)throw 0;await r.update();
     if(r.installing||r.waiting){s.textContent="يوجد تحديث جديد — جارٍ التنزيل…";const ok=await ready(r);if(ok){s.textContent="تم تنزيل التحديث";b.textContent="تحديث الآن";b.disabled=false;b.onclick=()=>{r.waiting&&r.waiting.postMessage("skip");setTimeout(()=>location.reload(),400)};window.__wirdUpd&&__wirdUpd();return}}

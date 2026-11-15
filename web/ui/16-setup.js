@@ -46,8 +46,7 @@ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.c
 function oldSheet(){[].forEach.call(document.querySelectorAll('[role="dialog"],.wd-sheet,.onb,.sheet,.modal,div'),function(d){if(d.dataset.suOld||d.children.length>40)return;var h=d.querySelector&&d.querySelector("h1,h2,h3,strong");if(!h||!/جهّز وِرد في دقيقة/.test(h.textContent))return;var box=d.closest('[role="dialog"],.wd-sheet,.onb')||d;if(box.dataset.suOld)return;box.dataset.suOld=1;var later=[].find.call(box.querySelectorAll("button"),function(b){return b.textContent.trim()==="بعدين"});later&&later.click();setTimeout(function(){box.remove();document.querySelectorAll(".wd-scrim,.scrim,.backdrop").forEach(function(x){x.remove()});R.classList.remove("ov-lock")},50)})}
 __wOnDom(oldSheet);
 window.__openSetup=function(){i=-1;welcome()};
-/* زر لإعادة المعالج من «عن وِرد» */
-__wOnDom(function(){var p=document.querySelector(".wp-page.sh-page");if(!p||p.querySelector(".su-again")||!p.querySelector("#updChk"))return;var b=document.createElement("button");b.type="button";b.className="su-again";b.textContent="إعادة معالج الإعداد";b.onclick=function(){close();setTimeout(__openSetup,300)};p.querySelector("#updChk").after(b)});
+/* زر معالج الإعداد بقى صف في صفحة الإعدادات الرئيسية (05-st-hub) */
 /* يظهر مرة واحدة للمستخدم الجديد فقط */
 function first(){var old=false;try{old=!!(localStorage.getItem("wird-onboarded")||localStorage.getItem("wird-history")||localStorage.getItem("wird-prayer"))}catch(e){}
  if(done())return;if(old){mark();return}setTimeout(welcome,600)}
