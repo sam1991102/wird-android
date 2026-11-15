@@ -759,7 +759,7 @@ html.adhan-open,html.adhan-open body{overflow:hidden!important;overscroll-behavi
 @keyframes adFade{from{opacity:0}to{opacity:1}}
 html.ov-lock,html.ov-lock body{overflow:hidden!important;overscroll-behavior:none}
 #focus,.mp,.reader,.st,.qx,.adhan-ov,#onb,.tasbih-full{overscroll-behavior:contain}
-#focus *,.mp *,.reader *,.st *,.qx *,.tasbih-full *{overscroll-behavior:contain}
+/* overscroll-behavior على الحاويات الخارجية بس (السطر اللي فوق). على كل العناصر جوه كان بيقفل السحب على أندرويد: أي عنصر overflow:hidden (زي كارت قائمة الإعدادات) بيوقف التمرير */
 #focus{animation:wFade .2s ease-out!important}
 .tasbih-full{animation:wFade .2s ease-out!important}
 @keyframes wFade{from{opacity:0}to{opacity:1}}

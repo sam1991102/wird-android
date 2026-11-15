@@ -45,7 +45,7 @@ let restoring=0,skipPop=0,ovDepth=0,closingByPop=0;
 const cur=()=>{const l=R.dataset.lib||"grid";return {w:1,v:R.dataset.view||"home",lib:l,cat:l==="list"&&typeof activeCategory!=="undefined"?activeCategory:""}};
 const unrest=()=>setTimeout(()=>{restoring--},0);
 const urlFor=s=>s.v==="library"&&s.lib==="list"&&s.cat&&!["all","mine"].includes(s.cat)?"/"+s.cat:(s.v==="home"?"/":"/#"+s.v);
-const push=()=>{if(restoring)return;const s=cur();const h=history.state;if(h&&h.w&&!h.ov&&h.v===s.v&&h.lib===s.lib&&h.cat===s.cat)return;_ps(s,"",urlFor(s))};
+const push=()=>{if(restoring)return;const s=cur();if(s.v==="settings")return;/* الإعدادات طبقة فوقية لها مدخل ov فقط */const h=history.state;if(h&&h.w&&!h.ov&&h.v===s.v&&h.lib===s.lib&&h.cat===s.cat)return;_ps(s,"",urlFor(s))};
 const mark=()=>{};/* حالة الزر المنوّر في ui/15-nav2.js وحده */
 const toGrid=()=>{if(R.dataset.lib==="list"&&libBack){restoring++;libBack.click();unrest()}};
 function go(v){

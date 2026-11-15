@@ -14,3 +14,12 @@ html.ios:not(.dark) .tb-strip{background:rgba(30,58,138,.06)!important;border-to
 .geo-x,.wp-reset{position:relative;min-width:36px;min-height:36px}
 .geo-x::after,.wp-reset::after,.footer a::after{content:"";position:absolute;inset:-8px}
 .footer a{position:relative;display:inline-block;padding:6px 2px}
+/* ترتيب الطبقات: النوافذ فوق الصفحات الفرعية (كانت بتفتح وراها)، والمنبّه والأذان فوق كل حاجة */
+.wd-sheet{z-index:2147483200}
+.adhan-ov,.al-ov{z-index:2147483600}
+.toast{z-index:2147483647}
+/* صف «تحديث التطبيق»: النص فوق والأزرار تحته بدل عمود نص مضغوط */
+.st-row.st-upd{flex-wrap:wrap;row-gap:10px}
+.st-row.st-upd>.st-l{flex:1 1 100%;min-width:0}
+.st-row.st-upd>.st-c{flex:1 1 100%;display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-start}
+.st-row.st-upd>.st-c>.btn{flex:1 1 auto}
