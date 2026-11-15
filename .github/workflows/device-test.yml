@@ -1,6 +1,6 @@
 name: Android device test
 
-# بيجرّب التطبيق الحقيقي على محاكي أندرويد ١٣: ترقية من غير ضياع بيانات، من غير إنترنت، الأذان والمنبّه،
+# بيجرّب التطبيق الحقيقي على محاكي أندرويد ١٢: ترقية من غير ضياع بيانات، من غير إنترنت، الأذان والمنبّه،
 # روابط الإشعارات، وأخطاء JS والانهيارات. النتيجة والصور بتتنشر في فرع device-shots.
 on:
   workflow_run:
@@ -57,10 +57,10 @@ jobs:
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules && sudo udevadm trigger --name-match=kvm
 
-      - name: Run on emulator (Android 13)
+      - name: Run on emulator (Android 12)
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 33
+          api-level: 31
           ram-size: 3072M
           cores: 2
           heap-size: 512M
@@ -69,7 +69,7 @@ jobs:
           arch: x86_64
           profile: pixel_6
           disable-animations: true
-          emulator-options: -no-window -gpu swiftshader_indirect -no-boot-anim -camera-back none
+          emulator-options: -no-window -gpu swiftshader_indirect -no-boot-anim -camera-back none -camera-front none -no-snapshot-save
           script: node qa/device/run.mjs old.apk new.apk
 
       - name: Host memory diagnostics

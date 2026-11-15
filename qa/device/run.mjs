@@ -46,14 +46,23 @@ async function connect() {
   throw new Error('WebView DevTools not reachable');
 }
 function cdp(method, params = {}) { return new Promise((ok, no) => { const id = ++mid; pend.set(id, ok); ws.send(JSON.stringify({ id, method, params })); setTimeout(() => { if (pend.has(id)) { pend.delete(id); no(new Error('cdp timeout ' + method)) } }, 30000) }) }
-async function js(expr) { const r = await cdp('Runtime.evaluate', { expression: expr, awaitPromise: true, returnByValue: true }); if (r.result?.exceptionDetails) throw new Error(r.result.exceptionDetails.exception?.description || 'eval error'); return r.result?.result?.value }
+async function js(expr, retry = 1) {
+  let r;
+  try { r = await cdp('Runtime.evaluate', { expression: expr, awaitPromise: true, returnByValue: true }) }
+  catch (e) { if (!retry) throw e; adb('reconnect', true); adb('wait-for-device', true); adb('shell am broadcast -a android.intent.action.CLOSE_SYSTEM_DIALOGS', true); await sleep(5000); await connect(); return js(expr, 0) }
+  if (r.result?.exceptionDetails) throw new Error(r.result.exceptionDetails.exception?.description || 'eval error'); return r.result?.result?.value }
 const launch = async (extra = '') => { adb(`shell am start -W -n ${PKG}/.MainActivity ${extra}`, true); await sleep(4000); const u = await connect(); await sleep(2500); return u };
 const stopApp = () => { adb(`shell am force-stop ${PKG}`, true) };
 const net = on => { adb(`shell cmd connectivity airplane-mode ${on ? 'disable' : 'enable'}`, true); adb(`shell svc wifi ${on ? 'enable' : 'disable'}`, true); adb(`shell svc data ${on ? 'enable' : 'disable'}`, true) };
 const online = async () => { for (let i = 0; i < 20; i++) { if (/bytes from|1 received/.test(adb('shell ping -c 1 -W 2 8.8.8.8', true))) return true; await sleep(2000) } return false };
 
 try {
-  adb('wait-for-device'); adb('shell settings put global window_animation_scale 0', true); adb('shell settings put global transition_animation_scale 0', true); adb('shell settings put global animator_duration_scale 0', true);
+  adb('wait-for-device');
+  // المحاكي بيكون تقيل أول ما يقوم: نستنى النظام يهدى ونقفل أي رسالة «مش بيستجيب»
+  for (let i = 0; i < 30 && !/1/.test(adb('shell getprop sys.boot_completed', true)); i++) await sleep(2000);
+  await sleep(45000);
+  adb('shell am broadcast -a android.intent.action.CLOSE_SYSTEM_DIALOGS', true); adb('shell input keyevent KEYCODE_HOME', true);
+  adb('shell settings put global window_animation_scale 0', true); adb('shell settings put global transition_animation_scale 0', true); adb('shell settings put global animator_duration_scale 0', true);
   res('emulator has internet', await online() || /200|301|302/.test(adb('shell curl -s -o /dev/null -w %{http_code} https://wird-azkar.pages.dev/', true)));
 
   // ١) النسخة القديمة (بتفتح الموقع من الإنترنت) + بيانات تجربة
