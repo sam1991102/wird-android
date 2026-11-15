@@ -25,7 +25,7 @@ function draw(){if(!el)return;S=load();var i=S.i%L.length,x=L[i],n=S.c[i]||0;
  '<div class="rt-dots" aria-hidden="true">'+L.map(function(_,k){return'<i'+(k===i?' class="on"':'')+'></i>'}).join("")+'</div>'+
  '<p class="rt-src">«لا يزالُ لسانُك رطبًا من ذكرِ الله» · الترمذي وابن ماجه</p>'}
 function ensure(){if(el&&el.isConnected)return;var sky=document.getElementById("skyCard");if(!sky)return;
- el=document.getElementById("ratbCard");if(!el){el=document.createElement("section");el.id="ratbCard";el.className="rt container";el.setAttribute("aria-label","اجعل لسانك رطبًا بذكر الله");
+ el=document.getElementById("ratbCard");if(!el){el=document.createElement("section");el.id="ratbCard";el.className="rt container";el.dataset.v="home";el.setAttribute("aria-label","اجعل لسانك رطبًا بذكر الله");
   el.addEventListener("click",function(e){var b=e.target.closest("[data-r]");if(!b)return;var r=b.dataset.r;S=load();var i=S.i%L.length;
    if(r==="tap"){S.c[i]=(S.c[i]||0)+1;try{navigator.vibrate&&navigator.vibrate(S.c[i]%L[i].g===0?[30,60,30]:8)}catch(x){}}
    else S.i=(i+(r==="next"?1:L.length-1))%L.length;save(S);draw()})}

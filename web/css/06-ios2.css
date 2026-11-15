@@ -93,7 +93,7 @@ main>section.to{order:2}
 main>#homeAlerts{order:3}
 main>#ayCard{order:4}
 main>#quranCard{order:5}
-html:not([data-view]) main>section:not(#skyCard):not(.to):not(#ayCard):not(#quranCard):not(#homeAlerts):not(#library):not(#favoritesSection):not(#mushafView):not(#tasbih),html[data-view="home"] main>section:not(#skyCard):not(.to):not(#ayCard):not(#quranCard):not(#homeAlerts){display:none!important}
+html:not([data-view]) main>section:not(#skyCard):not(#ratbCard):not(.to):not(#ayCard):not(#quranCard):not(#homeAlerts):not(#library):not(#favoritesSection):not(#mushafView):not(#tasbih),html[data-view="home"] main>section:not(#skyCard):not(#ratbCard):not(.to):not(#ayCard):not(#quranCard):not(#homeAlerts){display:none!important}
 }
 main>.hero.container,main>#kidsTile,main>#rdTile{display:none!important}
 @keyframes wHomeIn{to{opacity:1}}

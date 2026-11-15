@@ -206,6 +206,19 @@ for (const S of SKINS) {
   if (fl === 'no-focus') bad('focus', 'شاشة الأذكار ما فتحتش'); else if (fl.long && fl.textTop < -2) bad('focus', 'أول النص مقصوص من فوق ' + JSON.stringify(fl)); else notes.push('FOCUS-CHECK ' + JSON.stringify(fl));
   await ctx.close();
 }
+// كل قسم يظهر في صفحته بس (بطاقة الرئيسية ما تظهرش في المكتبة/المواقيت/السبحة/المصحف)
+for (const sk of SKINS) {
+  const { ctx, page } = await open(sk.ls);
+  await wait(1500);
+  for (const v of ['home', 'library', 'prayer', 'tasbih', 'mushaf']) {
+    await page.evaluate(v => window.__setView && __setView(v), v); await wait(500);
+    const r = await page.evaluate(v => { const vis = e => e.getClientRects().length && getComputedStyle(e).display !== 'none' && getComputedStyle(e).visibility !== 'hidden';
+      const s = [...document.querySelectorAll('main>section')].filter(vis); return { wrong: s.filter(x => x.dataset.v && x.dataset.v !== v).map(x => x.id || x.className), noV: s.filter(x => !x.dataset.v).map(x => x.id || x.className) } }, v);
+    if (r.wrong.length) bad('views ' + sk.name + '/' + v, 'أقسام من صفحة تانية ظاهرة: ' + r.wrong.join('، '));
+    if (r.noV.length) bad('views ' + sk.name + '/' + v, 'أقسام من غير data-v: ' + r.noV.join('، '));
+  }
+  await ctx.close();
+}
 // المعالج لمستخدم جديد
 {
   const { ctx, page, errs } = await open({}, true);
