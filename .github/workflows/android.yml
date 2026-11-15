@@ -65,6 +65,8 @@ jobs:
           mkdir -p out
           if ls android/app/build/outputs/apk/release/*.apk >/dev/null 2>&1; then
             cp android/app/build/outputs/apk/release/*.apk out/wird-${{ github.run_number }}.apk
+            # نسخة باسم ثابت عشان رابط «آخر نسخة» يفضل شغال دايمًا: releases/latest/download/wird.apk
+            cp android/app/build/outputs/apk/release/*.apk out/wird.apk
             cp android/app/build/outputs/bundle/release/*.aab out/wird-${{ github.run_number }}.aab
           else
             cp android/app/build/outputs/apk/debug/*.apk out/wird-${{ github.run_number }}-test.apk
