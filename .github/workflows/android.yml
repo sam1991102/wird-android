@@ -25,10 +25,14 @@ jobs:
         with:
           node-version: '22'
 
+      - name: Bundle the website inside the app (works offline)
+        run: node web/app-bundle.mjs
+
       - name: Install & sync Capacitor
         run: |
           npm ci || npm install
           npx cap sync android
+          test -s android/app/src/main/assets/public/app-files.json
 
       - name: Restore signing key
         env:

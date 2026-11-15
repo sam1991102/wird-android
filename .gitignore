@@ -6,3 +6,6 @@ android/local.properties
 *.jks
 *.keystore
 qa/out/
+
+# نسخة الموقع جوه التطبيق: بتتولّد في البناء من web/app-bundle.mjs
+/www/

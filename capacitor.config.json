@@ -3,13 +3,12 @@
   "appName": "وِرد",
   "webDir": "www",
   "server": {
-    "url": "https://wird-azkar.pages.dev/?app=android",
+    "hostname": "wird-azkar.pages.dev",
     "androidScheme": "https",
     "allowNavigation": [
       "wird-azkar.pages.dev",
       "*.wird-azkar.pages.dev"
-    ],
-    "errorPath": "offline.html"
+    ]
   },
   "android": {
     "backgroundColor": "#0f2a22",

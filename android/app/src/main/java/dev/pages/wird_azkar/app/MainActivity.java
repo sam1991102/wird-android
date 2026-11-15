@@ -13,11 +13,39 @@ public class MainActivity extends BridgeActivity {
     public void onCreate(Bundle savedInstanceState) {
         registerPlugin(WirdAdhanPlugin.class);
         super.onCreate(savedInstanceState);
+        siteFromAppOrNetwork();
         AdhanStore.ensureChannels(this);
         AdhanStore.armAll(this);
         WidgetData.refreshAll(this);
         lockScreen(getIntent());
         goTo(getIntent(), 2500);
+    }
+
+    /**
+     * الموقع جوه التطبيق: كل طلب على الدومين بيعدّي على SiteProxy (من الإنترنت لو متاح، وإلا من الجهاز).
+     * بيتسجّل للصفحة نفسها وللـ Service Worker، وبعدين نعيد تحميل الصفحة الأولى عشان تعدّي عليه هي كمان.
+     */
+    private void siteFromAppOrNetwork() {
+        final com.getcapacitor.Bridge b = getBridge();
+        if (b == null) return;
+        final android.content.Context app = getApplicationContext();
+        b.setWebViewClient(new com.getcapacitor.BridgeWebViewClient(b) {
+            @Override
+            public android.webkit.WebResourceResponse shouldInterceptRequest(WebView v, android.webkit.WebResourceRequest r) {
+                android.webkit.WebResourceResponse x = SiteProxy.intercept(app, r);
+                return x != null ? x : super.shouldInterceptRequest(v, r);
+            }
+        });
+        if (android.os.Build.VERSION.SDK_INT >= 24) {
+            android.webkit.ServiceWorkerController.getInstance().setServiceWorkerClient(new android.webkit.ServiceWorkerClient() {
+                @Override
+                public android.webkit.WebResourceResponse shouldInterceptRequest(android.webkit.WebResourceRequest r) {
+                    android.webkit.WebResourceResponse x = SiteProxy.intercept(app, r);
+                    return x != null ? x : b.getLocalServer().shouldInterceptRequest(r);
+                }
+            });
+        }
+        b.reload();
     }
 
     /** الظهور فوق شاشة القفل لمنبّه الفجر فقط، لا لباقي التطبيق. */
