@@ -3,7 +3,8 @@ name: Build Android
 on:
   push:
     branches: [main]
-    paths-ignore: ['web-deploy/**', '.github/workflows/deploy-web.yml']
+    # الموقع بيتنشر لوحده والتطبيق بيفتحه من الإنترنت، فتعديلات web/ و qa/ مش محتاجة نسخة أندرويد جديدة
+    paths-ignore: ['web/**', 'qa/**', 'web-deploy/**', '.github/workflows/deploy-web.yml', '.github/workflows/qa.yml']
   workflow_dispatch:
 
 permissions:
@@ -13,16 +14,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '21'
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
-          node-version: '20'
+          node-version: '22'
 
       - name: Install & sync Capacitor
         run: |
