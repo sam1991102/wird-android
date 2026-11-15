@@ -5,10 +5,13 @@ var R=document.documentElement,K="wird-setup-done";
 var STEPS=[
  {id:"st-prayer",t:"الموقع وطريقة الحساب",s:"اختر مدينتك وطريقة حساب المواقيت ووقت الإقامة"},
  {id:"notif",t:"الأذان والتنبيهات",s:"فعّل الأذان لكل صلاة، والتنبيه قبل الأذان"},
+ {id:"st-adhan",t:"صوت الأذان",s:"اختر المؤذن واستمع له قبل ما تثبّته"},
  {id:"st-alarm",t:"منبّه الفجر",s:"منبّه مستمر مع غفوة حتى تستيقظ"},
  {id:"st-dr",t:"تذكير بالذكر",s:"كم مرة يذكّرك وِرد بالذكر خلال اليوم"},
  {id:"st-qari",t:"القرآن والقارئ",s:"اختر صوت التلاوة واتجاه تقليب الصفحات"},
  {id:"st-look",t:"المظهر",s:"النمط والوضع الليلي وحجم الخط والأرقام"}];
+/* منبّه الفجر في تطبيق أندرويد بس؛ على الموقع ما يتعدّش خطوة */
+STEPS=STEPS.filter(function(x){return window.__WIRD_NATIVE||x.id!=="st-alarm"});
 var N=STEPS.length+2,ov=null,bar=null,i=-1;
 var ar=__ar;
 function done(){try{return localStorage.getItem(K)==="1"}catch(e){return true}}
@@ -31,14 +34,14 @@ function finish(){bar&&bar.remove();bar=null;close();
  screen(dots(N-1)+'<div class="su-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><h1>جاهز</h1><p>'+(A?"لضمان وصول الأذان في وقته على أندرويد، اسمح بالإشعارات والمنبّهات الدقيقة، وأوقف توفير البطارية لوِرد من صفحة الأذان.":"تم حفظ إعداداتك. تقبّل الله منك.")+'</p><button type="button" class="su-main" data-su="end">ابدأ وِردك</button>')}
 function step(k){i=k;if(k>=STEPS.length){finish();return}ov&&ov.remove();ov=null;[].forEach.call(document.querySelectorAll(".wp-page.sh-page,.wp-page.nt-page"),function(x){x.remove()});
  var s=STEPS[k];if(!bar){bar=el("","su-bar");document.body.appendChild(bar)}
- bar.innerHTML=dots(k+1)+'<div class="su-row"><div class="su-tx"><small>الخطوة '+ar(k+1)+" من "+ar(STEPS.length)+"</small><b>"+s.t+"</b><span>"+s.s+'</span></div></div><div class="su-btns"><button type="button" class="su-link" data-su="all">إنهاء</button><button type="button" class="su-main" data-su="next">'+(k===STEPS.length-1?"إنهاء الإعداد":"التالي")+"</button></div>";
+ bar.innerHTML=dots(k+1)+'<div class="su-row"><div class="su-tx"><small>الخطوة '+ar(k+1)+" من "+ar(STEPS.length)+"</small><b>"+s.t+"</b><span>"+s.s+'</span></div></div><div class="su-btns"><button type="button" class="su-link" data-su="all">إنهاء</button><button type="button" class="su-prev" data-su="prev">السابق</button><button type="button" class="su-main" data-su="next">'+(k===STEPS.length-1?"إنهاء الإعداد":"التالي")+"</button></div>";
  go(s.id)}
 /* يفتح صفحة الخطوة من الإعدادات؛ لو الصفحة مش موجودة على الجهاز ده (منبّه الفجر على أندرويد بس مثلًا) يعدّيها */
 function go(id){var tries=0;(function t(){var hub=[].find.call(document.querySelectorAll(".st"),function(x){return!x.hidden&&x.offsetHeight}),row=hub&&hub.querySelector('.sh-row[data-id="'+id+'"]');
  if(row){row.click();return}if(!hub&&tries===0&&window.__openSettings){tries++;__openSettings();setTimeout(t,350);return}step(i+1)})()}
 function end(){mark();ov&&ov.remove();ov=null;bar&&bar.remove();bar=null;close();R.classList.remove("su-on");window.__wirdGo&&__wirdGo("home")}
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-su]");if(!b)return;e.preventDefault();var a=b.dataset.su;
- if(a==="go")step(0);else if(a==="next")step(i+1);else if(a==="all")finish();else if(a==="skip"||a==="end")end();
+ if(a==="go")step(0);else if(a==="next")step(i+1);else if(a==="prev"){if(i<=0){bar&&bar.remove();bar=null;close();welcome()}else step(i-1)}else if(a==="all")finish();else if(a==="skip"||a==="end")end();
  else if(a==="tasbih"){if(ov.classList.contains("su-did"))return;ov.classList.add("su-did");try{navigator.vibrate&&navigator.vibrate(18)}catch(x){}
   ov.querySelector(".su-say").textContent="كده بدأت وِردك";setTimeout(function(){var o=ov&&ov.querySelector(".su-ok");if(o)o.textContent="تقبّل الله منك"},450)}
  else if(a==="restore"){mark();ov&&ov.remove();ov=null;R.classList.remove("su-on");window.__openSettingsPage&&__openSettingsPage("st-data")}});
