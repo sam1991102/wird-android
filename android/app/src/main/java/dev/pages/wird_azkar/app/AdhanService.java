@@ -155,9 +155,20 @@ public class AdhanService extends Service {
         }
     }
 
+    /** الهزّاز: من VibratorManager على أندرويد ١٢ وأحدث، ومن الخدمة القديمة على الأقدم. */
+    @SuppressWarnings("deprecation")
+    private Vibrator vibrator() {
+        if (Build.VERSION.SDK_INT >= 31) {
+            android.os.VibratorManager m = (android.os.VibratorManager) getSystemService(Context.VIBRATOR_MANAGER_SERVICE);
+            return m != null ? m.getDefaultVibrator() : null;
+        }
+        return (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+    }
+
+    @SuppressWarnings("deprecation") // vibrate(long[],int) للأجهزة قبل أندرويد ٨ بس
     private void vibrate() {
         try {
-            Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            Vibrator v = vibrator(); if (v == null) return;
             long[] pat = {0, 800, 400, 800, 400, 1200, 1500};
             if (Build.VERSION.SDK_INT >= 26) v.vibrate(VibrationEffect.createWaveform(pat, 0)); else v.vibrate(pat, 0);
         } catch (Exception ignored) {}
@@ -167,10 +178,15 @@ public class AdhanService extends Service {
         handler.removeCallbacksAndMessages(null);
         try { if (player != null) { player.stop(); player.release(); } } catch (Exception ignored) {}
         player = null;
-        try { ((Vibrator) getSystemService(Context.VIBRATOR_SERVICE)).cancel(); } catch (Exception ignored) {}
+        try { Vibrator v = vibrator(); if (v != null) v.cancel(); } catch (Exception ignored) {}
         try { if (wake != null && wake.isHeld()) wake.release(); } catch (Exception ignored) {}
-        stopForeground(true);
+        stopFg();
         stopSelf();
+    }
+
+    @SuppressWarnings("deprecation") // stopForeground(boolean) للأجهزة قبل أندرويد ٧ بس
+    private void stopFg() {
+        if (Build.VERSION.SDK_INT >= 24) stopForeground(STOP_FOREGROUND_REMOVE); else stopForeground(true);
     }
 
     @Override public void onDestroy() {

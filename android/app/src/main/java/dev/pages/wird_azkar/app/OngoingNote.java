@@ -21,6 +21,7 @@ final class OngoingNote {
         WidgetData.scheduleTick(c);
     }
 
+    @SuppressWarnings("deprecation") // Builder(Context) وsetPriority للأجهزة قبل أندرويد ٨ بس
     static void update(Context c) {
         NotificationManager nm = c.getSystemService(NotificationManager.class);
         if (!on(c)) { nm.cancel(ID); return; }

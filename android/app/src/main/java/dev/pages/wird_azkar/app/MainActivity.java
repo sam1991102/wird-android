@@ -21,6 +21,7 @@ public class MainActivity extends BridgeActivity {
     }
 
     /** الظهور فوق شاشة القفل لمنبّه الفجر فقط، لا لباقي التطبيق. */
+    @SuppressWarnings("deprecation") // الـ flags القديمة للأجهزة قبل أندرويد ٨.١ بس
     private void lockScreen(Intent i) {
         boolean alarm = i != null && i.getBooleanExtra("wird_alarm", false);
         try {

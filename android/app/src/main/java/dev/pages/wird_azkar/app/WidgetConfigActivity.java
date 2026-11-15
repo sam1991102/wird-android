@@ -26,6 +26,14 @@ public class WidgetConfigActivity extends Activity {
     private WidgetData.Cfg cfg;
     private FrameLayout preview;
 
+    /** لون شريط الحالة والتنقل: على أندرويد ١٥+ الشاشة من حافة لحافة وأندرويد بيتجاهل اللون أصلًا. */
+    @SuppressWarnings("deprecation")
+    private void barColors() {
+        if (android.os.Build.VERSION.SDK_INT >= 35) return;
+        getWindow().setStatusBarColor(BG);
+        getWindow().setNavigationBarColor(BG);
+    }
+
     @Override
     protected void onCreate(Bundle b) {
         super.onCreate(b);
@@ -37,8 +45,7 @@ public class WidgetConfigActivity extends Activity {
         if (info != null) for (int i = 0; i < WidgetData.PROVIDERS.length; i++)
             if (info.provider.getClassName().equals(WidgetData.PROVIDERS[i].getName())) type = i;
         cfg = WidgetData.cfg(this, id);
-        getWindow().setStatusBarColor(BG);
-        getWindow().setNavigationBarColor(BG);
+        barColors();
         setContentView(ui());
         draw();
     }

@@ -306,13 +306,13 @@ final class WidgetRender {
     }
 
     static String greg(JSONObject P, WidgetData.Cfg g) {
-        java.text.SimpleDateFormat f = new java.text.SimpleDateFormat("d MMMM y", new Locale("ar"));
+        java.text.SimpleDateFormat f = new java.text.SimpleDateFormat("d MMMM y", Locale.forLanguageTag("ar"));
         f.setTimeZone(TimeZone.getTimeZone(P.optString("tz", "Asia/Riyadh")));
         return dg(f.format(new java.util.Date()), g.arDigits);
     }
 
     static String dayName(JSONObject P, WidgetData.Cfg g) {
-        java.text.SimpleDateFormat f = new java.text.SimpleDateFormat("EEEE", new Locale("ar"));
+        java.text.SimpleDateFormat f = new java.text.SimpleDateFormat("EEEE", Locale.forLanguageTag("ar"));
         f.setTimeZone(TimeZone.getTimeZone(P.optString("tz", "Asia/Riyadh")));
         return f.format(new java.util.Date());
     }
