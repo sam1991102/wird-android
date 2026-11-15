@@ -50,18 +50,23 @@ public class WirdMediaPlugin extends Plugin {
                     ctl = future.get();
                     ctl.addListener(listener);
                     for (Runnable p : pending) p.run();
+                    pending.clear();
                 } catch (Exception e) {
                     future = null;
-                    emit("error");
+                    pending.clear();
+                    android.util.Log.e("WirdMedia", "controller connect failed", e);
+                    emit("error", "connect: " + e.getMessage());
                 }
-                pending.clear();
             }, ContextCompat.getMainExecutor(getContext()));
         });
     }
 
-    private void emit(String type) {
+    private void emit(String type) { emit(type, null); }
+
+    private void emit(String type, String msg) {
         JSObject o = new JSObject();
         o.put("type", type);
+        if (msg != null) o.put("msg", msg);
         o.put("owner", owner);
         notifyListeners("media", o);
     }
@@ -82,7 +87,8 @@ public class WirdMediaPlugin extends Plugin {
 
         @Override
         public void onPlayerError(@NonNull PlaybackException error) {
-            emit("error");
+            android.util.Log.e("WirdMedia", "player error", error);
+            emit("error", error.getErrorCodeName() + ": " + error.getMessage());
         }
     };
 

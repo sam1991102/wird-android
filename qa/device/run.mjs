@@ -150,6 +150,14 @@ try {
   res('lock-screen media controls exist', new RegExp(PKG + '[\\s\\S]{0,1500}state=PlaybackState \\{state=3').test(sess), (sess.match(/state=PlaybackState \{state=\d+/) || [''])[0]);
   await launch(); await js(`Capacitor.Plugins.WirdMedia.stop().then(()=>1)`).catch(() => { }); await sleep(3000);
   res('radio stop really stops', players() === 0, 'players ' + players());
+  // من الصفحة نفسها، بنفس محطات الإذاعة اللي في التطبيق
+  adb('logcat -c', true);
+  for (const src of ['https://stream.radiojar.com/4wqre23fytzuv', 'https://backup.qurango.net/radio/mohammed_siddiq_alminshawi']) {
+    const r = await js(`new Promise(ok=>{if(!window.__BgAudio)return ok('no __BgAudio');const a=new __BgAudio(),ev=[];['play','playing','waiting','error','pause'].forEach(n=>a.addEventListener(n,()=>{ev.push(n);if(n==='playing'||n==='error'){setTimeout(()=>{a.pause();ok(ev.join(','))},3000)}}));a.src='${src}';a.play().catch(e=>ev.push('reject '+e.message));setTimeout(()=>ok(ev.join(',')+' (timeout)'),40000)})`).catch(e => 'ERR ' + e.message);
+    res('page radio plays: ' + src.split('/')[2], /playing/.test(r) && !/error/.test(r), r);
+  }
+  const mlog = adb('logcat -d -s WirdMedia:* ExoPlayerImplInternal:E MediaSessionService:*', true).split('\n').filter(l => /WirdMedia|Exo|Media/.test(l)).slice(-8).join(' | ');
+  res('native media log', true, mlog.slice(0, 900));
   const shim = await js(`typeof window.__BgAudio`);
   res('page uses native background audio (after site deploy)', true, 'window.__BgAudio: ' + shim);
 
