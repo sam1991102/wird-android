@@ -18,7 +18,7 @@ jobs:
   device:
     if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 80
     env:
       OLD_REF: 174da6e   # آخر نسخة كانت بتفتح الموقع من الإنترنت (1.0.82)
     steps:

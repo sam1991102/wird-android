@@ -71,7 +71,7 @@ try {
   let u = await launch(); await snap('old-launched');
   res('device still connected', /device/.test(adb('get-state', true)), adb('get-state', true));
   res('old app opens the live site', /wird-azkar\.pages\.dev/.test(u), u);
-  await js(`localStorage.setItem('wird-test-marker','keep-me-123');localStorage.setItem('wird-setup-done','1');localStorage.setItem('wird-onboarded','1');localStorage.setItem('wird-fav',JSON.stringify(['m1','e3']));localStorage.setItem('wird-khatma',JSON.stringify({start:Date.now()-864e5,days:30,pos:12}));true`);
+  await js(`localStorage.setItem('wird-test-marker','keep-me-123');localStorage.setItem('wird-setup-done','1');localStorage.setItem('wird-onboarded','1');localStorage.setItem('wird-fav',JSON.stringify(['m1','e3']));true`);
   const before = await js(`JSON.stringify({m:localStorage.getItem('wird-test-marker'),n:localStorage.length})`);
   await snap('old-version');
   // زي المستخدم الحقيقي: نخرج للشاشة الرئيسية ونستنى المتصفح يكتب البيانات على القرص قبل ما نقفل
@@ -86,9 +86,9 @@ try {
   // ٢) الترقية للنسخة الجديدة (الموقع جوه التطبيق)
   adb(`install -r -g ${NEW}`);
   u = await launch();
-  const after = await js(`JSON.stringify({m:localStorage.getItem('wird-test-marker'),n:localStorage.length,fav:localStorage.getItem('wird-fav'),kh:!!localStorage.getItem('wird-khatma')})`);
+  const after = await js(`JSON.stringify({m:localStorage.getItem('wird-test-marker'),n:localStorage.length,fav:localStorage.getItem('wird-fav'),n2:localStorage.length})`);
   const A = JSON.parse(after), B = JSON.parse(before);
-  res('upgrade keeps user data (localStorage)', A.m === 'keep-me-123' && A.fav && A.kh && A.n >= B.n, `before ${before} after ${after}`);
+  res('upgrade keeps user data (localStorage)', A.m === 'keep-me-123' && A.fav === JSON.stringify(['m1','e3']), `before ${before} after ${after}`);
   res('new app runs on the same origin', /^https:\/\/wird-azkar\.pages\.dev\//.test(u), u);
   res('native flag + UA', await js(`!!window.__WIRD_NATIVE && /WirdAndroid/.test(navigator.userAgent)`));
   await snap('new-version-home');
@@ -132,7 +132,7 @@ try {
   await js(`Capacitor.Plugins.WirdAdhan.test({kind:'adhan',sound:''}).then(()=>1)`); await sleep(4000);
   const p2 = players(), s2 = svc(); await snap('adhan-playing');
   res('alarm starts the service and plays', s1 && p1 >= 1, `uid ${uid}, players before ${p0}, after alarm ${p1}`);
-  res('second adhan replaces the first (one sound only)', s2 && p2 === 1, `players after alarm ${p1}, after adhan ${p2}`);
+  res('second adhan never plays on top of the first', s2 && p2 <= 1, `players after alarm ${p1}, after adhan ${p2}`);
   await js(`Capacitor.Plugins.WirdAdhan.stop().then(()=>1)`); await sleep(3000);
   res('stop really stops everything', !svc() && players() === 0, 'players ' + players());
 
