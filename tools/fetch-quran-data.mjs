@@ -60,3 +60,4 @@ for (let s = 1; s <= 114; s++) taf += Object.keys(JSON.parse(fs.readFileSync(pat
 console.log('ayat', ayat, 'tafsir', taf);
 if (ayat !== 6236) throw new Error('expected 6236 ayat in pages, got ' + ayat);
 if (taf < 6200) throw new Error('tafsir incomplete: ' + taf);
+// v2
