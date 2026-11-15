@@ -26,7 +26,7 @@ function st(id){return ST.filter(function(s){return s.id===id})[0]}
 function toastx(m){try{toast(m)}catch(e){}}
 function play(id){var s=st(id);if(!s)return;if(cur===id&&A&&!A.paused){stop();return}
  stopAudio();cur=id;ui=0;tries=0;start();}
-function start(){var s=st(cur);if(!A){A=new Audio();A.addEventListener("playing",function(){state="live";tries=0;clearTimeout(A._w);render()});A.addEventListener("waiting",function(){if(state!=="live")return;state="buf";render();clearTimeout(A._w);A._w=setTimeout(function(){if(state==="buf")retry()},20000)});A.addEventListener("error",retry);A.preload="auto"}
+function start(){var s=st(cur);if(!A){A=new (window.__BgAudio||Audio)();A.addEventListener("playing",function(){state="live";tries=0;clearTimeout(A._w);render()});A.addEventListener("waiting",function(){if(state!=="live")return;state="buf";render();clearTimeout(A._w);A._w=setTimeout(function(){if(state==="buf")retry()},20000)});A.addEventListener("error",retry);A.preload="auto"}
  state="load";render();A.src=s.u[ui]+(s.u[ui].indexOf("?")<0?"?":"&")+"t="+Date.now();A.play().catch(function(){retry()});
  if("mediaSession" in navigator)try{navigator.mediaSession.metadata=new MediaMetadata({title:s.name,artist:"وِرد — بث مباشر",artwork:[{src:"/icon-512.png",sizes:"512x512",type:"image/png"}]});navigator.mediaSession.setActionHandler("pause",stop);navigator.mediaSession.setActionHandler("stop",stop);navigator.mediaSession.setActionHandler("play",function(){start()})}catch(e){}}
 function retry(){if(state==="idle"||!cur)return;var s=st(cur);tries++;if(tries>6){state="err";render();toastx("تعذّر الاتصال بالبث، حاول لاحقًا");return}ui=(ui+1)%s.u.length;setTimeout(function(){if(state!=="idle")start()},1500)}

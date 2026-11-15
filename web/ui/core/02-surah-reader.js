@@ -9,7 +9,7 @@ function build(){rd=document.createElement("div");rd.className="reader";rd.setAt
  rd.addEventListener("click",e=>{const b=e.target.closest("[data-a]");if(!b)return;const a=b.dataset.a;
   if(a==="close")close();
   if(a==="font"){const s=[1,1.15,1.3,1.5],i=(s.indexOf(+(rd.style.getPropertyValue("--qs")||1))+1)%s.length;rd.style.setProperty("--qs",s[i]);try{localStorage.setItem("wird-qs",s[i])}catch(e){}}
-  if(a==="play"){if(!audio){audio=new Audio();audio.addEventListener("ended",()=>setPlay(false));audio.addEventListener("error",()=>{setPlay(false);toast&&toast("تعذّر تشغيل التلاوة، تأكد من الاتصال بالإنترنت")})}
+  if(a==="play"){if(!audio){audio=new (window.__BgAudio||Audio)();audio.addEventListener("ended",()=>setPlay(false));audio.addEventListener("error",()=>{setPlay(false);toast&&toast("تعذّر تشغيل التلاوة، تأكد من الاتصال بالإنترنت")})}
    if(audio.dataset.s!==cur){audio.src="https://cdn.islamic.network/quran/audio-surah/128/ar.alafasy/"+SURAHS[cur].n+".mp3";audio.dataset.s=cur}
    if(audio.paused){audio.play().then(()=>setPlay(true)).catch(()=>setPlay(false))}else{audio.pause();setPlay(false)}}});
  body.addEventListener("scroll",()=>{const p=body.scrollTop/Math.max(1,body.scrollHeight-body.clientHeight);bar.style.width=(p*100).toFixed(1)+"%";clearTimeout(body._t);body._t=setTimeout(()=>{try{const o=JSON.parse(localStorage.getItem(POS)||"{}");o[cur]=p;localStorage.setItem(POS,JSON.stringify(o))}catch(e){}},300)},{passive:true});

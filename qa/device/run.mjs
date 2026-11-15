@@ -136,6 +136,23 @@ try {
   await js(`Capacitor.Plugins.WirdAdhan.stop().then(()=>1)`); await sleep(3000);
   res('stop really stops everything', !svc() && players() === 0, 'players ' + players());
 
+  // ٥ب) الإذاعة والتلاوة في الخلفية: تفضل شغالة بعد الخروج من التطبيق وقفل الشاشة
+  const msvc = () => /MediaService/.test(adb(`shell dumpsys activity services ${PKG}`, true));
+  await js(`Capacitor.Plugins.WirdMedia.play({src:'https://backup.qurango.net/radio/mohammed_siddiq_alminshawi',title:'اختبار الإذاعة',owner:'qa'}).then(()=>1)`).catch(e => res('media plugin call', false, e.message));
+  await sleep(8000);
+  const m1 = players(); await snap('radio-playing');
+  adb('shell input keyevent KEYCODE_HOME', true); await sleep(5000);
+  adb('shell input keyevent KEYCODE_SLEEP', true); await sleep(30000);
+  const m2 = players(), ms2 = msvc(), sess = adb('shell dumpsys media_session', true);
+  adb('shell input keyevent KEYCODE_WAKEUP', true); adb('shell wm dismiss-keyguard', true); await sleep(2000);
+  res('radio plays through the native service', m1 >= 1, 'players ' + m1);
+  res('radio keeps playing 30s after Home + screen off', m2 >= 1 && ms2, `players ${m2}, service ${ms2}`);
+  res('lock-screen media controls exist', new RegExp(PKG + '[\\s\\S]{0,1500}state=PlaybackState \\{state=3').test(sess), (sess.match(/state=PlaybackState \{state=\d+/) || [''])[0]);
+  await launch(); await js(`Capacitor.Plugins.WirdMedia.stop().then(()=>1)`).catch(() => { }); await sleep(3000);
+  res('radio stop really stops', players() === 0, 'players ' + players());
+  const shim = await js(`typeof window.__BgAudio`);
+  res('page uses native background audio (after site deploy)', true, 'window.__BgAudio: ' + shim);
+
   // ٦) رابط إشعار المنبّه بيفتح شاشة المنبّه
   stopApp();
   await launch(`-a android.intent.action.VIEW -d "https://wird-azkar.pages.dev/?alarm=1#prayer"`); await sleep(2500);

@@ -12,6 +12,7 @@ public class MainActivity extends BridgeActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         registerPlugin(WirdAdhanPlugin.class);
+        registerPlugin(WirdMediaPlugin.class);
         super.onCreate(savedInstanceState);
         siteFromAppOrNetwork();
         AdhanStore.ensureChannels(this);
