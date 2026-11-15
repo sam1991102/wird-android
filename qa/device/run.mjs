@@ -31,7 +31,7 @@ async function connect() {
         if (pg) {
           ws = new WebSocket(pg.webSocketDebuggerUrl);
           await new Promise((ok, no) => { ws.onopen = ok; ws.onerror = no });
-          ws.onmessage = m => { const d = JSON.parse(m.data); if (d.id && pend.has(d.id)) { pend.get(d.id)(d); pend.delete(d.id) } else if (d.method === 'Runtime.exceptionThrown') pageErrors.push(d.params.exceptionDetails.exception?.description?.split('\n')[0] || d.params.exceptionDetails.text)
+          ws.onmessage = m => { const d = JSON.parse(m.data); if (d.id && pend.has(d.id)) { pend.get(d.id)(d); pend.delete(d.id) } else if (d.method === 'Runtime.exceptionThrown') { const x = d.params.exceptionDetails, fr = x.stackTrace?.callFrames?.[0]; pageErrors.push((x.exception?.description?.split('\n')[0] || x.text) + ' @ ' + ((fr ? fr.url + ':' + (fr.lineNumber + 1) + ':' + (fr.columnNumber + 1) + ' ' + (fr.functionName || '') : (x.url || '') + ':' + (x.lineNumber + 1) + ':' + (x.columnNumber + 1)))) }
             // نوافذ confirm/alert بتجمّد الصفحة: نسجّل نصها ونقفلها
             else if (d.method === 'Page.javascriptDialogOpening') { dialogs.push(d.params.type + ': ' + d.params.message.replace(/\s+/g, ' ').slice(0, 120)); const id = ++mid; ws.send(JSON.stringify({ id, method: 'Page.handleJavaScriptDialog', params: { accept: false } })) } };
           await cdp('Runtime.enable'); await cdp('Page.enable');
