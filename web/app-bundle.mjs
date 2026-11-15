@@ -35,7 +35,7 @@ function check(p, b) {
   if (p.endsWith('.json')) JSON.parse(b.toString('utf8'));
   else if (p.endsWith('.png') && b.readUInt32BE(0) !== 0x89504e47) throw new Error('not png');
   else if (/\.jpe?g$/.test(p) && b.readUInt16BE(0) !== 0xffd8) throw new Error('not jpeg');
-  else if (p.endsWith('.ico') && b.readUInt32BE(0) !== 0x00000100) throw new Error('not ico');
+  else if (p.endsWith('.ico') && b.readUInt32BE(0) !== 0x00000100 && b.readUInt32BE(0) !== 0x89504e47) throw new Error('not ico'); // ico أو png بامتداد ico
 }
 async function get(p) {
   for (let i = 0; i < 3; i++) {
