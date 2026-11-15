@@ -45,9 +45,9 @@
  try{const u=new URL(location.href);if(u.searchParams.has("u")){u.searchParams.delete("u");history.replaceState(history.state,"",u.pathname+u.search+u.hash);setTimeout(()=>T("تم تحديث التطبيق"),1200)}}catch(e){}
  document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")check()});setTimeout(check,4000);setInterval(check,20*60*1000);
  /* زر الإعدادات: فحص حقيقي من الخادم */
- document.addEventListener("click",async e=>{const b=e.target.closest("#updChk");if(!b)return;e.stopImmediatePropagation();e.preventDefault();const s=b.closest(".st-upd")&&b.closest(".st-upd").querySelector(".upd-s");b.disabled=true;s&&(s.textContent="جارٍ التحقق…");
-  const[sv,lv]=await Promise.all([serverV(),localV()]);b.disabled=false;
+ document.addEventListener("click",async e=>{const b=e.target.closest("#updChk");if(!b)return;e.stopImmediatePropagation();e.preventDefault();const s=b.closest(".st-upd")&&b.closest(".st-upd").querySelector(".upd-s");b.disabled=true;b.classList.add("is-busy");s&&(s.textContent="جارٍ التحقق…");
+  const[sv,lv]=await Promise.all([serverV(),localV()]);b.disabled=false;b.classList.remove("is-busy");
   if(!sv){s&&(s.textContent="تعذّر التحقق، تأكد من الاتصال بالإنترنت");return}
-  if(sv>lv||!lv){s&&(s.textContent="يوجد إصدار جديد ("+lbl(sv)+")");b.textContent="تحديث الآن";b.onclick=null;b.addEventListener("click",ev=>{ev.stopImmediatePropagation();hard()},{once:true,capture:true});banner()}
+  if(sv>lv||!lv){s&&(s.textContent="فيه إصدار جديد ("+lbl(sv)+")، اضغط للتحديث");const k=b.querySelector(".upd-k");if(k){k.textContent="حدّث";b.classList.add("is-ready")}else b.textContent="تحديث الآن";b.onclick=null;b.addEventListener("click",ev=>{ev.stopImmediatePropagation();hard()},{once:true,capture:true});banner()}
   else{s&&(s.textContent="أنت على أحدث إصدار ("+lbl(lv)+")");T("التطبيق محدّث لآخر إصدار")}},true);
 })();

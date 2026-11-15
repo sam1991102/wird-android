@@ -30,14 +30,14 @@
  const ready=r=>new Promise(res=>{const w=r.installing||r.waiting;if(!w)return res(false);if(w.state==="installed"||w.state==="activated")return res(true);w.addEventListener("statechange",()=>{if(w.state==="installed"||w.state==="activated")res(true);if(w.state==="redundant")res(false)});setTimeout(()=>res(!!r.waiting),20000)});
  navigator.serviceWorker.getRegistration().then(r=>{if(r&&r.waiting&&navigator.serviceWorker.controller&&window.__wirdUpd)__wirdUpd()});
  const add=()=>{const ab=document.querySelector(".st .sh-hub");if(!ab||ab.querySelector(".st-upd"))return;
-  const row=document.createElement("div");row.className="st-row st-upd";row.innerHTML='<div class="st-l"><strong>تحديث التطبيق</strong><small class="upd-s">اضغط للتحقق من وجود إصدار أحدث</small></div><div class="st-c"><button type="button" class="btn btn-ghost" id="updChk">تحقّق من التحديث</button></div>';
-  /* «تحديث التطبيق» مجموعة لوحدها في آخر صفحة الإعدادات الرئيسية، فوق رقم الإصدار */
-  const vp=ab.querySelector(".sh-ver");const g=document.createElement("div");g.className="sh-g sh-upd";g.innerHTML='<h2>التحديث</h2>';const box=document.createElement("div");box.className="sh-list";box.appendChild(row);g.appendChild(box);ab.insertBefore(g,vp||null);
-  ver().then(v=>{if(!v)return;const t="الإصدار "+ar((1+Math.floor(Math.max(0,v-131)/10))+"."+(Math.max(0,v-131)%10));if(vp)vp.textContent=t;document.querySelectorAll("#st-about .st-ver").forEach(x=>x.textContent=t)});
-  row.querySelector("#updChk").onclick=async e=>{const b=e.currentTarget,s=row.querySelector(".upd-s");b.disabled=true;s.textContent="جارٍ التحقق…";
-   try{const r=await navigator.serviceWorker.getRegistration();if(!r)throw 0;await r.update();
-    if(r.installing||r.waiting){s.textContent="يوجد تحديث جديد — جارٍ التنزيل…";const ok=await ready(r);if(ok){s.textContent="تم تنزيل التحديث";b.textContent="تحديث الآن";b.disabled=false;b.onclick=()=>{r.waiting&&r.waiting.postMessage("skip");setTimeout(()=>location.reload(),400)};window.__wirdUpd&&__wirdUpd();return}}
-    const v=await ver();s.textContent="أنت على أحدث إصدار"+(v?" ("+ar((1+Math.floor(Math.max(0,v-131)/10))+"."+(Math.max(0,v-131)%10))+")":"");typeof toast==="function"&&toast("التطبيق محدّث لآخر إصدار")}
-   catch(x){s.textContent="تعذّر التحقق، تأكد من الاتصال بالإنترنت"}b.disabled=false}};
+  /* «تحديث التطبيق» صف زي باقي صفوف الإعدادات (أيقونة + عنوان + حالة)، في آخر «البيانات والتطبيق» */
+  const lists=[...ab.querySelectorAll(".sh-g")];const g=lists.find(x=>/البيانات/.test((x.querySelector("h2")||{}).textContent||""))||lists[lists.length-1];if(!g)return;
+  const row=document.createElement("button");row.type="button";row.className="sh-row st-upd";row.id="updChk";
+  row.innerHTML='<span class="nt-ic" style="--c:#3fa7d6"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v5h-5"/></svg></span><span class="sh-tx"><b>تحديث التطبيق</b><small class="upd-s">اضغط للتحقق من وجود إصدار أحدث</small></span><span class="sh-ch upd-k" aria-hidden="true">‹</span>';
+  g.querySelector(".sh-list").appendChild(row);
+  const vp=ab.querySelector(".sh-ver");
+  const VT=v=>"الإصدار "+ar((1+Math.floor(Math.max(0,v-131)/10))+"."+(Math.max(0,v-131)%10));
+  ver().then(v=>{if(!v)return;const t=VT(v);if(vp)vp.textContent=t;document.querySelectorAll("#st-about .st-ver").forEach(x=>x.textContent=t)});
+  /* الضغط بيتعامل معاه 17-perms-install (فحص الإصدار من الخادم) */};
  add();new MutationObserver(add).observe(document.body,{childList:true,subtree:true});
 })();

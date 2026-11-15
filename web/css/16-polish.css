@@ -99,3 +99,9 @@ html.rt-on .sk-dhikr{display:none}
 #st-about .ab-share{min-width:200px;min-height:48px}
 #st-about .ab-dua{margin:16px 0 4px;text-align:center;font:400 1rem/1.7 Amiri,var(--font-quran,serif);color:var(--ink-2,var(--muted))}
 #st-about bdi[data-latin]{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:.92em}
+/* صف «تحديث التطبيق» */
+.sh-row.st-upd .upd-k{transition:opacity .2s}
+.sh-row.st-upd.is-busy .nt-ic svg{animation:wSpin 1s linear infinite}
+.sh-row.st-upd.is-ready .upd-k{font-size:.8rem;font-weight:700;padding:4px 12px;border-radius:999px;background:var(--primary);color:#fff;opacity:1}
+@keyframes wSpin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.sh-row.st-upd.is-busy .nt-ic svg{animation:none}}

@@ -47,3 +47,5 @@ html.su-on .wp-page{visibility:visible}
 @media (max-height:700px){.su-icon{width:84px}.su-tb{width:min(170px,26vh)}.su-welcome .su-link{padding:4px 14px}}
 .su-prev{min-height:46px;padding:0 16px;border:1px solid var(--line);border-radius:14px;background:transparent;color:var(--ink);font:inherit;font-size:15px;font-weight:700;cursor:pointer}
 .su-prev:focus-visible,.su-main:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+/* أثناء المعالج الرجوع بيبقى من زرار «السابق» تحت */
+html.su-on .wp-page .wp-back{visibility:hidden}

@@ -40,8 +40,13 @@ function step(k){i=k;if(k>=STEPS.length){finish();return}ov&&ov.remove();ov=null
 function go(id){var tries=0;(function t(){var hub=[].find.call(document.querySelectorAll(".st"),function(x){return!x.hidden&&x.offsetHeight}),row=hub&&hub.querySelector('.sh-row[data-id="'+id+'"]');
  if(row){row.click();return}if(!hub&&tries===0&&window.__openSettings){tries++;__openSettings();setTimeout(t,350);return}step(i+1)})()}
 function end(){mark();ov&&ov.remove();ov=null;bar&&bar.remove();bar=null;close();R.classList.remove("su-on");window.__wirdGo&&__wirdGo("home")}
+/* أثناء المعالج: سهم الرجوع مخفي، وزرار الرجوع في الموبايل (اللي بيضغط السهم) بيبقى «السابق» بدل ما يقفل الصفحة ويلخبط الخطوات */
+function prev(){if(i<=0){bar&&bar.remove();bar=null;close();welcome()}else step(i-1)}
+/* زرار الرجوع في الموبايل أثناء خطوات المعالج = «السابق» (قبل ما الصفحة تتعامل معاه) */
+window.__suBack=function(){if(!bar||i<0)return false;/* نرجّع المدخل اللي اتسحب، علشان الرجوع ما يخرجش من التطبيق وسط المعالج */try{history.pushState(Object.assign({},history.state||{w:1,v:"home"},{w:1,ov:1,ovd:1}),"",location.href)}catch(x){}prev();return true};
+document.addEventListener("click",function(e){if(!bar||i<0||!e.target.closest||!e.target.closest(".wp-back"))return;e.preventDefault();e.stopImmediatePropagation();prev()},true);
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-su]");if(!b)return;e.preventDefault();var a=b.dataset.su;
- if(a==="go")step(0);else if(a==="next")step(i+1);else if(a==="prev"){if(i<=0){bar&&bar.remove();bar=null;close();welcome()}else step(i-1)}else if(a==="all")finish();else if(a==="skip"||a==="end")end();
+ if(a==="go")step(0);else if(a==="next")step(i+1);else if(a==="prev")prev();else if(a==="all")finish();else if(a==="skip"||a==="end")end();
  else if(a==="tasbih"){if(ov.classList.contains("su-did"))return;ov.classList.add("su-did");try{navigator.vibrate&&navigator.vibrate(18)}catch(x){}
   ov.querySelector(".su-say").textContent="كده بدأت وِردك";setTimeout(function(){var o=ov&&ov.querySelector(".su-ok");if(o)o.textContent="تقبّل الله منك"},450)}
  else if(a==="restore"){mark();ov&&ov.remove();ov=null;R.classList.remove("su-on");window.__openSettingsPage&&__openSettingsPage("st-data")}});

@@ -77,6 +77,8 @@ const sched=()=>{if(!raf)raf=setTimeout(check,40)};new MutationObserver(sched).o
 addEventListener("popstate",e=>{
  e.stopImmediatePropagation();
  if(skipPop>0){skipPop--;return}
+ /* معالج الإعداد شغال: زرار الرجوع = «السابق» */
+ if(window.__suBack&&__suBack())return;
  {const E=window.__mpEdge,top=openOv().pop();const __edge=E&&Date.now()-E.t<1500;if(top&&top.matches(".mp")&&(__edge||!(window.__mpBlk&&Date.now()-window.__mpBlk<2500))){if(__edge)window.__mpBlk=0;else window.__mpBlk=Date.now();_ps({...cur(),ov:1,ovd:ovDepth},"",location.href);if(E&&Date.now()-E.t<1500&&window.__mpFlip)__mpFlip(E.d);window.__mpEdge=null;__edge||typeof toast==="function"&&toast("للخروج من المصحف اضغط رجوع مرة أخرى أو زر الإغلاق");return}}
  const s=e.state&&e.state.w?e.state:{v:"home",lib:"grid"};
  const want=s.ov?(s.ovd||1):0;
