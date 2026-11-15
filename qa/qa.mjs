@@ -173,6 +173,8 @@ for (const S of SKINS) {
     if (n < 0) { bad(`${k}/${id}`, 'الصفحة ما فتحتش'); await ctx.close(); continue }
     const dead = [], covered = [];
     for (let i = 0; i < n; i++) {
+      // نقفل أي نافذة فتحها الزر اللي قبله (منبّه/قائمة اختيار) لأنها بتظهر فوق صفحة الإعدادات عن قصد
+      await page.evaluate(() => { document.querySelectorAll('.al-ov,.adhan-ov,.wd-sheet,.sheet,.ig-sheet').forEach(o => { if (o.closest('[data-qa]') || !o.offsetWidth) return; const b = o.querySelector('[data-x],.close,#alStop,[aria-label="إغلاق"]'); if (b) b.click(); if (o.offsetWidth) o.hidden = true }); try { window.__wirdNative && __wirdNative.stop() } catch (e) { } }); await wait(250);
       const info = await page.evaluate(i => { const e = document.querySelector(`[data-qa] [data-qb="${i}"]`); if (!e) return null; e.scrollIntoView({ block: 'center' }); const r = e.getBoundingClientRect(); const lab = e.closest('label'); const t = (e.getAttribute('aria-label') || e.textContent || (lab && lab.textContent) || e.name || e.tagName).trim().replace(/\s+/g, ' ').slice(0, 30); const x = r.left + r.width / 2, y = r.top + r.height / 2; const top = document.elementFromPoint(x, y); const ok = !!top && (e === top || e.contains(top) || top.contains(e) || (!!lab && lab.contains(top))); return { t, x, y, ok, top: top ? top.tagName + '.' + String(top.className).slice(0, 30) : 'none' } }, i);
       if (!info || SKIP.test(info.t)) continue;
       if (!info.ok && /^HEADER\.wp-h/.test(info.top)) continue; // الهيدر الثابت فوق العنصر بعد التمرير، مش مشكلة حقيقية
