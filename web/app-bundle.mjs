@@ -24,6 +24,17 @@ for (const [name, [, body, bin]] of Object.entries(site)) {
   files.add('/' + name);
 }
 
+// ١ب) المصحف المدني (صفحات + خطوط) والتفسير الميسر من المستودع نفسه: app-data/qdata (tools/fetch-quran-data.mjs)
+const QD = path.join(ROOT, 'app-data/qdata');
+if (!process.env.SKIP_STATIC) {
+  const walk = d => fs.readdirSync(d, { withFileTypes: true }).flatMap(e => e.isDirectory() ? walk(path.join(d, e.name)) : [path.join(d, e.name)]);
+  const q = fs.existsSync(QD) ? walk(QD) : [];
+  const nP = q.filter(f => /\/p\/\d+\.json$/.test(f)).length, nF = q.filter(f => /\.woff2$/.test(f)).length, nT = q.filter(f => /\/t\/\d+\.json$/.test(f)).length;
+  if (nP !== 604 || nF !== 604 || nT !== 114) { console.error(`app-data/qdata ناقص: صفحات ${nP}/604، خطوط ${nF}/604، تفسير ${nT}/114`); process.exit(1) }
+  for (const f of q) { const rel = '/qdata/' + path.relative(QD, f).split(path.sep).join('/'); put(rel.slice(1), fs.readFileSync(f)); files.add(rel) }
+  console.log('qdata:', q.length, 'files');
+}
+
 // ٢) الملفات الثابتة (المصحف وغيره) — بنحاول كل ملف ٣ مرات، ونتأكد إنه سليم
 const assets = JSON.parse(fs.readFileSync(path.join(ROOT, 'web-deploy/assets.json'), 'utf8'));
 // SKIP_STATIC=1 للتجربة المحلية من غير إنترنت (ملفات الموقع بس)

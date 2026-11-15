@@ -12,7 +12,7 @@
     if(k==="w"||k==="a"){snd=snd||new Audio();snd.src=b.dataset.u;snd.play().catch(()=>typeof toast==="function"&&toast("تعذّر التشغيل"))}
     else if(k==="c"){const t=sh.dataset.copy;navigator.clipboard&&navigator.clipboard.writeText(t);typeof toast==="function"&&toast("تم النسخ")}})}
   sh.hidden=false;sh.innerHTML='<div class="wd-card"><button type="button" class="wd-x" data-x aria-label="إغلاق">×</button><div class="wd-load">جارٍ التحميل…</div></div>';
-  try{const[vr,tf]=await Promise.all([fetch("https://api.quran.com/api/v4/verses/by_key/"+s+":"+a+"?words=true&word_fields=text_uthmani&fields=text_uthmani").then(r=>r.json()),fetch("https://api.quran.com/api/v4/tafsirs/16/by_ayah/"+s+":"+a).then(r=>r.json())]);
+  try{const[vr,tf]=await (window.__qLocal?__qLocal(s,a):Promise.reject()).catch(()=>Promise.all([fetch("https://api.quran.com/api/v4/verses/by_key/"+s+":"+a+"?words=true&word_fields=text_uthmani&fields=text_uthmani").then(r=>r.json()),fetch("https://api.quran.com/api/v4/tafsirs/16/by_ayah/"+s+":"+a).then(r=>r.json())]));
    const v=vr.verse,ws=v.words.filter(x=>x.char_type_name==="word"),wd=pos?ws[pos-1]:null;const T=((tf.tafsir&&tf.tafsir.text)||"").replace(/<[^>]+>/g,"").trim();
    const ayah=v.text_uthmani||ws.map(x=>x.text_uthmani).join(" ");const ref=(nm(s)?"سورة "+nm(s)+" — ":"")+"الآية "+ar(a);sh.dataset.copy="﴿"+ayah+"﴾ ["+(nm(s)||ar(s))+": "+ar(a)+"]"+(T?"\nالتفسير الميسر: "+T:"");
    const esc=t=>String(t).replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[m]);

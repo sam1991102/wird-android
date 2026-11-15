@@ -8,9 +8,11 @@ const FONT=n=>"https://static.qurancdn.com/fonts/quran/hafs/v2/woff2/p"+n+".woff
 let META=null;const CACHE={},FONTS={};
 async function meta(){if(META)return;META=await (await fetch("/mushaf/meta.json")).json()}
 async function data(n){if(CACHE[n])return CACHE[n];let j=null;
+ /* داخل التطبيق: الصفحة من الملفات المضمّنة أولًا */
+ if(window.__WIRD_NATIVE)try{const r=await fetch("/qdata/p/"+n+".json");if(r.ok){j=await r.json();if(j&&j.verses&&j.verses.length)return CACHE[n]=j}}catch(e){}
  try{const c=await caches.open("wird-mushaf-v1"),hit=await c.match(API(n));if(hit)j=await hit.json();else{const r=await fetch(API(n));if(!r.ok)throw 0;c.put(API(n),r.clone());j=await r.json()}}catch(e){const r=await fetch(API(n));j=await r.json()}
  return CACHE[n]=j}
-async function font(n){if(FONTS[n])return FONTS[n];const f=new FontFace("qcf"+n,"url("+FONT(n)+")",{display:"block"});FONTS[n]=f.load().then(x=>{document.fonts.add(x);return x});return FONTS[n]}
+async function font(n){if(FONTS[n])return FONTS[n];const f=new FontFace("qcf"+n,(window.__WIRD_NATIVE?"url(/qdata/f/p"+n+".woff2) format(\"woff2\"),":"")+"url("+FONT(n)+")",{display:"block"});FONTS[n]=f.load().then(x=>{document.fonts.add(x);return x});return FONTS[n]}
 const LAST="wird-mushaf-page";let cur=1,ov,busy=false,audio,curSura=1;
 const nm=s=>IDX[s-1][0].replace(/^سُورَةُ\s*/,"");
 function build(){ov=document.createElement("div");ov.className="mp";ov.setAttribute("role","dialog");ov.setAttribute("aria-modal","true");ov.setAttribute("aria-label","المصحف");ov.hidden=true;

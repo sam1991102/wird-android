@@ -1,0 +1,25 @@
+name: Quran data (mushaf + tafsir into repo)
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['tools/fetch-quran-data.mjs', '.github/workflows/quran-data.yml']
+permissions:
+  contents: write
+concurrency: { group: quran-data, cancel-in-progress: false }
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with: { node-version: 22 }
+      - run: node tools/fetch-quran-data.mjs
+      - name: Commit data
+        run: |
+          du -sh app-data/qdata app-data/qdata/*
+          git add app-data/qdata
+          if git diff --cached --quiet; then echo "no changes"; exit 0; fi
+          git -c user.name="wird-bot" -c user.email="wird-bot@users.noreply.github.com" commit -qm "بيانات المصحف المدني والتفسير الميسر داخل المستودع"
+          git pull -q --rebase && git push -q

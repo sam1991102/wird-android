@@ -54,7 +54,7 @@ final class SiteProxy {
 
     /** ملفات ثابتة بتتخدم من الجهاز من غير ما نسأل الإنترنت. */
     private static boolean immutable(String path) {
-        return path.startsWith("/mushaf/") || path.startsWith("/og/") || path.startsWith("/fonts/")
+        return path.startsWith("/mushaf/") || path.startsWith("/qdata/") || path.startsWith("/og/") || path.startsWith("/fonts/")
                 || path.startsWith("/kids/") || path.matches(".*\\.(png|jpe?g|webp|gif|ico|woff2?|ttf|svg)$");
     }
 
