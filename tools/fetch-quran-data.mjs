@@ -39,10 +39,13 @@ await pool(6, PAGES, async n => {
 });
 console.log('pages + fonts ok');
 
+// عدد آيات كل سورة من صفحات المصحف نفسها
+const COUNT = {};
+for (const n of PAGES) for (const v of JSON.parse(fs.readFileSync(path.join(OUT, 'p', n + '.json'))).verses) { const [s, a] = v.verse_key.split(':').map(Number); COUNT[s] = Math.max(COUNT[s] || 0, a) }
 const strip = t => String(t || '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
 await pool(4, Array.from({ length: 114 }, (_, i) => i + 1), async s => {
   const f = path.join(OUT, 't', s + '.json');
-  if (have(f)) return;
+  if (have(f) && Object.keys(JSON.parse(fs.readFileSync(f))).length === COUNT[s]) return;
   const out = {};
   for (let page = 1; ; page++) {
     const j = await get(`https://api.quran.com/api/v4/tafsirs/16/by_chapter/${s}?per_page=50&page=${page}`);
@@ -50,7 +53,13 @@ await pool(4, Array.from({ length: 114 }, (_, i) => i + 1), async s => {
     const pg = j.pagination || {};
     if (!pg.next_page || page >= (pg.total_pages || 1)) break;
   }
-  if (!Object.keys(out).length) throw new Error('tafsir ' + s + ' empty');
+  // أي آية ناقصة من الصفحات المجمّعة: نجيبها لوحدها
+  for (let a = 1; a <= COUNT[s]; a++) if (!out[a]) {
+    const j = await get(`https://api.quran.com/api/v4/tafsirs/16/by_ayah/${s}:${a}`);
+    out[a] = strip(j.tafsir && j.tafsir.text);
+  }
+  const miss = Array.from({ length: COUNT[s] }, (_, i) => i + 1).filter(a => !out[a]);
+  if (miss.length) throw new Error(`tafsir ${s}: no text for ayat ${miss.join(',')}`);
   fs.writeFileSync(f, JSON.stringify(out));
 });
 // تأكد نهائي: عدد آيات التفسير = عدد آيات المصحف
@@ -59,5 +68,4 @@ for (const n of PAGES) ayat += JSON.parse(fs.readFileSync(path.join(OUT, 'p', n 
 for (let s = 1; s <= 114; s++) taf += Object.keys(JSON.parse(fs.readFileSync(path.join(OUT, 't', s + '.json')))).length;
 console.log('ayat', ayat, 'tafsir', taf);
 if (ayat !== 6236) throw new Error('expected 6236 ayat in pages, got ' + ayat);
-if (taf < 6200) throw new Error('tafsir incomplete: ' + taf);
-// v2
+if (taf !== 6236) throw new Error('tafsir incomplete: ' + taf);
