@@ -74,7 +74,14 @@ try {
   await js(`localStorage.setItem('wird-test-marker','keep-me-123');localStorage.setItem('wird-setup-done','1');localStorage.setItem('wird-onboarded','1');localStorage.setItem('wird-fav',JSON.stringify(['m1','e3']));localStorage.setItem('wird-khatma',JSON.stringify({start:Date.now()-864e5,days:30,pos:12}));true`);
   const before = await js(`JSON.stringify({m:localStorage.getItem('wird-test-marker'),n:localStorage.length})`);
   await snap('old-version');
-  stopApp();
+  // زي المستخدم الحقيقي: نخرج للشاشة الرئيسية ونستنى المتصفح يكتب البيانات على القرص قبل ما نقفل
+  adb('shell input keyevent KEYCODE_HOME', true); await sleep(15000);
+  stopApp(); await sleep(2000);
+  // نتأكد إن البيانات اتكتبت فعلًا في النسخة القديمة قبل الترقية
+  u = await launch();
+  const reopened = await js(`localStorage.getItem('wird-test-marker')`);
+  res('old app keeps data after reopen (control)', reopened === 'keep-me-123', String(reopened));
+  adb('shell input keyevent KEYCODE_HOME', true); await sleep(5000); stopApp();
 
   // ٢) الترقية للنسخة الجديدة (الموقع جوه التطبيق)
   adb(`install -r -g ${NEW}`);
@@ -115,14 +122,17 @@ try {
 
   // ٥) الأذان والمنبّه: صوت واحد بس، والإيقاف بيوقف كله
   await js(`try{__closeOverlays()}catch(e){};true`);
-  const players = () => (adb('shell dumpsys audio', true).match(/state:started/g) || []).length;
+  // نعدّ الأصوات الشغالة بتاعة تطبيقنا بس (بالـ uid)، مش أصوات النظام
+  const uid = (adb(`shell dumpsys package ${PKG}`, true).match(/userId=(\d+)/) || [])[1];
+  const players = () => adb('shell dumpsys audio', true).split('\n').filter(l => /AudioPlaybackConfiguration/.test(l) && new RegExp('u/pid:' + uid + '/|uid:' + uid + '\\b').test(l) && /state:started/.test(l)).length;
+  const p0 = players();
   const svc = () => /AdhanService/.test(adb(`shell dumpsys activity services ${PKG}`, true));
   await js(`Capacitor.Plugins.WirdAdhan.test({kind:'alarm',sound:''}).then(()=>1)`); await sleep(4000);
   const p1 = players(), s1 = svc();
   await js(`Capacitor.Plugins.WirdAdhan.test({kind:'adhan',sound:''}).then(()=>1)`); await sleep(4000);
   const p2 = players(), s2 = svc(); await snap('adhan-playing');
-  res('alarm starts the service', s1, 'players ' + p1);
-  res('second adhan replaces the first (one sound only)', s2 && p2 <= Math.max(1, p1), `players after alarm ${p1}, after adhan ${p2}`);
+  res('alarm starts the service and plays', s1 && p1 >= 1, `uid ${uid}, players before ${p0}, after alarm ${p1}`);
+  res('second adhan replaces the first (one sound only)', s2 && p2 === 1, `players after alarm ${p1}, after adhan ${p2}`);
   await js(`Capacitor.Plugins.WirdAdhan.stop().then(()=>1)`); await sleep(3000);
   res('stop really stops everything', !svc() && players() === 0, 'players ' + players());
 
