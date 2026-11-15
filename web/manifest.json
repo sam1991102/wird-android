@@ -199,6 +199,8 @@
   "00b-dom.js",
   "00c-bg-audio.js",
   "00d-qlocal.js",
+  "00e-geo.js",
+  "00f-city.js",
   "core/00-boot.js",
   "core/01-adhkar.js",
   "core/02-surah-reader.js",
