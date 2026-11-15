@@ -90,14 +90,18 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" android:maxSdkVersion="32" />
-    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    <!-- منبّهات دقيقة للأذان: المستخدم بيسمح بيها من الإعدادات (التطبيق بيطلبها لو مش مسموحة).
+         USE_EXACT_ALARM اتشال: جوجل بلاي بتسمح بيه لتطبيقات المنبّه والتقويم بس -->
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <!-- منبّه الفجر على الشاشة كلها وهي مقفولة (محتاج إقرار في جوجل بلاي إن التطبيق فيه منبّه) -->
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- المواقيت كفاية عليها الموقع التقريبي. الدقيق لأندرويد ١١ وأقدم بس، لأن Capacitor هناك
+         مش بيقبل الموقع إلا لو الإذنين متعرّفين -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" android:maxSdkVersion="30" />
 </manifest>
