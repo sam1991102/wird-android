@@ -66,13 +66,13 @@ jobs:
             cp android/app/build/outputs/apk/debug/*.apk out/wird-${{ github.run_number }}-test.apk
           fi
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: wird-android-${{ github.run_number }}
           path: out/*
 
       - name: Publish release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: v1.0.${{ github.run_number }}
           name: وِرد أندرويد 1.0.${{ github.run_number }}

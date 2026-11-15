@@ -64,3 +64,8 @@ try {
 } catch(Exception e) {
     logger.info("google-services.json not found, google-services plugin not applied. Push Notifications won't work")
 }
+
+// اعرض تفاصيل أي استخدام لواجهات قديمة في كودنا (بدل سطر «some input files use a deprecated API» من غير تفاصيل)
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs += ["-Xlint:deprecation", "-Xlint:unchecked"]
+}
