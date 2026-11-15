@@ -214,8 +214,8 @@ for (const sk of SKINS) {
     await page.evaluate(v => window.__setView && __setView(v), v); await wait(500);
     const r = await page.evaluate(v => { const vis = e => e.getClientRects().length && getComputedStyle(e).display !== 'none' && getComputedStyle(e).visibility !== 'hidden';
       const s = [...document.querySelectorAll('main>section')].filter(vis); return { wrong: s.filter(x => x.dataset.v && x.dataset.v !== v).map(x => x.id || x.className), noV: s.filter(x => !x.dataset.v).map(x => x.id || x.className) } }, v);
-    if (r.wrong.length) bad('views ' + sk.name + '/' + v, 'أقسام من صفحة تانية ظاهرة: ' + r.wrong.join('، '));
-    if (r.noV.length) bad('views ' + sk.name + '/' + v, 'أقسام من غير data-v: ' + r.noV.join('، '));
+    if (r.wrong.length) bad('views ' + sk.k + '/' + v, 'أقسام من صفحة تانية ظاهرة: ' + r.wrong.join('، '));
+    if (r.noV.length) bad('views ' + sk.k + '/' + v, 'أقسام من غير data-v: ' + r.noV.join('، '));
   }
   await ctx.close();
 }
