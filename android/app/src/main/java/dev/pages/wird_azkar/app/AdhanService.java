@@ -50,6 +50,8 @@ public class AdhanService extends Service {
             return START_NOT_STICKY;
         }
 
+        // لو فيه أذان أو منبّه شغال (مثلًا منبّه الفجر وأذان الفجر في نفس الدقيقة): نوقفه قبل ما نبدأ الجديد
+        release();
         String raw = intent == null ? null : intent.getStringExtra("ev");
         try { current = new JSONObject(raw == null ? "{}" : raw); } catch (Exception e) { current = new JSONObject(); }
         boolean isAlarm = "alarm".equals(current.optString("kind"));
@@ -172,6 +174,16 @@ public class AdhanService extends Service {
             long[] pat = {0, 800, 400, 800, 400, 1200, 1500};
             if (Build.VERSION.SDK_INT >= 26) v.vibrate(VibrationEffect.createWaveform(pat, 0)); else v.vibrate(pat, 0);
         } catch (Exception ignored) {}
+    }
+
+    /** يوقف الصوت والاهتزاز ويحرّر القفل، من غير ما يقفل الخدمة. */
+    private void release() {
+        handler.removeCallbacksAndMessages(null);
+        try { if (player != null) { player.stop(); player.release(); } } catch (Exception ignored) {}
+        player = null;
+        try { Vibrator v = vibrator(); if (v != null) v.cancel(); } catch (Exception ignored) {}
+        try { if (wake != null && wake.isHeld()) wake.release(); } catch (Exception ignored) {}
+        wake = null;
     }
 
     private void stopAll() {

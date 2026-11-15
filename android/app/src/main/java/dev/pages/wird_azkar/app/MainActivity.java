@@ -45,7 +45,9 @@ public class MainActivity extends BridgeActivity {
         String path = i.getStringExtra("wird_path");
         Uri d = i.getData();
         if (path == null && d != null && "wird-azkar.pages.dev".equals(d.getHost())) {
-            path = (d.getPath() == null ? "/" : d.getPath()) + (d.getFragment() != null ? "#" + d.getFragment() : "");
+            path = (d.getPath() == null ? "/" : d.getPath())
+                    + (d.getEncodedQuery() != null ? "?" + d.getEncodedQuery() : "")
+                    + (d.getFragment() != null ? "#" + d.getFragment() : "");
         }
         if (path == null) return;
         i.removeExtra("wird_path");
@@ -54,7 +56,7 @@ public class MainActivity extends BridgeActivity {
         if (wv == null) return;
         String js = "(function(){var p=" + q + ";var h=p.indexOf('#')>=0?p.slice(p.indexOf('#')):'';var b=p.split('#')[0]||'/';"
                 + "if(location.pathname===b&&h){if(location.hash===h)dispatchEvent(new HashChangeEvent('hashchange'));else location.hash=h;}"
-                + "else location.href=b+(b.indexOf('?')<0?'?app=android':'')+h;})()";
+                + "else location.href=b+(b.indexOf('?')<0?'?app=android':'&app=android')+h;})()";
         wv.postDelayed(() -> wv.evaluateJavascript(js, null), delay);
     }
 

@@ -82,6 +82,13 @@ public final class AdhanStore {
         }
     }
 
+    /** أندرويد ١٤+ ممكن يقفل «ملء الشاشة» للتطبيقات غير المنبّهات؛ قبل كده مسموح دايمًا. */
+    static boolean canFullScreen(Context c) {
+        if (Build.VERSION.SDK_INT < 34) return true;
+        NotificationManager nm = c.getSystemService(NotificationManager.class);
+        return nm == null || nm.canUseFullScreenIntent();
+    }
+
     static boolean canExact(Context c) {
         if (Build.VERSION.SDK_INT < 31) return true;
         AlarmManager am = c.getSystemService(AlarmManager.class);

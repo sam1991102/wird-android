@@ -65,8 +65,23 @@ public class WirdAdhanPlugin extends Plugin {
         PowerManager pm = (PowerManager) c.getSystemService(Context.POWER_SERVICE);
         r.put("battery", Build.VERSION.SDK_INT < 23 || pm.isIgnoringBatteryOptimizations(c.getPackageName()));
         r.put("alarmMuted", AdhanService.isMuted(c));
+        r.put("fullScreen", AdhanStore.canFullScreen(c));
         try { r.put("version", c.getPackageManager().getPackageInfo(c.getPackageName(), 0).versionName); } catch (Exception ignored) {}
         call.resolve(r);
+    }
+
+    /** أندرويد ١٤+: صفحة السماح بعرض منبّه الفجر على الشاشة كلها. */
+    @PluginMethod
+    public void openFullScreenSettings(PluginCall call) {
+        try {
+            if (Build.VERSION.SDK_INT >= 34) {
+                Intent i = new Intent(android.provider.Settings.ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT,
+                        android.net.Uri.parse("package:" + getContext().getPackageName()));
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                getContext().startActivity(i);
+            }
+        } catch (Exception ignored) {}
+        call.resolve();
     }
 
     @PluginMethod
