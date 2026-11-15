@@ -18,7 +18,14 @@ function close(){var p=document.querySelectorAll(".wp-page.sh-page,.wp-page.nt-p
 function dots(k){var h="";for(var j=0;j<N;j++)h+='<i class="'+(j<=k?"on":"")+'"></i>';return'<div class="su-dots" aria-hidden="true">'+h+"</div>"}
 function screen(html){ov&&ov.remove();ov=el(html,"su-ov");ov.setAttribute("role","dialog");ov.setAttribute("aria-modal","true");document.body.appendChild(ov);R.classList.add("su-on")}
 function welcome(){var onb=document.getElementById("onb");if(onb)onb.hidden=true;
- screen(dots(0)+'<div class="su-logo">وِرد</div><h1>أهلًا بك في وِرد</h1><p>دقيقة واحدة نجهّز فيها المواقيت والأذان والتذكيرات على مقاسك. كل اختيار يمكنك تغييره لاحقًا من الإعدادات.</p><button type="button" class="su-main" data-su="go">ابدأ الإعداد</button><button type="button" class="su-link" data-su="restore">عندي نسخة احتياطية</button><button type="button" class="su-link" data-su="skip">تخطَّ الآن</button>')}
+ /* الترحيب: الشعار، ثم الحديث، ثم أول ذكر يقوله المستخدم بنفسه */
+ screen(dots(0)+'<img class="su-icon" src="/icon-512.png" alt="وِرد" width="120" height="120">'+
+  '<blockquote class="su-hd"><p>«لا يزالُ لسانُك رطبًا من ذكرِ الله»</p><cite>رواه الترمذي (٣٣٧٥) وابن ماجه (٣٧٩٣)، وصحّحه الألباني</cite></blockquote>'+
+  '<p class="su-say" aria-live="polite">ابدأ بأول ذكر: اضغط على الدائرة</p>'+
+  '<button type="button" class="su-tb" data-su="tasbih" aria-label="اضغط واذكر: سبحان الله وبحمده"><svg viewBox="0 0 244 244" aria-hidden="true"><circle class="t" cx="122" cy="122" r="112"/><circle class="f" cx="122" cy="122" r="112"/></svg><span>سبحان الله<br>وبحمده</span></button>'+
+  '<p class="su-ok" aria-live="polite"></p>'+
+  '<button type="button" class="su-main" data-su="go">ابدأ الإعداد</button><button type="button" class="su-link" data-su="restore">عندي نسخة احتياطية</button><button type="button" class="su-link" data-su="skip">تخطَّ الآن</button>');
+ ov.classList.add("su-welcome");ov.setAttribute("aria-label","أهلًا بك في وِرد")}
 function finish(){bar&&bar.remove();bar=null;close();
  var A=!!window.__WIRD_NATIVE;
  screen(dots(N-1)+'<div class="su-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><h1>جاهز</h1><p>'+(A?"لضمان وصول الأذان في وقته على أندرويد، اسمح بالإشعارات والمنبّهات الدقيقة، وأوقف توفير البطارية لوِرد من صفحة الأذان.":"تم حفظ إعداداتك. تقبّل الله منك.")+'</p><button type="button" class="su-main" data-su="end">ابدأ وِردك</button>')}
@@ -32,6 +39,8 @@ function go(id){var tries=0;(function t(){var hub=[].find.call(document.querySel
 function end(){mark();ov&&ov.remove();ov=null;bar&&bar.remove();bar=null;close();R.classList.remove("su-on");window.__wirdGo&&__wirdGo("home")}
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-su]");if(!b)return;e.preventDefault();var a=b.dataset.su;
  if(a==="go")step(0);else if(a==="next")step(i+1);else if(a==="all")finish();else if(a==="skip"||a==="end")end();
+ else if(a==="tasbih"){if(ov.classList.contains("su-did"))return;ov.classList.add("su-did");try{navigator.vibrate&&navigator.vibrate(18)}catch(x){}
+  ov.querySelector(".su-say").textContent="كده بدأت وِردك";setTimeout(function(){var o=ov&&ov.querySelector(".su-ok");if(o)o.textContent="تقبّل الله منك"},450)}
  else if(a==="restore"){mark();ov&&ov.remove();ov=null;R.classList.remove("su-on");window.__openSettingsPage&&__openSettingsPage("st-data")}});
 /* شاشة «جهّز وِرد في دقيقة» القديمة: المعالج حلّ محلها */
 function oldSheet(){[].forEach.call(document.querySelectorAll('[role="dialog"],.wd-sheet,.onb,.sheet,.modal,div'),function(d){if(d.dataset.suOld||d.children.length>40)return;var h=d.querySelector&&d.querySelector("h1,h2,h3,strong");if(!h||!/جهّز وِرد في دقيقة/.test(h.textContent))return;var box=d.closest('[role="dialog"],.wd-sheet,.onb')||d;if(box.dataset.suOld)return;box.dataset.suOld=1;var later=[].find.call(box.querySelectorAll("button"),function(b){return b.textContent.trim()==="بعدين"});later&&later.click();setTimeout(function(){box.remove();document.querySelectorAll(".wd-scrim,.scrim,.backdrop").forEach(function(x){x.remove()});R.classList.remove("ov-lock")},50)})}

@@ -257,7 +257,8 @@
   "20-pages.js",
   "21-reader.js",
   "23-focus.js",
-  "25-polish.js"
+  "25-polish.js",
+  "34-ratb.js"
  ],
  "css": [
   "00-core.css",

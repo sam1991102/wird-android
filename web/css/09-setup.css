@@ -25,3 +25,23 @@ html.su-on .wp-page{padding-bottom:150px!important}
 html.su-on .wp-page,html.su-on .st{transition:none!important;animation:none!important}
 html.su-on .st:not([hidden]){visibility:hidden}
 html.su-on .wp-page{visibility:visible}
+/* الترحيب: الشعار + الحديث + أول تسبيحة */
+.su-welcome{gap:clamp(8px,1.6vh,14px);overflow-y:auto;justify-content:safe center;padding-top:calc(48px + env(safe-area-inset-top,0px))}
+.su-icon{width:clamp(92px,15vh,128px);height:auto;aspect-ratio:1;border-radius:28%;box-shadow:0 10px 30px #0f3d2e40;margin-bottom:clamp(2px,1vh,10px)}
+.su-hd{margin:0;display:flex;flex-direction:column;gap:4px}
+.su-hd p{margin:0;max-width:none;font-family:Amiri,var(--font-quran,serif);font-weight:700;font-size:clamp(21px,3.2vh,27px);line-height:1.6;color:var(--ink)}
+.su-hd cite{font-style:normal;font-size:12.5px;line-height:1.6;color:var(--muted)}
+.su-ov p.su-say{font-size:15px;color:var(--ink);opacity:.85;margin-top:clamp(4px,1.4vh,14px)}
+.su-tb{position:relative;width:clamp(170px,27vh,236px);aspect-ratio:1;border-radius:50%;border:0;padding:0;background:color-mix(in srgb,var(--primary) 14%,var(--bg));cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;transition:transform .15s}
+.su-tb:active{transform:scale(.97)}
+.su-tb:focus-visible{outline:3px solid var(--gold);outline-offset:4px}
+.su-tb svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.su-tb circle{fill:none;stroke-width:6}
+.su-tb .t{stroke:color-mix(in srgb,var(--primary) 30%,var(--bg))}
+.su-tb .f{stroke:var(--gold,#d8b86c);stroke-linecap:round;stroke-dasharray:704;stroke-dashoffset:704;transition:stroke-dashoffset .6s ease}
+.su-did .su-tb .f{stroke-dashoffset:0}
+.su-tb span{position:relative;font-family:Amiri,var(--font-quran,serif);font-weight:700;font-size:clamp(22px,3.6vh,30px);line-height:1.5;color:var(--ink)}
+.su-ov p.su-ok{min-height:24px;font-size:15px;font-weight:700;color:var(--gold-ink,var(--gold))}
+.su-welcome .su-main{margin-top:clamp(2px,1vh,10px)}
+@media (prefers-reduced-motion:reduce){.su-tb .f{transition:none}}
+@media (max-height:700px){.su-icon{width:84px}.su-tb{width:min(170px,26vh)}.su-welcome .su-link{padding:4px 14px}}
