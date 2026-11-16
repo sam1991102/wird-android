@@ -42,7 +42,7 @@ function stTabs(){var st=document.querySelector(".st");if(!st)return;var nav=st.
  function mark(a){L.forEach(function(x){var on=x===a;x.classList.toggle("on",on);if(on){x.setAttribute("aria-current","true");try{x.scrollIntoView({inline:"center",block:"nearest"})}catch(e){}}else x.removeAttribute("aria-current")})}
  var lock=0;L.forEach(function(a){a.addEventListener("click",function(e){var t=tgt(a);if(!t)return;e.preventDefault();e.stopImmediatePropagation();var y=t.getBoundingClientRect().top-body.getBoundingClientRect().top+body.scrollTop-8;lock=Date.now();body.scrollTop=Math.max(0,y);mark(a)},true)});
  body.addEventListener("scroll",function(){if(Date.now()-lock<900)return;var bt=body.getBoundingClientRect().top,cur=null;L.forEach(function(a){var t=tgt(a);if(t&&t.getBoundingClientRect().top-bt<=60)cur=a});if(!cur&&L.length)cur=L[0];if(body.scrollTop+body.clientHeight>=body.scrollHeight-4){var vis=L.filter(function(a){var t=tgt(a);return t&&t.getBoundingClientRect().top<bt+body.clientHeight});cur=vis[vis.length-1]||cur}mark(cur)},{passive:true});mark(L[0])}
-new MutationObserver(function(){if(document.getElementById("st-look")&&!document.getElementById("tpOn"))stUI();stTabs()}).observe(document.body,{childList:true,subtree:true});
+__wOnDom(function(){if(document.getElementById("st-look")&&!document.getElementById("tpOn"))stUI();stTabs()});
 /* ---------- ٤) صفحة الاختبار التلقائي /test ---------- */
 var ERR=window.__wirdErrors||(window.__wirdErrors=[]);addEventListener("error",function(e){ERR.push(String(e.message||e))});addEventListener("unhandledrejection",function(e){ERR.push("promise: "+String(e.reason))});
 async function selfTest(){window.__wirdTesting=1;try{return await runTest()}finally{window.__wirdTesting=0}}

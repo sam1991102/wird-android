@@ -2,6 +2,7 @@
 // الترتيب والأنواع في web/manifest.json. الناتج: { name: [contentType, body] } بنفس شكل FILES في الـ Worker.
 import fs from 'node:fs';
 import { check as themeCheck } from './theme-lint.mjs';
+import { check as uiCheck } from './ui-lint.mjs';
 
 const W = new URL('.', import.meta.url).pathname;
 const read = p => fs.readFileSync(W + p, 'utf8');
@@ -12,6 +13,9 @@ export function build() {
   /* قفل الألوان: أي لون جديد مكتوب بقيمته في css/ بيوقف البناء (النشر وتطبيق أندرويد). التفاصيل: css/README.md */
   const tc = themeCheck();
   if (!tc.ok) throw new Error(tc.msg);
+  /* قفل الأداء: مراقب أو مؤقّت مستقل جديد في ui/ بيوقف البناء. التفاصيل: ui-lint.mjs */
+  const uc = uiCheck();
+  if (!uc.ok) throw new Error(uc.msg);
   const m = JSON.parse(read('manifest.json'));
   const F = {};
   for (const f of m.files) {

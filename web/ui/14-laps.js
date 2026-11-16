@@ -39,5 +39,5 @@ ov.hidden=false;R.classList.add("lp-open");lock();render()}
 document.addEventListener("visibilitychange",function(){if(!document.hidden&&ov&&!ov.hidden)lock()});
 function addBtns(){[].forEach.call(document.querySelectorAll(".wp-page .wp-laps"),function(box,i){if(box.querySelector(".lp-open-b"))return;var b=document.createElement("button");b.type="button";b.className="lp-open-b";b.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>وضع العدّ بملء الشاشة';
 b.onclick=function(e){e.stopPropagation();var all=[].slice.call(box.closest(".wp-page").querySelectorAll(".wp-laps"));open(all.indexOf(box))};box.appendChild(b)})}
-new MutationObserver(function(){addBtns()}).observe(document.body,{childList:true,subtree:true});
+__wOnDom(function(){addBtns()});
 })();

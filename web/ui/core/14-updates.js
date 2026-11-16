@@ -39,5 +39,5 @@
   const VT=v=>"الإصدار "+ar((1+Math.floor(Math.max(0,v-131)/10))+"."+(Math.max(0,v-131)%10));
   ver().then(v=>{if(!v)return;const t=VT(v);if(vp)vp.textContent=t;document.querySelectorAll("#st-about .st-ver").forEach(x=>x.textContent=t)});
   /* الضغط بيتعامل معاه 17-perms-install (فحص الإصدار من الخادم) */};
- add();new MutationObserver(add).observe(document.body,{childList:true,subtree:true});
+ add();__wOnDom(add);
 })();

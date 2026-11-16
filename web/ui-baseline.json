@@ -1,0 +1,154 @@
+{
+ "05-st-hub.js": {
+  "observer": 1,
+  "interval": 0
+ },
+ "09-skin-ios.js": {
+  "observer": 1,
+  "interval": 0
+ },
+ "10-radio.js": {
+  "observer": 0,
+  "interval": 1
+ },
+ "12-icons.js": {
+  "observer": 1,
+  "interval": 0
+ },
+ "14-laps.js": {
+  "observer": 1,
+  "interval": 0
+ },
+ "15-nav2.js": {
+  "observer": 1,
+  "interval": 0
+ },
+ "17-shell.js": {
+  "observer": 2,
+  "interval": 0
+ },
+ "19-home.js": {
+  "observer": 1,
+  "interval": 1
+ },
+ "20-pages.js": {
+  "observer": 2,
+  "interval": 0
+ },
+ "23-focus.js": {
+  "observer": 1,
+  "interval": 0
+ },
+ "25-polish.js": {
+  "observer": 1,
+  "interval": 1
+ },
+ "34-ratb.js": {
+  "observer": 1,
+  "interval": 1
+ },
+ "35-view-guard.js": {
+  "observer": 1,
+  "interval": 0
+ },
+ "core/01-adhkar.js": {
+  "observer": 6,
+  "interval": 0
+ },
+ "core/02-surah-reader.js": {
+  "observer": 1,
+  "interval": 0
+ },
+ "core/03-adhkar-actions.js": {
+  "observer": 1,
+  "interval": 0
+ },
+ "core/04-tasbih.js": {
+  "observer": 1,
+  "interval": 1
+ },
+ "core/06-adhkar-cards.js": {
+  "observer": 1,
+  "interval": 0
+ },
+ "core/07-prayer.js": {
+  "observer": 2,
+  "interval": 1
+ },
+ "core/08-mushaf-pages.js": {
+  "observer": 1,
+  "interval": 0
+ },
+ "core/09-settings.js": {
+  "observer": 1,
+  "interval": 0
+ },
+ "core/10-shell.js": {
+  "observer": 3,
+  "interval": 0
+ },
+ "core/11-adhan-notify.js": {
+  "observer": 2,
+  "interval": 1
+ },
+ "core/12-home-extras.js": {
+  "observer": 0,
+  "interval": 1
+ },
+ "core/13-khatma.js": {
+  "observer": 1,
+  "interval": 1
+ },
+ "core/14-updates.js": {
+  "observer": 0,
+  "interval": 1
+ },
+ "core/17-perms-install.js": {
+  "observer": 1,
+  "interval": 1
+ },
+ "core/20-theme-auto.js": {
+  "observer": 1,
+  "interval": 1
+ },
+ "core/21-qari-alarm.js": {
+  "observer": 0,
+  "interval": 1
+ },
+ "core/22-topbar.js": {
+  "observer": 4,
+  "interval": 2
+ },
+ "core/23-prayer-settings.js": {
+  "observer": 1,
+  "interval": 1
+ },
+ "core/25-hajj-ruqya.js": {
+  "observer": 3,
+  "interval": 0
+ },
+ "core/26-focus-actions.js": {
+  "observer": 1,
+  "interval": 0
+ },
+ "core/27-after-prayer.js": {
+  "observer": 2,
+  "interval": 0
+ },
+ "core/29-fixes.js": {
+  "observer": 1,
+  "interval": 2
+ },
+ "core/30-sources.js": {
+  "observer": 2,
+  "interval": 0
+ },
+ "core/31-sky.js": {
+  "observer": 1,
+  "interval": 1
+ },
+ "core/32-theme-device.js": {
+  "observer": 1,
+  "interval": 2
+ }
+}

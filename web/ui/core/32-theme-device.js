@@ -18,7 +18,7 @@ function seg(){var s=document.querySelector("#st-look .st-seg");if(!s)return;var
 function mark(){var s=document.querySelector("#st-look .st-seg");if(!s)return;var d=s.querySelector('[data-v="device"]');if(!d)return;var on=ls("wird-theme-mode")==="device";
  if(d.getAttribute("aria-checked")!==String(on))d.setAttribute("aria-checked",String(on));
  if(on)s.querySelectorAll("button").forEach(function(x){if(x!==d&&x.getAttribute("aria-checked")!=="false")x.setAttribute("aria-checked","false")})}
-new MutationObserver(function(){clearTimeout(seg.t);seg.t=setTimeout(seg,150)}).observe(document.body,{childList:true,subtree:true});setTimeout(seg,800);
+__wOnDom(function(){clearTimeout(seg.t);seg.t=setTimeout(seg,150)});setTimeout(seg,800);
 })();
 
 ;(function(){/* v234: اسم المدينة الحقيقي بدل «موقعي الحالي» */

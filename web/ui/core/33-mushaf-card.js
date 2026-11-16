@@ -24,6 +24,6 @@ function place(){ensure();var v=document.documentElement.dataset.view||"home",kh
  el.hidden=!(v==="home"||v==="mushaf")}
 function draw(){top();place()}
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",draw);else draw();
-new MutationObserver(place).observe(document.documentElement,{attributes:true,attributeFilter:["data-view"]});
+__wOnView(place);
 addEventListener("wird-mp-page",top);document.addEventListener("visibilitychange",function(){if(!document.hidden&&!dl.on)top()});addEventListener("storage",top);
 })();

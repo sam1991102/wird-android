@@ -29,5 +29,5 @@ window.__wirdCity=function(done){
  run();setTimeout(function(){q.focus()},150);return o};
 /* زر «ابحث عن مدينتك» جنب «استخدم موقعي الحالي» في إعدادات المواقيت */
 function btn(){var g=document.getElementById("geoBtn");if(!g||document.getElementById("cityFind"))return;var b=document.createElement("button");b.type="button";b.id="cityFind";b.className=g.className;b.innerHTML=(typeof ic==="function"?ic("search"):"")+" ابحث عن مدينتك";b.onclick=function(){window.__wirdCity()};g.insertAdjacentElement("afterend",b)}
-(window.__wOnDom||function(f){document.addEventListener("DOMContentLoaded",f)})(function(){btn();new MutationObserver(btn).observe(document.body,{childList:true,subtree:true})});
+(window.__wOnDom||function(f){document.addEventListener("DOMContentLoaded",f)})(function(){btn();__wOnDom(btn)});
 })();

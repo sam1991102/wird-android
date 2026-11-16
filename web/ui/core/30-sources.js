@@ -109,7 +109,7 @@ function day(){var s=document.querySelector(".hadith-day");if(!s||s.dataset.lib)
 function entries(){var p=document.querySelector(".dr2 .dr-p");if(p&&!p.querySelector('[data-n="hadith"]')){var ref=p.querySelector('[data-n="tools"]')||p.querySelector('[data-n="ruqya"]');if(ref){var b=ref.cloneNode(true);b.dataset.n="hadith";b.removeAttribute("id");var l=b.querySelector(".dr-l");if(l)l.textContent="مكتبة الأحاديث";var sv=b.querySelector("svg");if(sv)sv.innerHTML='<path d="M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5M9 7h6M9 11h6"/>';ref.after(b);b.addEventListener("click",function(e){e.stopImmediatePropagation();var x=p.querySelector(".dr-x");x&&x.click();setTimeout(function(){page()},150)},true)}}
  var sh=document.querySelector("#lib2 .l2-sh");if(sh&&!sh.querySelector('[data-sp="hadith"]')){var c=document.createElement("button");c.type="button";c.className="l2-shb l2-hd";c.dataset.sp="hadith";c.innerHTML='<span class="l2-si"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5M9 7h6M9 11h6"/></svg></span><b>مكتبة الأحاديث</b><small>الأربعون النووية كاملة</small>';sh.appendChild(c);c.addEventListener("click",function(e){e.stopImmediatePropagation();page()},true)}
  day()}
-new MutationObserver(function(){clearTimeout(entries.t);entries.t=setTimeout(entries,0)}).observe(document.body,{childList:true,subtree:true});setTimeout(entries,1200);
+__wOnDom(function(){clearTimeout(entries.t);entries.t=setTimeout(entries,0)});setTimeout(entries,1200);
 if(location.pathname.replace(/^\/|\/$/g,"")==="hadith")setTimeout(function(){page()},900);
 })();
 

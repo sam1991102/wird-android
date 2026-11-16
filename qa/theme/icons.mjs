@@ -2,6 +2,7 @@
 // 1) تباين كل أيقونة مع الخلفية اللي تحتها فعلاً (حد أدنى 3:1).
 // 2) أيقونات نفس المجموعة (نفس الحاوية) لازم يكون لها نفس المقاس ونفس اللون.
 // 3) نص مقصوص (أطول من مكانه ومخفي) أو عنصر طالع برّه الشاشة.
+// 4) المحاذاة: في أي قائمة (٣ عناصر أو أكتر من نفس النوع)، العمود الواحد لازم يبدأ من نفس المكان في كل الصفوف.
 // التشغيل: SITE=http://localhost:8787/ node qa/theme/icons.mjs [out.json]
 import fs from 'node:fs';
 import { COMBOS, PAGES } from './audit.mjs';
@@ -65,9 +66,24 @@ export async function scanIcons(browser, only) {
         }
         // مجموعات ألوانها مختلفة عن قصد (كل صف إعدادات له لونه)، بس المقاس لازم يتطابق
         const INK_VARY = ['nt-ic'];
+        // المحاذاة: الصفوف اللي من نفس النوع جوه نفس الحاوية — كل ابن بنفس الترتيب والنوع لازم حافته اليمين (بداية السطر العربي) تبقى واحدة
+        const align = [];
+        for (const box of document.querySelectorAll('ul,ol,div,section')) {
+          if (skip(box) || !vis(box)) continue;
+          const rows = [...box.children].filter(r => vis(r) && r.children.length >= 3 && getComputedStyle(r).display !== 'inline');
+          const groups = {}; for (const r of rows) (groups[r.tagName + '<' + [...r.children].slice(0, 3).map(k => k.tagName).join(',') + '>'] ||= []).push(r); // المجموعة = نوع الصف + أول ٣ عناصر جواه (الكلاس ممكن يختلف: fajr / dhuhr)
+          for (const [g, rs] of Object.entries(groups)) {
+            if (rs.length < 3) continue;
+            const same = rs.filter(r => Math.abs(r.getBoundingClientRect().width - rs[0].getBoundingClientRect().width) < 2 && Math.abs(r.getBoundingClientRect().left - rs[0].getBoundingClientRect().left) < 2); if (same.length < 3) continue;
+            const kids = r => [...r.children].filter(k => vis(k) && getComputedStyle(k).position !== 'absolute');
+            const key = k => k.tagName + '.' + ((k.getAttribute('class') || '').split(/\s+/)[0]);
+            const cols = {}; for (const r of same) { const R = r.getBoundingClientRect(); const seen = {}; for (const k of kids(r)) { const k0 = key(k); seen[k0] = (seen[k0] || 0) + 1; const kk = k0 + '#' + seen[k0]; if (/^(svg|i|b)\./i.test(kk) && k.children.length === 0 && !k.textContent.trim()) continue; (cols[kk] ||= []).push(Math.round(R.right - k.getBoundingClientRect().right)) } }
+            for (const [kk, xs] of Object.entries(cols)) { if (xs.length < 3) continue; const sp = Math.max(...xs) - Math.min(...xs); if (sp > 4) align.push({ group: g, col: kk, spread: sp }) }
+          }
+        }
         const mism = [];
         for (const [g, a] of Object.entries(out.groups)) { if (a.length < 2) continue; const sz = new Set(a.map(x => x.w + 'x' + x.h)), ik = new Set(a.map(x => x.ink)); const many = INK_VARY.some(c => g.includes(c)); if (sz.size > 1 || (ik.size > 1 && !many)) mism.push({ group: g, sizes: [...sz], inks: [...ik], n: a.length }) }
-        return { checked: out.n, contrast: out.contrast, mismatch: mism, clip: out.clip };
+        return { checked: out.n, contrast: out.contrast, mismatch: mism, clip: out.clip, align };
       }, SKIP);
       rows.push({ skin, mode, page: name, ...r });
     }
@@ -80,5 +96,5 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const b = await chromium.launch({ executablePath: process.env.CHROME || '/usr/bin/google-chrome' }); const rows = await scanIcons(b, process.env.ONLY && process.env.ONLY.split(',')); await b.close();
   fs.writeFileSync(OUT, JSON.stringify(rows, null, 1));
   const n = k => rows.reduce((s, r) => s + r[k].length, 0);
-  console.log(`أيقونات اتفحصت: ${rows.reduce((s, r) => s + r.checked, 0)} | أيقونات تباينها ضعيف: ${n('contrast')} | مجموعات مش متطابقة: ${n('mismatch')} | نص مقصوص/برّه الشاشة: ${n('clip')}`);
+  console.log(`أيقونات اتفحصت: ${rows.reduce((s, r) => s + r.checked, 0)} | أيقونات تباينها ضعيف: ${n('contrast')} | مجموعات مش متطابقة: ${n('mismatch')} | نص مقصوص/برّه الشاشة: ${n('clip')} | أعمدة مش على خط واحد: ${n('align')}`);
 }

@@ -89,5 +89,5 @@ function paint(){var box=document.querySelector("#skyCard .sk-next");if(!box)ret
  var c=clock(x.at),key=x.n+"|"+c.t+"|"+left(x.left);if(key===last)return;last=key;
  el.querySelector("b").textContent=x.n;el.querySelector("small").textContent=left(x.left);el.querySelector(".sk-x-t span").textContent=c.t;el.querySelector(".sk-x-t i").textContent=c.p;
  box.setAttribute("aria-label",x.n+" الساعة "+c.t+" "+c.p+"، "+left(x.left))}
-setInterval(function(){if(!document.hidden&&(document.documentElement.dataset.view||"home")==="home")paint()},1000);paint();
+__wEverySec(function(){if(!document.hidden&&(document.documentElement.dataset.view||"home")==="home")paint()});paint();
 })();

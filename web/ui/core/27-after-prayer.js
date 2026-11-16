@@ -40,7 +40,7 @@ function setup(force){if(document.getElementById("wsu"))return;var R=ready();if(
   else if(k==="done"||k==="later"){if(k==="done"&&o.querySelector("#wsuAp").checked){var a=AP();a.on=true;SV("wird-after",a);try{__wirdPush.sync(true)}catch(x){}}SV("wird-setup",k==="done"?1:0);if(k==="later")SV("wird-setup-later",Date.now());o.remove();document.documentElement.classList.remove("wsu-open")}});}
 window.__wirdSetup=function(){setup(true)};
 function boot(){apUI();bkUI();var l=J("wird-setup-later",0);if(!J("wird-setup",0)&&Date.now()-l>3*864e5)setTimeout(function(){setup(false)},2500)}
-boot();new MutationObserver(function(){clearTimeout(boot.t);boot.t=setTimeout(function(){apUI();bkUI()},250)}).observe(document.body,{childList:true,subtree:true});
+boot();__wOnDom(function(){clearTimeout(boot.t);boot.t=setTimeout(function(){apUI();bkUI()},250)});
 })();
 
 ;(function(){var ar=__ar;
@@ -62,7 +62,7 @@ function iq(){var el=document.getElementById("iqLine");var d;try{d=prayerDay(0)}
  if(!el){el=document.createElement("div");el.id="iqLine";el.className="iq-line";card.after(el)}el.textContent=txt;tb(txt)}
 function tb(t){var s=document.querySelector(".tb-strip");if(!s)return;var x=s.querySelector(".tb-iq");if(!t){if(x)x.remove();s.classList.remove("iq-on");return}if(!x){x=document.createElement("span");x.className="tb-iq";s.appendChild(x)}x.textContent=t;s.classList.add("iq-on")}
 function iqUI(){var sec=document.getElementById("st-prayer");if(!sec||document.getElementById("iqBox"))return;var q=IQ();var b=document.createElement("div");b.id="iqBox";b.className="st-row iq-box";b.innerHTML='<div class="st-l"><strong>وقت الإقامة بعد الأذان</strong><small class="st-hint">يظهر عدّاد تنازلي للإقامة بعد كل أذان</small></div><div class="iq-g">'+PR.map(function(p){return'<label>'+NM[p]+'<select data-p="'+p+'">'+[0,5,10,15,20,25,30,35,40].map(function(m){return'<option value="'+m+'"'+(m===q[p]?" selected":"")+'>'+(m?ar(m)+" د":"إيقاف")+'</option>'}).join("")+'</select></label>'}).join("")+'</div>';sec.appendChild(b);b.addEventListener("change",function(e){var p=e.target.dataset.p;if(!p)return;var o=IQ();o[p]=+e.target.value;SV("wird-iqama",o);iq()})}
-function run(){mark();iqUI()}run();setInterval(function(){if(!document.hidden)iq()},1000);
+function run(){mark();iqUI()}run();__wEverySec(function(){if(!document.hidden)iq()});
 var L=document.getElementById("prayerList");if(L)new MutationObserver(function(){clearTimeout(run.t);run.t=setTimeout(mark,50)}).observe(L,{childList:true});
 new MutationObserver(function(){clearTimeout(iqUI.t);iqUI.t=setTimeout(iqUI,250)}).observe(document.body,{childList:true,subtree:false});
 })();

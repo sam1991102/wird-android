@@ -45,5 +45,5 @@
     const row=t.closest(".dr-row");if(row){const r=s.list[+row.dataset.i];if(t.dataset.k==="t")r.t=t.value||r.t;else r.x=+t.value;save(s);return}
     if(t.id==="drEv"){s.every=+t.value;save(s);draw()}else if(t.id==="drFrom"){s.from=t.value;save(s)}else if(t.id==="drTo"){s.to=t.value;save(s)}});
    sec.addEventListener("click",e=>{const s=DR();if(e.target.id==="drAdd"){if(s.list.length>=8){T("الحد الأقصى ٨ أوقات");return}s.list.push({t:"12:00",x:s.list.length%PRE.length});save(s);draw()}else if(e.target.closest("[data-del]")){s.list.splice(+e.target.closest(".dr-row").dataset.i,1);save(s);draw()}})}};
- const tick=()=>{addSet();addImgBtn()};tick();new MutationObserver(()=>{clearTimeout(tick.t);tick.t=setTimeout(tick,120)}).observe(document.body,{childList:true,subtree:true});
+ const tick=()=>{addSet();addImgBtn()};tick();__wOnDom(()=>{clearTimeout(tick.t);tick.t=setTimeout(tick,120)});
 })();

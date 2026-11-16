@@ -1,7 +1,7 @@
 
 
 (function(){const P={janaza:'<path d="M9 3h6v4h4v4h-4v10H9V11H5V7h4z"/>',jawami:'<path d="M7 11V7.5a1.5 1.5 0 0 1 3 0V11M14 11V7.5a1.5 1.5 0 0 1 3 0V13a6 6 0 0 1-6 6h-.5A5.5 5.5 0 0 1 5 13.5V11"/><path d="M12 2.5v2M8.5 3.5l.8 1.6M15.5 3.5l-.8 1.6"/>'};
- const fix=()=>{for(const[k,p]of Object.entries(P))document.querySelectorAll('[data-cat="'+k+'"] svg, .cat-card[data-cat="'+k+'"] svg').forEach(s=>{if(s.dataset.fx)return;s.dataset.fx=1;s.innerHTML=p})};fix();new MutationObserver(()=>{clearTimeout(fix.t);fix.t=setTimeout(fix,120)}).observe(document.body,{childList:true,subtree:true})})();
+ const fix=()=>{for(const[k,p]of Object.entries(P))document.querySelectorAll('[data-cat="'+k+'"] svg, .cat-card[data-cat="'+k+'"] svg').forEach(s=>{if(s.dataset.fx)return;s.dataset.fx=1;s.innerHTML=p})};fix();__wOnDom(()=>{clearTimeout(fix.t);fix.t=setTimeout(fix,120)})})();
 
 (function(){
  const R=document.documentElement;
@@ -11,7 +11,7 @@
   brand.innerHTML='<img class="tb-logo" src="/logo-word.png" alt="وِرد" width="74" height="44"><span class="tb-date">'+hijri()+'</span>';
   const r=document.createElement("div");r.className="tb-row";r.append(menu,brand,search);inn.prepend(r);
   if(pill){const s=document.createElement("a");s.className="tb-strip";s.href="#prayer";s.setAttribute("aria-label","الصلاة القادمة");s.innerHTML='<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2"/></svg>';s.appendChild(pill);s.addEventListener("click",e=>{e.preventDefault();window.__wirdGo&&__wirdGo("prayer")});tb.appendChild(s)}};
- build();new MutationObserver(()=>{if(!document.querySelector(".topbar-in[data-v2]"))build()}).observe(document.body,{childList:true,subtree:true});
+ build();__wOnDom(()=>{if(!document.querySelector(".topbar-in[data-v2]"))build()});
  let sc=false;addEventListener("scroll",()=>{const s=scrollY>48;if(s!==sc){sc=s;R.classList.toggle("tb-scrolled",s)}},{passive:true});
  setInterval(()=>{const d=document.querySelector(".tb-date");if(d)d.textContent=hijri()},600000);
 })();

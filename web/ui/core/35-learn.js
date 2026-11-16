@@ -86,5 +86,5 @@ function drawer(){var p=document.querySelector(".dr2 .dr-p");if(!p||p.querySelec
 function tile(){if(document.getElementById("lrTile"))return;var ref=document.getElementById("kdHome");if(!ref)return;var c=ref.cloneNode(true);c.id="lrTile";var leaves=[].filter.call(c.querySelectorAll("*"),function(n){return n.children.length===0&&n.textContent.trim()});if(leaves[0])leaves[0].textContent="تعليم العبادات";if(leaves[1])leaves[1].textContent="الوضوء والصلاة";c.querySelector(".l2-si")&&delete c.querySelector(".l2-si").dataset.t;c.addEventListener("click",function(e){e.preventDefault();e.stopImmediatePropagation();list()},true);ref.parentElement.insertBefore(c,ref.nextSibling)}
 function boot(){drawer();tile();if(location.pathname.replace(/\/$/,"")==="/learn")setTimeout(list,300)}
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",boot);else boot();
-var T;new MutationObserver(function(){clearTimeout(T);T=setTimeout(function(){drawer();tile()},0)}).observe(document.body,{childList:true,subtree:true});
+var T;__wOnDom(function(){clearTimeout(T);T=setTimeout(function(){drawer();tile()},0)});
 })();

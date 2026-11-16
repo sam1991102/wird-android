@@ -48,7 +48,7 @@ new MutationObserver(()=>{const mp=document.querySelector(".mp");const open=!!(m
  if(wasOpen&&!open){const k=load();if(k&&k.pos<TOT){const pg=curPage();if(pg>k.pos&&pg<=k.pos+40){k.pos=pg;if(k.pos>=TOT)k.count=(k.count||0)+1;save(k);render();resync();if(k.pos>=plan(k).target)toast("أتممت وِرد الختمة اليوم")}}}
  wasOpen=open}).observe(document.body,{subtree:true,attributes:true,attributeFilter:["hidden","class","style"],childList:true});
 render();document.addEventListener("visibilitychange",()=>{if(!document.hidden)render()});
-new MutationObserver(()=>{if(document.documentElement.dataset.view==="mushaf")render()}).observe(document.documentElement,{attributes:true,attributeFilter:["data-view"]});
+__wOnView(()=>{if(document.documentElement.dataset.view==="mushaf")render()});
 /* تتبّع حيّ: كل صفحة تالية مباشرةً تُحسب فور ظهورها */
 let rsT;addEventListener("wird-mp-page",e=>{const k=load();if(!k||k.pos>=TOT)return;const pg=+e.detail;if(pg===k.pos+1){const before=k.pos>=plan(k).target;k.pos=pg;if(k.pos>=TOT)k.count=(k.count||0)+1;save(k);render();clearTimeout(rsT);rsT=setTimeout(resync,4000);if(!before&&k.pos>=plan(k).target)toast("أتممت وِرد الختمة اليوم، تقبّل الله")}});
 /* بلاطة المصحف في الرئيسية */

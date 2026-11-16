@@ -175,7 +175,7 @@ if(pc&&!$(".ntf-card")){const c=document.createElement("div");c.className="ntf-c
  c.querySelector("#ntfBtn").addEventListener("click",async()=>{const S=window.__wirdPush&&__wirdPush.state();const ok=S&&S.on&&Notification.permission==="granted";
   if(ok||!window.__wirdPush){openAdhanSettings();return}
   try{await __wirdPush.enable();toast("تم تفعيل التنبيهات")}catch(e){if(e.message==="ios"||e.message==="unsupported"||e.message==="denied")openAdhanSettings();else toast("تعذّر التفعيل")}paint()});
- new MutationObserver(paint).observe(document.documentElement,{attributes:true,attributeFilter:["data-view"]});}
+ __wOnView(paint);}
 /* زر "ذكّرني يوميًا" في الرئيسية يفتح التنبيهات الحديثة */
 const rb=$("#remind .remind-open");
 if(rb){rb.childNodes.forEach(n=>{if(n.nodeType===3&&/ذكّرني/.test(n.textContent))n.textContent=" تنبيهات الأذان والأذكار"});

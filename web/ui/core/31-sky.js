@@ -22,7 +22,7 @@ function draw(){var s=document.querySelector(".tb-strip");if(!s)return;var el=s.
   else{var d=hijriDay();html=moonSVG(d);label="القمر الليلة: "+phaseName(d)}}catch(e){return}
  if(el.dataset.h!==html){el.innerHTML=html;el.dataset.h=html}el.setAttribute("title",label);el.setAttribute("aria-label",label);el.setAttribute("role","img")}
 setTimeout(draw,1200);setInterval(draw,60000);document.addEventListener("visibilitychange",function(){if(!document.hidden)draw()});
-new MutationObserver(function(){if(!document.querySelector(".tb-strip .sky"))draw()}).observe(document.body,{childList:true,subtree:true});
+__wOnDom(function(){if(!document.querySelector(".tb-strip .sky"))draw()});
 window.__skyDraw=draw;})();
 
 ;(function(){/* ===== بطاقة السماء (v225): شمس وقمر حقيقيان حسب مدينة المستخدم ===== */
@@ -48,18 +48,22 @@ function build(){var hero=document.querySelector("section.hero");if(!hero)return
  el=document.createElement("section");el.className="container sky-card";el.id="skyCard";el.dataset.v="home";el.setAttribute("aria-label","حالة السماء والصلاة القادمة");
  el.innerHTML='<div class="sk-bg"></div><div class="sk-scene"></div><div class="sk-clouds"><span></span><span></span><span></span></div><div class="sk-info"><div class="sk-day"><b class="sk-wd"></b><small class="sk-city"></small></div><div class="sk-dates"><div><b class="sk-hj"></b><small class="sk-hy"></small></div><div><b class="sk-gr"></b><small class="sk-gy"></small></div></div><a class="sk-next" href="#prayer"><span class="sk-np"></span><b class="sk-cd"></b></a><div class="sk-meta"><span class="sk-label"></span><span class="sk-period"></span></div></div>';
  hero.parentNode.insertBefore(el,hero);return el}
-var last="";
-function paint(){var el=build();if(!el)return;var st=state(),d=hijriDay();el.dataset.sky=st.s;
+var last="",dKey="",FM={};
+/* بنكتب النص بس لو اتغيّر (الكتابة بتعيد رسم الكارت) */
+function put(el,sel,v){var e=el.querySelector(sel);if(e&&e.textContent!==v)e.textContent=v}
+function fmts(z){var k=z||"";return FM[k]||(FM[k]={wd:new Intl.DateTimeFormat("ar",{weekday:"long",timeZone:z}),hj:new Intl.DateTimeFormat("ar-SA-u-ca-islamic-umalqura",{day:"numeric",month:"long",year:"numeric",timeZone:z}),gr:new Intl.DateTimeFormat("ar-EG",{day:"numeric",month:"long",year:"numeric",timeZone:z})})}
+var hd={k:"",v:15};function hDay(){var k=Math.floor(Date.now()/6e4);if(hd.k!==k){hd.k=k;hd.v=hijriDay()}return hd.v}
+function paint(){var el=build();if(!el)return;var st=state(),d=hDay();if(el.dataset.sky!==st.s)el.dataset.sky=st.s;
  var key=st.s+"|"+(st.s==="night"?d:Math.round(st.f*60));if(key!==last){last=key;var sc=el.querySelector(".sk-scene");sc.innerHTML=(st.s==="night"||st.s==="twilight"?stars():"")+(st.s==="night"?moonSVG(((Date.now()/864e5-10962.76)%29.530589+29.530589)%29.530589):sunEl(st.f,st.s));
-  el.querySelector(".sk-label").textContent=st.s==="night"?"القمر الليلة: "+PHN(d):st.s==="dawn"?"قبيل الشروق":st.s==="twilight"?"بعد الغروب":st.s==="dusk"?"الشمس تميل إلى الغروب":"الشمس "+(st.f<.3?"في أول النهار":st.f<.7?"في كبد السماء":"بعد الزوال")}
- try{var z=tz(),now=new Date();el.querySelector(".sk-wd").textContent=new Intl.DateTimeFormat("ar",{weekday:"long",timeZone:z}).format(now);
-  el.querySelector(".sk-city").textContent=(typeof P!=="undefined"&&P.name)?P.name:"";
-  var hp=new Intl.DateTimeFormat("ar-SA-u-ca-islamic-umalqura",{day:"numeric",month:"long",year:"numeric",timeZone:z}).formatToParts(now);var gv=function(p,k){return(p.find(function(x){return x.type===k})||{}).value||""};
-  el.querySelector(".sk-hj").textContent=gv(hp,"day")+" "+gv(hp,"month");el.querySelector(".sk-hy").textContent=gv(hp,"year")+" هـ";
-  var gp=new Intl.DateTimeFormat("ar-EG",{day:"numeric",month:"long",year:"numeric",timeZone:z}).formatToParts(now);el.querySelector(".sk-gr").textContent=gv(gp,"day")+" "+gv(gp,"month");el.querySelector(".sk-gy").textContent=gv(gp,"year")}catch(e){}
- var ch=document.querySelector(".tb-strip .tp-chip b");el.querySelector(".sk-period").textContent=ch?ch.textContent:"";
- var n=next();if(n){el.querySelector(".sk-np").textContent=PN[n.k]+" بعد";el.querySelector(".sk-cd").textContent=fmt(n.left)}}
-paint();if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",paint);/* كارت السماء في الرئيسية بس: مفيش داعي يتحسب كل ثانية وهو مش ظاهر */setInterval(function(){if(!document.hidden&&(document.documentElement.dataset.view||"home")==="home")paint()},1000);document.addEventListener("visibilitychange",function(){if(!document.hidden){last="";paint()}});
+  put(el,".sk-label",st.s==="night"?"القمر الليلة: "+PHN(d):st.s==="dawn"?"قبيل الشروق":st.s==="twilight"?"بعد الغروب":st.s==="dusk"?"الشمس تميل إلى الغروب":"الشمس "+(st.f<.3?"في أول النهار":st.f<.7?"في كبد السماء":"بعد الزوال"))}
+ /* التواريخ بتتغيّر مرة في اليوم: بنحسبها مرة في الدقيقة بس، والمنسّقات بتتعمل مرة لكل منطقة زمنية */
+ var mk=Math.floor(Date.now()/6e4)+"|"+tz();if(mk!==dKey){dKey=mk;try{var z=tz(),now=new Date(),F=fmts(z),gv=function(p,k){return(p.find(function(x){return x.type===k})||{}).value||""};
+  put(el,".sk-wd",F.wd.format(now));put(el,".sk-city",(typeof P!=="undefined"&&P.name)?P.name:"");
+  var hp=F.hj.formatToParts(now);put(el,".sk-hj",gv(hp,"day")+" "+gv(hp,"month"));put(el,".sk-hy",gv(hp,"year")+" هـ");
+  var gp=F.gr.formatToParts(now);put(el,".sk-gr",gv(gp,"day")+" "+gv(gp,"month"));put(el,".sk-gy",gv(gp,"year"))}catch(e){}}
+ var ch=document.querySelector(".tb-strip .tp-chip b");put(el,".sk-period",ch?ch.textContent:"");
+ var n=next();if(n){put(el,".sk-np",PN[n.k]+" بعد");put(el,".sk-cd",fmt(n.left))}}
+paint();if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",paint);/* كارت السماء في الرئيسية بس: مفيش داعي يتحسب كل ثانية وهو مش ظاهر */__wEverySec(function(){if(!document.hidden&&(document.documentElement.dataset.view||"home")==="home")paint()});document.addEventListener("visibilitychange",function(){if(!document.hidden){last="";paint()}});
 window.__skyCard=paint;})();
 
 
@@ -74,5 +78,5 @@ function today(){var h=document.getElementById("todayDate");if(!h)return;var ks=
 /* ٣) إخفاء شريط الصلاة القادمة في الرئيسية طالما بطاقة السماء ظاهرة */
 function watch(){var c=document.getElementById("skyCard"),H=document.documentElement;if(!c)return;var on=c.offsetParent!==null;var r=c.getBoundingClientRect();var tb=document.querySelector(".topbar");var top=tb?tb.getBoundingClientRect().bottom:0;H.classList.toggle("sky-vis",on&&r.bottom>top+70&&r.top<innerHeight)}addEventListener("scroll",function(){watch()},{passive:true});addEventListener("hashchange",function(){setTimeout(watch,50)});
 function tick(){phrase();today();watch()}
-tick();setInterval(function(){if(!document.hidden&&(document.documentElement.dataset.view||"home")==="home")tick()},1000);document.addEventListener("visibilitychange",function(){if(!document.hidden)tick()});
+tick();__wEverySec(function(){if(!document.hidden&&(document.documentElement.dataset.view||"home")==="home")tick()});document.addEventListener("visibilitychange",function(){if(!document.hidden)tick()});
 })();

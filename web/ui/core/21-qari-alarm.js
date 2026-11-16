@@ -8,7 +8,7 @@
   s.addEventListener("click",e=>{if(e.target===s||e.target.closest("[data-x]")){s.hidden=true;setTimeout(()=>s.remove(),50);return}const b=e.target.closest("[data-k]");if(!b)return;try{localStorage.setItem("wird-qari",JSON.stringify(b.dataset.k))}catch(x){}s.hidden=true;setTimeout(()=>s.remove(),50);const sel=document.getElementById("qariSel");if(sel)sel.value=b.dataset.k;document.querySelectorAll(".r-qari span").forEach(x=>x.textContent=short(b.dataset.k));window.__mpReplay&&__mpReplay();T("القارئ: "+Q[b.dataset.k][0])});document.body.appendChild(s)};
  window.__pickQari=pick;
  const add=()=>{const p=document.querySelector(".mp .r-play");if(!p||p.parentElement.querySelector(".r-qari"))return;const b=document.createElement("button");b.type="button";b.className="r-qari";b.setAttribute("aria-label","اختيار القارئ");b.innerHTML='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3z"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span>'+esc(short(window.__qk?__qk():"ar.alafasy"))+'</span>';b.onclick=e=>{e.stopPropagation();pick()};p.after(b)};
- add();new MutationObserver(()=>{clearTimeout(add.t);add.t=setTimeout(add,150)}).observe(document.body,{childList:true,subtree:true});
+ add();__wOnDom(()=>{clearTimeout(add.t);add.t=setTimeout(add,150)});
 })();
 
 (function(){
@@ -41,7 +41,7 @@
   const after=document.querySelector("#st-dr")||ad;after.after(sec);
   sec.addEventListener("change",e=>{const s=AS();if(e.target.id==="alOn"){s.on=e.target.checked;J("wird-alarm",s);resync();/* أندرويد ١٤+: لازم إذن «ملء الشاشة» عشان المنبّه يظهر فوق شاشة القفل */if(s.on){const pl=window.Capacitor&&Capacitor.Plugins&&Capacitor.Plugins.WirdAdhan;pl&&pl.status&&pl.status().then(st=>{if(st&&st.fullScreen===false)(window.__wConfirm?__wConfirm:function(m){return Promise.resolve(confirm(m))})("اسمح لمنبّه الفجر بالظهور والشاشة مقفولة\nهتفتحلك صفحة الإعدادات، فعّل منها «العرض على الشاشة كلها» لـ«وِرد».",{ok:"افتح الإعدادات",cancel:"لاحقًا"}).then(y=>{y&&pl.openFullScreenSettings()})}).catch(()=>{})}if(s.on){const p=window.__wirdPush&&__wirdPush.state&&__wirdPush.state();T(p&&!p.on?"فعّل الإشعارات أولًا من قسم الأذان والتنبيهات":"تم تفعيل منبّه الفجر")}else T("تم إيقاف منبّه الفجر")}else if(e.target.id==="alOff"||e.target.id==="alAfter"){s[e.target.id==="alOff"?"off":"after"]=+e.target.value;J("wird-alarm",s);resync();T("تم الحفظ")}});
   sec.querySelector("#alTest").onclick=()=>{/* في التطبيق: نرنّ المنبّه الحقيقي (نفس صوت وإشعار الفجر) */try{if(window.__WIRD_NATIVE&&window.__wirdNative)__wirdNative.test("alarm")}catch(e){}showAlarm()}};
- addSet();new MutationObserver(()=>{clearTimeout(addSet.t);addSet.t=setTimeout(addSet,150)}).observe(document.body,{childList:true,subtree:true});
+ addSet();__wOnDom(()=>{clearTimeout(addSet.t);addSet.t=setTimeout(addSet,150)});
 })();
 
 (function(){
@@ -71,5 +71,5 @@
    const order=["st-adhan","st-prayer","st-qari","st-look","st-data","st-about"];const box=ad&&ad.parentElement;if(box&&!box.dataset.re){box.dataset.re=1;order.forEach(id=>{const s=document.getElementById(id);if(s&&s.parentElement===box)box.appendChild(s)})}
    const q=$("#st-qari h2");if(q&&q.textContent!=="المصحف والقارئ")q.textContent="المصحف والقارئ"}
  };
- run();new MutationObserver(()=>{clearTimeout(run.t);run.t=setTimeout(run,120)}).observe(document.body,{childList:true,subtree:true});
+ run();__wOnDom(()=>{clearTimeout(run.t);run.t=setTimeout(run,120)});
 })();

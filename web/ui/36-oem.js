@@ -13,5 +13,5 @@ function add(){if(done()||!st)return;var pg=[].slice.call(document.querySelector
  c.querySelector(".oem-go").onclick=function(){W.openAutostart().catch(function(){})};
  c.querySelector(".oem-done").onclick=function(){try{localStorage.setItem(K,"1")}catch(e){}c.remove()};
  b.insertBefore(c,b.firstChild)}
-W.status().then(function(s){if(s&&s.oem&&OEM.test(s.oem)){st=s;(window.__wOnDom||function(f){new MutationObserver(f).observe(document.body,{childList:true,subtree:true})})(add);add()}}).catch(function(){});
+W.status().then(function(s){if(s&&s.oem&&OEM.test(s.oem)){st=s;__wOnDom(add)}}).catch(function(){});
 })();
