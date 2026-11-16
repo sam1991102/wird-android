@@ -1,13 +1,13 @@
 
 /*ios2*/
 .dr2 .dr-p{background:var(--bg)!important;color:var(--ink)!important}
-.dr2 .dr-top,.dr2 .dr-np,.dr2 .dr-search{margin-inline:12px!important}
+.dr2 .dr-top,.dr2 .dr-np,.dr2 .dr-search{margin-inline:var(--s12)!important}
 .dr2 .dr-np{background:var(--paper)!important;color:var(--ink)!important;border:0!important;border-radius:var(--rd-s)!important}
 .dr2 .dr-np b{color:var(--primary)!important}
 .dr2 .dr-search{background:var(--line-2)!important;border:0!important;border-radius:var(--rd-s)!important;color:var(--muted)!important}
-.dr2 .dr-g{flex:none!important;height:auto!important;max-height:none!important;background:var(--paper)!important;border-radius:var(--rd-s)!important;overflow:hidden;margin:0 12px!important;padding:0!important;display:block!important}
+.dr2 .dr-g{flex:none!important;height:auto!important;max-height:none!important;background:var(--paper)!important;border-radius:var(--rd-s)!important;overflow:hidden;margin:0 var(--s12)!important;padding:0!important;display:block!important}
 .dr2 .dr-sep{height:22px!important;background:none!important;border:0!important;margin:0!important}
-.dr2 .dr-p .dr-i2{flex:none!important;display:flex!important;align-items:center;gap:12px;width:100%;min-height:46px;padding:0 12px!important;margin:0!important;border-radius:0!important;background:none!important;color:var(--ink)!important;font-size:var(--t-base)}
+.dr2 .dr-p .dr-i2{flex:none!important;display:flex!important;align-items:center;gap:var(--s12);width:100%;min-height:46px;padding:0 var(--s12)!important;margin:0!important;border-radius:0!important;background:none!important;color:var(--ink)!important;font-size:var(--t-base)}
 .dr2 .dr-p .dr-i2+.dr-i2{border-top:.5px solid var(--line)!important}
 .dr2 .dr-p .dr-i2.on{background:var(--paper-2)!important}
 .dr2 .dr-p .dr-i2.on .dr-l{color:var(--ink)!important;font-weight:600}
@@ -20,7 +20,7 @@
 html.ios .dr-logo{filter:brightness(0)}html.ios.dark .dr-logo{filter:brightness(0) invert(1)}
 /* شريط سفلي بنمط iOS: أيقونات أحادية اللون، والنشط بلون التطبيق */
 .bottom-nav.nav5{display:flex!important;align-items:stretch;height:auto!important;min-height:58px;padding:6px 4px calc(4px + var(--safe-b,0px))!important;gap:0!important}
-.bottom-nav.nav5>a,.bottom-nav.nav5>.nv-x{flex:1 1 0!important;display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-width:0;height:auto!important;margin:0!important;padding:2px 0!important;background:none!important;border:0!important;box-shadow:none!important;color:var(--muted)!important;font:inherit;font-size:var(--t-2xs)!important;text-decoration:none;cursor:pointer;transform:none!important;position:static!important}
+.bottom-nav.nav5>a,.bottom-nav.nav5>.nv-x{flex:1 1 0!important;display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:var(--s4);min-width:0;height:auto!important;margin:0!important;padding:var(--s2) 0!important;background:none!important;border:0!important;box-shadow:none!important;color:var(--muted)!important;font:inherit;font-size:var(--t-2xs)!important;text-decoration:none;cursor:pointer;transform:none!important;position:static!important}
 .bottom-nav.nav5 .ni{position:static!important;transform:none!important;width:28px!important;height:26px!important;margin:0!important;padding:0!important;border-radius:0!important;background:none!important;box-shadow:none!important;display:flex;align-items:center;justify-content:center;color:inherit!important}
 .bottom-nav.nav5 .ni svg{width:25px!important;height:25px!important;stroke:currentColor!important;color:currentColor!important;stroke-width:1.7}
 .bottom-nav.nav5 .nt{position:static!important;font-size:var(--t-2xs)!important;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
@@ -41,7 +41,7 @@ html.ios .topbar .icon-btn svg{stroke:currentColor!important;color:currentColor!
 html:not(.dark):not(.ios) .dr2 .dr-brand img{filter:brightness(.72) saturate(1.4)}
 .wp-page.in{transform:none!important}
 #skyCard .sk-wd{display:inline-block;padding-top:.32em;line-height:1.35}
-.sh-page .st-sec .st-row,.sh-page .st-sec .st-note,.sh-page .st-sec>p{padding-left:16px!important;padding-right:16px!important;box-sizing:border-box}
+.sh-page .st-sec .st-row,.sh-page .st-sec .st-note,.sh-page .st-sec>p{padding-left:var(--s16)!important;padding-right:var(--s16)!important;box-sizing:border-box}
 .sh-page .st-sec{overflow:hidden}
 html.ios .st-sw span::after{display:none!important}
 .st-tg input[type=checkbox]{-webkit-appearance:none;appearance:none;flex:none;width:51px;height:31px;margin:0;border-radius:31px;background:var(--switch-off);position:relative;cursor:pointer;transition:background .2s;border:0}
@@ -68,20 +68,20 @@ html{--mp-paper:#FBF8EF}html.sepia{--mp-paper:#F6EAD0}html.dark{--mp-paper:#0E14
 .mp .mp-page{border:0!important;border-radius:0!important;box-shadow:none!important;outline:0!important;margin:0!important;width:100%!important;max-width:none!important;padding:4px 10px 8px!important;background:var(--mp-paper)!important;background-image:none!important}
 .mp .mp-page::before{display:none!important}
 .mp .mp-page:not(.mp-out)::after{display:none!important}
-.mp .mp-head{border:0!important;background:transparent!important;padding:2px 4px 6px!important;margin:0!important}
+.mp .mp-head{border:0!important;background:transparent!important;padding:var(--s2) var(--s4) var(--s6)!important;margin:0!important}
 .mp .mp-bar,.mp .mp-foot{background:var(--mp-paper)!important;border:0!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
-.mp .mp-bar{padding-top:6px!important;padding-bottom:6px!important}
-.mp .mp-foot{padding-top:6px!important;padding-bottom:max(6px,env(safe-area-inset-bottom,0px))!important}
+.mp .mp-bar{padding-top:var(--s6)!important;padding-bottom:var(--s6)!important}
+.mp .mp-foot{padding-top:var(--s6)!important;padding-bottom:max(6px,env(safe-area-inset-bottom,0px))!important}
 }
 /* خلفية سادة: إزالة زخرفة المحراب من خلف المحتوى */
 html,html.dark,html.sepia,html.ios{--mihrab:none!important;--orn:none!important}
 body::before,body::after,main::before,main::after{background-image:none!important;-webkit-mask-image:none!important;mask-image:none!important}
 /* الرئيسية */
 .ay-hide{display:none!important}
-#ayCard{margin:14px 16px 0}
+#ayCard{margin:var(--s14) var(--s16) 0}
 #ayCard>:not(.ay-tabs){margin-left:0!important;margin-right:0!important}
-.ay-tabs{display:flex;gap:4px;margin:0 0 8px;padding:4px;border-radius:14px;background:var(--line-2)}
-.ay-tabs button{flex:1;border:0;background:transparent;padding:9px 6px;border-radius:10px;font:inherit;font-size:14px;color:var(--muted);cursor:pointer}
+.ay-tabs{display:flex;gap:var(--s4);margin:0 0 var(--s8);padding:var(--s4);border-radius:14px;background:var(--line-2)}
+.ay-tabs button{flex:1;border:0;background:transparent;padding:var(--s10) var(--s6);border-radius:10px;font:inherit;font-size:14px;color:var(--muted);cursor:pointer}
 .ay-tabs button[aria-selected="true"]{background:var(--paper);color:var(--ink);font-weight:700;box-shadow:0 1px 3px rgba(0,0,0,.08)}
 .bottom-nav.nav5 .nv-radio .ni svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 /* ترتيب الرئيسية من أول رسم، وإخفاء أي قسم قديم */
@@ -110,7 +110,7 @@ html[data-view]:not([data-view="home"]) #ayCard,html[data-view]:not([data-view="
 /* مع فتح الإعدادات: شريط «الصلاة القادمة» يختفي في نفس اللحظة فلا يتحرك شيء بعدها */
 
 /* صفوف الإعدادات اللي فيها قائمة اختيار: العنوان فوق والقائمة تحته بعرض كامل */
-.wp-page .st-row:has(select){flex-direction:column!important;align-items:stretch!important;gap:8px}
+.wp-page .st-row:has(select){flex-direction:column!important;align-items:stretch!important;gap:var(--s8)}
 .wp-page .st-row:has(select) select{width:100%!important;max-width:none!important}
 .wp-page .st-row:has(select) .st-l{max-width:none!important}
 #library .l2-sh{min-height:var(--l2sh,0)}
