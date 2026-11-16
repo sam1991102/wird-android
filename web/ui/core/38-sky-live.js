@@ -5,24 +5,27 @@
     من غير نت: السما بتشتغل بالوقت بس والشارة بتختفي. الستايل في css/17-sky-live.css */
 var ar=__ar;
 /* [أعلى، وسط، أسفل، توهّج] لكل نقطة */
+/* ألوان مأخوذة من صور سما حقيقية: الأزرق بيفضل لحد الغروب، والبرتقالي عند الأفق بس، والبنفسجي بعد ما الشمس تغيب */
 var K={
- night:["#05081a","#0c1638","#1b2a5c","rgba(200,215,255,.10)"],
- fajr:["#101a40","#3a3570","#b9837a","rgba(255,170,130,.35)"],
- sunrise:["#3a6fb0","#86aedb","#f2c08f","rgba(255,205,140,.55)"],
- morning:["#2a72c0","#5e9ee0","#9cc8ef","rgba(255,245,215,.40)"],
- noon:["#1f6fc4","#3b8fe0","#7cb8ee","rgba(255,255,230,.40)"],
- asr:["#2a6aa8","#5a90c4","#d9b382","rgba(255,200,120,.40)"],
- golden:["#3a3f78","#a8577a","#ec955c","rgba(255,160,90,.55)"],
- maghrib:["#2b2350","#77396a","#d9644b","rgba(255,140,80,.55)"],
- dusk:["#151a3d","#3e2c5c","#7e475a","rgba(220,120,110,.25)"],
- isha:["#0a1030","#16224a","#2c3566","rgba(190,200,255,.12)"]
+ night:["#04060f","#0a1230","#16244a","rgba(190,205,255,.08)"],
+ fajr:["#0b1230","#23305e","#5d5a86","rgba(255,170,130,.22)"],
+ dawn:["#1d3566","#5d6f9e","#e9a46f","rgba(255,180,120,.45)"],
+ sunrise:["#2f5e9e","#7fa3cf","#f6c48f","rgba(255,210,150,.55)"],
+ morning:["#2b6cb6","#5a9ad8","#a6cdee","rgba(255,250,225,.35)"],
+ noon:["#1d64b8","#3a87d6","#8cc0ec","rgba(255,255,235,.35)"],
+ asr:["#2463aa","#4f8bc8","#b8d3e6","rgba(255,235,190,.35)"],
+ golden:["#2a5c9c","#6e95c0","#f0c38e","rgba(255,200,120,.55)"],
+ maghrib:["#22396e","#8a6f9a","#f08a52","rgba(255,150,80,.60)"],
+ dusk:["#141d44","#3d3566","#a45a5c","rgba(220,120,110,.25)"],
+ isha:["#0a1030","#141f45","#2a325e","rgba(190,200,255,.10)"]
 };
 function hex(c){var m=c.match(/[\d.]+/g);if(c[0]==="#")return[parseInt(c.slice(1,3),16),parseInt(c.slice(3,5),16),parseInt(c.slice(5,7),16),1];return m.map(Number)}
 function mix(a,b,f){var x=hex(a),y=hex(b);if(a[0]==="#"&&b[0]==="#")return"#"+[0,1,2].map(function(i){return("0"+Math.round(x[i]+(y[i]-x[i])*f).toString(16)).slice(-2)}).join("");return"rgba("+[0,1,2].map(function(i){return Math.round(x[i]+(y[i]-x[i])*f)}).join(",")+","+(x[3]+(y[3]-x[3])*f).toFixed(3)+")"}
-function stops(){var t=prayerDay(0).t;return[[t.fajr-1.2,"night"],[t.fajr,"fajr"],[t.sunrise,"sunrise"],[t.sunrise+1.3,"morning"],[t.dhuhr,"noon"],[t.asr,"asr"],[t.maghrib-.45,"golden"],[t.maghrib,"maghrib"],[t.maghrib+.45,"dusk"],[t.isha,"isha"],[t.isha+1.2,"night"]]}
+function stops(){var t=prayerDay(0).t;return[[t.fajr-1.2,"night"],[t.fajr,"fajr"],[t.sunrise-.4,"dawn"],[t.sunrise,"sunrise"],[t.sunrise+1.3,"morning"],[t.dhuhr,"noon"],[t.asr,"asr"],[t.maghrib-.6,"golden"],[t.maghrib,"maghrib"],[t.maghrib+.45,"dusk"],[t.isha,"isha"],[t.isha+1.2,"night"]]}
 function colors(h){var s=stops();if(h<s[0][0])return K.night;for(var i=0;i<s.length-1;i++){var a=s[i],b=s[i+1];if(h>=a[0]&&h<b[0]){var f=(h-a[0])/(b[0]-a[0]);f=f*f*(3-2*f);return K[a[1]].map(function(c,j){return mix(c,K[b[1]][j],f)})}}return K.night}
 /* مكان التوهّج: مع الشمس بالنهار، وفوق ناحية القمر بالليل */
-function glowAt(h){try{var t=prayerDay(0).t;if(h>=t.sunrise-.3&&h<=t.maghrib+.3){var f=Math.max(0,Math.min(1,(h-t.sunrise)/(t.maghrib-t.sunrise)));return[(14+70*f)+"%",(85-60*Math.sin(Math.PI*f))+"%"]}}catch(e){}return["22%","18%"]}
+/* التوهّج على الشمس نفسها (نفس معادلة مكانها في 31-sky.js)، وعند الأفق قبل الشروق وبعد الغروب */
+function glowAt(h){try{var t=prayerDay(0).t;if(h>=t.sunrise-.5&&h<=t.maghrib+.5){var f=Math.max(0,Math.min(1,(h-t.sunrise)/(t.maghrib-t.sunrise)));return[(86-74*f)+"%",(96-74*Math.sin(Math.PI*f))+"%"]}}catch(e){}return["30%","10%"]}
 
 var lastSky="";
 function paintSky(){var el=document.getElementById("skyCard");if(!el)return;var h;try{h=__nowH()}catch(e){return}

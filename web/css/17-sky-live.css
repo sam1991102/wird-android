@@ -15,7 +15,8 @@
 #skyCard .sk-wx svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 #skyCard .sk-wx b{font-size:var(--t-base);font-variant-numeric:tabular-nums}
 
-/* الجو: سحاب / ضباب / مطر / ثلج / عاصفة */
+/* الجو: صافي من غير سحاب خالص (زي الحقيقة) / سحاب / ضباب / مطر / ثلج / عاصفة */
+#skyCard:not([data-wx]) .sk-clouds,#skyCard[data-wx="clear"] .sk-clouds{display:none}
 #skyCard[data-wx="cloudy"] .sk-bg,#skyCard[data-wx="rain"] .sk-bg,#skyCard[data-wx="storm"] .sk-bg{filter:saturate(.55) brightness(.82)}
 #skyCard[data-wx="fog"] .sk-bg{filter:saturate(.4) brightness(.92)}
 #skyCard[data-wx="snow"] .sk-bg{filter:saturate(.5) brightness(.95)}

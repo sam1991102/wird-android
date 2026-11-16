@@ -1222,7 +1222,7 @@ html.tb-scrolled .tb-strip{height:34px!important;opacity:1!important;padding:0 v
 
 
 .sk-scene{position:absolute;inset:0;z-index:-2;pointer-events:none}
-.sk-sun{position:absolute;width:64px;height:64px;transform:translate(-50%,-50%)}
+.sk-sun{position:absolute;width:52px;height:52px;transform:translate(-50%,-50%)}
 .sk-sun i{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 42% 40%,#fffbe6 0%,#ffe48a 38%,#ffc23d 70%,#f7a51f 100%);box-shadow:0 0 30px 10px rgba(255,214,90,.55),0 0 90px 40px rgba(255,214,90,.28)}
 .sk-sun.sk-dusk i{background:radial-gradient(circle at 42% 40%,#fff1d6,#ffb36b 55%,#f17a3c);box-shadow:0 0 34px 12px rgba(255,140,70,.55),0 0 90px 40px rgba(255,140,70,.3)}
 .sk-sun.sk-dawn i,.sk-sun.sk-twilight i{background:radial-gradient(circle,#ffd7a6,#f39a5a 60%,transparent 72%);box-shadow:0 0 60px 30px rgba(243,154,90,.45)}
