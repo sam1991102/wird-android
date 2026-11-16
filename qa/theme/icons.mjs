@@ -77,8 +77,9 @@ export async function scanIcons(browser, only) {
             const same = rs.filter(r => Math.abs(r.getBoundingClientRect().width - rs[0].getBoundingClientRect().width) < 2 && Math.abs(r.getBoundingClientRect().left - rs[0].getBoundingClientRect().left) < 2); if (same.length < 3) continue;
             const kids = r => [...r.children].filter(k => vis(k) && getComputedStyle(k).position !== 'absolute');
             const key = k => k.tagName + '.' + ((k.getAttribute('class') || '').split(/\s+/)[0]);
-            const cols = {}; for (const r of same) { const R = r.getBoundingClientRect(); const seen = {}; for (const k of kids(r)) { const k0 = key(k); seen[k0] = (seen[k0] || 0) + 1; const kk = k0 + '#' + seen[k0]; if (/^(svg|i|b)\./i.test(kk) && k.children.length === 0 && !k.textContent.trim()) continue; (cols[kk] ||= []).push(Math.round(R.right - k.getBoundingClientRect().right)) } }
-            for (const [kk, xs] of Object.entries(cols)) { if (xs.length < 3) continue; const sp = Math.max(...xs) - Math.min(...xs); if (sp > 4) align.push({ group: g, col: kk, spread: sp }) }
+            const cols = {}; for (const r of same) { const R = r.getBoundingClientRect(); const seen = {}; for (const k of kids(r)) { const k0 = key(k); seen[k0] = (seen[k0] || 0) + 1; const kk = k0 + '#' + seen[k0]; if (/^(svg|i|b)\./i.test(kk) && k.children.length === 0 && !k.textContent.trim()) continue; const K = k.getBoundingClientRect(); (cols[kk] ||= []).push([Math.round(R.right - K.right), Math.round(K.left - R.left)]) } }
+            /* العمود مضبوط لو بدايته (يمين) أو نهايته (شمال) على خط واحد — زرار في آخر السطر بيتحاذى من الشمال */
+            for (const [kk, xs] of Object.entries(cols)) { if (xs.length < 3) continue; const spR = Math.max(...xs.map(x => x[0])) - Math.min(...xs.map(x => x[0])), spL = Math.max(...xs.map(x => x[1])) - Math.min(...xs.map(x => x[1])), sp = Math.min(spR, spL); if (sp > 4) align.push({ group: g, col: kk, spread: sp }) }
           }
         }
         const mism = [];

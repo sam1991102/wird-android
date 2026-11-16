@@ -16,8 +16,8 @@ html.ios .today-card *{color:var(--on-dark)!important}
 html.ios .btn-primary>span[aria-hidden]{background:color-mix(in srgb,var(--on-dark) 22%,transparent)!important;color:var(--on-primary)!important}
 html.ios .btn-gold{background:var(--primary)!important;background-image:none!important;color:var(--on-gold)!important}
 html.ios .btn-ghost{background:var(--paper-2)!important;color:var(--primary)!important}
-html.ios .sk-bg{background:linear-gradient(180deg,#0E1B3D,var(--brand) 70%,#3A5BA0)!important}
-html.ios .sk-bg *{color:var(--on-dark)}html.ios .sk-next{color:var(--on-dark)!important;background:rgba(255,255,255,.18)!important}
+
+
 html.ios .dy-card,html.ios .daily-card,html.ios .stat,html.ios #quranCard,html.ios #kidsTile,html.ios #nextd{border:0!important;box-shadow:none!important;border-radius:var(--rd-m)!important}
 html.ios .bottom-nav{background:rgba(249,249,249,.86)!important;-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);border-top:.5px solid var(--line)!important;box-shadow:none!important}
 html.ios.dark .bottom-nav{background:rgba(22,22,24,.86)!important}

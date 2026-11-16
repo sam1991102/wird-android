@@ -35,7 +35,8 @@ function next(){return __nextPrayer()}
 function fmt(x){var s=Math.max(0,Math.round(x*3600));var hh=Math.floor(s/3600),mm=Math.floor(s%3600/60),ss=s%60;return ar(hh+":"+String(mm).padStart(2,"0")+":"+String(ss).padStart(2,"0"))}
 function hijriDay(){try{var d=+new Intl.DateTimeFormat("en-u-ca-islamic-umalqura-nu-latn",{day:"numeric",timeZone:tz()}).format(new Date());if(cityH()>=prayerDay(0).t.maghrib)d+=1;return Math.min(30,Math.max(1,d))}catch(e){return 15}}
 function state(){try{var t=prayerDay(0).t,h=cityH();if(h>=t.fajr&&h<t.sunrise)return{s:"dawn",f:0};if(h>=t.sunrise&&h<t.maghrib){var f=(h-t.sunrise)/(t.maghrib-t.sunrise);return{s:f>0.86?"dusk":"day",f:f}}if(h>=t.maghrib&&h<t.maghrib+0.6)return{s:"twilight",f:1};return{s:"night",f:0}}catch(e){return{s:"day",f:.4}}}
-function sunEl(f,s){f=Math.max(0,Math.min(1,f));var x=58-48*f,y=74-56*Math.sin(Math.PI*f);if(s==="dawn"){x=60;y=82}if(s==="twilight"){x=8;y=84}
+/* الشمس بتتحرّك في الشريط الفاضي فوق (بين الشارة واسم اليوم) عشان ما تغطّيش الكلام */
+function sunEl(f,s){f=Math.max(0,Math.min(1,f));var x=50-24*f,y=28-12*Math.sin(Math.PI*f);if(s==="dawn"){x=50;y=26}if(s==="twilight"){x=26;y=26}
  return'<div class="sk-sun sk-'+s+'" style="left:'+x.toFixed(1)+'%;top:'+y.toFixed(1)+'%"><i></i></div>'}
 function moonSVG(d){var k=(1-Math.cos(2*Math.PI*d/29.53))/2,wax=d<=15,r=40,c=44;var rx=(Math.abs(1-2*k)*r).toFixed(2);
  var lit="M"+c+" "+(c-r)+" A"+r+" "+r+" 0 0 "+(wax?1:0)+" "+c+" "+(c+r)+" A"+rx+" "+r+" 0 0 "+((k>0.5)===wax?1:0)+" "+c+" "+(c-r)+"Z";

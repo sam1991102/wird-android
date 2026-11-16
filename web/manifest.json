@@ -234,6 +234,7 @@
   "core/29-fixes.js",
   "core/30-sources.js",
   "core/31-sky.js",
+  "core/38-sky-live.js",
   "core/32-theme-device.js",
   "core/33-mushaf-card.js",
   "core/34-kids.js",
@@ -279,6 +280,7 @@
   "12-reader.css",
   "13-home.css",
   "14-focus.css",
-  "16-polish.css"
+  "16-polish.css",
+  "17-sky-live.css"
  ]
 }

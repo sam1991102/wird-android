@@ -1,0 +1,39 @@
+/* ===== كارت اليوم: سما حيّة =====
+   الألوان بتتحسب في ui/core/38-sky-live.js من وقت اليوم الحقيقي (بين مواعيد الصلاة) وبتتحط في
+   --sk-top / --sk-mid / --sk-low / --sk-glow على #skyCard. والجو الفعلي (اختياري) في data-wx.
+   الكارت متصمّم بألوانه (مستثنى من قفل الألوان)، والكلام عليه دايمًا فاتح فوق طبقة تغميق. */
+#skyCard{--sk-top:#1f6fc4;--sk-mid:#3b8fe0;--sk-low:#7cb8ee;--sk-glow:rgba(255,240,200,.35);--sk-gx:30%;--sk-gy:40%;color:var(--on-dark)}
+#skyCard .sk-bg{background:radial-gradient(70% 55% at var(--sk-gx) var(--sk-gy),var(--sk-glow),transparent 65%),linear-gradient(180deg,var(--sk-top) 0%,var(--sk-mid) 52%,var(--sk-low) 100%)!important;transition:filter 1.2s ease}
+/* تغميق خفيف تحت الكلام: يخلّي النص مقروء في أفتح سما */
+#skyCard .sk-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,12,30,.16),rgba(6,12,30,.05) 40%,rgba(6,12,30,.28))}
+#skyCard .sk-next,#skyCard .sk-next *{color:var(--on-dark)!important}
+#skyCard .sk-next{background:rgba(8,16,36,.22);border:1px solid rgba(255,255,255,.2);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+
+/* شارة الجو */
+#skyCard .sk-wx{position:absolute;top:var(--s16);left:var(--s16);z-index:2;display:inline-flex;align-items:center;gap:var(--s6);padding:var(--s4) var(--s10);border-radius:var(--rd-pill);background:rgba(255,255,255,.18);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);font-size:var(--t-sm);font-weight:700;color:#fff;direction:rtl}
+#skyCard .sk-wx[hidden]{display:none}
+#skyCard .sk-wx svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#skyCard .sk-wx b{font-size:var(--t-base);font-variant-numeric:tabular-nums}
+
+/* الجو: سحاب / ضباب / مطر / ثلج / عاصفة */
+#skyCard[data-wx="cloudy"] .sk-bg,#skyCard[data-wx="rain"] .sk-bg,#skyCard[data-wx="storm"] .sk-bg{filter:saturate(.55) brightness(.82)}
+#skyCard[data-wx="fog"] .sk-bg{filter:saturate(.4) brightness(.92)}
+#skyCard[data-wx="snow"] .sk-bg{filter:saturate(.5) brightness(.95)}
+#skyCard[data-wx="partly"] .sk-clouds span,#skyCard[data-wx="cloudy"] .sk-clouds span,#skyCard[data-wx="rain"] .sk-clouds span,#skyCard[data-wx="storm"] .sk-clouds span{opacity:1!important;height:52px;background:rgba(232,236,244,.72)}
+#skyCard[data-wx="rain"] .sk-sun,#skyCard[data-wx="storm"] .sk-sun,#skyCard[data-wx="cloudy"] .sk-sun,#skyCard[data-wx="fog"] .sk-sun{opacity:.35}
+#skyCard[data-sky="night"][data-wx="cloudy"] .sk-clouds span,#skyCard[data-sky="night"][data-wx="rain"] .sk-clouds span{background:rgba(110,120,150,.7)}
+#skyCard[data-wx="cloudy"] .sk-stars,#skyCard[data-wx="rain"] .sk-stars,#skyCard[data-wx="storm"] .sk-stars,#skyCard[data-wx="fog"] .sk-stars{opacity:.15}
+#skyCard .sk-fx{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden;opacity:0;transition:opacity 1s}
+#skyCard[data-wx="rain"] .sk-fx,#skyCard[data-wx="storm"] .sk-fx,#skyCard[data-wx="snow"] .sk-fx,#skyCard[data-wx="fog"] .sk-fx{opacity:1}
+#skyCard .sk-fx i{position:absolute;top:-20px;width:1.5px;height:16px;background:linear-gradient(transparent,rgba(255,255,255,.7));animation:skFall .7s linear infinite}
+#skyCard[data-wx="snow"] .sk-fx i{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.85);animation-duration:4s}
+#skyCard[data-wx="fog"] .sk-fx i{display:none}
+#skyCard[data-wx="fog"] .sk-fx{background:linear-gradient(180deg,rgba(235,238,245,.1),rgba(235,238,245,.45))}
+#skyCard[data-wx="storm"] .sk-fx::after{content:"";position:absolute;inset:0;background:#fff;opacity:0;animation:skFlash 7s infinite}
+@keyframes skFall{to{transform:translate(-30px,320px)}}
+@keyframes skFlash{0%,92%,100%{opacity:0}93%{opacity:.35}94%{opacity:0}95%{opacity:.22}}
+/* الحركة بتقف لما الكارت مش ظاهر، أو لو الموبايل على «تقليل الحركة» */
+#skyCard.sk-off *,#skyCard.sk-off *::after{animation-play-state:paused!important}
+@media (prefers-reduced-motion:reduce){#skyCard .sk-fx i,#skyCard .sk-fx::after,#skyCard .sk-clouds span{animation:none!important}}
+/* ظل خفيف للكلام زي تطبيق الطقس: يفضل مقروء لو سحابة عدّت وراه */
+#skyCard .sk-info{text-shadow:0 1px 6px rgba(6,12,30,.35)}
