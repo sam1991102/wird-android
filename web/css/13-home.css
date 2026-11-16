@@ -3,11 +3,11 @@
 /* ── أذكار اليوم: مسار الشمس ── */
 #homeAlerts{margin:14px 16px 0;--da-bg1:#0F2A22;--da-bg2:#1B4536;--da-gold:#E2C27F;--da-ink:#F4EFE2;--da-mute:rgba(244,239,226,.62)}
 html.ios #homeAlerts{--da-bg1:#0E1A3D;--da-bg2:#1E3A8A;--da-gold:#F2CF83}
-.da-card{position:relative;overflow:hidden;padding:14px 14px 14px;border-radius:24px;color:var(--da-ink);background:linear-gradient(160deg,var(--da-bg2),var(--da-bg1) 70%)}
+.da-card{position:relative;overflow:hidden;padding:14px 14px 14px;border-radius:var(--rd-xl);color:var(--da-ink);background:linear-gradient(160deg,var(--da-bg2),var(--da-bg1) 70%)}
 .da-card::before{content:"";position:absolute;inset:auto -30% -60% -30%;height:120%;background:radial-gradient(closest-side,rgba(226,194,127,.16),transparent);pointer-events:none}
 .da-hd{position:relative;display:flex;align-items:center;justify-content:space-between;gap:8px}
-.da-hd h2{margin:0;font-size:16px;font-weight:700;color:var(--da-ink)}
-.da-kahf{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:20px;border:1px solid rgba(226,194,127,.45);background:rgba(226,194,127,.12);color:var(--da-gold);font:inherit;font-size:13px;cursor:pointer}
+.da-hd h2{margin:0;font-size:var(--t-base);font-weight:700;color:var(--da-ink)}
+.da-kahf{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:var(--rd-l);border:1px solid rgba(226,194,127,.45);background:rgba(226,194,127,.12);color:var(--da-gold);font:inherit;font-size:var(--t-sm);cursor:pointer}
 .da-kahf svg{width:16px;height:16px}
 .da-svg{position:relative;display:block;width:100%;height:auto;margin:4px 0 0;overflow:visible}
 .da-track{fill:none;stroke:rgba(244,239,226,.22);stroke-width:2;stroke-dasharray:3 6;stroke-linecap:round}
@@ -25,14 +25,14 @@ html.ios #homeAlerts{--da-bg1:#0E1A3D;--da-bg2:#1E3A8A;--da-gold:#F2CF83}
 @media (prefers-reduced-motion:reduce){.da-st.is-now .da-halo{animation:none}}
 .da-labels{position:relative;margin-top:2px}
 .da-lb{position:absolute;top:0;transform:translateX(-50%);white-space:nowrap;display:flex;flex-direction:column;align-items:center;gap:1px;padding:4px 2px;border:0;background:none;color:var(--da-ink);font:inherit;cursor:pointer}
-.da-lb b{font-size:14px;font-weight:600}
-.da-lb small{font-size:11.5px;color:var(--da-mute)}
+.da-lb b{font-size:var(--t-md);font-weight:600}
+.da-lb small{font-size:var(--t-xs);color:var(--da-mute)}
 .da-lb.is-now b,.da-lb.is-now small{color:var(--da-gold);font-weight:700}
-.da-go{position:relative;display:block;width:100%;padding:12px;border:0;border-radius:16px;background:var(--da-gold);color:#1A1405;font:inherit;font-size:15px;font-weight:700;cursor:pointer}
+.da-go{position:relative;display:block;width:100%;padding:12px;border:0;border-radius:var(--rd-m);background:var(--da-gold);color:#1A1405;font:inherit;font-size:var(--t-base);font-weight:700;cursor:pointer}
 .da-go:active{transform:scale(.98)}
 .da-go{margin-top:18px}
 .da-labels{height:36px}
-.da-go.is-note{font-size:13px;font-weight:600}
+.da-go.is-note{font-size:var(--t-sm);font-weight:600}
 /* السماء الحية: لون الكارت يتبع وقت اليوم */
 .da-card.sky-dawn{background:linear-gradient(180deg,#7FB6E0 0%,#F3C6A5 75%,#F9DFC5 100%);--da-ink:#2A2033;--da-mute:rgba(42,32,51,.6);--da-gold:#B5531C}
 .sky-dawn .da-track{stroke:rgba(42,32,51,.28)}
@@ -55,13 +55,13 @@ html.ios #homeAlerts{--da-bg1:#0E1A3D;--da-bg2:#1E3A8A;--da-gold:#F2CF83}
 #skyCard .sk-x{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%}
 #skyCard .sk-x-n{display:flex;flex-direction:column;gap:1px;min-width:0}
 #skyCard .sk-x{color:inherit}
-#skyCard .sk-x-n b{font-size:17px;font-weight:700;color:inherit}
-#skyCard .sk-x-n small{font-size:12.5px;color:inherit;opacity:.78}
+#skyCard .sk-x-n b{font-size:var(--t-lg);font-weight:700;color:inherit}
+#skyCard .sk-x-n small{font-size:var(--t-sm);color:inherit;opacity:.78}
 #skyCard .sk-x-t{display:flex;align-items:baseline;gap:4px;color:inherit;white-space:nowrap}
-#skyCard .sk-x-t span{font-size:28px;font-weight:700;line-height:1.1;font-variant-numeric:tabular-nums}
-#skyCard .sk-x-t i{font-style:normal;font-size:14px;font-weight:600}
+#skyCard .sk-x-t span{font-size:var(--t-3xl);font-weight:700;line-height:1.1;font-variant-numeric:tabular-nums}
+#skyCard .sk-x-t i{font-style:normal;font-size:var(--t-md);font-weight:600}
 /* سطر الذكر: في المنتصف، أكبر، وبين خطين رفيعين؛ ووقت اليوم تحته صغير */
 #skyCard *:has(>.sk-dhikr){display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:4px!important;text-align:center!important}
 #skyCard .sk-dhikr{display:flex!important;align-items:center;gap:12px;width:100%;justify-content:center;font-size:23px!important;line-height:1.5;margin:6px 0 0!important;order:0}
 #skyCard .sk-dhikr::before,#skyCard .sk-dhikr::after{content:"";flex:1;max-width:48px;height:1px;background:currentColor;opacity:.35}
-#skyCard *:has(>.sk-dhikr)>.sk-period{order:1;font-size:12px!important;opacity:.7}
+#skyCard *:has(>.sk-dhikr)>.sk-period{order:1;font-size:var(--t-xs)!important;opacity:.7}

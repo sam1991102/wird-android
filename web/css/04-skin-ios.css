@@ -16,15 +16,15 @@ html.ios .btn-gold{background:var(--primary)!important;background-image:none!imp
 html.ios .btn-ghost{background:var(--paper-2)!important;color:var(--primary)!important}
 html.ios .sk-bg{background:linear-gradient(180deg,#0E1B3D,#1E3A8A 70%,#3A5BA0)!important}
 html.ios .sk-bg *{color:#fff}html.ios .sk-next{color:#fff!important;background:rgba(255,255,255,.18)!important}
-html.ios .dy-card,html.ios .daily-card,html.ios .stat,html.ios #quranCard,html.ios #kidsTile,html.ios #nextd{border:0!important;box-shadow:none!important;border-radius:14px!important}
+html.ios .dy-card,html.ios .daily-card,html.ios .stat,html.ios #quranCard,html.ios #kidsTile,html.ios #nextd{border:0!important;box-shadow:none!important;border-radius:var(--rd-m)!important}
 html.ios .bottom-nav{background:rgba(249,249,249,.86)!important;-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);border-top:.5px solid var(--line)!important;box-shadow:none!important}
 html.ios.dark .bottom-nav{background:rgba(22,22,24,.86)!important}
 html.ios body::before,html.ios body::after{display:none}
-.skin-seg{display:flex;gap:6px;margin-top:6px}.skin-seg button{flex:1;padding:9px 0;border-radius:12px;border:1px solid var(--line);background:var(--paper-2);color:var(--ink);font:inherit;cursor:pointer}.skin-seg button[aria-checked=true]{background:var(--primary);color:var(--on-primary);border-color:transparent}
+.skin-seg{display:flex;gap:6px;margin-top:6px}.skin-seg button{flex:1;padding:9px 0;border-radius:var(--rd-s);border:1px solid var(--line);background:var(--paper-2);color:var(--ink);font:inherit;cursor:pointer}.skin-seg button[aria-checked=true]{background:var(--primary);color:var(--on-primary);border-color:transparent}
 /* نمط أبل: عناوين كبيرة، مفاتيح iOS، أزرار مقسومة */
 html.ios .wp-page .wp-h{background:var(--bg)!important;background-image:none!important;color:var(--ink)!important;box-shadow:none!important;border-bottom:.5px solid var(--line)}
 html.ios .wp-page .wp-h h1{font-size:30px!important;font-weight:700!important;letter-spacing:-.3px;color:var(--ink)!important;font-family:var(--font-ui)!important}
-html.ios .wp-page .wp-h p{color:var(--muted)!important;font-size:13px!important}
+html.ios .wp-page .wp-h p{color:var(--muted)!important;font-size:var(--t-sm)!important}
 html.ios .wp-page .wp-back{background:none!important;border:0!important;color:var(--primary)!important;font-size:22px!important;box-shadow:none!important}
 html.ios .wp-page{background:var(--bg)!important}
 html.ios .st-sw span{position:relative;display:inline-block;width:51px!important;height:31px!important;border-radius:31px!important;background:var(--switch-off)!important;transition:background .2s}
@@ -33,12 +33,12 @@ html.ios .st-sw input:checked+span{background:var(--primary)!important}
 html.ios .st-sw input:checked+span::before{transform:translateX(-20px)}
 html.ios.dark .st-sw span{background:var(--switch-off)!important}
 html.ios [aria-checked]{transition:background .15s}
-html.ios .st-row [data-seg]{border-radius:7px!important}
+html.ios .st-row [data-seg]{border-radius:var(--rd-xs)!important}
 html.ios .st-row [data-seg][aria-checked=true]{background:var(--paper)!important;color:var(--ink)!important;box-shadow:0 3px 8px rgba(0,0,0,.12),0 3px 1px rgba(0,0,0,.04)!important}
 html.ios.dark .st-row [data-seg][aria-checked=true]{background:var(--primary)!important;color:var(--on-primary)!important}
 html.ios .st-row [data-seg]:not([aria-checked=true]){background:transparent!important;color:var(--ink)!important}
-html.ios .sh-list,html.ios .nt-card,html.ios .rd-grp{border:0!important;border-radius:12px!important}
-html.ios .sh-g h2,html.ios .rd-h{font-weight:400!important;text-transform:none;font-size:13px!important;color:var(--muted)!important}
+html.ios .sh-list,html.ios .nt-card,html.ios .rd-grp{border:0!important;border-radius:var(--rd-s)!important}
+html.ios .sh-g h2,html.ios .rd-h{font-weight:400!important;text-transform:none;font-size:var(--t-sm)!important;color:var(--muted)!important}
 html.ios button,html.ios a{-webkit-tap-highlight-color:transparent}
 html.ios .sh-row:active,html.ios .rd-card:active,html.ios .dr-i2:active{background:var(--line-2)!important}
 html.ios .dr2 .wd-x,html.ios .dr2 [data-x]{color:var(--ink)!important;background:var(--paper)!important;border:.5px solid var(--line)!important}

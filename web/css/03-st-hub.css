@@ -1,11 +1,11 @@
 
 /*st-hub*/.st.hub .st-tabs,.st.hub .st-body>.st-sec,.st.hub .st-body>section{display:none!important}
-.sh-hub{padding:8px 16px 32px}.sh-g{margin:14px 0 6px}.sh-g h2{font-size:13px;font-weight:600;color:var(--muted,#8a9a93);margin:0 6px 8px}
-.sh-list{background:var(--card,rgba(255,255,255,.04));border:1px solid var(--line,rgba(255,255,255,.07));border-radius:18px;overflow:hidden}
+.sh-hub{padding:8px 16px 32px}.sh-g{margin:14px 0 6px}.sh-g h2{font-size:var(--t-sm);font-weight:600;color:var(--muted,#8a9a93);margin:0 6px 8px}
+.sh-list{background:var(--card,rgba(255,255,255,.04));border:1px solid var(--line,rgba(255,255,255,.07));border-radius:var(--rd-l);overflow:hidden}
 .sh-row{display:flex;align-items:center;gap:12px;width:100%;padding:13px 14px;background:none;border:0;color:inherit;font:inherit;text-align:right;cursor:pointer}
 .sh-row+.sh-row{border-top:1px solid var(--line,rgba(255,255,255,.07))}.sh-row:active{background:rgba(127,127,127,.08)}
-.sh-tx{flex:1;display:flex;flex-direction:column;gap:2px;min-width:0}.sh-tx b{font-size:15px;font-weight:600}.sh-tx small{font-size:12px;color:var(--muted,#8a9a93);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.sh-ch{font-size:20px;color:var(--muted,#8a9a93);opacity:.6}.sh-ver{text-align:center;font-size:12px;color:var(--muted,#8a9a93);margin-top:18px}
+.sh-tx{flex:1;display:flex;flex-direction:column;gap:2px;min-width:0}.sh-tx b{font-size:var(--t-base);font-weight:600}.sh-tx small{font-size:var(--t-xs);color:var(--muted,#8a9a93);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sh-ch{font-size:var(--t-xl);color:var(--muted,#8a9a93);opacity:.6}.sh-ver{text-align:center;font-size:var(--t-xs);color:var(--muted,#8a9a93);margin-top:18px}
 .sh-page .nt-body>.st-sec{display:block!important;margin:0;}.sh-page .nt-body>.st-sec>:first-child:not(.st-row):not(.st-note){display:none}.sh-page .nt-entry,.sh-page .st-sub{display:none!important}
 .sh-page .nt-body>.st-sec{border:0!important;background:none!important;box-shadow:none!important;padding:0!important;max-width:none}
 .sh-page .prayer-settings,.sh-page .st-sub{margin-top:0!important;padding-top:0!important;border-top:0!important}

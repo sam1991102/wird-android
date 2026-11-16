@@ -1,14 +1,14 @@
 
 /*laps*/
 .wp-page.wp-noanim,.wp-page.wp-noanim *{transition:none!important;animation:none!important}
-.lp-open-b{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:10px;padding:11px 14px;border-radius:14px;border:1px solid var(--line);background:var(--paper);color:var(--primary-ink);font:inherit;font-size:15px;font-weight:700;cursor:pointer}
+.lp-open-b{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:10px;padding:11px 14px;border-radius:var(--rd-m);border:1px solid var(--line);background:var(--paper);color:var(--primary-ink);font:inherit;font-size:var(--t-base);font-weight:700;cursor:pointer}
 .lp-open-b svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .lp-ov{position:fixed;inset:0;z-index:2147483400;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:max(16px,env(safe-area-inset-top)) 20px max(20px,env(safe-area-inset-bottom));background:radial-gradient(circle at 50% 38%,#1f6b52 0%,#0f3d2e 55%,#06201a 100%);color:#f4ecd8;text-align:center;-webkit-user-select:none;user-select:none}
 html.ios .lp-ov{background:radial-gradient(circle at 50% 38%,#2c4a9e 0%,#14275e 55%,#0a1020 100%)}
 .lp-ov[hidden]{display:none}
 .lp-top{position:absolute;top:max(14px,env(safe-area-inset-top));left:16px;right:16px;display:flex;align-items:center;justify-content:space-between;gap:10px}
-.lp-t{font-size:18px}
-.lp-x,.lp-reset{min-width:44px;height:44px;padding:0 14px;border-radius:22px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);color:inherit;font:inherit;font-size:15px;cursor:pointer}
+.lp-t{font-size:var(--t-lg)}
+.lp-x,.lp-reset{min-width:44px;height:44px;padding:0 14px;border-radius:var(--rd-l);border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);color:inherit;font:inherit;font-size:var(--t-base);cursor:pointer}
 .lp-tap{position:relative;width:min(78vw,320px);aspect-ratio:1;border:0;padding:0;background:none;color:inherit;cursor:pointer;border-radius:50%;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 .lp-tap:active{transform:scale(.97)}
 .lp-tap:disabled{cursor:default}
@@ -18,13 +18,13 @@ html.ios .lp-ov{background:radial-gradient(circle at 50% 38%,#2c4a9e 0%,#14275e 
 html.ios .lp-arc{stroke:#fff}
 .lp-in{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
 .lp-n{font-size:min(30vw,128px);font-weight:800;line-height:1}
-.lp-of{font-size:20px;opacity:.75;margin-top:6px}
+.lp-of{font-size:var(--t-xl);opacity:.75;margin-top:6px}
 .lp-dots{display:flex;gap:10px}
 .lp-dots i{width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,.4)}
 .lp-dots i.on{background:#e2c27f;border-color:#e2c27f}
 html.ios .lp-dots i.on{background:#fff;border-color:#fff}
-.lp-s{margin:0;font-size:20px;font-weight:700;min-height:1.5em}
-.lp-hint{margin:0;font-size:14px;opacity:.65}
-.lp-undo{padding:12px 22px;border-radius:24px;border:1px solid rgba(255,255,255,.25);background:transparent;color:inherit;font:inherit;font-size:15px;cursor:pointer}
+.lp-s{margin:0;font-size:var(--t-xl);font-weight:700;min-height:1.5em}
+.lp-hint{margin:0;font-size:var(--t-md);opacity:.65}
+.lp-undo{padding:12px 22px;border-radius:var(--rd-xl);border:1px solid rgba(255,255,255,.25);background:transparent;color:inherit;font:inherit;font-size:var(--t-base);cursor:pointer}
 .lp-undo:disabled{opacity:.35;cursor:default}
 @media (prefers-reduced-motion:reduce){.lp-arc{transition:none}}
