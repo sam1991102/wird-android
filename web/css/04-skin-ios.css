@@ -11,7 +11,7 @@ html.ios .tb-logo{filter:brightness(0)}html.ios.dark .tb-logo{filter:brightness(
 html.ios #installBtn{background:var(--primary)!important;background-image:none!important;color:var(--on-dark)!important;border:0!important}
 html.ios #heroStart,html.ios .today-card,html.ios .qk-cont{background:var(--primary)!important;background-image:none!important;color:var(--on-dark)!important;box-shadow:none}
 html.ios .today-card *{color:var(--on-dark)!important}
-html.ios .btn-primary>span[aria-hidden]{background:rgba(255,255,255,.22)!important;color:var(--on-primary)!important}
+html.ios .btn-primary>span[aria-hidden]{background:color-mix(in srgb,var(--on-dark) 22%,transparent)!important;color:var(--on-primary)!important}
 html.ios .btn-gold{background:var(--primary)!important;background-image:none!important;color:var(--on-gold)!important}
 html.ios .btn-ghost{background:var(--paper-2)!important;color:var(--primary)!important}
 html.ios .sk-bg{background:linear-gradient(180deg,#0E1B3D,var(--brand) 70%,#3A5BA0)!important}
@@ -28,13 +28,13 @@ html.ios .wp-page .wp-h p{color:var(--muted)!important;font-size:var(--t-sm)!imp
 html.ios .wp-page .wp-back{background:none!important;border:0!important;color:var(--primary)!important;font-size:22px!important;box-shadow:none!important}
 html.ios .wp-page{background:var(--bg)!important}
 html.ios .st-sw span{position:relative;display:inline-block;width:51px!important;height:31px!important;border-radius:31px!important;background:var(--switch-off)!important;transition:background .2s}
-html.ios .st-sw span::before{content:"";position:absolute;top:2px;inset-inline-start:2px;width:27px;height:27px;border-radius:50%;background:#fff!important;box-shadow:0 3px 8px rgba(0,0,0,.15),0 1px 1px rgba(0,0,0,.16);transition:transform .2s}
+html.ios .st-sw span::before{content:"";position:absolute;top:2px;inset-inline-start:2px;width:27px;height:27px;border-radius:50%;background:var(--knob)!important;box-shadow:0 3px 8px color-mix(in srgb,var(--shade) 15%,transparent),0 1px 1px color-mix(in srgb,var(--shade) 16%,transparent);transition:transform .2s}
 html.ios .st-sw input:checked+span{background:var(--primary)!important}
 html.ios .st-sw input:checked+span::before{transform:translateX(-20px)}
 html.ios.dark .st-sw span{background:var(--switch-off)!important}
 html.ios [aria-checked]{transition:background .15s}
 html.ios .st-row [data-seg]{border-radius:var(--rd-xs)!important}
-html.ios .st-row [data-seg][aria-checked=true]{background:var(--paper)!important;color:var(--ink)!important;box-shadow:0 3px 8px rgba(0,0,0,.12),0 3px 1px rgba(0,0,0,.04)!important}
+html.ios .st-row [data-seg][aria-checked=true]{background:var(--paper)!important;color:var(--ink)!important;box-shadow:0 3px 8px color-mix(in srgb,var(--shade) 12%,transparent),0 3px 1px color-mix(in srgb,var(--shade) 4%,transparent)!important}
 html.ios.dark .st-row [data-seg][aria-checked=true]{background:var(--primary)!important;color:var(--on-primary)!important}
 html.ios .st-row [data-seg]:not([aria-checked=true]){background:transparent!important;color:var(--ink)!important}
 html.ios .sh-list,html.ios .nt-card,html.ios .rd-grp{border:0!important;border-radius:var(--rd-s)!important}
@@ -47,7 +47,7 @@ html.ios .m-sepia{display:none!important}
 html.ios.dark #phraseChips button.active,html.ios.dark .mv-card.mv-primary,html.ios.dark #targetSeg button.active{background:var(--primary)!important;color:var(--on-primary)!important}html.ios.dark .mv-card.mv-primary *{color:var(--on-primary)!important}
 html.ios:not(.dark){--bg:#F3F5FA;--paper:#FFFFFF;--paper-2:#EEF1F8;--ink:#0F1B33;--ink-2:#33415C;--muted:#566079;--line:rgba(15,27,51,.12);--line-2:rgba(15,27,51,.07)}
 html.ios.dark{--bg:#0A1020;--paper:#131B2E;--paper-2:#1B2540;--ink:#E9EDF7;--ink-2:#C3CBE0;--muted:rgba(233,237,247,.6);--line:rgba(160,175,215,.18);--line-2:rgba(160,175,215,.1)}
-html.ios:not(.dark) .topbar,html.ios:not(.dark) .bottom-nav.nav5{background:#FFFFFF!important;color:var(--ink)!important}
+html.ios:not(.dark) .topbar,html.ios:not(.dark) .bottom-nav.nav5{background:var(--paper)!important;color:var(--ink)!important}
 html.ios.dark .topbar,html.ios.dark .bottom-nav.nav5{background:var(--paper)!important;color:var(--ink)!important}
 html.ios:not(.dark) .tb-logo{filter:brightness(0) saturate(100%) invert(9%) sepia(30%) saturate(2000%) hue-rotate(200deg)}
 html.ios body,html.ios main{color:var(--ink)}

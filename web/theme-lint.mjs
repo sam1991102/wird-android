@@ -12,16 +12,20 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 const BASE = path.join(HERE, 'theme-baseline.json');
 const RAW = /#[0-9a-fA-F]{3,8}\b|\b(?:rgba?|hsla?)\(/g;
 
+// أجزاء ليها ألوانها الخاصة عن قصد (ورق المصحف ووضعه الليلي، السما ورسوم الرئيسية حسب الوقت، ركن الأطفال،
+// شاشة الأذان، شاشة البداية والمعالج، وضع التركيز الهادي، زرار المفضّلة، شريط الآيفون الشفاف). مش بتتعد في القفل.
+export const EXEMPT = /mp-|sky-|\bsk-|\bda-|\bkd-|adhan|\baz-|#wSplash|\bsu-|\bwsu|calm|favorite-button|\.onb\b|\boa-|rd-fav|qx-|\.ios(\.dark)? \.(topbar|bottom-nav)\b|dr-ic\b|#fActs|tl-cel|\.lp-ov|\.focus|#focus|#fStage|pt-(dawn|day|sunset|night)|tl-medal|\.qx\b/;
 const SPACE = /^(padding|margin|gap|row-gap|column-gap)(-[a-z-]+)?$/;
 const LEN = /(?:^|[\s,/])-?(?:\d*\.)?\d+(?:px|rem)\b/;
 export function count(css) {
   const n = { color: 0, font: 0, radius: 0, space: 0 };
   for (const m of css.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+    const ex = EXEMPT.test(m[1]);
     for (const d of m[2].split(';')) {
       const i = d.indexOf(':'); if (i < 0) continue;
-      const prop = d.slice(0, i).trim(); if (prop.startsWith('--')) continue; // تعريف رمز: مسموح
+      const prop = d.slice(0, i).replace(/\/\*[\s\S]*?\*\//g, '').trim(); if (prop.startsWith('--') || /mask/.test(prop)) continue; // تعريف رمز، أو قناع (مش لون)
       const val = d.slice(i + 1).replace(/url\([^)]*\)/g, ''); // الصور المضمّنة مش ألوان واجهة
-      n.color += (val.match(RAW) || []).length;
+      if (!ex) n.color += (val.match(RAW) || []).length;
       if (/calc|clamp|min\(|max\(/.test(val)) continue; // قيم محسوبة عن قصد
       if (prop === 'font-size' && LEN.test(val)) n.font++;
       if (prop === 'border-radius' && LEN.test(val.replace(/\b0(px)?\b/g, ''))) n.radius++;

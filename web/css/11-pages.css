@@ -3,6 +3,6 @@
 .pt-tm{margin:var(--s16) 0 var(--s8);padding:var(--s14) var(--s16);border-radius:var(--rd-l);border:1px solid var(--line);background:var(--paper)}
 .pt-tm h3{margin:0 0 var(--s10);font-size:var(--t-base);color:var(--ink)}
 .pt-tm-g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s10) var(--s8)}
-.pt-tm-g div{display:flex;flex-direction:column;align-items:center;gap:var(--s2);padding:var(--s8) var(--s4);border-radius:var(--rd-s);background:var(--line-2,rgba(127,127,127,.08))}
+.pt-tm-g div{display:flex;flex-direction:column;align-items:center;gap:var(--s2);padding:var(--s8) var(--s4);border-radius:var(--rd-s);background:var(--line-2,color-mix(in srgb,var(--ink) 8%,transparent))}
 .pt-tm-g span{font-size:var(--t-xs);color:var(--muted)}
 .pt-tm-g b{font-size:var(--t-md);color:var(--ink)}
