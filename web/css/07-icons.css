@@ -1,6 +1,6 @@
 
 /*icons*/
 svg.ph{fill:currentColor!important;stroke:none!important}
-.dr2 .dr-p .dr-i2 .dr-ic svg.ph{fill:#fff!important;width:18px!important;height:18px!important}
+.dr2 .dr-p .dr-i2 .dr-ic svg.ph{fill:var(--on-dark)!important;width:18px!important;height:18px!important}
 .bottom-nav.nav5 .ni svg.ph{width:26px!important;height:26px!important}
 .dr2 .dr-search svg.ph{width:18px!important;height:18px!important;flex:none;fill:var(--muted)!important}

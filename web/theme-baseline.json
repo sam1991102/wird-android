@@ -1,6 +1,6 @@
 {
  "00-core.css": {
-  "color": 355,
+  "color": 293,
   "font": 57,
   "radius": 6,
   "space": 21
@@ -24,37 +24,37 @@
   "space": 0
  },
  "04-skin-ios.css": {
-  "color": 27,
+  "color": 15,
   "font": 2,
   "radius": 1,
   "space": 0
  },
  "05-radio.css": {
-  "color": 8,
+  "color": 5,
   "font": 2,
   "radius": 0,
   "space": 0
  },
  "06-ios2.css": {
-  "color": 8,
+  "color": 5,
   "font": 1,
   "radius": 3,
   "space": 1
  },
  "07-icons.css": {
-  "color": 1,
+  "color": 0,
   "font": 0,
   "radius": 0,
   "space": 0
  },
  "08-laps.css": {
-  "color": 19,
+  "color": 14,
   "font": 0,
   "radius": 0,
   "space": 0
  },
  "09-setup.css": {
-  "color": 10,
+  "color": 8,
   "font": 2,
   "radius": 0,
   "space": 1
@@ -72,25 +72,25 @@
   "space": 0
  },
  "12-reader.css": {
-  "color": 14,
+  "color": 13,
   "font": 0,
   "radius": 0,
   "space": 0
  },
  "13-home.css": {
-  "color": 39,
+  "color": 36,
   "font": 1,
   "radius": 0,
   "space": 0
  },
  "14-focus.css": {
-  "color": 12,
+  "color": 11,
   "font": 0,
   "radius": 0,
   "space": 1
  },
  "16-polish.css": {
-  "color": 24,
+  "color": 21,
   "font": 3,
   "radius": 1,
   "space": 0

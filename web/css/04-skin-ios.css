@@ -5,17 +5,17 @@ html.ios.dark{--primary:#6B8BFF;--primary-2:#8AA3FF;--accent:#6B8BFF;--gold:#6B8
 html.ios body{letter-spacing:0}
 html.ios{--brand:#1E3A8A;--deep:#14275E}html.ios.dark{--brand:#6B8BFF;--deep:#14275E}
 html.ios .topbar{background:rgba(249,249,249,.86)!important;-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);color:#000!important;border-bottom:.5px solid var(--line)}
-html.ios.dark .topbar{background:rgba(22,22,24,.86)!important;color:#fff!important}
+html.ios.dark .topbar{background:rgba(22,22,24,.86)!important;color:var(--on-dark)!important}
 html.ios .topbar *{color:inherit;border-color:var(--line)}
 html.ios .tb-logo{filter:brightness(0)}html.ios.dark .tb-logo{filter:brightness(0) invert(1)}
-html.ios #installBtn{background:var(--primary)!important;background-image:none!important;color:#fff!important;border:0!important}
-html.ios #heroStart,html.ios .today-card,html.ios .qk-cont{background:var(--primary)!important;background-image:none!important;color:#fff!important;box-shadow:none}
-html.ios .today-card *{color:#fff!important}
+html.ios #installBtn{background:var(--primary)!important;background-image:none!important;color:var(--on-dark)!important;border:0!important}
+html.ios #heroStart,html.ios .today-card,html.ios .qk-cont{background:var(--primary)!important;background-image:none!important;color:var(--on-dark)!important;box-shadow:none}
+html.ios .today-card *{color:var(--on-dark)!important}
 html.ios .btn-primary>span[aria-hidden]{background:rgba(255,255,255,.22)!important;color:var(--on-primary)!important}
 html.ios .btn-gold{background:var(--primary)!important;background-image:none!important;color:var(--on-gold)!important}
 html.ios .btn-ghost{background:var(--paper-2)!important;color:var(--primary)!important}
-html.ios .sk-bg{background:linear-gradient(180deg,#0E1B3D,#1E3A8A 70%,#3A5BA0)!important}
-html.ios .sk-bg *{color:#fff}html.ios .sk-next{color:#fff!important;background:rgba(255,255,255,.18)!important}
+html.ios .sk-bg{background:linear-gradient(180deg,#0E1B3D,var(--brand) 70%,#3A5BA0)!important}
+html.ios .sk-bg *{color:var(--on-dark)}html.ios .sk-next{color:var(--on-dark)!important;background:rgba(255,255,255,.18)!important}
 html.ios .dy-card,html.ios .daily-card,html.ios .stat,html.ios #quranCard,html.ios #kidsTile,html.ios #nextd{border:0!important;box-shadow:none!important;border-radius:var(--rd-m)!important}
 html.ios .bottom-nav{background:rgba(249,249,249,.86)!important;-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);border-top:.5px solid var(--line)!important;box-shadow:none!important}
 html.ios.dark .bottom-nav{background:rgba(22,22,24,.86)!important}
@@ -48,11 +48,11 @@ html.ios.dark #phraseChips button.active,html.ios.dark .mv-card.mv-primary,html.
 html.ios:not(.dark){--bg:#F3F5FA;--paper:#FFFFFF;--paper-2:#EEF1F8;--ink:#0F1B33;--ink-2:#33415C;--muted:#566079;--line:rgba(15,27,51,.12);--line-2:rgba(15,27,51,.07)}
 html.ios.dark{--bg:#0A1020;--paper:#131B2E;--paper-2:#1B2540;--ink:#E9EDF7;--ink-2:#C3CBE0;--muted:rgba(233,237,247,.6);--line:rgba(160,175,215,.18);--line-2:rgba(160,175,215,.1)}
 html.ios:not(.dark) .topbar,html.ios:not(.dark) .bottom-nav.nav5{background:#FFFFFF!important;color:var(--ink)!important}
-html.ios.dark .topbar,html.ios.dark .bottom-nav.nav5{background:#131B2E!important;color:var(--ink)!important}
+html.ios.dark .topbar,html.ios.dark .bottom-nav.nav5{background:var(--paper)!important;color:var(--ink)!important}
 html.ios:not(.dark) .tb-logo{filter:brightness(0) saturate(100%) invert(9%) sepia(30%) saturate(2000%) hue-rotate(200deg)}
 html.ios body,html.ios main{color:var(--ink)}
-html.ios #skyCard .sk-wd,html.ios #skyCard .sk-city,html.ios #skyCard .sk-hj,html.ios #skyCard .sk-hy,html.ios #skyCard .sk-gr,html.ios #skyCard .sk-gy,html.ios #skyCard .sk-dhikr,html.ios #skyCard .sk-period,html.ios #skyCard .sk-np,html.ios #skyCard .sk-cd,html.ios #skyCard .sk-label{color:#fff!important}html.ios #skyCard .sk-city,html.ios #skyCard .sk-hy,html.ios #skyCard .sk-gy,html.ios #skyCard .sk-period{color:rgba(255,255,255,.72)!important}
-html.ios .today-card .btn-ghost,html.ios .today-card .btn-ghost *{color:#1E3A8A!important;stroke:currentColor}html.ios.dark .today-card .btn-ghost,html.ios.dark .today-card .btn-ghost *{color:#fff!important}
+html.ios #skyCard .sk-wd,html.ios #skyCard .sk-city,html.ios #skyCard .sk-hj,html.ios #skyCard .sk-hy,html.ios #skyCard .sk-gr,html.ios #skyCard .sk-gy,html.ios #skyCard .sk-dhikr,html.ios #skyCard .sk-period,html.ios #skyCard .sk-np,html.ios #skyCard .sk-cd,html.ios #skyCard .sk-label{color:var(--on-dark)!important}html.ios #skyCard .sk-city,html.ios #skyCard .sk-hy,html.ios #skyCard .sk-gy,html.ios #skyCard .sk-period{color:color-mix(in srgb,var(--on-dark) 72%,transparent)!important}
+html.ios .today-card .btn-ghost,html.ios .today-card .btn-ghost *{color:var(--brand)!important;stroke:currentColor}html.ios.dark .today-card .btn-ghost,html.ios.dark .today-card .btn-ghost *{color:var(--on-dark)!important}
 html.ios:not(.dark){--gold-ink:#1E3A8A;--card-sh:0 1px 2px rgba(15,27,51,.04),0 8px 24px rgba(15,27,51,.06)}html.ios.dark{--gold-ink:#AFC0FF;--card-sh:none}
 html.ios .l2-shb,html.ios .resume-chip,html.ios .sl-week,html.ios .geo-tip,html.ios .wp-f,html.ios .wp-laps,html.ios .tl-o,html.ios .dr2 .dr-tools .dr-i2{background:var(--paper)!important;border-color:var(--line)!important}
 html.ios .l2-all,html.ios .wp-share,html.ios .adj-b,html.ios .tl-q button,html.ios .tl-b.on,html.ios .tl-day b,html.ios .sl-chk,html.ios .wp-chk{border-color:var(--primary)!important}

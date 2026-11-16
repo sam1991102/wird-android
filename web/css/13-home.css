@@ -12,7 +12,7 @@ html.ios #homeAlerts{--da-bg1:#0E1A3D;--da-bg2:#1E3A8A;--da-gold:#F2CF83}
 .da-svg{position:relative;display:block;width:100%;height:auto;margin:var(--s4) 0 0;overflow:visible}
 .da-track{fill:none;stroke:rgba(244,239,226,.22);stroke-width:2;stroke-dasharray:3 6;stroke-linecap:round}
 .da-done{fill:none;stroke:var(--da-gold);stroke-width:3;stroke-linecap:round}
-.da-sun{fill:#fff;filter:drop-shadow(0 0 6px rgba(255,236,190,.9))}
+.da-sun{fill:var(--on-dark);filter:drop-shadow(0 0 6px rgba(255,236,190,.9))}
 .da-st{cursor:pointer;color:var(--da-ink);outline:none}
 .da-dot{fill:rgba(244,239,226,.12);stroke:rgba(244,239,226,.35);stroke-width:1.5;transition:fill .2s}
 .da-halo{fill:none;stroke:none}
@@ -20,7 +20,7 @@ html.ios #homeAlerts{--da-bg1:#0E1A3D;--da-bg2:#1E3A8A;--da-gold:#F2CF83}
 .da-st.is-now{color:#1A1405}
 .da-st.is-now .da-dot{fill:var(--da-gold);stroke:none}
 .da-st.is-now .da-halo{stroke:var(--da-gold);stroke-opacity:.45;stroke-width:2;animation:none;transform-box:fill-box;transform-origin:center}
-.da-st:focus-visible .da-dot{stroke:#fff;stroke-width:2.5}
+.da-st:focus-visible .da-dot{stroke:var(--on-dark);stroke-width:2.5}
 @keyframes daPulse{0%,100%{transform:scale(1);stroke-opacity:.45}50%{transform:scale(1.12);stroke-opacity:.12}}
 @media (prefers-reduced-motion:reduce){.da-st.is-now .da-halo{animation:none}}
 .da-labels{position:relative;margin-top:var(--s2)}
@@ -36,7 +36,7 @@ html.ios #homeAlerts{--da-bg1:#0E1A3D;--da-bg2:#1E3A8A;--da-gold:#F2CF83}
 /* السماء الحية: لون الكارت يتبع وقت اليوم */
 .da-card.sky-dawn{background:linear-gradient(180deg,#7FB6E0 0%,#F3C6A5 75%,#F9DFC5 100%);--da-ink:#2A2033;--da-mute:rgba(42,32,51,.6);--da-gold:#B5531C}
 .sky-dawn .da-track{stroke:rgba(42,32,51,.28)}
-.sky-dawn .da-dot{fill:rgba(255,255,255,.5);stroke:rgba(42,32,51,.22)}
+.sky-dawn .da-dot{fill:color-mix(in srgb,var(--on-dark) 50%,transparent);stroke:rgba(42,32,51,.22)}
 .sky-dawn .da-done{stroke:#E58A3C}
 .sky-dawn .da-st.is-now .da-dot{fill:#F2A65A}.sky-dawn .da-st.is-now .da-halo{stroke:#F2A65A}
 .sky-dawn .da-go{background:#2A2033;color:#FBE7CF}

@@ -4,9 +4,9 @@
 .su-ov h1{margin:var(--s4) 0 0;font-size:26px;color:var(--ink)}
 .su-ov p{margin:0;max-width:340px;font-size:var(--t-base);line-height:1.9;color:var(--muted)}
 .su-logo{display:flex;align-items:center;justify-content:center;width:88px;height:88px;border-radius:var(--rd-xl);background:radial-gradient(circle at 50% 40%,#2A8466,#0F3D2E 55%,#06201A);color:#E2C27F;font-size:30px;font-weight:700;margin-bottom:var(--s6)}
-.su-check{display:flex;align-items:center;justify-content:center;width:84px;height:84px;border-radius:50%;background:var(--primary);color:#fff}
+.su-check{display:flex;align-items:center;justify-content:center;width:84px;height:84px;border-radius:50%;background:var(--primary);color:var(--on-dark)}
 .su-check svg{width:44px;height:44px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
-.su-main{min-width:220px;padding:var(--s14) var(--s24);border:0;border-radius:var(--rd-m);background:var(--primary);color:#fff;font:inherit;font-size:var(--t-base);font-weight:700;cursor:pointer}
+.su-main{min-width:220px;padding:var(--s14) var(--s24);border:0;border-radius:var(--rd-m);background:var(--primary);color:var(--on-dark);font:inherit;font-size:var(--t-base);font-weight:700;cursor:pointer}
 .su-link{padding:var(--s8) var(--s14);border:0;background:transparent;color:var(--muted);font:inherit;font-size:var(--t-md);cursor:pointer}
 .su-dots{display:flex;gap:var(--s6);justify-content:center}
 .su-dots i{width:7px;height:7px;border-radius:var(--rd-2xs);background:var(--line)}

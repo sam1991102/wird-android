@@ -13,8 +13,8 @@
 .dr2 .dr-p .dr-i2.on .dr-l{color:var(--ink)!important;font-weight:600}
 .dr2 .dr-p .dr-i2.on::before{display:none!important}
 .dr2 .dr-p .dr-i2::after{content:"‹";margin-inline-start:auto;color:var(--muted);font-size:var(--t-lg)}
-.dr2 .dr-p .dr-i2 .dr-ic{flex:none;width:29px!important;height:29px!important;border-radius:var(--rd-xs)!important;background:var(--c,#8E8E93)!important;display:flex!important;align-items:center;justify-content:center;color:#fff!important}
-.dr2 .dr-p .dr-i2 .dr-ic svg{stroke:#fff!important;color:#fff!important;width:18px!important;height:18px!important}
+.dr2 .dr-p .dr-i2 .dr-ic{flex:none;width:29px!important;height:29px!important;border-radius:var(--rd-xs)!important;background:var(--c,#8E8E93)!important;display:flex!important;align-items:center;justify-content:center;color:var(--on-dark)!important}
+.dr2 .dr-p .dr-i2 .dr-ic svg{stroke:var(--on-dark)!important;color:var(--on-dark)!important;width:18px!important;height:18px!important}
 .dr2 .dr-i2[data-n=home]{--c:#007AFF}.dr2 .dr-i2[data-n=library]{--c:#FF9500}.dr2 .dr-i2[data-n=mushaf]{--c:#34C759}.dr2 .dr-i2[data-n=tasbih]{--c:#AF52DE}.dr2 .dr-i2[data-n=prayer]{--c:#5856D6}.dr2 .dr-i2[data-n=qibla]{--c:#30B0C7}.dr2 .dr-i2[data-n=hijri]{--c:#FF3B30}.dr2 .dr-i2[data-n=alarm]{--c:#FF9F0A}.dr2 .dr-i2[data-n=khatma]{--c:#00C7BE}.dr2 .dr-i2[data-n=bm]{--c:#FFCC00}.dr2 .dr-i2[data-n=tools]{--c:#8E8E93}.dr2 .dr-i2[data-n=kids]{--c:#FF2D55}.dr2 .dr-i2[data-n=learn]{--c:#5AC8FA}.dr2 .dr-i2[data-n=hadith]{--c:#A2845E}.dr2 .dr-i2[data-n=hajj]{--c:#64D2FF}.dr2 .dr-i2[data-n=ruqya]{--c:#32D74B}.dr2 .dr-i2[data-n=names]{--c:#BF5AF2}.dr2 .dr-i2[data-n=adhan]{--c:#FF3B30}.dr2 .dr-i2[data-n=set]{--c:#8E8E93}.dr2 .dr-i2[data-n=update]{--c:#0A84FF}.dr2 .dr-i2[data-n=install]{--c:#34C759}.dr2 .dr-i2[data-n=share]{--c:#FF9500}.dr2 .dr-i2[data-n=radio]{--c:#FF375F}.dr2 .dr-i2[data-n=search]{--c:#8E8E93}
 .dr-x{border-color:var(--line)!important;color:var(--muted)!important;background:var(--paper)!important}
 html.ios .dr-logo{filter:brightness(0)}html.ios.dark .dr-logo{filter:brightness(0) invert(1)}

@@ -71,7 +71,7 @@ html.rt-on .sk-dhikr{display:none}
 .w-dlg-p{margin:var(--s8) 0 0;font-size:var(--t-base);line-height:1.8;color:var(--ink-2,var(--muted));white-space:pre-line}
 .w-dlg-b{display:flex;gap:var(--s10);margin-top:var(--s20)}
 .w-dlg-b button{flex:1;min-height:46px;border-radius:var(--rd-m);font:inherit;font-weight:700;font-size:var(--t-base);cursor:pointer}
-.w-dlg-ok{border:0;background:var(--primary);color:#fff}
+.w-dlg-ok{border:0;background:var(--primary);color:var(--on-dark)}
 .w-dlg-ok.danger{background:var(--danger,#b3261e)}
 .w-dlg-no{border:1px solid var(--line);background:transparent;color:var(--ink)}
 .w-dlg-b button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
@@ -101,7 +101,7 @@ html.rt-on .sk-dhikr{display:none}
 /* صف «تحديث التطبيق» */
 .sh-row.st-upd .upd-k{transition:opacity .2s}
 .sh-row.st-upd.is-busy .nt-ic svg{animation:wSpin 1s linear infinite}
-.sh-row.st-upd.is-ready .upd-k{font-size:var(--t-sm);font-weight:700;padding:var(--s4) var(--s12);border-radius:var(--rd-pill);background:var(--primary);color:#fff;opacity:1}
+.sh-row.st-upd.is-ready .upd-k{font-size:var(--t-sm);font-weight:700;padding:var(--s4) var(--s12);border-radius:var(--rd-pill);background:var(--primary);color:var(--on-dark);opacity:1}
 @keyframes wSpin{to{transform:rotate(360deg)}}
 @media (prefers-reduced-motion:reduce){.sh-row.st-upd.is-busy .nt-ic svg{animation:none}}
 /* بطاقة «التشغيل التلقائي» (شاومي وغيرها) */
@@ -110,6 +110,6 @@ html.rt-on .sk-dhikr{display:none}
 .oem-card p{margin:var(--s6) 0 0;font-size:var(--t-md);line-height:1.8;color:var(--ink-2,var(--muted))}
 .oem-b{display:flex;gap:var(--s8);margin-top:var(--s12);flex-wrap:wrap}
 .oem-b button{min-height:44px;padding:0 var(--s16);border-radius:var(--rd-s);font:inherit;font-weight:700;font-size:var(--t-md);cursor:pointer}
-.oem-go{border:0;background:var(--primary);color:#fff}
+.oem-go{border:0;background:var(--primary);color:var(--on-dark)}
 .oem-done{border:1px solid var(--line);background:transparent;color:var(--ink)}
 .oem-b button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}

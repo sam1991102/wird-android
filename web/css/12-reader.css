@@ -3,7 +3,7 @@
 .mp .mp-bar,.mp .mp-foot{transition:transform .22s ease,opacity .22s ease}
 .mp.mp-imm .mp-bar{transform:translateY(-110%);opacity:0;pointer-events:none}
 .mp.mp-imm .mp-foot{transform:translateY(110%);opacity:0;pointer-events:none}
-.mp .mp-nt[aria-pressed="true"]{background:var(--primary);color:#fff}
+.mp .mp-nt[aria-pressed="true"]{background:var(--primary);color:var(--on-dark)}
 .mp .mp-nt svg{width:20px;height:20px}
 .mp.mp-night{--mp-paper:#0F0E0B;background:#0F0E0B!important;color:#D9CFB4}
 .mp.mp-night .mp-stage,.mp.mp-night .mp-book,.mp.mp-night .mp-page{background:#0F0E0B!important}

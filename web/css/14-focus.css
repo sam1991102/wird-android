@@ -9,7 +9,7 @@
 #fStage.f-fade-b{-webkit-mask-image:linear-gradient(#000 82%,transparent);mask-image:linear-gradient(#000 82%,transparent)}
 #fStage.f-fade-t{-webkit-mask-image:linear-gradient(transparent,#000 12%);mask-image:linear-gradient(transparent,#000 12%)}
 #fStage.f-fade-t.f-fade-b{-webkit-mask-image:linear-gradient(transparent,#000 12%,#000 82%,transparent);mask-image:linear-gradient(transparent,#000 12%,#000 82%,transparent)}
-#focus .f-more{position:relative;margin:-40px auto var(--s4);align-self:center;display:none;align-items:center;gap:var(--s4);padding:var(--s6) var(--s14);border:0;border-radius:var(--rd-l);background:rgba(0,0,0,.35);color:#fff;font:inherit;font-size:var(--t-sm);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);z-index:2;flex:none}
+#focus .f-more{position:relative;margin:-40px auto var(--s4);align-self:center;display:none;align-items:center;gap:var(--s4);padding:var(--s6) var(--s14);border:0;border-radius:var(--rd-l);background:rgba(0,0,0,.35);color:var(--on-dark);font:inherit;font-size:var(--t-sm);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);z-index:2;flex:none}
 #focus .f-more svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 #focus.f-has-more .f-more{display:inline-flex}
 /* ٣) الأزرار تتلم في «⋯» لما الذكر طويل */
