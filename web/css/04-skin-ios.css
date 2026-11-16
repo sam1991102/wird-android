@@ -23,11 +23,11 @@ html.ios body::before,html.ios body::after{display:none}
 .skin-seg{display:flex;gap:var(--s6);margin-top:var(--s6)}.skin-seg button{flex:1;padding:var(--s10) 0;border-radius:var(--rd-s);border:1px solid var(--line);background:var(--paper-2);color:var(--ink);font:inherit;cursor:pointer}.skin-seg button[aria-checked=true]{background:var(--primary);color:var(--on-primary);border-color:transparent}
 /* نمط أبل: عناوين كبيرة، مفاتيح iOS، أزرار مقسومة */
 html.ios .wp-page .wp-h{background:var(--bg)!important;background-image:none!important;color:var(--ink)!important;box-shadow:none!important;border-bottom:.5px solid var(--line)}
-html.ios .wp-page .wp-h h1{font-size:30px!important;font-weight:700!important;letter-spacing:-.3px;color:var(--ink)!important;font-family:var(--font-ui)!important}
+html.ios .wp-page .wp-h h1{font-size:var(--t-4xl)!important;font-weight:700!important;letter-spacing:-.3px;color:var(--ink)!important;font-family:var(--font-ui)!important}
 html.ios .wp-page .wp-h p{color:var(--muted)!important;font-size:var(--t-sm)!important}
-html.ios .wp-page .wp-back{background:none!important;border:0!important;color:var(--primary)!important;font-size:22px!important;box-shadow:none!important}
+html.ios .wp-page .wp-back{background:none!important;border:0!important;color:var(--primary)!important;font-size:var(--t-glyph)!important;box-shadow:none!important}
 html.ios .wp-page{background:var(--bg)!important}
-html.ios .st-sw span{position:relative;display:inline-block;width:51px!important;height:31px!important;border-radius:31px!important;background:var(--switch-off)!important;transition:background .2s}
+html.ios .st-sw span{position:relative;display:inline-block;width:51px!important;height:31px!important;border-radius:var(--rd-pill)!important;background:var(--switch-off)!important;transition:background .2s}
 html.ios .st-sw span::before{content:"";position:absolute;top:2px;inset-inline-start:2px;width:27px;height:27px;border-radius:50%;background:var(--knob)!important;box-shadow:0 3px 8px color-mix(in srgb,var(--shade) 15%,transparent),0 1px 1px color-mix(in srgb,var(--shade) 16%,transparent);transition:transform .2s}
 html.ios .st-sw input:checked+span{background:var(--primary)!important}
 html.ios .st-sw input:checked+span::before{transform:translateX(-20px)}

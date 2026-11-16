@@ -1,7 +1,7 @@
 
 /*polish*/
 .l2-shb .l2-si{color:var(--on-hero-acc)!important}
-#prayer .ph-at{margin:var(--s2) 0 var(--s6);font-size:22px;font-weight:700;color:var(--on-hero-acc);letter-spacing:.2px}
+#prayer .ph-at{margin:var(--s2) 0 var(--s6);font-size:var(--t-glyph);font-weight:700;color:var(--on-hero-acc);letter-spacing:.2px}
 #prayer .prayer-card.pt-dawn .prayer-head{background:linear-gradient(160deg,#1F3A5F 0%,#7A5A78 60%,#B9734F 100%)!important}
 #prayer .prayer-card.pt-day .prayer-head{background:linear-gradient(160deg,#16557A 0%,#1F6E95 55%,#2E86A8 100%)!important}
 #prayer .prayer-card.pt-sunset .prayer-head{background:linear-gradient(160deg,#3B2A5C 0%,#8E3F66 60%,#C5604A 100%)!important}
@@ -26,7 +26,7 @@ html.ios:not(.dark) .tb-strip{background:color-mix(in srgb,var(--primary) 6%,tra
 .cp-card{display:flex;flex-direction:column;gap:var(--s10);max-height:82vh}
 .cp-h{display:flex;align-items:center;justify-content:space-between}
 .cp-h b{font-size:var(--fs-lg,1.15rem)}
-.cp-x{width:44px;height:44px;border:0;background:transparent;color:inherit;font-size:1.6rem;border-radius:50%;cursor:pointer}
+.cp-x{width:44px;height:44px;border:0;background:transparent;color:inherit;font-size:var(--t-2xl);border-radius:50%;cursor:pointer}
 .cp-q{width:100%;min-height:48px;padding:0 var(--s14);border-radius:var(--rd-s);border:1px solid color-mix(in srgb,currentColor 25%,transparent);background:var(--bg);color:inherit;font:inherit;font-size:var(--t-base)}
 .cp-geo{min-height:44px;border-radius:var(--rd-s);border:1px dashed color-mix(in srgb,currentColor 30%,transparent);background:transparent;color:inherit;font:inherit;cursor:pointer}
 .cp-l{list-style:none;margin:0;padding:0;overflow:auto;flex:1;min-height:120px}

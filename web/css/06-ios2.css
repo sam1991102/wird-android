@@ -44,7 +44,7 @@ html:not(.dark):not(.ios) .dr2 .dr-brand img{filter:brightness(.72) saturate(1.4
 .sh-page .st-sec .st-row,.sh-page .st-sec .st-note,.sh-page .st-sec>p{padding-left:var(--s16)!important;padding-right:var(--s16)!important;box-sizing:border-box}
 .sh-page .st-sec{overflow:hidden}
 html.ios .st-sw span::after{display:none!important}
-.st-tg input[type=checkbox]{-webkit-appearance:none;appearance:none;flex:none;width:51px;height:31px;margin:0;border-radius:31px;background:var(--switch-off);position:relative;cursor:pointer;transition:background .2s;border:0}
+.st-tg input[type=checkbox]{-webkit-appearance:none;appearance:none;flex:none;width:51px;height:31px;margin:0;border-radius:var(--rd-pill);background:var(--switch-off);position:relative;cursor:pointer;transition:background .2s;border:0}
 .st-tg input[type=checkbox]::before{content:"";position:absolute;top:2px;inset-inline-start:2px;width:27px;height:27px;border-radius:50%;background:var(--knob);box-shadow:0 3px 8px color-mix(in srgb,var(--shade) 15%,transparent),0 1px 1px color-mix(in srgb,var(--shade) 16%,transparent);transition:transform .2s}
 .st-tg input[type=checkbox]:checked{background:var(--primary)}
 html.ios .st-tg input[type=checkbox]:checked{background:var(--primary)}
@@ -80,8 +80,8 @@ body::before,body::after,main::before,main::after{background-image:none!importan
 .ay-hide{display:none!important}
 #ayCard{margin:var(--s14) var(--s16) 0}
 #ayCard>:not(.ay-tabs){margin-left:0!important;margin-right:0!important}
-.ay-tabs{display:flex;gap:var(--s4);margin:0 0 var(--s8);padding:var(--s4);border-radius:14px;background:var(--line-2)}
-.ay-tabs button{flex:1;border:0;background:transparent;padding:var(--s10) var(--s6);border-radius:10px;font:inherit;font-size:14px;color:var(--muted);cursor:pointer}
+.ay-tabs{display:flex;gap:var(--s4);margin:0 0 var(--s8);padding:var(--s4);border-radius:var(--rd-m);background:var(--line-2)}
+.ay-tabs button{flex:1;border:0;background:transparent;padding:var(--s10) var(--s6);border-radius:var(--rd-s);font:inherit;font-size:var(--t-md);color:var(--muted);cursor:pointer}
 .ay-tabs button[aria-selected="true"]{background:var(--paper);color:var(--ink);font-weight:700;box-shadow:0 1px 3px color-mix(in srgb,var(--shade) 8%,transparent)}
 .bottom-nav.nav5 .nv-radio .ni svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 /* ترتيب الرئيسية من أول رسم، وإخفاء أي قسم قديم */
