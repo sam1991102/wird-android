@@ -31,7 +31,7 @@ var lastSky="";
 function paintSky(){var el=document.getElementById("skyCard");if(!el)return;var h;try{h=__nowH()}catch(e){return}
  var k=Math.round(h*30);if(k===lastSky)return;lastSky=k;/* كل دقيقتين كفاية: التغيير بطيء */
  var c;try{c=colors(h)}catch(e){return}var g=glowAt(h),st=el.style;
- st.setProperty("--sk-top",c[0]);st.setProperty("--sk-mid",c[1]);st.setProperty("--sk-low",c[2]);st.setProperty("--sk-glow",c[3]);st.setProperty("--sk-gx",g[0]);st.setProperty("--sk-gy",g[1])}
+ st.setProperty("--sk-top",c[0]);st.setProperty("--sk-mid",c[1]);st.setProperty("--sk-low",c[2]);st.setProperty("--sk-glow",c[3]);st.setProperty("--sk-gx",g[0]);st.setProperty("--sk-gy",g[1]);var ph=phase(h);if(el.dataset.ph!==ph)el.dataset.ph=ph}
 
 /* ===== الجو ===== */
 var WX={0:["clear","صافي"],1:["clear","صافي غالبًا"],2:["partly","غائم جزئيًا"],3:["cloudy","غائم"],45:["fog","ضباب"],48:["fog","ضباب"],
@@ -52,10 +52,28 @@ function load(){var c=coords();if(!c)return;var v=cached(c);if(v)show(v);if((v&&
  fetch("https://api.open-meteo.com/v1/forecast?latitude="+c[0]+"&longitude="+c[1]+"&current=temperature_2m,weather_code,is_day&timezone=auto").then(function(r){return r.ok?r.json():null}).then(function(j){busy=0;if(!j||!j.current)return;
   var o={k:c.join(","),at:Date.now(),t:Math.round(j.current.temperature_2m),w:j.current.weather_code,d:j.current.is_day};try{localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}show(o)}).catch(function(){busy=0})}
 function show(o){var el=document.getElementById("skyCard");if(!el)return;var m=WX[o.w]||WX[0],kind=m[0];
- if(el.dataset.wx!==kind)el.dataset.wx=kind;
+ if(el.dataset.wx!==kind)el.dataset.wx=kind;clouds(el,kind);
  var b=el.querySelector(".sk-wx");if(!b){b=document.createElement("span");b.className="sk-wx";el.appendChild(b)}
  var ic=kind==="clear"&&!o.d?"night":kind,html='<svg viewBox="0 0 24 24" aria-hidden="true">'+IC[ic]+'</svg><b>'+ar(o.t)+'°</b><span>'+m[1]+'</span>';
  if(b.dataset.h!==html){b.innerHTML=html;b.dataset.h=html}b.hidden=false;b.setAttribute("aria-label","الجو الآن: "+m[1]+"، "+ar(o.t)+" درجة")}
+/* ===== السحاب الواقعي =====
+ بيتولّد من ضوضاء طبيعية (fractal noise) بنفس طريقة رسم السحاب في الألعاب، ويتحوّل لصورة مرة واحدة لكل كثافة
+ (الرسم من الضوضاء تقيل، والصورة الجاهزة خفيفة وهي بتتحرّك). الكثافة من حالة الجو، واللون من نور الوقت (data-ph في CSS) */
+var COV={partly:.32,cloudy:.9,rain:.95,storm:.97,snow:.85},CL={};
+function cloudSVG(cov){var b=(-(2.55-cov*1.55)).toFixed(2),sh=(cov>.8?.12:.14),f="<feTurbulence type='fractalNoise' baseFrequency='0.0045 0.011' numOctaves='6' seed='7' stitchTiles='stitch'/>";
+ return"<svg xmlns='http://www.w3.org/2000/svg' width='760' height='380'><defs>"+
+ "<filter id='c' x='0' y='0' width='100%' height='100%'>"+f+"<feColorMatrix type='matrix' values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  4 0 0 0 "+b+"'/><feGaussianBlur stdDeviation='1.2'/></filter>"+
+ "<filter id='s' x='0' y='0' width='100%' height='100%'>"+f+"<feColorMatrix type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  4 0 0 0 "+(b-.15).toFixed(2)+"'/><feOffset dy='10'/><feGaussianBlur stdDeviation='6'/></filter>"+
+ "<linearGradient id='v' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='white'/><stop offset='.6' stop-color='white' stop-opacity='.85'/><stop offset='1' stop-color='white' stop-opacity='.2'/></linearGradient><mask id='m'><rect width='760' height='380' fill='url(#v)'/></mask></defs>"+
+ "<g mask='url(#m)'><rect width='760' height='380' filter='url(#s)' opacity='"+sh+"'/><rect width='760' height='380' filter='url(#c)'/></g></svg>"}
+function cloudImg(kind,cb){var cov=COV[kind];if(!cov)return cb(null);if(CL[kind])return cb(CL[kind]);
+ var im=new Image();im.onload=function(){try{var c=document.createElement("canvas");c.width=760;c.height=380;c.getContext("2d").drawImage(im,0,0);CL[kind]="url("+c.toDataURL("image/png")+")"}catch(e){CL[kind]="url(\""+im.src+"\")"}cb(CL[kind])};
+ im.onerror=function(){cb(null)};im.src="data:image/svg+xml,"+encodeURIComponent(cloudSVG(cov))}
+function clouds(el,kind){var c=el.querySelector(".sk-clouds");if(!c||c.dataset.k===kind)return;c.dataset.k=kind;
+ cloudImg(kind,function(u){if(c.dataset.k!==kind)return;if(u){c.style.backgroundImage=u;c.classList.add("on")}else c.classList.remove("on")})}
+/* مرحلة النور (للون السحاب): من نفس نقاط الوقت */
+function phase(h){try{var t=prayerDay(0).t;if(h<t.fajr-.2||h>=t.maghrib+.8)return"night";if(h<t.sunrise+.6)return"dawn";if(h<t.maghrib-.6)return"day";if(h<t.maghrib+.2)return"sunset";return"dusk"}catch(e){return"day"}}
+
 /* طبقة المطر/الثلج: بتتعمل مرة واحدة */
 function fx(el){if(el.querySelector(".sk-fx"))return;var d=document.createElement("div");d.className="sk-fx";d.setAttribute("aria-hidden","true");var h="";for(var i=0;i<48;i++)h+='<i style="left:'+(i*17%100)+'%;animation-delay:-'+((i%12)*.31).toFixed(2)+'s;animation-duration:'+(.55+(i%5)*.09).toFixed(2)+'s"></i>';d.innerHTML=h;el.insertBefore(d,el.querySelector(".sk-info"))}
 /* الحركة تقف لما الكارت مش ظاهر */

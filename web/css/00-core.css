@@ -1230,11 +1230,7 @@ html.tb-scrolled .tb-strip{height:34px!important;opacity:1!important;padding:0 v
 .sk-stars b{position:absolute;border-radius:50%;background:#fff;opacity:.8;animation:skTw 4s ease-in-out infinite}
 @keyframes skTw{50%{opacity:.25}}
 .sk-clouds{position:absolute;inset:0;z-index:-1;pointer-events:none}
-.sk-clouds span{position:absolute;height:34px;border-radius:var(--rd-pill);background:rgba(255,255,255,.55);filter:blur(10px);animation:skCl 60s linear infinite}
-.sk-clouds span:nth-child(1){width:150px;top:58%;left:-20%}.sk-clouds span:nth-child(2){width:110px;top:30%;left:-35%;animation-duration:85s;animation-delay:-30s;opacity:.7}.sk-clouds span:nth-child(3){width:180px;top:60%;left:-40%;animation-duration:110s;animation-delay:-60s;opacity:.5}
-.sky-card[data-sky="night"] .sk-clouds span{background:rgba(160,180,220,.12)}.sky-card[data-sky="dawn"] .sk-clouds span,.sky-card[data-sky="twilight"] .sk-clouds span{background:rgba(255,200,170,.25)}
-@keyframes skCl{to{transform:translateX(160vw)}}
-@media (prefers-reduced-motion:reduce){.sk-clouds span,.sk-stars b{animation:none}}
+@media (prefers-reduced-motion:reduce){.sk-stars b{animation:none}}
 .sk-info{position:relative;padding:var(--s20) var(--s20) var(--s16);display:flex;flex-direction:column;gap:var(--s10)}
 .sk-day{display:flex;flex-direction:column;align-items:flex-start}
 .sk-wd{font-family:var(--font-accent);font-weight:400;font-size:46px;line-height:1.25}

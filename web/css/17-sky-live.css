@@ -16,13 +16,23 @@
 #skyCard .sk-wx b{font-size:var(--t-base);font-variant-numeric:tabular-nums}
 
 /* الجو: صافي من غير سحاب خالص (زي الحقيقة) / سحاب / ضباب / مطر / ثلج / عاصفة */
-#skyCard:not([data-wx]) .sk-clouds,#skyCard[data-wx="clear"] .sk-clouds{display:none}
+/* السحاب: صورة واقعية بتتولّد مرة واحدة من ضوضاء طبيعية (fractal noise) في 38-sky-live.js، وبتتحرّك ببطء شديد */
+#skyCard .sk-clouds{position:absolute;inset:0;z-index:-2;pointer-events:none;background-repeat:repeat-x;background-size:760px 100%;opacity:0;transition:opacity 1.2s,filter 1.2s;animation:skDrift 300s linear infinite}
+#skyCard .sk-clouds.on{opacity:1}
+@keyframes skDrift{to{background-position-x:-760px}}
+/* لون السحاب بياخد من نور الوقت: أبيض بالنهار، دهبي مع الشروق، وردي مع المغرب، رمادي باهت بالليل */
+#skyCard[data-ph="dawn"] .sk-clouds{filter:sepia(.35) saturate(1.6) hue-rotate(-10deg)}
+#skyCard[data-ph="sunset"] .sk-clouds{filter:sepia(.5) saturate(2.2) hue-rotate(-25deg) brightness(.95)}
+#skyCard[data-ph="dusk"] .sk-clouds{filter:sepia(.4) saturate(1.4) hue-rotate(-40deg) brightness(.6)}
+#skyCard[data-ph="night"] .sk-clouds{filter:brightness(.38) saturate(.5)}
+/* غائم كلّي: سحاب رمادي (مش أبيض) زي الحقيقة، والكلام يفضل مقروء */
+#skyCard[data-wx="cloudy"] .sk-clouds,#skyCard[data-wx="snow"] .sk-clouds{filter:brightness(.74) saturate(.5)}
+#skyCard[data-wx="rain"] .sk-clouds,#skyCard[data-wx="storm"] .sk-clouds{filter:brightness(.6) saturate(.5)}
+#skyCard[data-wx="rain"][data-ph="night"] .sk-clouds,#skyCard[data-wx="storm"][data-ph="night"] .sk-clouds{filter:brightness(.3) saturate(.4)}
 #skyCard[data-wx="cloudy"] .sk-bg,#skyCard[data-wx="rain"] .sk-bg,#skyCard[data-wx="storm"] .sk-bg{filter:saturate(.55) brightness(.82)}
 #skyCard[data-wx="fog"] .sk-bg{filter:saturate(.4) brightness(.92)}
 #skyCard[data-wx="snow"] .sk-bg{filter:saturate(.5) brightness(.95)}
-#skyCard[data-wx="partly"] .sk-clouds span,#skyCard[data-wx="cloudy"] .sk-clouds span,#skyCard[data-wx="rain"] .sk-clouds span,#skyCard[data-wx="storm"] .sk-clouds span{opacity:1!important;height:52px;background:rgba(232,236,244,.72)}
 #skyCard[data-wx="rain"] .sk-sun,#skyCard[data-wx="storm"] .sk-sun,#skyCard[data-wx="cloudy"] .sk-sun,#skyCard[data-wx="fog"] .sk-sun{opacity:.35}
-#skyCard[data-sky="night"][data-wx="cloudy"] .sk-clouds span,#skyCard[data-sky="night"][data-wx="rain"] .sk-clouds span{background:rgba(110,120,150,.7)}
 #skyCard[data-wx="cloudy"] .sk-stars,#skyCard[data-wx="rain"] .sk-stars,#skyCard[data-wx="storm"] .sk-stars,#skyCard[data-wx="fog"] .sk-stars{opacity:.15}
 #skyCard .sk-fx{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden;opacity:0;transition:opacity 1s}
 #skyCard[data-wx="rain"] .sk-fx,#skyCard[data-wx="storm"] .sk-fx,#skyCard[data-wx="snow"] .sk-fx,#skyCard[data-wx="fog"] .sk-fx{opacity:1}
@@ -35,6 +45,6 @@
 @keyframes skFlash{0%,92%,100%{opacity:0}93%{opacity:.35}94%{opacity:0}95%{opacity:.22}}
 /* الحركة بتقف لما الكارت مش ظاهر، أو لو الموبايل على «تقليل الحركة» */
 #skyCard.sk-off *,#skyCard.sk-off *::after{animation-play-state:paused!important}
-@media (prefers-reduced-motion:reduce){#skyCard .sk-fx i,#skyCard .sk-fx::after,#skyCard .sk-clouds span{animation:none!important}}
+@media (prefers-reduced-motion:reduce){#skyCard .sk-fx i,#skyCard .sk-fx::after,#skyCard .sk-clouds{animation:none!important}}
 /* ظل خفيف للكلام زي تطبيق الطقس: يفضل مقروء لو سحابة عدّت وراه */
 #skyCard .sk-info{text-shadow:0 1px 6px rgba(6,12,30,.35)}
