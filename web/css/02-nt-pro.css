@@ -16,13 +16,13 @@
 .nt-card .nt-sw{position:absolute;top:14px;left:14px}
 .nt-sw{width:46px;height:28px;border-radius:999px;border:0;background:var(--paper-2,#e9e4d8);position:relative;cursor:pointer;flex:none;transition:background .2s;padding:0}
 .nt-sw i{position:absolute;top:3px;right:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:right .2s}
-.nt-sw.on{background:var(--gold-2,#d8b86c)}.nt-sw.on i{right:21px}
-html.dark .nt-sw:not(.on){background:#2a3a33}
-.nt-stat{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border-radius:18px;background:color-mix(in srgb,#d8b86c 14%,var(--card));border:1px solid color-mix(in srgb,#d8b86c 35%,transparent)}
+.nt-sw.on{background:var(--gold-2,var(--gold))}.nt-sw.on i{right:21px}
+html.dark .nt-sw:not(.on){background:var(--switch-off)}
+.nt-stat{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border-radius:18px;background:color-mix(in srgb,var(--gold) 14%,var(--card));border:1px solid color-mix(in srgb,var(--gold) 35%,transparent)}
 .nt-stat div{display:flex;flex-direction:column;gap:2px}.nt-stat b{color:var(--ink)}.nt-stat span{font-size:.8rem;color:var(--muted)}
-.nt-stat.ok{flex-direction:column;align-items:flex-start;gap:2px;background:color-mix(in srgb,#3fb27f 12%,var(--card));border-color:color-mix(in srgb,#3fb27f 35%,transparent)}
+.nt-stat.ok{flex-direction:column;align-items:flex-start;gap:2px;background:color-mix(in srgb,var(--success) 12%,var(--card));border-color:color-mix(in srgb,var(--success) 35%,transparent)}
 .nt-note{margin:18px 4px 0;font-size:.8rem;line-height:1.8;color:var(--muted)}
-.nt-entry{display:flex;align-items:center;gap:12px;width:100%;text-align:start;margin:10px 0 6px;padding:14px;border-radius:18px;background:var(--card);border:1px solid color-mix(in srgb,#d8b86c 40%,transparent);cursor:pointer;font:inherit;color:inherit}
+.nt-entry{display:flex;align-items:center;gap:12px;width:100%;text-align:start;margin:10px 0 6px;padding:14px;border-radius:18px;background:var(--card);border:1px solid color-mix(in srgb,var(--gold) 40%,transparent);cursor:pointer;font:inherit;color:inherit}
 .nt-entry .nt-tx{display:flex;flex-direction:column;flex:1;gap:2px}.nt-entry b{color:var(--ink)}.nt-entry small{font-size:.78rem;color:var(--muted)}
 .nt-entry .nt-ch{font-size:1.4rem;color:var(--muted)}
 .nt-row{display:flex;align-items:center;gap:12px;padding:14px;border-radius:18px;background:var(--card)}
@@ -31,17 +31,17 @@ html.dark .nt-sw:not(.on){background:#2a3a33}
 .nt-sec h3{font-size:.95rem;margin:0 4px 10px;color:var(--ink)}
 .nt-chips{display:flex;flex-wrap:wrap;gap:8px}
 .nt-chip{min-width:56px;padding:9px 14px;border-radius:999px;border:1px solid var(--line,rgba(0,0,0,.1));background:var(--card);color:var(--ink);font:inherit;font-weight:600;cursor:pointer}
-.nt-chip.on{background:var(--gold-2,#d8b86c);border-color:transparent;color:#111}
+.nt-chip.on{background:var(--gold-2,var(--gold));border-color:transparent;color:#111}
 .nt-hint{margin:8px 4px 0;font-size:.8rem;color:var(--muted);line-height:1.7}
 .nt-list{display:flex;flex-direction:column;border-radius:18px;overflow:hidden;background:var(--card)}
 .nt-opt{display:flex;align-items:center;gap:12px;padding:13px 14px;cursor:pointer;border-bottom:1px solid var(--line,rgba(0,0,0,.06))}
 .nt-opt:last-child{border-bottom:0}
 .nt-opt .nt-tx{flex:1;display:flex;flex-direction:column}.nt-opt b{font-weight:600;color:var(--ink)}.nt-opt small{font-size:.75rem;color:var(--muted)}
 .nt-rd{width:20px;height:20px;border-radius:50%;border:2px solid var(--muted);flex:none;position:relative}
-.nt-opt.on .nt-rd{border-color:var(--gold-2,#d8b86c)}.nt-opt.on .nt-rd::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--gold-2,#d8b86c)}
+.nt-opt.on .nt-rd{border-color:var(--gold-2,var(--gold))}.nt-opt.on .nt-rd::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--gold-2,var(--gold))}
 .nt-play{width:36px;height:36px;border-radius:50%;border:0;background:var(--paper-2,#efe9dc);display:grid;place-items:center;cursor:pointer;flex:none;color:var(--ink)}
 .nt-play svg{width:16px;height:16px;fill:currentColor}
-.nt-play.on{background:var(--gold-2,#d8b86c);color:#111}.nt-play.on svg path{d:path("M7 5h4v14H7zM13 5h4v14h-4z")}
+.nt-play.on{background:var(--gold-2,var(--gold));color:#111}.nt-play.on svg path{d:path("M7 5h4v14H7zM13 5h4v14h-4z")}
 html.dark .nt-play:not(.on){background:#22322b}
 .nt-all{width:100%;margin-top:22px}
 
@@ -49,6 +49,6 @@ html.dark .nt-play:not(.on){background:#22322b}
 /* مفتاح «الصلاة القادمة على شاشة القفل» بنفس شكل باقي المفاتيح (كان checkbox عادي) */
 input.og-sw{appearance:none;-webkit-appearance:none;margin:0;width:46px;height:28px;border-radius:999px;background:var(--paper-2,#e9e4d8);position:relative;cursor:pointer;flex:none;transition:background .2s}
 input.og-sw::before{content:"";position:absolute;top:3px;right:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:right .2s}
-input.og-sw:checked{background:var(--gold-2,#d8b86c)}input.og-sw:checked::before{right:21px}
+input.og-sw:checked{background:var(--gold-2,var(--gold))}input.og-sw:checked::before{right:21px}
 html.dark input.og-sw:not(:checked){background:#2a3a33}
-input.og-sw:focus-visible{outline:2px solid var(--gold-2,#d8b86c);outline-offset:2px}
+input.og-sw:focus-visible{outline:2px solid var(--gold-2,var(--gold));outline-offset:2px}

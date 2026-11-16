@@ -44,7 +44,7 @@ html:not(.dark):not(.ios) .dr2 .dr-brand img{filter:brightness(.72) saturate(1.4
 .sh-page .st-sec .st-row,.sh-page .st-sec .st-note,.sh-page .st-sec>p{padding-left:16px!important;padding-right:16px!important;box-sizing:border-box}
 .sh-page .st-sec{overflow:hidden}
 html.ios .st-sw span::after{display:none!important}
-.st-tg input[type=checkbox]{-webkit-appearance:none;appearance:none;flex:none;width:51px;height:31px;margin:0;border-radius:31px;background:rgba(120,120,128,.2);position:relative;cursor:pointer;transition:background .2s;border:0}
+.st-tg input[type=checkbox]{-webkit-appearance:none;appearance:none;flex:none;width:51px;height:31px;margin:0;border-radius:31px;background:var(--switch-off);position:relative;cursor:pointer;transition:background .2s;border:0}
 .st-tg input[type=checkbox]::before{content:"";position:absolute;top:2px;inset-inline-start:2px;width:27px;height:27px;border-radius:50%;background:#fff;box-shadow:0 3px 8px rgba(0,0,0,.15),0 1px 1px rgba(0,0,0,.16);transition:transform .2s}
 .st-tg input[type=checkbox]:checked{background:var(--primary)}
 html.ios .st-tg input[type=checkbox]:checked{background:var(--primary)}

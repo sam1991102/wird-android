@@ -1,6 +1,7 @@
 // يبني ملفات موقع وِرد من المستودع: web/site + أجزاء ui.js من web/ui + أجزاء styles.css من web/css
 // الترتيب والأنواع في web/manifest.json. الناتج: { name: [contentType, body] } بنفس شكل FILES في الـ Worker.
 import fs from 'node:fs';
+import { check as themeCheck } from './theme-lint.mjs';
 
 const W = new URL('.', import.meta.url).pathname;
 const read = p => fs.readFileSync(W + p, 'utf8');
@@ -8,6 +9,9 @@ const read = p => fs.readFileSync(W + p, 'utf8');
 export const isBin = t => /^(image\/(png|jpe?g|webp|gif|x-icon|vnd\.microsoft\.icon)|font\/|application\/(octet-stream|font|x-font))/.test(t);
 
 export function build() {
+  /* قفل الألوان: أي لون جديد مكتوب بقيمته في css/ بيوقف البناء (النشر وتطبيق أندرويد). التفاصيل: css/README.md */
+  const tc = themeCheck();
+  if (!tc.ok) throw new Error(tc.msg);
   const m = JSON.parse(read('manifest.json'));
   const F = {};
   for (const f of m.files) {
