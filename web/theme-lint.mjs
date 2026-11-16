@@ -29,7 +29,7 @@ export function count(css) {
       if (!ex) n.color += (val.match(RAW) || []).length;
       if (/calc|clamp|min\(|max\(/.test(val)) continue; // قيم محسوبة عن قصد
       if (ex) continue; // الأجزاء المتصمّمة بمقاساتها كمان
-      if ((prop === 'font-family' || prop === 'font') && /["']|\b(serif|sans-serif|system-ui|Amiri|Tajawal)\b/.test(val.replace(/var\([^)]*\)/g, ''))) n.family++;
+      if (!/@font-face/.test(m[1]) && (prop === 'font-family' || prop === 'font') && /["']|\b(serif|sans-serif|system-ui|Amiri|Tajawal)\b/.test(val.replace(/var\([^)]*\)/g, ''))) n.family++;
       if (prop === 'font-size' && LEN.test(val)) n.font++;
       if (prop === 'border-radius' && LEN.test(val.replace(/\b0(px)?\b/g, ''))) n.radius++;
       if (SPACE.test(prop) && LEN.test(val.replace(/(^|\s)-?(0|1px)(?=\s|$)/g, ' '))) n.space++;
