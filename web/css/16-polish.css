@@ -1,7 +1,6 @@
 
 /*polish*/
-.l2-shb .l2-si{color:#E2C27F!important}
-.l2-shb .l2-si svg.w-hg{width:26px;height:26px;fill:none!important}
+.l2-shb .l2-si{color:var(--on-hero-acc)!important}
 #prayer .ph-at{margin:2px 0 6px;font-size:22px;font-weight:700;color:#F2D597;letter-spacing:.2px}
 #prayer .prayer-card.pt-dawn .prayer-head{background:linear-gradient(160deg,#1F3A5F 0%,#7A5A78 60%,#B9734F 100%)!important}
 #prayer .prayer-card.pt-day .prayer-head{background:linear-gradient(160deg,#16557A 0%,#1F6E95 55%,#2E86A8 100%)!important}
@@ -55,7 +54,7 @@ html.rt-on .sk-dhikr{display:none}
 .rt-ring{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
 .rt-ring circle{fill:none;stroke-width:4}
 .rt-tr{stroke:var(--line)}
-.rt-pr{stroke:var(--gold);stroke-linecap:round;transition:stroke-dashoffset .25s ease}
+.rt-pr{stroke:var(--gold-ink);stroke-linecap:round;transition:stroke-dashoffset .25s ease}
 .rt-n{position:relative;font:700 1.7rem/1 var(--font-ui,Tajawal),sans-serif}
 .rt-tap small{position:relative;font-size:.72rem;color:var(--ink-2);margin-top:4px}
 .rt-nav:focus-visible,.rt-tap:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
