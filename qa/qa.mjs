@@ -93,7 +93,7 @@ for (const S of SKINS) {
       else if (st.lit[0] !== label) bad(`${k}/nav:${label}`, `المنوّر «${st.lit[0]}» بدل «${label}»`);
       const covered = await page.evaluate(() => [...document.querySelectorAll('.wp-page,.st:not([hidden]),.mp')].some(e => e.offsetWidth && e.getBoundingClientRect().height > innerHeight * .6));
       if (label !== 'الرئيسية' && !covered) { if (await vis(page, '#ayCard')) bad(`${k}/nav:${label}`, 'كارت الآية والحديث ظاهر برا الرئيسية'); if (await vis(page, '#homeAlerts')) bad(`${k}/nav:${label}`, 'أذكار اليوم ظاهرة برا الرئيسية') }
-      if (label === 'المواقيت' && !(await vis(page, '#ptTomorrow'))) bad(k + '/prayer', 'مواقيت الغد مش ظاهرة ' + await page.evaluate(() => window.__wPagesDiag ? __wPagesDiag() : 'no-module'));
+      if (label === 'المواقيت' && !(await vis(page, '#ptTools'))) bad(k + '/prayer', 'أدوات المواقيت مش ظاهرة');
       if (label === 'المصحف') { const f = await page.evaluate(() => { const v = document.getElementById('mushafView'); return v ? [...v.children].filter(c => c.offsetHeight).slice(0, 2).map(c => c.textContent.trim().slice(0, 30)).join(' | ') : '' }); if (!/القراءة/.test(f)) bad(k + '/mushaf', 'زر القراءة مش في أول الصفحة: ' + f + ' ' + await page.evaluate(() => window.__wPagesDiag ? __wPagesDiag() : 'no-module')) }
       if (label === 'المواقيت') { const n = await page.evaluate(() => [...document.querySelectorAll('#prayer button,#prayer a')].filter(b => b.offsetWidth && /إعداد|ضبط/.test((b.getAttribute('aria-label') || '') + b.textContent)).length); if (n > 1) bad(k + '/prayer', `${n} أزرار إعدادات`) }
       await shot(page, `${k}-02-nav-${i}`);
@@ -122,7 +122,7 @@ for (const S of SKINS) {
     for (const [id, t] of rows) {
       const t0 = Date.now();
       await page.evaluate(id => window.__openSettingsPage && __openSettingsPage(id), id); await wait(1400);
-      const ok = await page.evaluate(() => [...document.querySelectorAll('.wp-page.sh-page,.wp-page.nt-page')].filter(e => e.offsetWidth).length);
+      const ok = await page.evaluate(() => [...document.querySelectorAll('.wp-page.sh-page,.wp-page.nt-page,.su-ov')].filter(e => e.offsetWidth).length);
       if (!ok) bad(`${k}/settings:${t}`, 'صفحة الإعداد ما فتحتش');
       await shot(page, `${k}-06-set-${id}`);
       await page.evaluate(() => window.__closeOverlays && __closeOverlays()); await wait(300);
@@ -167,6 +167,7 @@ for (const S of SKINS) {
     await ctx.close();
   }
   for (const id of ids) {
+    if (id === 'x-setup') continue; // معالج الإعداد مش صفحة إعدادات (اتفحص فوق)
     const { ctx, page } = await open(S.ls); await wait(1300);
     await page.evaluate(id => window.__openSettingsPage && __openSettingsPage(id), id); await wait(1500);
     const n = await page.evaluate(() => { const p = [...document.querySelectorAll('.wp-page.sh-page,.wp-page.nt-page')].filter(e => e.offsetWidth).pop(); if (!p) return -1; p.dataset.qa = 1; const els = [...p.querySelectorAll('button,[role=switch],[role=button],input[type=checkbox],input[type=radio],label.switch')].filter(e => { const r = e.getBoundingClientRect(); return r.width > 8 && r.height > 8 && getComputedStyle(e).visibility !== 'hidden' && !e.closest('.wp-back,.wp-h') }); els.forEach((e, i) => e.dataset.qb = i); return els.length });
@@ -226,7 +227,7 @@ for (const sk of SKINS) {
   if (!(await vis(page, '.su-ov'))) bad('wizard', 'المعالج ما ظهرش لمستخدم جديد');
   else {
     await page.click('[data-su="go"]');
-    for (let s = 1; s <= 7; s++) { const t0 = Date.now(); await wait(1500); await shot(page, 'wizard-' + s); if (await vis(page, '.su-ov')) break; const has = await page.evaluate(() => [...document.querySelectorAll('.wp-page.sh-page,.wp-page.nt-page')].filter(e => e.offsetWidth).length); if (!has) bad('wizard', `الخطوة ${s} ما فتحتش صفحتها`); const nx = await page.$('[data-su="next"],[data-su="end"]'); if (!nx) break; await nx.click() }
+    for (let s = 1; s <= 7; s++) { const t0 = Date.now(); await wait(1500); await shot(page, 'wizard-' + s); if (await vis(page, '.su-ov')) break; const has = await page.evaluate(() => [...document.querySelectorAll('.wp-page.sh-page,.wp-page.nt-page,.su-ov')].filter(e => e.offsetWidth).length); if (!has) bad('wizard', `الخطوة ${s} ما فتحتش صفحتها`); const nx = await page.$('[data-su="next"],[data-su="end"]'); if (!nx) break; await nx.click() }
   }
   [...new Set(errs)].forEach(e => bad('wizard/js', e));
   await ctx.close();
