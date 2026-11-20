@@ -238,6 +238,7 @@
   "core/38-sky-live.js",
   "core/39-prayer-card.js",
   "core/40-prayer-page.js",
+  "core/41-dhikr-hourly.js",
   "core/32-theme-device.js",
   "core/33-mushaf-card.js",
   "core/34-kids.js",
@@ -286,6 +287,7 @@
   "16-polish.css",
   "17-sky-live.css",
   "18-prayer-card.css",
-  "19-prayer-page.css"
+  "19-prayer-page.css",
+  "20-dhikr.css"
  ]
 }

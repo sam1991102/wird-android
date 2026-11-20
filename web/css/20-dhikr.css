@@ -1,0 +1,9 @@
+/* ===== ذكر الساعة: مثال الإشعار في الإعدادات (ui/core/41-dhikr-hourly.js) ===== */
+.dh-prev{margin-top:var(--s12);padding:var(--s12) var(--s14);border:1px solid var(--line);border-radius:var(--rd-l);background:var(--paper);box-shadow:var(--sh-1)}
+.dh-top{display:flex;align-items:center;gap:var(--s6);font-size:var(--t-xs);color:var(--muted)}
+.dh-app{width:18px;height:18px;border-radius:var(--rd-pill);display:grid;place-items:center;background:var(--primary);color:var(--on-primary);font-family:var(--font-accent);font-size:var(--t-2xs)}
+.dh-prev b{display:block;margin-top:var(--s6);font-size:var(--t-sm);color:var(--ink)}
+.dh-tx{margin:var(--s2) 0;font-size:var(--t-md);line-height:1.8;color:var(--ink)}
+.dh-prev small{display:block;font-size:var(--t-xs);color:var(--muted)}
+.dh-act{display:flex;gap:var(--s20);margin-top:var(--s10);padding-top:var(--s8);border-top:1px solid var(--line);font-size:var(--t-sm);font-weight:700;color:var(--primary-ink)}
+.dh-act span:last-child{color:var(--muted)}
