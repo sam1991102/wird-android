@@ -49,7 +49,9 @@ public class MediaService extends MediaSessionService {
     @Nullable
     @Override
     public MediaSession onGetSession(MediaSession.ControllerInfo controllerInfo) {
-        return session;
+        // الخدمة لازم تكون exported عشان شاشة القفل والبلوتوث، لكن نسمح بس للنظام وللتطبيق نفسه
+        if (controllerInfo.isTrusted() || getPackageName().equals(controllerInfo.getPackageName())) return session;
+        return null;
     }
 
     @Override
