@@ -6,18 +6,19 @@
 var ar=__ar;
 /* [أعلى، وسط، أسفل، توهّج] لكل نقطة */
 /* ألوان مأخوذة من صور سما حقيقية: الأزرق بيفضل لحد الغروب، والبرتقالي عند الأفق بس، والبنفسجي بعد ما الشمس تغيب */
+/* [أعلى، وسط، أسفل، توهّج، كثبان بعيدة، كثبان قريبة] — الكثبان بتاخد لون النور: رملي بالنهار، دافي وقت الغروب، كحلي بالليل */
 var K={
- night:["#04060f","#0a1230","#16244a","rgba(190,205,255,.08)"],
- fajr:["#0b1230","#23305e","#5d5a86","rgba(255,170,130,.22)"],
- dawn:["#1d3566","#5d6f9e","#e9a46f","rgba(255,180,120,.45)"],
- sunrise:["#2f5e9e","#7fa3cf","#f6c48f","rgba(255,210,150,.55)"],
- morning:["#2b6cb6","#5a9ad8","#a6cdee","rgba(255,250,225,.35)"],
- noon:["#1d64b8","#3a87d6","#8cc0ec","rgba(255,255,235,.35)"],
- asr:["#2463aa","#4f8bc8","#b8d3e6","rgba(255,235,190,.35)"],
- golden:["#2a5c9c","#6e95c0","#f0c38e","rgba(255,200,120,.55)"],
- maghrib:["#22396e","#8a6f9a","#f08a52","rgba(255,150,80,.60)"],
- dusk:["#141d44","#3d3566","#a45a5c","rgba(220,120,110,.25)"],
- isha:["#0a1030","#141f45","#2a325e","rgba(190,200,255,.10)"]
+ night:["#04060f","#0a1230","#16244a","rgba(190,205,255,.08)","#0b1230","#060914"],
+ fajr:["#0b1230","#23305e","#5d5a86","rgba(255,170,130,.22)","#1d1d3a","#121228"],
+ dawn:["#1d3566","#5d6f9e","#e9a46f","rgba(255,180,120,.45)","#4a3a48","#2e2433"],
+ sunrise:["#2f5e9e","#7fa3cf","#f6c48f","rgba(255,210,150,.55)","#b98c62","#8f6743"],
+ morning:["#2b6cb6","#5a9ad8","#a6cdee","rgba(255,250,225,.35)","#cfa676","#ac8150"],
+ noon:["#1d64b8","#3a87d6","#8cc0ec","rgba(255,255,235,.35)","#d1aa78","#b08552"],
+ asr:["#2463aa","#4f8bc8","#b8d3e6","rgba(255,235,190,.35)","#c99a64","#a57444"],
+ golden:["#2a5c9c","#6e95c0","#f0c38e","rgba(255,200,120,.55)","#b07a4e","#86583a"],
+ maghrib:["#22396e","#8a6f9a","#f08a52","rgba(255,150,80,.60)","#7a4a3c","#4f2f2a"],
+ dusk:["#141d44","#3d3566","#a45a5c","rgba(220,120,110,.25)","#2c2238","#1b1626"],
+ isha:["#0a1030","#141f45","#2a325e","rgba(190,200,255,.10)","#141a33","#0b0f22"]
 };
 function hex(c){var m=c.match(/[\d.]+/g);if(c[0]==="#")return[parseInt(c.slice(1,3),16),parseInt(c.slice(3,5),16),parseInt(c.slice(5,7),16),1];return m.map(Number)}
 function mix(a,b,f){var x=hex(a),y=hex(b);if(a[0]==="#"&&b[0]==="#")return"#"+[0,1,2].map(function(i){return("0"+Math.round(x[i]+(y[i]-x[i])*f).toString(16)).slice(-2)}).join("");return"rgba("+[0,1,2].map(function(i){return Math.round(x[i]+(y[i]-x[i])*f)}).join(",")+","+(x[3]+(y[3]-x[3])*f).toFixed(3)+")"}
@@ -27,11 +28,17 @@ function colors(h){var s=stops();if(h<s[0][0])return K.night;for(var i=0;i<s.len
 /* التوهّج على الشمس نفسها (نفس معادلة مكانها في 31-sky.js)، وعند الأفق قبل الشروق وبعد الغروب */
 function glowAt(h){try{var t=prayerDay(0).t;if(h>=t.sunrise-.5&&h<=t.maghrib+.5){var f=Math.max(0,Math.min(1,(h-t.sunrise)/(t.maghrib-t.sunrise)));return[(86-74*f)+"%",(96-74*Math.sin(Math.PI*f))+"%"]}}catch(e){}return["30%","10%"]}
 
+/* الكروت اللي عليها السما: كارت اليوم في الرئيسية، وكارت الصلاة القادمة في المواقيت */
+function cards(){var a=[],k=document.getElementById("skyCard"),p=document.querySelector("#prayer .pc2 .prayer-head");if(k)a.push(k);if(p)a.push(p);return a}
+/* كارت المواقيت: طبقة سما ورا المحتوى (نفس طبقات كارت اليوم) */
+function layer(el){if(el.id==="skyCard"||el.querySelector(".w-skyl"))return;var l=document.createElement("div");l.className="w-skyl";l.setAttribute("aria-hidden","true");l.innerHTML='<div class="sk-bg"></div><div class="sk-scene"></div><div class="sk-clouds"></div>';el.insertBefore(l,el.firstChild)}
 var lastSky="";
-function paintSky(){var el=document.getElementById("skyCard");if(!el)return;var h;try{h=__nowH()}catch(e){return}
- var k=Math.round(h*30);if(k===lastSky)return;lastSky=k;/* كل دقيقتين كفاية: التغيير بطيء */
- var c;try{c=colors(h)}catch(e){return}var g=glowAt(h),st=el.style;
- st.setProperty("--sk-top",c[0]);st.setProperty("--sk-mid",c[1]);st.setProperty("--sk-low",c[2]);st.setProperty("--sk-glow",c[3]);st.setProperty("--sk-gx",g[0]);st.setProperty("--sk-gy",g[1]);var ph=phase(h);if(el.dataset.ph!==ph)el.dataset.ph=ph}
+function paintSky(force){var h;try{h=__nowH()}catch(e){return}
+ var k=Math.round(h*30);if(k===lastSky&&!force)return;lastSky=k;/* كل دقيقتين كفاية: التغيير بطيء */
+ var c;try{c=colors(h)}catch(e){return}var g=glowAt(h),ph=phase(h);
+ cards().forEach(function(el){var st=el.style;st.setProperty("--sk-top",c[0]);st.setProperty("--sk-mid",c[1]);st.setProperty("--sk-low",c[2]);st.setProperty("--sk-glow",c[3]);st.setProperty("--sk-gx",g[0]);st.setProperty("--sk-gy",g[1]);st.setProperty("--dune-far",c[4]);st.setProperty("--dune-near",c[5]);if(el.dataset.ph!==ph)el.dataset.ph=ph;
+  /* كارت اليوم بيرسم مشهده بنفسه (31-sky.js)؛ كارت المواقيت بياخد القمر والنجوم بالليل بس — الشمس عنده على القوس (39-prayer-card.js) */
+  if(el.id!=="skyCard"&&window.__skyScene){var sc=el.querySelector(".w-skyl .sk-scene"),sn=__skyScene(),night=/^(night|twilight)/.test(sn.key),k2=night?sn.key:"day";if(sc&&sc.dataset.k!==k2){sc.dataset.k=k2;sc.innerHTML=night?sn.html:""}}})}
 
 /* ===== الجو ===== */
 var WX={0:["clear","صافي"],1:["clear","صافي غالبًا"],2:["partly","غائم جزئيًا"],3:["cloudy","غائم"],45:["fog","ضباب"],48:["fog","ضباب"],
@@ -51,7 +58,9 @@ function cached(c){try{var v=JSON.parse(localStorage.getItem(KEY)||"null");if(v&
 function load(){var c=coords();if(!c)return;var v=cached(c);if(v)show(v);if((v&&Date.now()-v.at<TTL)||busy||!navigator.onLine)return;busy=1;
  fetch("https://api.open-meteo.com/v1/forecast?latitude="+c[0]+"&longitude="+c[1]+"&current=temperature_2m,weather_code,is_day&timezone=auto").then(function(r){return r.ok?r.json():null}).then(function(j){busy=0;if(!j||!j.current)return;
   var o={k:c.join(","),at:Date.now(),t:Math.round(j.current.temperature_2m),w:j.current.weather_code,d:j.current.is_day};try{localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}show(o)}).catch(function(){busy=0})}
-function show(o){var el=document.getElementById("skyCard");if(!el)return;var m=WX[o.w]||WX[0],kind=m[0];
+var lastWx=null;
+function show(o){lastWx=o;cards().forEach(function(el){showOn(el,o)})}
+function showOn(el,o){var m=WX[o.w]||WX[0],kind=m[0];
  if(el.dataset.wx!==kind)el.dataset.wx=kind;clouds(el,kind);
  var b=el.querySelector(".sk-wx");if(!b){b=document.createElement("span");b.className="sk-wx";el.appendChild(b)}
  var ic=kind==="clear"&&!o.d?"night":kind,html='<svg viewBox="0 0 24 24" aria-hidden="true">'+IC[ic]+'</svg><b>'+ar(o.t)+'°</b><span>'+m[1]+'</span>';
@@ -74,14 +83,14 @@ function clouds(el,kind){var c=el.querySelector(".sk-clouds");if(!c||c.dataset.k
 /* مرحلة النور (للون السحاب): من نفس نقاط الوقت */
 function phase(h){try{var t=prayerDay(0).t;if(h<t.fajr-.2||h>=t.maghrib+.8)return"night";if(h<t.sunrise+.6)return"dawn";if(h<t.maghrib-.6)return"day";if(h<t.maghrib+.2)return"sunset";return"dusk"}catch(e){return"day"}}
 
-/* طبقة المطر/الثلج: بتتعمل مرة واحدة */
-function fx(el){if(el.querySelector(".sk-fx"))return;var d=document.createElement("div");d.className="sk-fx";d.setAttribute("aria-hidden","true");var h="";for(var i=0;i<48;i++)h+='<i style="left:'+(i*17%100)+'%;animation-delay:-'+((i%12)*.31).toFixed(2)+'s;animation-duration:'+(.55+(i%5)*.09).toFixed(2)+'s"></i>';d.innerHTML=h;el.insertBefore(d,el.querySelector(".sk-info"))}
+/* طبقة المطر/الثلج: بتتعمل مرة واحدة لكل كارت */
+function fx(el){if(el.querySelector(".sk-fx"))return;var d=document.createElement("div");d.className="sk-fx";d.setAttribute("aria-hidden","true");var h="";for(var i=0;i<48;i++)h+='<i style="left:'+(i*17%100)+'%;animation-delay:-'+((i%12)*.31).toFixed(2)+'s;animation-duration:'+(.55+(i%5)*.09).toFixed(2)+'s"></i>';d.innerHTML=h;var L=el.querySelector(".w-skyl");if(L)L.appendChild(d);else el.insertBefore(d,el.querySelector(".sk-info"))}
 /* الحركة تقف لما الكارت مش ظاهر */
-var io=null;function watch(el){if(io||!window.IntersectionObserver)return;io=new IntersectionObserver(function(es){es.forEach(function(e){e.target.classList.toggle("sk-off",!e.isIntersecting)})});io.observe(el)}
-
-function run(){var el=document.getElementById("skyCard");if(!el)return;fx(el);watch(el);paintSky();load()}
-__wOnDom(function(){var el=document.getElementById("skyCard");if(el&&!el.querySelector(".sk-fx"))run()});
-var n=0;__wEverySec(function(){if((document.documentElement.dataset.view||"home")!=="home")return;paintSky();if(++n%60===0)load()});
+var io=window.IntersectionObserver?new IntersectionObserver(function(es){es.forEach(function(e){e.target.classList.toggle("sk-off",!e.isIntersecting)})}):null;
+function setup(el){if(el.dataset.wsky)return;el.dataset.wsky="1";el.classList.add("w-sky");layer(el);fx(el);if(io)io.observe(el);if(lastWx)showOn(el,lastWx)}
+function run(){var a=cards();if(!a.length)return;a.forEach(setup);paintSky(true);load()}
+__wOnDom(function(){if(cards().some(function(el){return!el.dataset.wsky}))run()});
+var n=0;__wEverySec(function(){var v=document.documentElement.dataset.view||"home";if(v!=="home"&&v!=="prayer")return;paintSky();if(++n%60===0)load()});
 document.addEventListener("visibilitychange",function(){if(!document.hidden)load()});
 /* لما المستخدم يغيّر مدينته */
 window.addEventListener("storage",function(e){if(e.key==="wird-prayer")load()});

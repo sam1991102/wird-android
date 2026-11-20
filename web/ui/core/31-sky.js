@@ -53,9 +53,12 @@ var last="",dKey="",FM={};
 /* بنكتب النص بس لو اتغيّر (الكتابة بتعيد رسم الكارت) */
 function put(el,sel,v){var e=el.querySelector(sel);if(e&&e.textContent!==v)e.textContent=v}
 function fmts(z){var k=z||"";return FM[k]||(FM[k]={wd:new Intl.DateTimeFormat("ar",{weekday:"long",timeZone:z}),hj:new Intl.DateTimeFormat("ar-SA-u-ca-islamic-umalqura",{day:"numeric",month:"long",year:"numeric",timeZone:z}),gr:new Intl.DateTimeFormat("ar-EG",{day:"numeric",month:"long",year:"numeric",timeZone:z})})}
+/* المشهد (شمس بمكانها الحقيقي / قمر بطوره / نجوم) — بيستخدمه كارت اليوم وكارت المواقيت */
+function scene(){var st=state(),d=hDay();return{key:st.s+"|"+(st.s==="night"?d:Math.round(st.f*60)),html:(st.s==="night"||st.s==="twilight"?stars():"")+(st.s==="night"?moonSVG(((Date.now()/864e5-10962.76)%29.530589+29.530589)%29.530589):sunEl(st.f,st.s))}}
+window.__skyScene=function(){return scene()};
 var hd={k:"",v:15};function hDay(){var k=Math.floor(Date.now()/6e4);if(hd.k!==k){hd.k=k;hd.v=hijriDay()}return hd.v}
 function paint(){var el=build();if(!el)return;var st=state(),d=hDay();if(el.dataset.sky!==st.s)el.dataset.sky=st.s;
- var key=st.s+"|"+(st.s==="night"?d:Math.round(st.f*60));if(key!==last){last=key;var sc=el.querySelector(".sk-scene");sc.innerHTML=(st.s==="night"||st.s==="twilight"?stars():"")+(st.s==="night"?moonSVG(((Date.now()/864e5-10962.76)%29.530589+29.530589)%29.530589):sunEl(st.f,st.s));
+ var sn=scene();if(sn.key!==last){last=sn.key;var sc=el.querySelector(".sk-scene");sc.innerHTML=sn.html;
   put(el,".sk-label",st.s==="night"?"القمر الليلة: "+PHN(d):st.s==="dawn"?"قبيل الشروق":st.s==="twilight"?"بعد الغروب":st.s==="dusk"?"الشمس تميل إلى الغروب":"الشمس "+(st.f<.3?"في أول النهار":st.f<.7?"في كبد السماء":"بعد الزوال"))}
  /* التواريخ بتتغيّر مرة في اليوم: بنحسبها مرة في الدقيقة بس، والمنسّقات بتتعمل مرة لكل منطقة زمنية */
  var mk=Math.floor(Date.now()/6e4)+"|"+tz();if(mk!==dKey){dKey=mk;try{var z=tz(),now=new Date(),F=fmts(z),gv=function(p,k){return(p.find(function(x){return x.type===k})||{}).value||""};

@@ -18,7 +18,7 @@ export const PAGES = [
   ['الإذاعة', '__openRadio()'], ['البحث', '__openSearch()'], ['اختيار المدينة', '__wirdCity()'],
 ];
 // الأجزاء المستثناة عن قصد: ليها ألوانها الخاصة (ورق المصحف، بطاقات السماء والصلاة اللي بتتغيّر مع وقت اليوم، المنبّه، ركن الطفل، أيقونات الإعدادات...)
-export const EXEMPT = ['.da-', '.sky-', '.ph-', '.mp-page', '.mp-lines', '#skyCard', '.sk-', '.al-ov', '.adhan-ov', '.kd-', '.nt-ic', '.ph-hero', '.su-icon', '#wSplash', 'img', 'svg', 'canvas', 'video'];
+export const EXEMPT = ['.da-', '.sky-', '.ph-', '.mp-page', '.mp-lines', '#skyCard', '.w-sky', '.sk-', '.al-ov', '.adhan-ov', '.kd-', '.nt-ic', '.ph-hero', '.su-icon', '#wSplash', 'img', 'svg', 'canvas', 'video'];
 
 export async function scan(browser, onlyPages) {
   const rows = [];

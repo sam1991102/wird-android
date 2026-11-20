@@ -1,0 +1,51 @@
+/* ===== صفحة المواقيت: كارت الصلاة القادمة (ui/core/39-prayer-card.js) =====
+   السما من 17-sky-live.css، وفوقها قوس الشمس وكثبان رملية بلون النور (--dune-far / --dune-near).
+   المحتوى في النص: «الصلاة القادمة» ← اسم الصلاة بخط اللمسة ← الوقت ← شريحة «المتبقي». */
+.pc2 .prayer-head.pc-v2{min-height:300px;padding:92px var(--s16) 76px;text-align:center}
+.pc2 .prayer-head.pc-v2>.pc-main{display:flex;flex-direction:column;align-items:center}
+.pc-v2 #prayerTitle{display:contents}
+.pc-v2 .eyebrow{order:1;margin:0;opacity:.9}
+.pc2 .prayer-head.pc-v2 #nextName{order:2;font-size:calc(var(--t-4xl) * 1.4);line-height:1.1;margin-top:var(--s2)}
+.pc-v2 #prayerTitle small{display:none}
+.pc2 .prayer-head.pc-v2 .ph-at{order:3;margin:0;font-size:var(--t-3xl);font-weight:800;color:var(--on-dark);font-variant-numeric:tabular-nums}
+/* المتبقي: نفس عنصر العدّاد، في شريحة زجاج */
+.pc-v2 .countdown{order:4;margin-top:var(--s10);display:inline-flex;align-items:center;gap:var(--s6);padding:var(--s4) var(--s14);border-radius:var(--rd-pill);font-size:var(--t-md)!important;font-weight:800;color:var(--on-dark)!important;background:color-mix(in srgb,var(--on-dark) 16%,transparent);border:1px solid color-mix(in srgb,var(--on-dark) 22%,transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);line-height:1.6}
+.pc-v2 .countdown::before{content:"المتبقي";font-weight:700;opacity:.85}
+/* اتنقلوا للقائمة تحت (التاريخ، التوقيت) أو بقى القوس بيقولهم (وقت إيه ومضى قد إيه) */
+.pc-v2 #prayerPlace,.pc-v2 .ph-now,.pc-v2 .ph-bar,.pc-v2 .ph-date{display:none!important}
+/* فوق: المدينة يمين، والإعدادات والجو شمال */
+.pc2 .prayer-head.pc-v2.w-sky>.pc-city{position:absolute;top:var(--s16);right:var(--s16);z-index:2;font-size:var(--t-sm);font-weight:700;opacity:.9}
+.pc-v2 #prayerSettingsBtn{top:var(--s12);inset-inline-end:auto;left:var(--s12);width:36px;height:36px;padding:0!important;display:grid;place-items:center;font-size:0!important;border-radius:var(--rd-pill);color:var(--on-dark)!important;background:color-mix(in srgb,var(--on-dark) 16%,transparent)!important;border:1px solid color-mix(in srgb,var(--on-dark) 22%,transparent)!important}
+.pc-v2 #prayerSettingsBtn svg{width:18px;height:18px}
+.pc2 .prayer-head.pc-v2.w-sky .sk-wx{top:var(--s16);left:60px}
+
+/* القوس والكثبان */
+.pc-arc{position:absolute;inset:0;width:100%;height:100%;z-index:3}
+.pc-arc .pc-track{fill:none;stroke:var(--on-dark);stroke-opacity:.3;stroke-width:1.2;stroke-dasharray:2 5}
+.pc-arc .pc-done{fill:none;stroke:var(--on-hero-acc);stroke-opacity:.85;stroke-width:2;stroke-linecap:round}
+.pc-arc .pc-marks circle{fill:var(--on-dark);fill-opacity:.6}
+.pc-arc .pc-disc{fill:#ffe9a6}
+.pc-arc .pc-sun.low .pc-disc{fill:#ffb46b}
+.pc-arc .pc-dune{transition:fill 1.2s ease}
+.pc-arc .pc-far{fill:var(--dune-far,#d1aa78)}
+.pc-arc .pc-near{fill:var(--dune-near,#b08552)}
+.w-skyl .sk-fx{z-index:4}
+
+/* ===== القائمة ===== */
+.pc-day{display:flex;align-items:center;justify-content:space-between;gap:var(--s8);padding:var(--s12) var(--s16) var(--s8)}
+.pc-day button{width:36px;height:36px;border-radius:var(--rd-pill);border:1px solid var(--line);background:var(--paper);color:var(--primary-ink);display:grid;place-items:center;flex:none}
+.pc-day button svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.pc-day .pc-dt{text-align:center;line-height:1.5}
+.pc-day .pc-dt b{display:block;font-size:var(--t-md);color:var(--ink)}
+.pc-day .pc-dt small{font-size:var(--t-xs);color:var(--muted)}
+/* يوم غير النهارده: الضغط على التاريخ يرجّع للنهارده، والحالة وعلامة «صلّيت» بتختفي */
+.pc-day.is-other .pc-dt{cursor:pointer}
+.pc-day.is-other .pc-dt small::after{content:" · ارجع للنهارده";color:var(--primary-ink);font-weight:700}
+.prayer-list.pc-other .pl-st,.prayer-list.pc-other .sl-chk{visibility:hidden}
+.prayer-list.pc-other li.next{background:none}
+/* الشروق علامة وقت، مش صلاة */
+.pc2 .prayer-list li.sunrise>span:not(.pl-ic)::after{content:"علامة وقت، مش صلاة";display:block;font-size:var(--t-2xs);font-weight:500;color:var(--muted)}
+.pc-extra{display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--s8);margin:var(--s4) var(--s16) 0;padding:var(--s12) 0 var(--s4);border-top:1px dashed var(--line);font-size:var(--t-xs);color:var(--muted)}
+.pc-extra>div{text-align:center;flex:1 1 0;min-width:64px}
+.pc-extra b{display:block;font-size:var(--t-sm);color:var(--ink);font-variant-numeric:tabular-nums}
+.pc-extra p{flex:1 0 100%;margin:var(--s6) 0 0;text-align:center;font-size:var(--t-2xs)}

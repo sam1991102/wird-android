@@ -11,7 +11,7 @@ const { chromium } = await import(PW);
 const SITE = process.env.SITE || 'http://localhost:8787/';
 const OUT = process.argv[2] || 'icons-audit.json';
 // أجزاء بألوانها الخاصة عن قصد (ورق المصحف، سماء الوقت، رسوم الأطفال، شعارات)
-const SKIP = ['.ph-art', '.mp-page', '.mp-lines', '.sky-', '#skyCard', '.kd-art', '.su-icon', '#wSplash', '.brand', '.logo'];
+const SKIP = ['.ph-art', '.w-sky', '.mp-page', '.mp-lines', '.sky-', '#skyCard', '.kd-art', '.su-icon', '#wSplash', '.brand', '.logo'];
 
 export async function scanIcons(browser, only) {
   const rows = [];

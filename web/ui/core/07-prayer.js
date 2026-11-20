@@ -43,8 +43,6 @@ qb.querySelector(".q-start").addEventListener("click",async()=>{try{if(typeof De
  if("ondeviceorientationabsolute" in window)addEventListener("deviceorientationabsolute",onOri);else addEventListener("deviceorientation",onOri);live=true;qb.querySelector(".q-start").hidden=true;draw();
  setTimeout(()=>{if(heading==null)msg.textContent="البوصلة غير متاحة على هذا الجهاز. استخدم الدرجة الموضحة مع بوصلة الهاتف."},3000)}catch(e){msg.textContent="البوصلة غير متاحة على هذا الجهاز."}});
 document.getElementById("qiblaBtn").addEventListener("click",function(){qb.hidden=!qb.hidden;this.setAttribute("aria-expanded",!qb.hidden);if(!qb.hidden){draw();if(!("DeviceOrientationEvent" in window)||!matchMedia("(pointer:coarse)").matches)qb.querySelector(".q-start").hidden=true}});
-const art=document.createElement("div");art.className="ph-art";art.setAttribute("aria-hidden","true");head.append(art);
-const _t=tick;tick=function(){_t();const s=state();if(s)art.innerHTML=svg(IC[s.next])};
 decorate();dates();tick();setInterval(tick,15000);
 document.getElementById("citySelect")?.addEventListener("change",()=>setTimeout(()=>{decorate();if(!qb.hidden)draw()},50));
 })();

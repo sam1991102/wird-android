@@ -14,8 +14,8 @@ const BASE = path.join(HERE, 'theme-baseline.json');
 const RAW = /#[0-9a-fA-F]{3,8}\b|\b(?:rgba?|hsla?)\(/g;
 
 // أجزاء ليها ألوانها الخاصة عن قصد (ورق المصحف ووضعه الليلي، السما ورسوم الرئيسية حسب الوقت، ركن الأطفال،
-// شاشة الأذان، شاشة البداية والمعالج، وضع التركيز الهادي، زرار المفضّلة، شريط الآيفون الشفاف). مش بتتعد في القفل.
-export const EXEMPT = /mp-|sky-|\bsk-|\bda-|\bkd-|adhan|\baz-|#wSplash|\bsu-|\bwsu|calm|favorite-button|\.onb\b|\boa-|rd-fav|qx-|\.ios(\.dark)? \.(topbar|bottom-nav)\b|dr-ic\b|#fActs|tl-cel|\.lp-ov|\.focus|#focus|#fStage|pt-(dawn|day|sunset|night)|tl-medal|\.qx\b/;
+// شاشة الأذان، شاشة البداية والمعالج، وضع التركيز الهادي، زرار المفضّلة، شريط الآيفون الشفاف، قوس الشمس والكثبان في كارت المواقيت). مش بتتعد في القفل.
+export const EXEMPT = /mp-|sky-|\bsk-|\bda-|\bkd-|adhan|\baz-|#wSplash|\bsu-|\bwsu|calm|favorite-button|\.onb\b|\boa-|rd-fav|qx-|\.ios(\.dark)? \.(topbar|bottom-nav)\b|dr-ic\b|#fActs|tl-cel|\.lp-ov|\.focus|#focus|#fStage|pt-(dawn|day|sunset|night)|tl-medal|\.qx\b|\.pc-arc/;
 const SPACE = /^(padding|margin|gap|row-gap|column-gap)(-[a-z-]+)?$/;
 const LEN = /(?:^|[\s,/])-?(?:\d*\.)?\d+(?:px|rem)\b/;
 export function count(css) {

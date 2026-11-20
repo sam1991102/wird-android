@@ -284,6 +284,12 @@ html.dark .surah-card.surah-all{background:var(--brand)}
 .pc2 #nextName{font-family:var(--font-text);font-size:clamp(2rem,7vw,2.6rem);line-height:1.2}
 .pc2 #prayerTitle small{font-size:var(--fs-sm,.875rem);color:var(--on-dark-2);font-weight:400}
 .pc2 .prayer-head .countdown{font-size:clamp(2.2rem,9vw,3rem);font-weight:800;color:var(--on-dark);letter-spacing:.02em;line-height:1.1}
+/* خطوط كارت الصلاة القادمة: اسم الصلاة بخط اللمسة (الأميري)، وكل الباقي (العنوان الصغير والعدّاد والوقت) بخط الواجهة وأرقام متساوية العرض */
+.pc2 .prayer-head .eyebrow{font-family:var(--font-ui);font-size:var(--t-sm);font-weight:700;letter-spacing:0}
+.pc2 .prayer-head #prayerTitle{font-family:var(--font-ui)}
+.pc2 .prayer-head #nextName{font-family:var(--font-accent);font-weight:400}
+.pc2 .prayer-head #prayerTitle small{font-family:var(--font-ui);font-size:var(--t-sm);font-weight:600;color:var(--on-dark-2)}
+.pc2 .prayer-head .countdown{font-family:var(--font-ui);font-variant-numeric:tabular-nums}
 .pc2 #prayerPlace{color:var(--on-dark-2);margin:var(--s10) 0 0;font-size:var(--fs-sm,.875rem)}
 .pc2 #prayerSettingsBtn{background:color-mix(in srgb,var(--on-dark) 7.8%,transparent);border-color:color-mix(in srgb,var(--on-dark) 16.5%,transparent);color:var(--on-dark);flex:none}
 .ph-bar{height:6px;border-radius:var(--rd-xs);background:color-mix(in srgb,var(--on-dark) 13.3%,transparent);margin-top:var(--s14);overflow:hidden;max-width:420px}
@@ -330,11 +336,11 @@ html.dark .q-needle svg{stroke:var(--gold-2);fill:var(--gold-2)}
 .q-msg{margin:var(--s6) 0 var(--s12);color:var(--ink-2);font-size:var(--fs-sm,.875rem)}
 @media (min-width:761px){.pc2 .prayer-head{padding:var(--s32) var(--s32)}.pc2 .prayer-list{display:grid;grid-template-columns:repeat(2,1fr);column-gap:var(--s24)}.pc2 .prayer-list li:nth-last-child(2){border-bottom:0}}
 @media (prefers-reduced-motion:reduce){.q-rose,.q-needle,.ph-bar span{transition:none}}
-.ph-art{position:absolute;inset-inline-end:28px;top:50%;transform:translateY(-50%);width:150px;height:150px;color:color-mix(in srgb,var(--on-dark) 7.8%,transparent);pointer-events:none}
-.ph-art .ic{width:100%;height:100%;stroke-width:1.2}
-@media (max-width:760px){.ph-art{width:110px;height:110px;top:auto;bottom:18px;transform:none;inset-inline-end:14px}}
+
+
+
 @media (max-width:760px){html[data-view]:not([data-view="home"]) main{padding-bottom:120px}}
-.pc2 .prayer-head>div:not(.ph-art){position:relative;z-index:1}
+.pc2 .prayer-head>:not(.w-skyl):not(.sk-wx){position:relative;z-index:1}
 .pc2 .prayer-head{display:block}
 .pc2 #prayerSettingsBtn{position:absolute;top:18px;inset-inline-end:18px;z-index:2}
 @media (max-width:760px){.pc2 #prayerSettingsBtn{padding:var(--s6) var(--s10);font-size:var(--t-sm)}}

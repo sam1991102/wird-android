@@ -2,11 +2,6 @@
 /*polish*/
 .l2-shb .l2-si{color:var(--on-hero-acc)!important}
 #prayer .ph-at{margin:var(--s2) 0 var(--s6);font-size:var(--t-glyph);font-weight:700;color:var(--on-hero-acc);letter-spacing:.2px}
-/* ألوان السما متغمّقة بحيث الكلام الفاتح والذهبي فوقها يتقري (تباين ≥ 4.5) */
-#prayer .prayer-card.pt-dawn .prayer-head{background:linear-gradient(160deg,#1F3A5F 0%,#5F465E 60%,#6F442F 100%)!important}
-#prayer .prayer-card.pt-day .prayer-head{background:linear-gradient(160deg,#155377 0%,#175472 55%,#1D546A 100%)!important}
-#prayer .prayer-card.pt-sunset .prayer-head{background:linear-gradient(160deg,#3B2A5C 0%,#7B3658 60%,#7C3C2E 100%)!important}
-#prayer .prayer-card.pt-night .prayer-head{background:radial-gradient(120% 90% at 70% 0%,#24305E 0%,#0B1230 65%,#070B1E 100%)!important}
 
 /* الإبداعي الفاتح: شريط «الصلاة القادمة» بنفس لون الشريط العلوي بدل الرمادي */
 html.ios:not(.dark) .tb-strip{background:color-mix(in srgb,var(--primary) 6%,transparent)!important;border-top:1px solid color-mix(in srgb,var(--ink) 6%,transparent)}

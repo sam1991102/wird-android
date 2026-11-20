@@ -235,6 +235,7 @@
   "core/30-sources.js",
   "core/31-sky.js",
   "core/38-sky-live.js",
+  "core/39-prayer-card.js",
   "core/32-theme-device.js",
   "core/33-mushaf-card.js",
   "core/34-kids.js",
@@ -281,6 +282,7 @@
   "13-home.css",
   "14-focus.css",
   "16-polish.css",
-  "17-sky-live.css"
+  "17-sky-live.css",
+  "18-prayer-card.css"
  ]
 }
