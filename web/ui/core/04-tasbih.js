@@ -19,5 +19,5 @@ function render(){if(!box)return;const c=timeCategory(),items=catItems(c);if(!it
  box.querySelector(".nextd-txt").textContent=nx.text;box.querySelector(".nextd-go").onclick=()=>openFocus(c)}
 render();document.addEventListener("visibilitychange",()=>{if(!document.hidden)render()});
 const f=document.getElementById("focus");if(f)new MutationObserver(()=>{if(f.hidden)render()}).observe(f,{attributes:true,attributeFilter:["hidden"]});
-setInterval(render,60000);
+__wEvery(60,render);
 })();

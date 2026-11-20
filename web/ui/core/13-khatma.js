@@ -52,5 +52,5 @@ __wOnView(()=>{if(document.documentElement.dataset.view==="mushaf")render()});
 /* تتبّع حيّ: كل صفحة تالية مباشرةً تُحسب فور ظهورها */
 let rsT;addEventListener("wird-mp-page",e=>{const k=load();if(!k||k.pos>=TOT)return;const pg=+e.detail;if(pg===k.pos+1){const before=k.pos>=plan(k).target;k.pos=pg;if(k.pos>=TOT)k.count=(k.count||0)+1;save(k);render();clearTimeout(rsT);rsT=setTimeout(resync,4000);if(!before&&k.pos>=plan(k).target)toast("أتممت وِرد الختمة اليوم، تقبّل الله")}});
 /* بلاطة المصحف في الرئيسية */
-const hp=$("#hpPage");const upd=window.__khTile=()=>{const k=load();if(hp&&k&&k.pos<TOT)hp.textContent="الختمة "+ar(plan(k).pct)+"٪"};upd();setInterval(upd,30000);
+const hp=$("#hpPage");const upd=window.__khTile=()=>{const k=load();if(hp&&k&&k.pos<TOT)hp.textContent="الختمة "+ar(plan(k).pct)+"٪"};upd();__wEvery(30,upd);
 })();

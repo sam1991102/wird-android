@@ -6,7 +6,7 @@ if(M[p])setTimeout(function(){if(!document.querySelector('.wp-page')&&typeof win
 var f=document.getElementById('bkFile');if(f&&!f.getAttribute('aria-label'))f.setAttribute('aria-label','اختيار ملف النسخة الاحتياطية');
 try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persisted().then(function(x){if(!x)navigator.storage.persist()})}catch(e){}
 function fri(){var s=document.getElementById("season");if(!s||s.hidden||!/الجمعة/.test(s.textContent))return;try{var d=prayerDay(0);var n=new Date();var h=n.getHours()+n.getMinutes()/60;if(n.getDay()===5&&h>=d.t.maghrib)s.hidden=true}catch(e){}}
-setTimeout(fri,1500);setInterval(fri,6e4);
+setTimeout(fri,1500);__wEvery(60,fri);
 })();
 ;(function(){
 /* ===== وِرد — إضافات v192: الاستكمال • الوضع الهادئ • ثيمات الوقت • صفحة الاختبار ===== */
@@ -34,7 +34,7 @@ if(J("wird-calm",0))document.documentElement.classList.add("calm");
 var TP={fajr:"#1c3a52",duha:"#1d5a6e",day:"#0f3d2e",asr:"#6a4a14",maghrib:"#5a2a3c",night:"#0c2230"};
 function period(){try{var t=prayerDay(0).t,h=__nowH();if(h>=t.fajr&&h<t.sunrise)return"fajr";if(h>=t.sunrise&&h<t.dhuhr)return"duha";if(h>=t.dhuhr&&h<t.asr)return"day";if(h>=t.asr&&h<t.maghrib)return"asr";if(h>=t.maghrib&&h<t.isha+.5)return"maghrib";return"night"}catch(e){return"day"}}
 function theme(){var on=1;var r=document.documentElement;if(!on){r.removeAttribute("data-tp");return}var p=period();if(r.getAttribute("data-tp")!==p){r.setAttribute("data-tp",p);var m=document.querySelector('meta[name="theme-color"]');}}
-theme();setInterval(theme,6e4);document.addEventListener("visibilitychange",function(){if(!document.hidden)theme()});
+theme();__wEvery(60,theme);document.addEventListener("visibilitychange",function(){if(!document.hidden)theme()});
 /* خيارات داخل قسم «المظهر» الأصلي + تشغيل تبويبات الإعدادات */
 function stUI(){var lk=document.getElementById("st-look");if(!lk||document.getElementById("tpOn"))return;var w=document.createElement("div");w.id="stLook";w.innerHTML='<span id="tpOn" hidden></span><label class="st-row st-tg"><span><b>وضع القراءة الهادئة</b><small>نص أكبر بدون أزرار — اضغط على الذكر للعدّ</small></span><input type="checkbox" id="calmOn"'+(calmOn()?" checked":"")+'></label>';lk.appendChild(w);w.querySelector("#calmOn").onchange=function(){setCalm(this.checked)}}
 function stTabs(){var st=document.querySelector(".st");if(!st)return;var nav=st.querySelector(".st-tabs"),body=st.querySelector(".st-body");if(!nav||!body||nav.dataset.ok)return;nav.dataset.ok=1;var L=[].slice.call(nav.querySelectorAll("a[href^='#']"));

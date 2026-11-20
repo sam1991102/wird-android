@@ -7,10 +7,6 @@
   "observer": 1,
   "interval": 0
  },
- "10-radio.js": {
-  "observer": 0,
-  "interval": 1
- },
  "12-icons.js": {
   "observer": 1,
   "interval": 0
@@ -29,7 +25,7 @@
  },
  "19-home.js": {
   "observer": 1,
-  "interval": 1
+  "interval": 0
  },
  "20-pages.js": {
   "observer": 2,
@@ -40,14 +36,6 @@
   "interval": 0
  },
  "25-polish.js": {
-  "observer": 1,
-  "interval": 1
- },
- "34-ratb.js": {
-  "observer": 1,
-  "interval": 1
- },
- "35-view-guard.js": {
   "observer": 1,
   "interval": 0
  },
@@ -65,7 +53,7 @@
  },
  "core/04-tasbih.js": {
   "observer": 1,
-  "interval": 1
+  "interval": 0
  },
  "core/06-adhkar-cards.js": {
   "observer": 1,
@@ -89,35 +77,23 @@
  },
  "core/11-adhan-notify.js": {
   "observer": 2,
-  "interval": 1
- },
- "core/12-home-extras.js": {
-  "observer": 0,
-  "interval": 1
+  "interval": 0
  },
  "core/13-khatma.js": {
   "observer": 1,
-  "interval": 1
- },
- "core/14-updates.js": {
-  "observer": 0,
-  "interval": 1
+  "interval": 0
  },
  "core/17-perms-install.js": {
   "observer": 1,
-  "interval": 1
+  "interval": 0
  },
  "core/20-theme-auto.js": {
   "observer": 1,
-  "interval": 1
- },
- "core/21-qari-alarm.js": {
-  "observer": 0,
-  "interval": 1
+  "interval": 0
  },
  "core/22-topbar.js": {
-  "observer": 4,
-  "interval": 2
+  "observer": 3,
+  "interval": 0
  },
  "core/25-hajj-ruqya.js": {
   "observer": 3,
@@ -133,18 +109,18 @@
  },
  "core/29-fixes.js": {
   "observer": 1,
-  "interval": 2
+  "interval": 0
  },
  "core/30-sources.js": {
-  "observer": 2,
+  "observer": 1,
   "interval": 0
  },
  "core/31-sky.js": {
   "observer": 1,
-  "interval": 1
+  "interval": 0
  },
  "core/32-theme-device.js": {
   "observer": 1,
-  "interval": 2
+  "interval": 0
  }
 }

@@ -17,5 +17,5 @@ function later(){if(!q)q=requestAnimationFrame(run)}
 /* المربعات بتتبني من جديد في كل زيارة لصفحة الأذكار: نبدّل الأيقونة في نفس اللحظة (قبل الرسم) عشان ما تظهرش القديمة ثم الجديدة */
 var L=document.getElementById("library");L&&new MutationObserver(tiles).observe(L,{childList:true,subtree:true});
 __wOnDom(later);__wOnView(later);
-setInterval(function(){if(!document.hidden&&document.documentElement.dataset.view==="prayer")prayer()},30000);run();
+__wEvery(30,function(){if(document.documentElement.dataset.view==="prayer")prayer()});run();
 })();

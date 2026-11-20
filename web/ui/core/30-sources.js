@@ -35,7 +35,7 @@ var NM={fajr:"وقت الفجر",duha:"وقت الضحى",day:"وقت الظهر
 function chip(){var tp=document.documentElement.getAttribute("data-tp");var s=document.querySelector(".tb-strip");if(!s)return;var c=s.querySelector(".tp-chip");if(!tp){c&&c.remove();return}if(!c){c=document.createElement("span");c.className="tp-chip";c.innerHTML="<i></i><b></b>";s.appendChild(c)}var t=NM[tp]||"";if(c.lastChild.textContent!==t)c.lastChild.textContent=t}
 new MutationObserver(chip).observe(document.documentElement,{attributes:true,attributeFilter:["data-tp"]});setTimeout(chip,1500);
 var QR=/[ٱۖۗۚۛۙۘ]/;function tag(){["#fText",".wp-rq .wp-ar"].forEach(function(s){document.querySelectorAll(s).forEach(function(e){e.classList.toggle("q-uth",QR.test(e.textContent))})})}
-new MutationObserver(function(){clearTimeout(tag.t);tag.t=setTimeout(tag,60)}).observe(document.body,{childList:true,subtree:true,characterData:true});})();
+__wOnDom(tag);})();
 ;(function(){/* توحيد صيغة المصادر + علامة درجة الحديث */try{
 var R=[[/^صحيح البخاري \(([^)]+)\)،\s*ومسلم \(([^)]+)\)/,"متفق عليه: البخاري ($1)، ومسلم ($2)"],[/^صحيح البخاري ومسلم/,"متفق عليه"],[/^صحيح مسلم/,"رواه مسلم"],[/^صحيح البخاري/,"رواه البخاري"],[/^سنن أبي داود والترمذي/,"رواه أبو داود والترمذي"],[/^سنن أبي داود/,"رواه أبو داود"],[/^سنن الترمذي/,"رواه الترمذي"],[/^سنن النسائي/,"رواه النسائي"],[/^سنن ابن ماجه/,"رواه ابن ماجه"],[/^مسند أحمد/,"رواه أحمد"]];
 adhkar.forEach(function(a){if(!a||!a.source)return;var s=String(a.source),pre="",m=s.match(/^((?:سورة [^—]+|آية الكرسي) — )(.*)$/);if(m){pre=m[1];s=m[2]}

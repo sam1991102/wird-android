@@ -73,7 +73,7 @@ document.addEventListener("click",function(e){var el=e.target.closest&&e.target.
 document.addEventListener("keydown",function(e){if(e.key!=="Enter"&&e.key!==" ")return;var el=e.target.closest&&e.target.closest("#homeAlerts .da-st");if(el){e.preventDefault();open(el.dataset.k)}});
 window.__renderDayArc=render;
 function tick(){var b=document.getElementById("homeAlerts");if(!b||document.hidden)return;if((R.dataset.view||"home")!=="home")return;if(b.dataset.min!==String(Math.floor(hours()*60)))render(b)}
-render(document.getElementById("homeAlerts"));setInterval(tick,60000);document.addEventListener("visibilitychange",tick);
+render(document.getElementById("homeAlerts"));__wEvery(60,tick);document.addEventListener("visibilitychange",tick);
 })();
 
 /* ── كارت اليوم: ميعاد الصلاة القادمة ── */(function(){

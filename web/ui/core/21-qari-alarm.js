@@ -33,7 +33,7 @@
  window.__showAlarm=showAlarm;
  if(/[?&]alarm=1/.test(location.search)){try{const u=new URL(location.href);u.searchParams.delete("alarm");history.replaceState(history.state,"",u.pathname+u.search+u.hash)}catch(e){}setTimeout(showAlarm,600)}
  /* داخل التطبيق: إن كان مفتوحًا وقت المنبّه */
- let fired=J("wird-alarm-fired")||0;setInterval(()=>{const s=AS();if(!s.on)return;const now=Date.now();for(const f of [fajrAt(0)-s.off*60e3].concat(s.after>0?[fajrAt(0)+s.after*60e3]:[])){if(now>=f&&now-f<90e3&&fired!==f){fired=f;J("wird-alarm-fired",f);showAlarm();break}}},15e3);
+ let fired=J("wird-alarm-fired")||0;__wEvery(15,()=>{const s=AS();if(!s.on)return;const now=Date.now();for(const f of [fajrAt(0)-s.off*60e3].concat(s.after>0?[fajrAt(0)+s.after*60e3]:[])){if(now>=f&&now-f<90e3&&fired!==f){fired=f;J("wird-alarm-fired",f);showAlarm();break}}});
  navigator.serviceWorker&&navigator.serviceWorker.addEventListener("message",e=>{if(e.data&&e.data.type==="alarm")showAlarm()});
  /* الإعدادات */
  const addSet=()=>{const ad=document.querySelector("#st-adhan");if(!ad||document.querySelector("#st-alarm"))return;const s=AS();const sec=document.createElement("section");sec.className="st-sec";sec.id="st-alarm";

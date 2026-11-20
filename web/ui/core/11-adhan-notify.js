@@ -96,7 +96,7 @@ function tick(){
   const {t,L}=d;for(const p of PR){if(!S.pr[p])continue;const diff=(L.h-t[p])*60;const key=L.y+"-"+L.m+"-"+L.d+"-"+p;
     if(diff>=0&&diff<1.2&&lastFired!==key){lastFired=key;showAdhan(p,true);break}}
 }
-setInterval(tick,15000);
+__wEvery(15,tick);
 /* فتح من إشعار الأذان */
 const qp=new URLSearchParams(location.search).get("adhan");
 if(qp&&PR.includes(qp)){setTimeout(()=>showAdhan(qp,false),600);try{history.replaceState(history.state,"",location.pathname+location.hash)}catch(e){}}

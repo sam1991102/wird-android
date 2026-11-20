@@ -25,7 +25,7 @@ function upd(){let d;try{d=prayerDay(0)}catch(e){return}const {t,L,isFri}=d;cons
  else{const n=prayerDay(1);tt=24-L.h+n.t.fajr;name="الفجر";$("#hpTime").textContent=fmtH(n.t.fajr)}
  const m=Math.max(0,Math.round(tt*60));$("#hpName").textContent=name;$("#hpCd").textContent="بعد "+(m>=60?ar(Math.floor(m/60))+" س ":"")+ar(m%60)+" د";
  const p=parseInt(String(localStorage.getItem("wird-mushaf-page")||"").replace(/\D/g,""),10);$("#hpPage").textContent=p>1&&p<=604?"تابع من صفحة "+ar(p):"ابدأ القراءة";window.__khTile&&window.__khTile()}
-upd();setInterval(()=>{if(!document.hidden)upd()},30000);document.addEventListener("visibilitychange",()=>{if(!document.hidden)upd()});
+upd();__wEvery(30,upd);document.addEventListener("visibilitychange",()=>{if(!document.hidden)upd()});
 sec.addEventListener("click",e=>{const b=e.target.closest("[data-hp]");if(!b)return;const k=b.dataset.hp,go=window.__wirdGo||(()=>{});
  if(k==="prayer")go("prayer");else if(k==="tasbih")go("tasbih");
  else if(k==="mushaf"){const p=parseInt(String(localStorage.getItem("wird-mushaf-page")||"").replace(/\D/g,""),10);window.__openPage&&__openPage(p>=1&&p<=604?p:1)}

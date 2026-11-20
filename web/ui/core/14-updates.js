@@ -5,7 +5,7 @@
  window.__wirdUpd=function(){if(document.querySelector(".upd-bar"))return;const b=document.createElement("div");b.className="upd-bar";b.setAttribute("role","status");b.innerHTML='<span>يوجد تحديث جديد للتطبيق</span><button type="button" class="btn btn-sm">تحديث الآن</button><button type="button" class="upd-x" aria-label="لاحقًا">×</button>';b.querySelector(".btn").onclick=()=>location.reload();b.querySelector(".upd-x").onclick=()=>b.remove();document.body.appendChild(b)};
  const chk=()=>navigator.serviceWorker.getRegistration().then(r=>{if(!r)return;r.update().catch(()=>{});if(r.waiting&&navigator.serviceWorker.controller)r.waiting.postMessage&&r.waiting.postMessage("skip")}).catch(()=>{});
  document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")chk()});
- window.addEventListener("focus",chk);setInterval(chk,30*60*1000);setTimeout(chk,8000);
+ window.addEventListener("focus",chk);__wEvery(1800,chk);setTimeout(chk,8000);
  /* حديث اليوم */
  const ar=__ar;
  const now=new Date(),doy=Math.floor((now-new Date(now.getFullYear(),0,0))/864e5),n=(doy%42)+1;

@@ -21,7 +21,7 @@ function draw(){var s=document.querySelector(".tb-strip");if(!s)return;var el=s.
   else if(h>=t.maghrib&&h<t.maghrib+0.5){html=sunSVG(1,"dusk");label="وقت الغروب"}
   else{var d=hijriDay();html=moonSVG(d);label="القمر الليلة: "+phaseName(d)}}catch(e){return}
  if(el.dataset.h!==html){el.innerHTML=html;el.dataset.h=html}el.setAttribute("title",label);el.setAttribute("aria-label",label);el.setAttribute("role","img")}
-setTimeout(draw,1200);setInterval(draw,60000);document.addEventListener("visibilitychange",function(){if(!document.hidden)draw()});
+setTimeout(draw,1200);__wEvery(60,draw);document.addEventListener("visibilitychange",function(){if(!document.hidden)draw()});
 __wOnDom(function(){if(!document.querySelector(".tb-strip .sky"))draw()});
 window.__skyDraw=draw;})();
 

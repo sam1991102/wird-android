@@ -13,7 +13,7 @@
   if(pill){const s=document.createElement("a");s.className="tb-strip";s.href="#prayer";s.setAttribute("aria-label","الصلاة القادمة");s.innerHTML='<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2"/></svg>';s.appendChild(pill);s.addEventListener("click",e=>{e.preventDefault();window.__wirdGo&&__wirdGo("prayer")});tb.appendChild(s)}};
  build();__wOnDom(()=>{if(!document.querySelector(".topbar-in[data-v2]"))build()});
  let sc=false;addEventListener("scroll",()=>{const s=scrollY>48;if(s!==sc){sc=s;R.classList.toggle("tb-scrolled",s)}},{passive:true});
- setInterval(()=>{const d=document.querySelector(".tb-date");if(d)d.textContent=hijri()},600000);
+ __wEvery(600,()=>{const d=document.querySelector(".tb-date");if(d)d.textContent=hijri()});
 })();
 
 (function(){
@@ -22,7 +22,7 @@
   const name=((document.getElementById("nextName")||{}).textContent||"").trim();const pill=((document.getElementById("nextPillText")||{}).textContent||"").trim();const tm=((document.querySelector("#prayerList li.next strong")||{}).textContent||"").trim();
   const rem=name?pill.replace(name,"").trim():pill;const nm=name||pill.split(" ")[0];
   const html='<span class="tb-np-k">الصلاة القادمة</span><b class="tb-np-n">'+nm+'</b>'+(rem?'<span class="tb-np-r">بعد '+String(rem).replace(/\d/g,__ar)+'</span>':'')+(tm?'<span class="tb-np-t">'+tm+'</span>':'');if(box.innerHTML!==html)box.innerHTML=html};
- upd();setInterval(upd,15000);new MutationObserver(()=>{clearTimeout(upd.t);upd.t=setTimeout(upd,200)}).observe(document.body,{childList:true,subtree:true,characterData:true});
+ upd();__wEvery(15,upd);__wOnDom(upd);
 })();
 
 

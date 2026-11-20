@@ -30,5 +30,5 @@ function ensure(){if(el&&el.isConnected)return;var sky=document.getElementById("
    if(r==="tap"){S.c[i]=(S.c[i]||0)+1;try{navigator.vibrate&&navigator.vibrate(S.c[i]%L[i].g===0?[30,60,30]:8)}catch(x){}}
    else S.i=(i+(r==="next"?1:L.length-1))%L.length;save(S);draw()})}
  sky.insertAdjacentElement("afterend",el);document.documentElement.classList.add("rt-on");draw()}
-(window.__wOnDom||function(f){document.addEventListener("DOMContentLoaded",f)})(function(){ensure();setInterval(function(){if(el&&load().d!==S.d)draw()},60000);new MutationObserver(ensure).observe(document.body,{childList:true})});
+(window.__wOnDom||function(f){document.addEventListener("DOMContentLoaded",f)})(ensure);__wEvery(60,function(){if(el&&load().d!==S.d)draw()});
 })();
