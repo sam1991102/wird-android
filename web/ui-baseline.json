@@ -118,9 +118,5 @@
  "core/31-sky.js": {
   "observer": 1,
   "interval": 0
- },
- "core/32-theme-device.js": {
-  "observer": 1,
-  "interval": 0
  }
 }
