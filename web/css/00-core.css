@@ -1314,3 +1314,5 @@ html.dark,html.sepia{--tint:color-mix(in srgb,var(--gold) 10%,transparent);--tin
 .l2-si,.l2-ic,.tl-ic,.tl-e,.pl-ic,.ct-ic,.mt-ic,.hp-ic,.ntf-ic,.mv-ic,.mv-bm-ic,.lr-num,.lr-big,.nt-ic,.rd-fl,.dr-ic,.sc-chip span,.wp-back{background:var(--chip-bg);color:var(--chip-ink);border:0;box-shadow:none}
 .l2-si svg,.tl-e svg,.rd-fl svg{stroke:currentColor}
 .pc2 .prayer-list li.next .pl-ic{background:var(--primary);color:var(--on-primary)}
+/* سفاري على الآيفون بياخد لون شريط الحالة من خلفية html: نخليها بلون الشريط العلوي بدل الأبيض (body فاضل بلون الصفحة) */
+html:not(.ios):has(.topbar.tb2){background-color:var(--brand)}html.dark:not(.ios):has(.topbar.tb2){background-color:var(--deep)}html:not(.ios):has(.topbar.tb2) body{min-height:100vh}
