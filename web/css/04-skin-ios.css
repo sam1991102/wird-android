@@ -14,7 +14,7 @@ html.ios #installBtn{background:var(--primary)!important;background-image:none!i
 html.ios #heroStart,html.ios .today-card,html.ios .qk-cont{background:var(--primary)!important;background-image:none!important;color:var(--on-dark)!important;box-shadow:none}
 html.ios .today-card *{color:var(--on-dark)!important}
 html.ios .btn-primary>span[aria-hidden]{background:color-mix(in srgb,var(--on-dark) 22%,transparent)!important;color:var(--on-primary)!important}
-html.ios .btn-gold{background:var(--primary)!important;background-image:none!important;color:var(--on-gold)!important}
+
 html.ios .btn-ghost{background:var(--paper-2)!important;color:var(--primary)!important}
 
 

@@ -3,6 +3,7 @@
 //   font   — font-size بـpx/rem                    ← استخدم var(--t-xs .. --t-4xl)
 //   radius — border-radius بـpx/rem (غير 0 و50%)   ← استخدم var(--rd-2xs .. --rd-xl / --rd-pill)
 //   family — font-family مكتوب بالاسم       ← استخدم var(--font-ui / --font-text / --font-deco / --font-quran)
+//   chip   — مربع أيقونة (.xxx-ic) بلون خاص بدل --chip-bg / --chip-ink ← كل مربعات الأيقونات شكل واحد
 //   space  — padding/margin/gap بـpx/rem (غير 0 و1px) ← استخدم var(--s2 .. --s48)
 // العدد لكل ملف ولكل نوع ما ينفعش يزيد عن المسجّل في theme-baseline.json.
 // لما تنقل قيم قديمة للرموز، شغّل: node theme-lint.mjs --update  علشان العدد الجديد (الأقل) يتسجّل.
@@ -19,7 +20,7 @@ export const EXEMPT = /mp-|sky-|\bsk-|\bda-|\bkd-|adhan|\baz-|#wSplash|\bsu-|\bw
 const SPACE = /^(padding|margin|gap|row-gap|column-gap)(-[a-z-]+)?$/;
 const LEN = /(?:^|[\s,/])-?(?:\d*\.)?\d+(?:px|rem)\b/;
 export function count(css) {
-  const n = { color: 0, font: 0, radius: 0, space: 0, family: 0 };
+  const n = { color: 0, font: 0, radius: 0, space: 0, family: 0, chip: 0 };
   for (const m of css.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
     const ex = EXEMPT.test(m[1]);
     for (const d of m[2].split(';')) {
@@ -29,6 +30,7 @@ export function count(css) {
       if (!ex) n.color += (val.match(RAW) || []).length;
       if (/calc|clamp|min\(|max\(/.test(val)) continue; // قيم محسوبة عن قصد
       if (ex) continue; // الأجزاء المتصمّمة بمقاساتها كمان
+      if (/\.[\w-]+-ic(?![\w-])/.test(m[1].replace(/:not\([^)]*\)/g, '')) && !/html\.ios|\.mv-primary|\.wide|li\.next|#greetEyebrow/.test(m[1]) && /^(background|background-color|color)$/.test(prop) && !/--chip-|currentColor|inherit|transparent|none/.test(val)) n.chip++;
       if (!/@font-face/.test(m[1]) && (prop === 'font-family' || prop === 'font') && /["']|\b(serif|sans-serif|system-ui|Amiri|Tajawal)\b/.test(val.replace(/var\([^)]*\)/g, ''))) n.family++;
       if (prop === 'font-size' && LEN.test(val)) n.font++;
       if (prop === 'border-radius' && LEN.test(val.replace(/\b0(px)?\b/g, ''))) n.radius++;
@@ -44,7 +46,7 @@ export function check({ update = false } = {}) {
   for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.css')).sort()) now[f] = count(fs.readFileSync(path.join(dir, f), 'utf8'));
   if (update || !fs.existsSync(BASE)) { fs.writeFileSync(BASE, JSON.stringify(now, null, 1) + '\n'); return { ok: true, now, msg: 'اتسجّل العدد الحالي' }; }
   const base = JSON.parse(fs.readFileSync(BASE, 'utf8'));
-  const AR = { color: 'لون', font: 'حجم خط', radius: 'استدارة', space: 'مسافة', family: 'نوع خط' };
+  const AR = { color: 'لون', font: 'حجم خط', radius: 'استدارة', space: 'مسافة', family: 'نوع خط', chip: 'لون مربع أيقونة خاص' };
   const bad = [];
   for (const [f, n] of Object.entries(now)) for (const k of Object.keys(n)) { const b = (base[f] || {})[k] ?? 0; if (n[k] > b) bad.push(`${f}: ${AR[k]} ${n[k]} (المسموح ${b})`) }
   return { ok: !bad.length, now, bad, msg: bad.length ? 'فيه قيم جديدة مكتوبة بإيدها — استخدم الرموز (الألوان var(--ink)…، الخط var(--t-md)…، الاستدارة var(--rd-s)…، المسافات var(--s12)…):\n  ' + bad.join('\n  ') : 'مفيش قيم جديدة مكتوبة بإيدها' };
@@ -53,6 +55,6 @@ export function check({ update = false } = {}) {
 if (import.meta.url === 'file://' + process.argv[1]) {
   const r = check({ update: process.argv.includes('--update') });
   const t = k => Object.values(r.now).reduce((a, b) => a + b[k], 0);
-  console.log(r.msg, `| ألوان ${t('color')} · أحجام خط ${t('font')} · استدارة ${t('radius')} · مسافات ${t('space')} · أنواع خط ${t('family')}`);
+  console.log(r.msg, `| ألوان ${t('color')} · أحجام خط ${t('font')} · استدارة ${t('radius')} · مسافات ${t('space')} · أنواع خط ${t('family')} · مربعات أيقونات بلون خاص ${t('chip')}`);
   if (!r.ok) process.exit(1);
 }
