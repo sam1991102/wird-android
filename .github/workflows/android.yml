@@ -43,6 +43,12 @@ jobs:
             echo "KEYSTORE_FILE=$RUNNER_TEMP/wird-release.jks" >> "$GITHUB_ENV"
           fi
 
+      - name: Restore Firebase config (Crashlytics)
+        env:
+          GS_B64: ${{ secrets.GOOGLE_SERVICES_JSON_B64 }}
+        run: |
+          if [ -n "$GS_B64" ]; then echo "$GS_B64" | base64 -d > android/app/google-services.json; else echo "::notice::No GOOGLE_SERVICES_JSON_B64 secret - building without Crashlytics"; fi
+
       - name: Build APK + AAB
         working-directory: android
         env:

@@ -1,0 +1,55 @@
+name: Firebase Test Lab
+
+# بعد كل بناء ناجح: يجرّب الـ APK على موبايلات حقيقية (Robo يلفّ في الشاشات تلقائيًا ويكشف الانهيارات).
+# يشتغل بس لو السرّين موجودين: GCP_SA_KEY (مفتاح حساب خدمة JSON) و FIREBASE_PROJECT_ID.
+on:
+  workflow_run:
+    workflows: ["Build Android"]
+    types: [completed]
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  robo:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      HAS_KEY: ${{ secrets.GCP_SA_KEY != '' && secrets.FIREBASE_PROJECT_ID != '' }}
+    steps:
+      - name: Skip notice
+        if: env.HAS_KEY != 'true'
+        run: echo "::notice::Test Lab secrets not set - skipped"
+
+      - uses: actions/download-artifact@v5
+        if: env.HAS_KEY == 'true'
+        with:
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ github.token }}
+          path: art
+
+      - uses: google-github-actions/auth@v2
+        if: env.HAS_KEY == 'true'
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - uses: google-github-actions/setup-gcloud@v2
+        if: env.HAS_KEY == 'true'
+
+      - name: Robo test on real devices
+        if: env.HAS_KEY == 'true'
+        env:
+          PROJECT: ${{ secrets.FIREBASE_PROJECT_ID }}
+        run: |
+          APK=$(ls art/*/wird-*.apk | grep -v '/wird.apk$' | head -1)
+          echo "APK: $APK"
+          gcloud config set project "$PROJECT"
+          # أجهزة حقيقية (physical) من ماركات مختلفة؛ لو جهاز اتشال من المعمل، شوف: gcloud firebase test android models list
+          gcloud firebase test android run --type robo --app "$APK" \
+            --device model=oriole,version=33 \
+            --device model=redfin,version=30 \
+            --timeout 5m 2>&1 | tee robo.txt || true
+          grep -E "Passed|Failed|Inconclusive|Crash" robo.txt | tee -a "$GITHUB_STEP_SUMMARY"
+          ! grep -q "Failed" robo.txt
