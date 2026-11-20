@@ -31,6 +31,7 @@ public class AdhanService extends Service {
     static final String ACT_SNOOZE = "dev.pages.wird_azkar.app.SNOOZE";
     private static final int NOTIF_ID = 4242;
     private static final long ALARM_MAX_MS = 5 * 60_000L;
+    private static final long ADHAN_MAX_MS = 6 * 60_000L;
 
     private MediaPlayer player;
     private PowerManager.WakeLock wake;
@@ -71,6 +72,9 @@ public class AdhanService extends Service {
         if (isAlarm) {
             vibrate();
             handler.postDelayed(this::stopAll, ALARM_MAX_MS);
+        } else {
+            /* حد أقصى للأذان: لو التحميل علّق على نت ضعيف، الخدمة وإشعارها ما يفضلوش شغّالين */
+            handler.postDelayed(this::stopAll, ADHAN_MAX_MS);
         }
         return START_NOT_STICKY;
     }

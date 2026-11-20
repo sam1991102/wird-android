@@ -46,7 +46,9 @@ function buildEvents(days=21){
 const sigNow=()=>JSON.stringify([S.pr,S.pre,S.morning,S.evening,S.kahf,S.sleep,typeof P!=="undefined"?[P.lat,P.lng,P.method,P.asr,P.tz]:0]);
 
 async function getSub(create){
-  const reg=await navigator.serviceWorker.ready;let sub=await reg.pushManager.getSubscription();
+  /* التطبيق: الاشتراك محلي، من غير ما نستنى الـservice worker (ممكن ما يكونش جاهز من غير نت) */
+  if(window.__WIRD_NATIVE&&window.__wirdNative&&__wirdNative.sub)return create||Notification.permission==="granted"?__wirdNative.sub:null;
+  const reg=await Promise.race([navigator.serviceWorker.ready,new Promise((_,j)=>setTimeout(()=>j(new Error("sw")),15000))]);let sub=await reg.pushManager.getSubscription();
   if(!sub&&create)sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:u8(KEY)});
   return sub;
 }
@@ -142,7 +144,10 @@ function inject(){
     else if(el.id==="azPre"){S.pre=+el.value;changed()}
     else if(el.id==="azSound"){S.sound=el.value;save(S)}});
   sec.addEventListener("click",async e=>{const b=e.target.closest("button");if(!b)return;
-    if(b.id==="azMain"){b.disabled=true;try{if(S.on&&Notification.permission==="granted"){await disable();toast("أُوقفت التنبيهات")}else{await enable();toast("تم تفعيل التنبيهات")}}catch(err){toast(err.message==="denied"?"لم يُسمح بالإشعارات":err.message==="ios"?"ثبّت وِرد على الشاشة الرئيسية أولًا":"تعذّر التفعيل، حاول مجددًا")}b.disabled=false;paint(sec)}
+    if(b.id==="azMain"){b.disabled=true;const st=sec.querySelector("#azStatus");let why="";
+      try{if(S.on&&Notification.permission==="granted"){await disable();toast("أُوقفت التنبيهات")}else{st.textContent="جارٍ التفعيل…";await Promise.race([enable(),new Promise((_,j)=>setTimeout(()=>j(new Error("timeout")),45000))]);toast("تم تفعيل التنبيهات")}}
+      catch(err){const m=err&&err.message;why=m==="denied"?"ما اتسمحش بالإشعارات. لو ظهرلك سؤال واخترت «عدم السماح»، فعّلها من إعدادات الموبايل ← وِرد ← الإشعارات.":m==="ios"?"على الآيفون: ثبّت وِرد على الشاشة الرئيسية الأول (مشاركة ← إضافة إلى الشاشة الرئيسية)، وافتحه من الأيقونة.":m==="sw"||m==="timeout"?"التفعيل اتأخر. اتأكد إن النت شغال، واقفل الصفحة وافتحها تاني.":"ما قدرناش نفعّل التنبيهات ("+(m||"خطأ")+"). جرّب تاني.";S.on=false;save(S)}
+      b.disabled=false;paint(sec);if(why){st.textContent=why;st.className="az-status warn"}}
     if(b.id==="azTest"){b.disabled=true;try{await sync(true);const sub=await getSub(false);const r=await fetch("/api/push/test",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({endpoint:sub&&sub.endpoint})}).then(r=>r.json());toast(r.ok?"أُرسل التنبيه — سيصلك خلال ثوانٍ":"تعذّر الإرسال")}catch(err){toast("تعذّر الإرسال")}b.disabled=false}
     if(b.id==="azPrev"){const k=(document.getElementById("azSound")||{}).value||S.sound,src=(ADHANS[k]||{}).u;if(!src){toast("اختر صوتًا أولًا");return}if(!window.__pv){const p=window.__pv=new Audio();p.preload="auto";p.addEventListener("playing",()=>{const x=document.getElementById("azPrev");if(x){x.textContent="إيقاف";x.disabled=false}});p.addEventListener("waiting",()=>{const x=document.getElementById("azPrev");if(x&&!p.paused)x.textContent="جارٍ التحميل…"});const rs=()=>{const x=document.getElementById("azPrev");if(x){x.textContent="استماع";x.disabled=false}};p.addEventListener("pause",rs);p.addEventListener("ended",rs);p.addEventListener("error",()=>{rs();toast("تعذّر التشغيل، تأكد من الاتصال بالإنترنت")})}const p=window.__pv;if(!p.paused&&p.dataset.k===k){p.pause();return}p.pause();p.dataset.k=k;p.src=src;b.textContent="جارٍ التحميل…";p.play().catch(e=>{if(e&&e.name!=="AbortError"){b.textContent="استماع";toast("تعذّر التشغيل")}})}
   });

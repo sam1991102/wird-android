@@ -29,6 +29,7 @@ public final class AdhanStore {
     static final String CH_GENERAL = "wird_general_v2";
     static final String CH_PLAYING = "wird_playing_v1";
     /** ذكر الساعة: قناة بتنزل من فوق (من غير صوت، اهتزاز قصير) وقناة هادية لو المستخدم اختار كده */
+    static final int MAX_ARMED = 400;
     static final String CH_DHIKR = "wird_dhikr_v1";
     static final String CH_DHIKR_QUIET = "wird_dhikr_quiet_v1";
     static final String BASE = "https://wird-azkar.pages.dev";
@@ -144,6 +145,8 @@ public final class AdhanStore {
             PendingIntent pi = fireIntent(c, req, ev);
             String kind = ev.optString("kind", "notif");
             boolean loud = kind.equals("adhan") || kind.equals("alarm");
+            /* أندرويد بيقفل التطبيق لو عدّى ٥٠٠ منبّه: بعد ٤٠٠ نسيب التذكيرات ونكمّل الأذان والمنبّه بس */
+            if (count >= MAX_ARMED && !loud) continue;
             try {
                 if (loud && canExact(c)) {
                     Intent open = new Intent(c, MainActivity.class);
@@ -157,9 +160,13 @@ public final class AdhanStore {
                 armed.put(req);
                 count++;
             } catch (SecurityException se) {
-                am.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, t, pi);
-                armed.put(req);
-                count++;
+                try {
+                    am.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, t, pi);
+                    armed.put(req);
+                    count++;
+                } catch (Exception ignored) {}
+            } catch (Exception ignored) {
+                /* مثلًا حد المنبّهات بتاع النظام: نكمّل الباقي من غير ما التطبيق يقفل */
             }
         }
         p.edit().putString("armed", armed.toString()).apply();

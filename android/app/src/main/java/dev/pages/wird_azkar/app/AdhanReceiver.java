@@ -20,6 +20,7 @@ public class AdhanReceiver extends BroadcastReceiver {
         AdhanStore.ensureChannels(c);
 
         if (Intent.ACTION_BOOT_COMPLETED.equals(action)
+                || action.endsWith(".QUICKBOOT_POWERON") /* شاومي وغيرها */
                 || Intent.ACTION_MY_PACKAGE_REPLACED.equals(action)
                 || Intent.ACTION_TIME_CHANGED.equals(action)
                 || Intent.ACTION_TIMEZONE_CHANGED.equals(action)
