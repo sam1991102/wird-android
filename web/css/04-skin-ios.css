@@ -56,8 +56,8 @@ html.ios body,html.ios main{color:var(--ink)}
 html.ios #skyCard .sk-wd,html.ios #skyCard .sk-city,html.ios #skyCard .sk-hj,html.ios #skyCard .sk-hy,html.ios #skyCard .sk-gr,html.ios #skyCard .sk-gy,html.ios #skyCard .sk-dhikr,html.ios #skyCard .sk-period,html.ios #skyCard .sk-np,html.ios #skyCard .sk-cd,html.ios #skyCard .sk-label{color:var(--on-dark)!important}html.ios #skyCard .sk-city,html.ios #skyCard .sk-hy,html.ios #skyCard .sk-gy,html.ios #skyCard .sk-period{color:color-mix(in srgb,var(--on-dark) 72%,transparent)!important}
 html.ios .today-card .btn-ghost,html.ios .today-card .btn-ghost *{color:var(--brand)!important;stroke:currentColor}html.ios.dark .today-card .btn-ghost,html.ios.dark .today-card .btn-ghost *{color:var(--on-dark)!important}
 html.ios:not(.dark){--gold-ink:#1E3A8A;--card-sh:0 1px 2px rgba(15,27,51,.04),0 8px 24px rgba(15,27,51,.06)}html.ios.dark{--gold-ink:#AFC0FF;--card-sh:none}
-html.ios .l2-shb,html.ios .resume-chip,html.ios .sl-week,html.ios .geo-tip,html.ios .wp-f,html.ios .wp-laps,html.ios .tl-o,html.ios .dr2 .dr-tools .dr-i2{background:var(--paper)!important;border-color:var(--line)!important}
-html.ios .l2-all,html.ios .wp-share,html.ios .adj-b,html.ios .tl-q button,html.ios .tl-b.on,html.ios .tl-day b,html.ios .sl-chk,html.ios .wp-chk{border-color:var(--primary)!important}
+html.ios .l2-shb,html.ios .resume-chip,html.ios .sl-week,html.ios .wp-f,html.ios .wp-laps,html.ios .tl-o,html.ios .dr2 .dr-tools .dr-i2{background:var(--paper)!important;border-color:var(--line)!important}
+html.ios .l2-all,html.ios .wp-share,html.ios .tl-q button,html.ios .tl-b.on,html.ios .tl-day b,html.ios .sl-chk,html.ios .wp-chk{border-color:var(--primary)!important}
 html.ios .wp-prog i b,html.ios .wp-dots i.on,html.ios .al-up,html.ios #heroStart>span[aria-hidden]{background:var(--primary)!important}
 html.ios .tl-m.on,html.ios .tl-tbl tr.t td{background:color-mix(in srgb,var(--primary) 12%,transparent)!important;border-color:var(--primary)!important}
 html.ios body::before,html.ios body::after,html.ios main::before{background-image:none!important}

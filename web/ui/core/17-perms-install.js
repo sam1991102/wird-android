@@ -17,7 +17,7 @@
   if(!navigator.geolocation)s.querySelector('[data-p="g"]').closest(".pm-row").hidden=true;
   s.addEventListener("click",async e=>{const b=e.target.closest("[data-p]");if(!b)return;b.disabled=true;
    if(b.dataset.p==="n"){try{await __wirdPush.enable();mark(b,1);T("تم تفعيل الإشعارات")}catch(x){mark(b,0,"تفعيل");T(x&&x.message==="denied"?"تم رفض الإذن، يمكنك تفعيله من إعدادات الجهاز":"الإشعارات غير مدعومة على هذا الجهاز")}}
-   else{const g=document.getElementById("geoBtn");if(g){g.click();setTimeout(()=>mark(b,1),1500)}else navigator.geolocation.getCurrentPosition(()=>mark(b,1),()=>mark(b,0,"السماح"))}});
+   else __wirdGeo(false).then(ok=>mark(b,ok,"السماح"))});
   ls("wird-perm","1")};
  window.__wirdPerms=perms;
  window.addEventListener("appinstalled",()=>ls("wird-installed","1"));

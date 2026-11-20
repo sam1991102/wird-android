@@ -94,29 +94,9 @@
           <h2 id="prayerTitle"><span id="nextName">—</span> <small>بعد</small> <span class="countdown" id="countdown">--:--:--</span></h2>
           <p class="muted" id="prayerPlace">—</p>
         </div>
-        <button class="btn btn-ghost btn-sm" id="prayerSettingsBtn" aria-expanded="false" aria-controls="prayerSettings"><i data-ic="settings"></i> الإعدادات</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="prayerSettingsBtn" aria-label="إعدادات المواقيت"><i data-ic="settings"></i></button>
       </div>
       <ol class="prayer-list" id="prayerList"></ol>
-      <div class="prayer-settings" id="prayerSettings" hidden>
-        <label>المدينة
-          <select id="citySelect"></select>
-        </label>
-        <button class="btn btn-ghost btn-sm" id="geoBtn"><i data-ic="pin"></i> استخدم موقعي الحالي</button>
-        <label>طريقة الحساب
-          <select id="methodSelect">
-            <option value="uq">أم القرى (السعودية)</option>
-            <option value="egypt">الهيئة المصرية العامة للمساحة</option>
-            <option value="mwl">رابطة العالم الإسلامي</option>
-            <option value="gulf">الخليج (دبي)</option>
-            <option value="karachi">جامعة العلوم الإسلامية بكراتشي</option>
-            <option value="isna">أمريكا الشمالية (ISNA)</option>
-          </select>
-        </label>
-        <label>العصر
-          <select id="asrSelect"><option value="1">الجمهور (شافعي، مالكي، حنبلي)</option><option value="2">الحنفي</option></select>
-        </label>
-        <p class="muted small">المواقيت تُحسب على جهازك فلكيًا، وقد تختلف دقيقة أو دقيقتين عن تقويم بلدك الرسمي. موقعك لا يُرسل إلى أي جهة.</p>
-      </div>
     </div>
   </section>
 

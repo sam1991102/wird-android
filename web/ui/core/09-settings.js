@@ -17,9 +17,8 @@ function themeNow(){return R.classList.contains("dark")?"dark":R.classList.conta
 function build(){ov=document.createElement("div");ov.className="st";ov.setAttribute("role","dialog");ov.setAttribute("aria-modal","true");ov.setAttribute("aria-labelledby","stT");ov.hidden=true;
  const R1=JSON.parse(get("wird-rem2","{}"));const r=(k,d)=>R1[k]!=null?R1[k]:d;
  ov.innerHTML='<header class="st-bar"><button type="button" class="r-btn" data-x aria-label="إغلاق"><svg class="ic" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button><strong id="stT">الإعدادات</strong><span style="width:42px"></span></header>'+
- '<nav class="st-tabs" aria-label="أقسام الإعدادات"><a href="#st-look">المظهر</a><a href="#st-prayer">المواقيت</a><a href="#st-remind">التذكيرات</a><a href="#st-data">البيانات</a><a href="#st-about">عن وِرد</a></nav><div class="st-body">'+
+ '<nav class="st-tabs" aria-label="أقسام الإعدادات"><a href="#st-look">المظهر</a><a href="#st-remind">التذكيرات</a><a href="#st-data">البيانات</a><a href="#st-about">عن وِرد</a></nav><div class="st-body">'+
  sec("look",I.sun,"المظهر",row("الوضع",seg("theme",[["light","فاتح"],["sepia","ورقي"],["dark","ليلي"]],themeNow()))+row("حجم خط الأذكار",seg("size",[["0","صغير"],["1","عادي"],["2","كبير"],["3","أكبر"],["4","الأكبر"]],get("wird-fs","1")))+row("الأرقام",seg("digits",[["ar","١٢٣"],["latin","123"]],get("wird-digits","ar")),"يُطبَّق بعد إعادة تحميل الصفحة")+row("الاهتزاز عند العدّ",sw("stVib",get("wird-vib","1")!=="0"),"على الهواتف التي تدعمه"))+
- sec("prayer",I.clock,"مواقيت الصلاة",'<div class="st-prayer-slot"></div>')+
  sec("remind",I.bell,"التذكيرات",'<p class="st-note">تُضاف التذكيرات إلى تقويم هاتفك فتصلك حتى لو لم تفتح الموقع. اختر ما تريد ثم اضغط «أضف إلى التقويم» وافتح الملف.</p>'+
   '<h3>الأذكار اليومية</h3>'+row("أذكار الصباح",sw("rm_m",r("m",1))+tm("rt_m",r("tm","06:30")))+row("أذكار المساء",sw("rm_e",r("e",1))+tm("rt_e",r("te","17:30")))+row("أذكار النوم",sw("rm_s",r("s",0))+tm("rt_s",r("ts","22:30")))+
   '<h3>الصلاة</h3>'+row("تنبيه عند كل صلاة",sw("rm_p",r("p",0)),"الفجر والظهر والعصر والمغرب والعشاء لمدة ٣٠ يومًا حسب مدينتك")+row("قبل الأذان بـ",'<select id="rt_pb" class="st-sel"><option value="0">عند الأذان</option><option value="5">٥ دقائق</option><option value="10">١٠ دقائق</option><option value="15">١٥ دقيقة</option></select>')+
@@ -33,7 +32,6 @@ function build(){ov=document.createElement("div");ov.className="st";ov.setAttrib
   '<div class="ab-act"><button type="button" class="btn btn-primary ab-share">شارك وِرد</button><div class="st-links"><a href="/privacy.html">سياسة الخصوصية</a><a href="/contact.html">تواصل معنا</a><a href="/about.html">عن الموقع</a></div></div>'+
   '<p class="ab-dua">لا تنسونا من صالح دعائكم</p>')+'</div>';
  document.body.append(ov);
- const ps=document.getElementById("prayerSettings");if(ps){ov.querySelector(".st-prayer-slot").append(ps);ps.hidden=false;ps.classList.add("st-inner")}
  const bk=document.querySelector(".backup");if(bk){ov.querySelector(".st-backup-slot").append(bk)}
  ov.querySelector("[data-x]").onclick=close;
  ov.addEventListener("click",e=>{const b=e.target.closest("[data-seg]");if(b){const g=b.dataset.seg,v=b.dataset.v;b.parentElement.querySelectorAll("button").forEach(x=>x.setAttribute("aria-checked",x===b));apply(g,v)}
@@ -77,7 +75,6 @@ let lf;function open(sectionId){lf=document.activeElement;if(!ov)build();ov.hidd
 function close(){ov.hidden=true;if(!document.querySelector(".reader:not([hidden]),.mp:not([hidden])"))R.classList.remove("reader-open");lf&&lf.focus&&lf.focus()}
 window.__openSettings=open;
 if(navigator.vibrate){const v0=navigator.vibrate.bind(navigator);navigator.vibrate=(...a)=>get("wird-vib","1")!=="0"&&v0(...a)}gb.onclick=()=>open();
-const psb=document.getElementById("prayerSettingsBtn");if(psb){const n=psb.cloneNode(true);psb.replaceWith(n);n.addEventListener("click",()=>open("prayer"))}
 if(location.hash==="#settings")setTimeout(()=>open(),300);
 })();
 (()=>{"use strict";

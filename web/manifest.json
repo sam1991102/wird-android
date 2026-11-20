@@ -226,6 +226,7 @@
   "core/21-qari-alarm.js",
   "core/22-topbar.js",
   "core/23-prayer-settings.js",
+  "core/23b-wake-daily.js",
   "core/24-dhikr-reminders.js",
   "core/25-hajj-ruqya.js",
   "core/26-focus-actions.js",
@@ -236,6 +237,7 @@
   "core/31-sky.js",
   "core/38-sky-live.js",
   "core/39-prayer-card.js",
+  "core/40-prayer-page.js",
   "core/32-theme-device.js",
   "core/33-mushaf-card.js",
   "core/34-kids.js",
@@ -283,6 +285,7 @@
   "14-focus.css",
   "16-polish.css",
   "17-sky-live.css",
-  "18-prayer-card.css"
+  "18-prayer-card.css",
+  "19-prayer-page.css"
  ]
 }

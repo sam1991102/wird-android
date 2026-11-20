@@ -12,7 +12,7 @@
 .pc-v2 .countdown{order:4;margin-top:var(--s10);display:inline-flex;align-items:center;gap:var(--s6);padding:var(--s4) var(--s14);border-radius:var(--rd-pill);font-size:var(--t-md)!important;font-weight:800;color:var(--on-dark)!important;background:color-mix(in srgb,var(--on-dark) 16%,transparent);border:1px solid color-mix(in srgb,var(--on-dark) 22%,transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);line-height:1.6}
 .pc-v2 .countdown::before{content:"المتبقي";font-weight:700;opacity:.85}
 /* اتنقلوا للقائمة تحت (التاريخ، التوقيت) أو بقى القوس بيقولهم (وقت إيه ومضى قد إيه) */
-.pc-v2 #prayerPlace,.pc-v2 .ph-now,.pc-v2 .ph-bar,.pc-v2 .ph-date{display:none!important}
+.pc-v2 #prayerPlace{display:none!important}
 /* فوق: المدينة يمين، والإعدادات والجو شمال */
 .pc2 .prayer-head.pc-v2.w-sky>.pc-city{position:absolute;top:var(--s16);right:var(--s16);z-index:2;font-size:var(--t-sm);font-weight:700;opacity:.9}
 .pc-v2 #prayerSettingsBtn{top:var(--s12);inset-inline-end:auto;left:var(--s12);width:36px;height:36px;padding:0!important;display:grid;place-items:center;font-size:0!important;border-radius:var(--rd-pill);color:var(--on-dark)!important;background:color-mix(in srgb,var(--on-dark) 16%,transparent)!important;border:1px solid color-mix(in srgb,var(--on-dark) 22%,transparent)!important}
@@ -45,7 +45,3 @@
 .prayer-list.pc-other li.next{background:none}
 /* الشروق علامة وقت، مش صلاة */
 .pc2 .prayer-list li.sunrise>span:not(.pl-ic)::after{content:"علامة وقت، مش صلاة";display:block;font-size:var(--t-2xs);font-weight:500;color:var(--muted)}
-.pc-extra{display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--s8);margin:var(--s4) var(--s16) 0;padding:var(--s12) 0 var(--s4);border-top:1px dashed var(--line);font-size:var(--t-xs);color:var(--muted)}
-.pc-extra>div{text-align:center;flex:1 1 0;min-width:64px}
-.pc-extra b{display:block;font-size:var(--t-sm);color:var(--ink);font-variant-numeric:tabular-nums}
-.pc-extra p{flex:1 0 100%;margin:var(--s6) 0 0;text-align:center;font-size:var(--t-2xs)}

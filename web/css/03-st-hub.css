@@ -8,11 +8,9 @@
 .sh-ch{font-size:var(--t-xl);color:var(--muted,var(--muted));opacity:.6}.sh-ver{text-align:center;font-size:var(--t-xs);color:var(--muted,var(--muted));margin-top:var(--s20)}
 .sh-page .nt-body>.st-sec{display:block!important;margin:0;}.sh-page .nt-body>.st-sec>:first-child:not(.st-row):not(.st-note){display:none}.sh-page .nt-entry,.sh-page .st-sub{display:none!important}
 .sh-page .nt-body>.st-sec{border:0!important;background:none!important;box-shadow:none!important;padding:0!important;max-width:none}
-.sh-page .prayer-settings,.sh-page .st-sub{margin-top:0!important;padding-top:0!important;border-top:0!important}
-.sh-page .st-prayer-slot>.prayer-settings{margin-top:var(--s4)!important}
+.sh-page .st-sub{margin-top:0!important;padding-top:0!important;border-top:0!important}
 @media (min-width:761px){.bottom-nav.nav5::after{display:none!important}.sh-page .wp-body{max-width:720px;margin-inline:auto;width:100%;box-sizing:border-box}}
 @media (min-width:761px){html body .bottom-nav.nav5::after{display:none!important}}
-.sh-page .prayer-settings{grid-template-columns:minmax(0,1fr)!important}
 @media (min-width:761px){html.st-open .wp-page.sh-page,html.st-open .wp-page.nt-page:not(.rd-tab){right:104px!important}}
 /* صف فيه أزرار اختيار كتير (الوضع): العنوان فوق والأزرار تحته لو المساحة ضيقة */
 .sh-page .st-row:has(.st-seg){flex-wrap:wrap;row-gap:var(--s10)}.sh-page .st-row .st-c:has(.st-seg){max-width:100%}

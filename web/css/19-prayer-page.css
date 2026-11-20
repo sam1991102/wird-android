@@ -1,0 +1,71 @@
+/* ===== صفحة المواقيت: المدينة على الكارت، أوقات أخرى، الأسبوع، الأدوات — وصفحة «إعدادات المواقيت» =====
+   الجافاسكربت في ui/core/40-prayer-page.js و 39-prayer-card.js */
+
+/* المدينة: زرار على الكارت */
+.pc2 .prayer-head.pc-v2.w-sky>.pc-city{display:inline-flex;align-items:center;gap:var(--s4);padding:var(--s4) var(--s10);border-radius:var(--rd-pill);border:1px solid color-mix(in srgb,var(--on-dark) 22%,transparent);background:color-mix(in srgb,var(--on-dark) 16%,transparent);color:inherit;font:inherit;font-size:var(--t-sm);font-weight:700;opacity:1;cursor:pointer}
+.pc-city svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.pc-city:focus-visible{outline:2px solid var(--on-dark);outline-offset:2px}
+
+/* أوقات أخرى (مطوية) */
+.pc-more{margin:var(--s8) var(--s16) 0;border:1px solid var(--line);border-radius:var(--rd-m);background:var(--paper)}
+.pc-more summary{display:flex;align-items:center;justify-content:space-between;padding:var(--s12) var(--s14);font-weight:700;font-size:var(--t-sm);color:var(--ink);cursor:pointer;list-style:none}
+.pc-more summary::-webkit-details-marker{display:none}
+.pc-more summary svg{width:18px;height:18px;fill:none;stroke:var(--muted);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
+.pc-more[open] summary svg{transform:rotate(180deg)}
+.pc-more-b{padding:0 var(--s14) var(--s12)}
+.pc-more-g{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s8);text-align:center}
+.pc-more-g span{display:block;font-size:var(--t-xs);color:var(--muted)}
+.pc-more-g b{font-size:var(--t-sm);color:var(--ink);font-variant-numeric:tabular-nums}
+.pc-more p{margin:var(--s10) 0 0;font-size:var(--t-xs);color:var(--muted);text-align:center}
+
+/* الأسبوع: سطر واحد */
+.prayer-card .sl-week{display:flex;align-items:center;justify-content:space-between;gap:var(--s12);margin:var(--s10) var(--s16) 0;padding:var(--s12) var(--s14);border-radius:var(--rd-m);font-size:var(--t-sm);color:var(--muted)}
+.sl-week b{color:var(--ink)}
+.sl-dots{display:flex;gap:var(--s6)}
+.sl-dots i{width:10px;height:10px;border-radius:var(--rd-pill);background:var(--line)}
+.sl-dots i.h{background:color-mix(in srgb,var(--primary) 45%,var(--line))}
+.sl-dots i.f{background:var(--primary)}
+.sl-dots i.t{outline:2px solid color-mix(in srgb,var(--primary) 35%,transparent);outline-offset:1px}
+
+/* «فعّل الأذان» بنفس هامش باقي الأقسام */
+.prayer-card>.ntf-card{margin:var(--s10) var(--s16) 0}
+
+/* الأدوات */
+.pt-tools{display:grid;grid-template-columns:repeat(var(--n,4),1fr);gap:var(--s8);margin:var(--s12) var(--s16) var(--s16)}
+.pt-tool{display:flex;flex-direction:column;align-items:center;gap:var(--s6);padding:var(--s10) var(--s4);border:1px solid var(--line);border-radius:var(--rd-m);background:var(--paper);color:var(--ink);font:inherit;font-size:var(--t-xs);font-weight:700;cursor:pointer;white-space:nowrap}
+.pt-tool-ic{width:36px;height:36px;border-radius:var(--rd-s);display:grid;place-items:center;background:var(--chip-bg);color:var(--chip-ink)}
+.pt-tool svg,.pt-set svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* ===== إعدادات المواقيت ===== */
+.pt-set .wp-body{padding:var(--s8) var(--s16) var(--s32)}
+.pt-sec{margin-top:var(--s20)}
+.pt-sec h2{margin:0 0 var(--s8);font-size:var(--t-sm);font-weight:700;color:var(--muted);font-family:inherit}
+.pt-box{border:1px solid var(--line);border-radius:var(--rd-l);background:var(--paper);overflow:hidden}
+.pt-row{display:flex;align-items:center;gap:var(--s12);padding:var(--s12) var(--s14);border-bottom:1px solid var(--line)}
+.pt-row:last-child{border-bottom:0}
+.pt-ic{width:36px;height:36px;flex:none;border-radius:var(--rd-s);display:grid;place-items:center;background:var(--chip-bg);color:var(--chip-ink)}
+.pt-tx{flex:1;min-width:0;display:flex;flex-direction:column}
+.pt-tx b{font-size:var(--t-base);color:var(--ink)}
+.pt-tx small{font-size:var(--t-xs);color:var(--muted)}
+.pt-note{margin:var(--s6) var(--s4) 0;font-size:var(--t-xs);color:var(--muted);line-height:1.7}
+.pt-sel select{width:100%;border:0;background:transparent;color:var(--ink);font:inherit;font-size:var(--t-base);padding:var(--s2) 0}
+.pt-seg{display:flex;padding:var(--s4);border-radius:var(--rd-m);background:var(--paper-2);border:1px solid var(--line)}
+.pt-seg button{flex:1;padding:var(--s8);border:0;border-radius:var(--rd-s);background:transparent;color:var(--muted);font:inherit;font-size:var(--t-sm);font-weight:700;cursor:pointer}
+.pt-seg button[aria-checked=true]{background:var(--paper);color:var(--ink);box-shadow:var(--sh-1)}
+.pt-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--s4);padding:var(--s10)}
+.pt-grid label{display:flex;flex-direction:column;align-items:center;gap:var(--s4);font-size:var(--t-xs);color:var(--muted)}
+.pt-grid select{width:100%;padding:var(--s6) var(--s2);border:1px solid var(--line);border-radius:var(--rd-s);background:var(--paper);color:var(--ink);font:inherit;font-size:var(--t-sm);text-align:center}
+.pt-adv summary{display:flex;align-items:center;justify-content:space-between;cursor:pointer;list-style:none}
+.pt-adv summary::-webkit-details-marker{display:none}
+.pt-adv summary h2{margin:0}
+.pt-adv summary svg{color:var(--muted);transition:transform .2s}
+.pt-adv[open] summary svg{transform:rotate(180deg)}
+.pt-adv .pt-box{margin-top:var(--s8)}
+.pt-adj button{width:34px;height:34px;flex:none;border:0;border-radius:var(--rd-pill);background:var(--chip-bg);color:var(--chip-ink);font:inherit;font-size:var(--t-md);font-weight:700;cursor:pointer}
+.pt-adj output{min-width:32px;text-align:center;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
+.pt-link{border:0;background:none;padding:0;color:var(--primary-ink);font:inherit;font-weight:700;cursor:pointer;text-decoration:underline}
+.pt-go{width:100%;border:0;background:none;font:inherit;text-align:start;cursor:pointer;color:var(--ink)}
+.pt-go>svg{color:var(--muted)}
+.pt-priv{margin-top:var(--s24)}
+@media (prefers-reduced-motion:reduce){.pc-more summary svg,.pt-adv summary svg{transition:none}}
+html.dark .pc2 .prayer-list li.cur .pl-st{color:var(--primary-ink)}

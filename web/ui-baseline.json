@@ -73,7 +73,7 @@
  },
  "core/07-prayer.js": {
   "observer": 2,
-  "interval": 1
+  "interval": 0
  },
  "core/08-mushaf-pages.js": {
   "observer": 1,
@@ -119,10 +119,6 @@
   "observer": 4,
   "interval": 2
  },
- "core/23-prayer-settings.js": {
-  "observer": 1,
-  "interval": 1
- },
  "core/25-hajj-ruqya.js": {
   "observer": 3,
   "interval": 0
@@ -132,7 +128,7 @@
   "interval": 0
  },
  "core/27-after-prayer.js": {
-  "observer": 2,
+  "observer": 1,
   "interval": 0
  },
  "core/29-fixes.js": {

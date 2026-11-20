@@ -16,7 +16,7 @@ window.__wirdCity=function(done){
  var q=o.querySelector(".cp-q"),L=o.querySelector(".cp-l"),S=o.querySelector(".cp-s"),seq=0,tm=0,rows=[];
  function close(){o.remove();done&&done()}
  o.querySelector(".cp-x").onclick=close;o.addEventListener("click",function(e){if(e.target===o)close()});
- o.querySelector(".cp-geo").onclick=function(){var b=this;if(!navigator.geolocation)return T("تحديد الموقع غير متاح");b.lastChild.textContent="جارٍ تحديد موقعك…";navigator.geolocation.getCurrentPosition(function(p){var tz="";try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone}catch(x){}if(apply({name:"موقعي الحالي",lat:p.coords.latitude,lng:p.coords.longitude,tz:tz})){P.pick=0;try{savePrayer()}catch(x){}close()}},function(){b.lastChild.textContent="استخدم موقعي الحالي";S.textContent="ما قدرناش نحدد موقعك — اكتب اسم مدينتك فوق"},{timeout:20000})};
+ o.querySelector(".cp-geo").onclick=function(){var b=this;b.lastChild.textContent="جارٍ تحديد موقعك…";__wirdGeo(false).then(function(ok){if(ok)close();else{b.lastChild.textContent="استخدم موقعي الحالي";S.textContent="ما قدرناش نحدد موقعك — اكتب اسم مدينتك فوق"}})};
  function draw(){L.innerHTML=rows.map(function(r,i){return'<li><button type="button" role="option" data-i="'+i+'"><b>'+esc(r.name)+'</b><small>'+esc(r.sub||"")+'</small></button></li>'}).join("")}
  L.addEventListener("click",function(e){var b=e.target.closest("[data-i]");if(!b)return;if(apply(rows[+b.dataset.i]))close()});
  function local(v){var n=N(v);return (window.CITIES||CITIES).filter(function(c){return !n||N(c[1]).indexOf(n)>=0||c[0].indexOf(n)>=0}).map(function(c){return{name:c[1],sub:"",lat:c[2],lng:c[3],tz:c[4],method:c[5]}})}
@@ -27,7 +27,4 @@ window.__wirdCity=function(done){
    draw();S.textContent=rows.length?"":"مفيش نتائج — جرّب كتابة الاسم بطريقة تانية أو بالإنجليزي"},function(){if(my!==seq)return;S.textContent=rows.length?"":"البحث في كل المدن محتاج إنترنت"})}
  q.addEventListener("input",function(){clearTimeout(tm);tm=setTimeout(run,300)});
  run();setTimeout(function(){q.focus()},150);return o};
-/* زر «ابحث عن مدينتك» جنب «استخدم موقعي الحالي» في إعدادات المواقيت */
-function btn(){var g=document.getElementById("geoBtn");if(!g||document.getElementById("cityFind"))return;var b=document.createElement("button");b.type="button";b.id="cityFind";b.className=g.className;b.innerHTML=(typeof ic==="function"?ic("search"):"")+" ابحث عن مدينتك";b.onclick=function(){window.__wirdCity()};g.insertAdjacentElement("afterend",b)}
-(window.__wOnDom||function(f){document.addEventListener("DOMContentLoaded",f)})(function(){btn();__wOnDom(btn)});
 })();

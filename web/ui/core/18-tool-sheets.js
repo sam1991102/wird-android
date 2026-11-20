@@ -4,7 +4,7 @@
  const T=m=>typeof toast==="function"&&toast(m);const ar=__ar;
  const J=(k,v)=>{try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||"null");localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}};
  const esc=t=>String(t).replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[m]);
- const PG={"hj-sheet":"تقويم أم القرى وأيامه المميزة","qb-sheet":"اتجاه الكعبة من مكانك","nm-sheet":"تسعة وتسعون اسمًا ومعانيها","bm-sheet":"الآيات اللي حفظتها من المصحف"};
+ const PG={"hj-sheet":"تقويم أم القرى وأيامه المميزة","nm-sheet":"تسعة وتسعون اسمًا ومعانيها","bm-sheet":"الآيات اللي حفظتها من المصحف"};
  /* المحتوى اللي بيتقري بيفتح صفحة كاملة بنفس شكل باقي الصفحات؛ البحث يفضل لوحة سريعة */
  const open=(cls,html)=>{if(PG[cls]&&window.__wPage){document.querySelectorAll(".wp-page."+cls).forEach(x=>x.remove());
    const m=html.match(/^<div class="tl-h">([^<]*)<\/div>/);const title=m?m[1]:"";const body=m?html.slice(m[0].length):html;let s=null;
@@ -30,33 +30,20 @@
   const opts=()=>{const o=HS();s.querySelector(".hj-opts").innerHTML=[["on","تفعيل تذكير الصيام"],["mt","الإثنين والخميس"],["white","الأيام البيض"],["big","عرفة وعاشوراء وتاسوعاء"]].map(([k,l])=>'<label class="pm-row"><span>'+l+'</span><span class="st-sw"><input type="checkbox" data-o="'+k+'"'+(o[k]?" checked":"")+'><span></span></span></label>').join("")};
   draw();opts();s.addEventListener("click",e=>{const b=e.target.closest("[data-h]");if(b){off+=b.dataset.h==="n"?1:-1;draw()}});
   s.addEventListener("change",e=>{const k=e.target.dataset.o;if(!k)return;const o=HS();o[k]=e.target.checked?1:0;if(k==="on")o.on=e.target.checked;J("wird-hijri",o);try{__wirdPush.sync()}catch(x){}if(k==="on"&&o.on){const p=window.__wirdPush&&__wirdPush.state&&__wirdPush.state();T(p&&!p.on?"فعّل الإشعارات أولًا من الإعدادات":"تم تفعيل تذكير الصيام")}})};
- /* ===== القبلة ===== */
- const KA=[21.4225,39.8262];const rad=x=>x*Math.PI/180,deg=x=>x*180/Math.PI;
- const bearing=(la,lo)=>{const p1=rad(la),p2=rad(KA[0]),dl=rad(KA[1]-lo);return(deg(Math.atan2(Math.sin(dl)*Math.cos(p2),Math.cos(p1)*Math.sin(p2)-Math.sin(p1)*Math.cos(p2)*Math.cos(dl)))+360)%360};
- const dist=(la,lo)=>{const R=6371,a=Math.sin(rad(KA[0]-la)/2)**2+Math.cos(rad(la))*Math.cos(rad(KA[0]))*Math.sin(rad(KA[1]-lo)/2)**2;return Math.round(2*R*Math.asin(Math.sqrt(a)))};
- const qiblaSheet=()=>{const s=open("qb-sheet",'<div class="tl-h">اتجاه القبلة</div><div class="qb-wrap"><div class="qb-dial"><div class="qb-rose"><span class="qn">ش</span><span class="qe">ق</span><span class="qs">ج</span><span class="qw">غ</span><div class="qb-needle"><svg viewBox="0 0 40 120" width="40" height="120"><path d="M20 4 L32 60 L20 52 L8 60 Z" fill="var(--gold,#d4af5f)"/><circle cx="20" cy="60" r="5" fill="currentColor"/></svg><div class="qb-kaaba">🕋</div></div></div><div class="qb-top"></div></div></div><div class="qb-info wd-meta">جارٍ تحديد موقعك…</div><div class="qb-act"></div><p class="wd-meta" style="font-size:.8rem">ضع الهاتف مستويًا وبعيدًا عن المعادن والمغناطيس. إن لم تعمل البوصلة، استخدم الزاوية من الشمال.</p>');
-  const info=s.querySelector(".qb-info"),act=s.querySelector(".qb-act"),rose=s.querySelector(".qb-rose"),nd=s.querySelector(".qb-needle");let Q=null,listening=false,lastOk=0;
-  const setLoc=(la,lo,src)=>{Q=bearing(la,lo);nd.style.transform="rotate("+Q+"deg)";info.innerHTML='القبلة على بُعد <b>'+ar(Math.round(Q))+'°</b> من الشمال باتجاه عقارب الساعة · المسافة إلى مكة '+ar(dist(la,lo).toLocaleString("en"))+' كم<br><small>'+esc(src)+'</small>';startCompass()};
-  const onO=e=>{let h=null;if(typeof e.webkitCompassHeading==="number")h=e.webkitCompassHeading;else if(e.absolute&&typeof e.alpha==="number")h=360-e.alpha;if(h==null||Q==null)return;lastOk=Date.now();rose.style.transform="rotate("+(-h)+"deg)";const diff=Math.abs(((Q-h+540)%360)-180);s.querySelector(".qb-dial").classList.toggle("ok",diff<5);s.querySelector(".qb-top").textContent=diff<5?"أنت متجه إلى القبلة ✓":""};
-  const startCompass=()=>{if(listening)return;const go=()=>{listening=true;addEventListener("deviceorientationabsolute",onO,true);addEventListener("deviceorientation",onO,true);setTimeout(()=>{if(!lastOk)act.innerHTML='<p class="wd-meta">البوصلة غير متاحة في هذا الجهاز أو المتصفح. وجّه الهاتف بحيث يكون الشمال في الأعلى، والقبلة حيث يشير السهم.</p>'},2500)};
-   if(typeof DeviceOrientationEvent!=="undefined"&&typeof DeviceOrientationEvent.requestPermission==="function"){act.innerHTML='<button type="button" class="btn">تشغيل البوصلة</button>';act.querySelector("button").onclick=()=>DeviceOrientationEvent.requestPermission().then(r=>{act.innerHTML="";if(r==="granted")go();else T("لم يُسمح بالوصول إلى البوصلة")}).catch(()=>T("تعذّر تشغيل البوصلة"))}else go()};
-  s.addEventListener("tlclose",()=>{removeEventListener("deviceorientationabsolute",onO,true);removeEventListener("deviceorientation",onO,true)});
-  const P=J("wird-prayer");const useGeo=()=>{if(!navigator.geolocation){info.textContent="تحديد الموقع غير متاح";return}info.textContent="جارٍ تحديد موقعك…";navigator.geolocation.getCurrentPosition(p=>setLoc(p.coords.latitude,p.coords.longitude,"حسب موقعك الحالي"),()=>{info.textContent="لم يُسمح بالوصول للموقع.";if(P&&P.lat)setLoc(P.lat,P.lng,"حسب مدينتك في الإعدادات: "+(P.name||""))},{enableHighAccuracy:true,timeout:10000,maximumAge:600000})};
-  if(P&&typeof P.lat==="number"){setLoc(P.lat,P.lng,"حسب "+(P.name||"مدينتك")+" — ");info.insertAdjacentHTML("beforeend",' <button type="button" class="btn btn-ghost btn-sm qb-geo">استخدم موقعي الدقيق</button>');info.querySelector(".qb-geo").onclick=useGeo}else useGeo()};
  /* ===== الأدعية ===== */
  
  
- window.__openQibla=qiblaSheet;window.__openHijri=hijriSheet;
+ window.__openHijri=hijriSheet;
  /* ===== بطاقة الأدوات في الرئيسية ===== */
  const mk=()=>{const after=document.querySelector(".hadith-day")||document.querySelector(".ayah-day");if(!after||document.querySelector(".tools-day"))return!!after;const h=hj(new Date());const sec=document.createElement("section");sec.className="container section tools-day";sec.dataset.v="home";
   sec.innerHTML='<div class="tl-grid"><button type="button" class="tl-tile" data-t="h"><span class="tl-ic">🌙</span><b>التقويم الهجري</b><small>'+ar(h.d)+' '+HM[h.m-1]+'</small></button><button type="button" class="tl-tile" data-t="q"><span class="tl-ic">🧭</span><b>اتجاه القبلة</b><small>بالبوصلة</small></button><button type="button" class="tl-tile" data-t="d"><span class="tl-ic">🤲</span><b>الأدعية</b><small>من القرآن والسنة</small></button></div>';
-  after.after(sec);sec.addEventListener("click",e=>{const b=e.target.closest("[data-t]");if(!b)return;({h:hijriSheet,q:qiblaSheet,d:()=>window.__openDuas()})[b.dataset.t]()});return true};
+  after.after(sec);sec.addEventListener("click",e=>{const b=e.target.closest("[data-t]");if(!b)return;({h:hijriSheet,q:()=>window.__openQibla(),d:()=>window.__openDuas()})[b.dataset.t]()});return true};
  if(!mk())__wWait(mk,()=>{})
 })();
 
 (function(){
  const T=m=>typeof toast==="function"&&toast(m);const esc=t=>String(t).replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[m]);
- const PG={"hj-sheet":"تقويم أم القرى وأيامه المميزة","qb-sheet":"اتجاه الكعبة من مكانك","nm-sheet":"تسعة وتسعون اسمًا ومعانيها","bm-sheet":"الآيات اللي حفظتها من المصحف"};
+ const PG={"hj-sheet":"تقويم أم القرى وأيامه المميزة","nm-sheet":"تسعة وتسعون اسمًا ومعانيها","bm-sheet":"الآيات اللي حفظتها من المصحف"};
  /* المحتوى اللي بيتقري بيفتح صفحة كاملة بنفس شكل باقي الصفحات؛ البحث يفضل لوحة سريعة */
  const open=(cls,html)=>{if(PG[cls]&&window.__wPage){document.querySelectorAll(".wp-page."+cls).forEach(x=>x.remove());
    const m=html.match(/^<div class="tl-h">([^<]*)<\/div>/);const title=m?m[1]:"";const body=m?html.slice(m[0].length):html;let s=null;
@@ -100,7 +87,7 @@
 (function(NAMES,RUM){
  const T=m=>typeof toast==="function"&&toast(m);const ar=__ar;const esc=t=>String(t).replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[m]);
  const J=(k,v)=>{try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||"null");localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}};
- const PG={"hj-sheet":"تقويم أم القرى وأيامه المميزة","qb-sheet":"اتجاه الكعبة من مكانك","nm-sheet":"تسعة وتسعون اسمًا ومعانيها","bm-sheet":"الآيات اللي حفظتها من المصحف"};
+ const PG={"hj-sheet":"تقويم أم القرى وأيامه المميزة","nm-sheet":"تسعة وتسعون اسمًا ومعانيها","bm-sheet":"الآيات اللي حفظتها من المصحف"};
  /* المحتوى اللي بيتقري بيفتح صفحة كاملة بنفس شكل باقي الصفحات؛ البحث يفضل لوحة سريعة */
  const open=(cls,html)=>{if(PG[cls]&&window.__wPage){document.querySelectorAll(".wp-page."+cls).forEach(x=>x.remove());
    const m=html.match(/^<div class="tl-h">([^<]*)<\/div>/);const title=m?m[1]:"";const body=m?html.slice(m[0].length):html;let s=null;

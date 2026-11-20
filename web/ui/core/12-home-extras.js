@@ -29,7 +29,7 @@ upd();setInterval(()=>{if(!document.hidden)upd()},30000);document.addEventListen
 sec.addEventListener("click",e=>{const b=e.target.closest("[data-hp]");if(!b)return;const k=b.dataset.hp,go=window.__wirdGo||(()=>{});
  if(k==="prayer")go("prayer");else if(k==="tasbih")go("tasbih");
  else if(k==="mushaf"){const p=parseInt(String(localStorage.getItem("wird-mushaf-page")||"").replace(/\D/g,""),10);window.__openPage&&__openPage(p>=1&&p<=604?p:1)}
- else if(k==="qibla"){go("prayer");setTimeout(()=>{const q=$("#qiblaBtn");q&&q.click()},250)}
+ else if(k==="qibla")window.__openQibla();
  else if(k==="mine"){go("library");setCategory("mine")}});
 /* ---- آية اليوم ---- */
 const AY=[[2,152,"البقرة"],[2,186,"البقرة"],[13,28,"الرعد"],[94,6,"الشرح"],[65,3,"الطلاق"],[3,139,"آل عمران"],[39,53,"الزمر"],[40,60,"غافر"],[33,41,"الأحزاب"],[2,153,"البقرة"],[9,51,"التوبة"],[12,87,"يوسف"],[20,25,"طه"],[21,87,"الأنبياء"],[3,8,"آل عمران"],[2,201,"البقرة"],[14,7,"إبراهيم"],[50,16,"ق"],[8,46,"الأنفال"],[29,69,"العنكبوت"],[30,21,"الروم"],[67,2,"الملك"],[16,128,"النحل"],[2,45,"البقرة"],[7,56,"الأعراف"],[93,5,"الضحى"],[42,19,"الشورى"]];
@@ -47,8 +47,6 @@ ay.addEventListener("click",e=>{const b=e.target.closest("[data-ay]");if(!b||!tx
 
 (()=>{"use strict";
 const $=s=>document.querySelector(s),ar=n=>String(n).replace(/\d/g,__ar);
-const acts=$("#prayer .pl-actions");if(!acts||$("#monthBtn"))return;
-const b=document.createElement("button");b.type="button";b.className="btn btn-ghost";b.id="monthBtn";b.textContent="جدول الشهر";acts.prepend(b);
 const fmt=h=>{let s;try{s=fmtT(h)}catch(e){const m=Math.round(h*60)%1440;s=ar(Math.floor(m/60)+":"+String(m%60).padStart(2,"0"))}return String(s).replace(/\s*[صم]\s*$/,"")};
 const hijri=new Intl.DateTimeFormat("ar-SA-u-ca-islamic-umalqura",{day:"numeric",month:"long",timeZone:"UTC"});
 const greg=new Intl.DateTimeFormat("ar-EG",{weekday:"short",day:"numeric",month:"numeric",timeZone:"UTC"});
@@ -64,5 +62,5 @@ function open(){
  ov.addEventListener("click",e=>{if(e.target===ov||e.target.closest("[data-x]"))close();else if(e.target.closest('[data-m="print"]'))window.print()});
  addEventListener("keydown",function k(e){if(e.key==="Escape"){close();removeEventListener("keydown",k)}});
 }
-b.addEventListener("click",open);
+window.__openMonth=open;
 })();

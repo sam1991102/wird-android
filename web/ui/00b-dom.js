@@ -8,7 +8,7 @@
 (function(){
 var fns=[],q=0,streak=0,quiet=0;
 /* أجزاء بتتحدّث كل ثانية (العدّادات وبطاقة السما): تغييرها مش محتاج يصحّي باقي الوحدات */
-var TICKING="#skyCard,.tb-strip,#countdown,#nextPillText,#nextName,#settingsBtn,#installBtn,.ph-now,.ph-bar,#iqLine";
+var TICKING="#skyCard,.tb-strip,#countdown,#nextPillText,#nextName,#settingsBtn,#installBtn,#iqLine";
 function run(){q=0;if(++streak>120){streak=0;quiet=Date.now()+500}for(var i=0;i<fns.length;i++){try{fns[i]()}catch(e){console.error(e)}}}
 function inTicking(n){var e=n.nodeType===1?n:n.parentElement;return !!(e&&e.closest&&e.closest(TICKING))}
 /* بنصحّي الوحدات بس لو اتضاف/اتشال عنصر فعلاً، وبرّه الأجزاء اللي بتعدّ */

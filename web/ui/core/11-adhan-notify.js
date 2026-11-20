@@ -163,14 +163,14 @@ document.addEventListener("change",e=>{if(e.target&&/city|method|asr/i.test(e.ta
 const $=s=>document.querySelector(s);
 const openAdhanSettings=()=>{window.__openSettingsPage&&__openSettingsPage("st-adhan")};
 window.__openAdhanSettings=openAdhanSettings;
-/* بطاقة التنبيهات في تبويب المواقيت */
-const pc=$("#prayer .prayer-card"),acts=$("#prayer .pl-actions");
+/* بطاقة «فعّل الأذان» في تبويب المواقيت: تظهر بس لو التنبيهات مقفولة */
+const pc=$("#prayer .prayer-card");
 if(pc&&!$(".ntf-card")){const c=document.createElement("div");c.className="ntf-card";
  c.innerHTML='<span class="ntf-ic" aria-hidden="true">'+(()=>{try{return ic("clock")}catch(e){return""}})()+'</span><div class="ntf-tx"><strong>الأذان والتنبيهات</strong><small id="ntfState"></small></div><button type="button" class="btn btn-primary btn-sm" id="ntfBtn"></button>';
- (acts||pc.lastElementChild).before(c);
+ pc.append(c);
  const paint=()=>{const S=window.__wirdPush?__wirdPush.state():{};const ok=S.on&&("Notification"in window)&&Notification.permission==="granted";
   $("#ntfState").textContent=ok?"مفعّلة — يصلك الأذان وتذكير الأذكار في وقتها":"فعّلها ليصلك الأذان حتى والتطبيق مغلق";
-  const b=$("#ntfBtn");b.textContent=ok?"الإعدادات":"تفعيل";b.className=ok?"btn btn-ghost btn-sm":"btn btn-primary btn-sm";c.classList.toggle("on",!!ok)};
+  const b=$("#ntfBtn");b.textContent=ok?"الإعدادات":"تفعيل";b.className=ok?"btn btn-ghost btn-sm":"btn btn-primary btn-sm";c.hidden=!!ok};
  paint();document.addEventListener("visibilitychange",paint);
  c.querySelector("#ntfBtn").addEventListener("click",async()=>{const S=window.__wirdPush&&__wirdPush.state();const ok=S&&S.on&&Notification.permission==="granted";
   if(ok||!window.__wirdPush){openAdhanSettings();return}
