@@ -28,6 +28,9 @@ public final class AdhanStore {
     static final String CH_ALARM = "wird_alarm_v1";
     static final String CH_GENERAL = "wird_general_v2";
     static final String CH_PLAYING = "wird_playing_v1";
+    /** ذكر الساعة: قناة بتنزل من فوق (من غير صوت، اهتزاز قصير) وقناة هادية لو المستخدم اختار كده */
+    static final String CH_DHIKR = "wird_dhikr_v1";
+    static final String CH_DHIKR_QUIET = "wird_dhikr_quiet_v1";
     static final String BASE = "https://wird-azkar.pages.dev";
 
     private AdhanStore() {}
@@ -68,6 +71,19 @@ public final class AdhanStore {
         nm.createNotificationChannel(general);
         try { nm.deleteNotificationChannel("wird_general_v1"); } catch (Exception ignored) {}
         nm.createNotificationChannel(playing);
+
+        NotificationChannel dhikr = new NotificationChannel(CH_DHIKR, "ذكر الساعة", NotificationManager.IMPORTANCE_HIGH);
+        dhikr.setDescription("ذكر قصير بيظهر فوق الشاشة كل فترة");
+        dhikr.setSound(null, null);
+        dhikr.enableVibration(true);
+        dhikr.setVibrationPattern(new long[]{0, 40});
+        dhikr.setLockscreenVisibility(android.app.Notification.VISIBILITY_PUBLIC);
+        nm.createNotificationChannel(dhikr);
+
+        NotificationChannel dhikrQuiet = new NotificationChannel(CH_DHIKR_QUIET, "ذكر الساعة (هادي)", NotificationManager.IMPORTANCE_LOW);
+        dhikrQuiet.setDescription("ذكر قصير في الإشعارات من غير ما يظهر فوق الشاشة");
+        dhikrQuiet.setSound(null, null);
+        nm.createNotificationChannel(dhikrQuiet);
     }
 
     static void save(Context c, JSONArray events) {

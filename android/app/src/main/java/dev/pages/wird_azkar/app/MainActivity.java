@@ -104,9 +104,19 @@ public class MainActivity extends BridgeActivity {
         } catch (Exception ignored) {}
     }
 
+    /** التطبيق قدّام المستخدم: ذكر الساعة ما يظهرش كإشعار */
+    static volatile boolean foreground = false;
+
+    @Override
+    public void onPause() {
+        foreground = false;
+        super.onPause();
+    }
+
     @Override
     public void onResume() {
         super.onResume();
+        foreground = true;
         pushSystemTheme();
         /* شاومي وغيرها بيمسحوا الإشعار الثابت ومنبّهات التحديث لما التطبيق يتقفل من «التطبيقات الأخيرة»: نرجّعهم كل ما يتفتح */
         WidgetData.refreshAll(this);

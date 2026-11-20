@@ -30,6 +30,7 @@ public class AdhanReceiver extends BroadcastReceiver {
         }
 
         if (WNotify.ACT_LATER.equals(intent.getAction())) { WNotify.scheduleLater(c, intent); return; }
+        if (WNotify.ACT_DHIKR.equals(intent.getAction())) { WNotify.dhikrTap(c, intent); return; }
         String raw = intent.getStringExtra("ev");
         if (raw == null) return;
         JSONObject ev;
@@ -37,6 +38,7 @@ public class AdhanReceiver extends BroadcastReceiver {
         String kind = ev.optString("kind", "notif");
         WirdWidget.refreshAll(c);
         AdhanStore.extendIfNeeded(c);
+        if (kind.equals("dhikr")) { WNotify.dhikr(c, ev, raw); return; }
         boolean quiet = kind.equals("adhan") && AdhanStore.respectSilent(c) && AdhanStore.phoneSilent(c);
         if (!quiet && (kind.equals("adhan") || kind.equals("alarm"))) {
             Intent svc = new Intent(c, AdhanService.class);

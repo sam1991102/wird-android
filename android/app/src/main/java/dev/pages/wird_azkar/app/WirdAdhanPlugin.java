@@ -217,6 +217,16 @@ public class WirdAdhanPlugin extends Plugin {
         call.resolve();
     }
 
+    /** ضغطات «قلتها» و«+١٠» على إشعار ذكر الساعة من آخر مرة: dhikrTaps() → {date:"yyyy-MM-dd", n} وبيصفّرها */
+    @PluginMethod
+    public void dhikrTaps(PluginCall call) {
+        JSObject r = new JSObject();
+        String[] t = WNotify.takeTaps(getContext());
+        r.put("date", t[0]);
+        r.put("n", Integer.parseInt(t[1]));
+        call.resolve(r);
+    }
+
     /** الإشعار الثابت للصلاة القادمة: setOngoing({on:true|false}) → {on} */
     @PluginMethod
     public void setOngoing(PluginCall call) {
