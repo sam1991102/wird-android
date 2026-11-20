@@ -1,6 +1,6 @@
 
 
-(function(){const P={janaza:'<path d="M9 3h6v4h4v4h-4v10H9V11H5V7h4z"/>',jawami:'<path d="M7 11V7.5a1.5 1.5 0 0 1 3 0V11M14 11V7.5a1.5 1.5 0 0 1 3 0V13a6 6 0 0 1-6 6h-.5A5.5 5.5 0 0 1 5 13.5V11"/><path d="M12 2.5v2M8.5 3.5l.8 1.6M15.5 3.5l-.8 1.6"/>'};
+(function(){const P={janaza:'<path d="M7 21V9.5a5 5 0 0 1 10 0V21M4 21h16M10 12.5h4M10 15.5h4"/>',jawami:'<path d="M7 11V7.5a1.5 1.5 0 0 1 3 0V11M14 11V7.5a1.5 1.5 0 0 1 3 0V13a6 6 0 0 1-6 6h-.5A5.5 5.5 0 0 1 5 13.5V11"/><path d="M12 2.5v2M8.5 3.5l.8 1.6M15.5 3.5l-.8 1.6"/>'};
  const fix=()=>{for(const[k,p]of Object.entries(P))document.querySelectorAll('[data-cat="'+k+'"] svg, .cat-card[data-cat="'+k+'"] svg').forEach(s=>{if(s.dataset.fx)return;s.dataset.fx=1;s.innerHTML=p})};fix();__wOnDom(()=>{clearTimeout(fix.t);fix.t=setTimeout(fix,120)})})();
 
 (function(){
@@ -22,7 +22,7 @@
   const name=((document.getElementById("nextName")||{}).textContent||"").trim();const pill=((document.getElementById("nextPillText")||{}).textContent||"").trim();const tm=((document.querySelector("#prayerList li.next strong")||{}).textContent||"").trim();
   const rem=name?pill.replace(name,"").trim():pill;const nm=name||pill.split(" ")[0];
   const html='<span class="tb-np-k">الصلاة القادمة</span><b class="tb-np-n">'+nm+'</b>'+(rem?'<span class="tb-np-r">بعد '+String(rem).replace(/\d/g,__ar)+'</span>':'')+(tm?'<span class="tb-np-t">'+tm+'</span>':'');if(box.innerHTML!==html)box.innerHTML=html};
- upd();__wEvery(15,upd);__wOnDom(upd);
+ upd();__wEverySec(upd);__wOnDom(upd);
 })();
 
 

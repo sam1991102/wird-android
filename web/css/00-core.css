@@ -582,7 +582,7 @@ html[data-view="home"] .bottom-nav a[data-nav="home"]::after,html[data-view="lib
 .season,.nextd{text-align:start;width:100%}
 .hero-trust li::before{content:""!important;width:9px;height:9px;display:inline-block;margin-inline-end:var(--s6);background:var(--orn) center/contain no-repeat!important;vertical-align:middle;clip-path:none!important}
 @media (min-width:900px){.hero{text-align:start;justify-items:stretch}.hero-copy{align-items:flex-start}.hero-actions,.hero-trust{justify-content:flex-start}body::before{width:min(520px,40vw);left:auto;right:6vw;transform:none}}
-.dial{background:radial-gradient(closest-side,var(--deep) 84%,transparent 85%),conic-gradient(var(--gold-2) calc(var(--p)*1%),color-mix(in srgb,var(--gold-2) 22%,transparent) 0)!important}
+.dial{background:radial-gradient(closest-side,var(--deep) 84%,transparent 85%),conic-gradient(var(--gold-2) calc(var(--p)*1%),var(--line) 0)!important}
 .ic{stroke-width:1.7}
 .next-pill{white-space:nowrap!important;font-size:var(--t-sm)}
 @media (max-width:480px){.top-actions{gap:var(--s6)}.top-actions .icon-btn{width:38px;height:38px}}
