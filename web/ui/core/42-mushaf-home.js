@@ -39,7 +39,7 @@ function build(){v=document.getElementById("mushafView");if(!v||built)return;bui
   '<div class="mh-under"><div class="mh-t"><b data-k="ut"></b><small data-k="us"></small></div><button type="button" class="mh-go" data-a="go"><span data-k="gl">أكمل</span>'+svg(I.go)+'</button></div>'+
  '</div>'+
  '<div class="mh-mini" aria-hidden="true"><div class="mh-t"><b data-k="mt"></b><small data-k="ms"></small></div><button type="button" class="mh-go" data-a="go" tabindex="-1"><span data-k="gl2">أكمل</span>'+svg(I.go)+'</button></div>'+
- '<div class="mh-jz"><div class="mh-lb"><button type="button" data-a="kh" data-k="kl"></button><span data-k="kr"></span></div><div class="mh-strip" role="list" aria-label="الأجزاء"></div></div>'+
+ '<div class="mh-jz"><div class="mh-lb"><button type="button" data-a="kh" data-k="kl"></button><span data-k="kr"></span></div><div class="mh-strip" role="list" aria-label="الأجزاء"></div><button type="button" class="mh-khc" data-a="kh"><span class="mh-khr"><b data-k="kt"></b><small data-k="ks"></small></span><span class="mh-khb" data-k="kb"></span></button></div>'+
  '<label class="mh-find">'+svg(I.search)+'<input type="search" enterkeyhint="go" autocomplete="off" placeholder="سورة، صفحة، ٢:٢٥٥، أو كلمة" aria-label="بحث في المصحف"></label><p class="mh-msg" aria-live="polite"></p>'+
  '<div class="mh-sec"><b>سور اليوم</b><small data-k="tl"></small></div><div class="mh-grid" data-k="today"></div>'+
  '<div class="mh-sec"><b>كل السور</b><small>'+ar(114)+' سورة</small></div><div class="mh-grid" data-k="all">'+IDX.map(function(m,i){return tile(i+1,(m[1]==="m"?"مكية":"مدنية")+" · "+ar(m[2]))}).join("")+'</div>';
@@ -82,6 +82,10 @@ function draw(){if(!v)return;var p=page(),start=!p,P=p||1,R=P%2===0?P-1:P,Lp=Mat
   strip.forEach(function(b,i){var j=i+1,end=j<30?JUZ[j]-1:TOT;b.className=end<=k.pos?"d":j===cj?"c":""})}
  else{put("kl",k?"أتممت الختمة · ابدأ ختمة جديدة":"ابدأ ختمة");put("kr",p?"أنت في الجزء "+ar(juzOf(P)):"");var cj2=p?juzOf(P):0;strip.forEach(function(b,i){b.className=i+1===cj2?"c":""})}
  v.querySelector(".mh-lb [data-a=kh]").classList.toggle("lnk",!(k&&k.pos<TOT));
+ /* كارت الختمة: المدة والخطة، وبيفتح صفحة الختمة (تبدأ/تغيّر المدة/تلغي) */
+ if(k&&k.pos<TOT){var q=__khatma.plan(k);put("kt","ختمة في "+ar(k.days)+(k.days>=3&&k.days<=10?" أيام":" يوم")+" · اليوم "+ar(q.dayNo)+" من "+ar(k.days));put("ks",q.ahead?"أنجزت وِرد النهارده ✓":"وِرد النهارده: صفحة "+ar(q.from)+" – "+ar(q.to));put("kb","الخطة")}
+ else if(k){put("kt","مبارك، أتممت الختمة");put("ks","عدد ختماتك: "+ar(k.count||1));put("kb","ختمة جديدة")}
+ else{put("kt","ابدأ ختمة");put("ks","اختار تختم في كام يوم، ونقسّملك وِرد يومي");put("kb","ابدأ")}
  /* سور اليوم */
  var td=today();put("tl",td.label);var g=v.querySelector('[data-k="today"]'),h=td.list.map(function(x){return tile(x.n,x.sub,x.hl)}).join("");if(g.dataset.h!==h){g.innerHTML=h;g.dataset.h=h}}
 /* وقت آخر قراءة */

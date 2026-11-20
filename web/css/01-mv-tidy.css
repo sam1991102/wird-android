@@ -1,8 +1,5 @@
 
-/*mv-tidy*/#mushafView .qk-cont{display:none}
-.kh-new:not(.open) .kh-opts,.kh-new:not(.open) .kh-from,.kh-new:not(.open) .kh-top small{display:none}
-.kh-new:not(.open){display:flex;align-items:center;justify-content:space-between;gap:var(--s12)}
-.kh-new:not(.open) .kh-top strong{display:none}
+/*mv-tidy*/
 html.mv-offline .qk-dl{display:none}
 #quranCard .qk-dl{font-size:var(--fs-xs,.78rem);opacity:.8}
 

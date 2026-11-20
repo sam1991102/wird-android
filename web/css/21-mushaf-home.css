@@ -57,3 +57,7 @@ html:not([data-view="mushaf"]) .mh-mini{display:none}
 .mh-sc.today{border-color:var(--gold);background:linear-gradient(160deg,color-mix(in srgb,var(--gold) 12%,transparent),transparent 60%)}
 #mushafView.mh :focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){.mh-mini{transition:none}}
+/* كارت الختمة تحت شريط الأجزاء */
+.mh-khc{display:flex;align-items:center;gap:12px;width:100%;margin-top:12px;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:var(--paper-2);color:var(--ink);text-align:start}
+.mh-khr{flex:1;min-width:0}.mh-khr b{display:block;font-size:14px}.mh-khr small{font-size:12px;color:var(--muted)}
+.mh-khb{flex:none;background:var(--primary);color:var(--on-primary);border-radius:999px;padding:8px 16px;font-size:13px;font-weight:800}
