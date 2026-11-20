@@ -43,7 +43,7 @@ html.rt-on .sk-dhikr{display:none}
 .rt-row{display:grid;grid-template-columns:44px auto 44px;align-items:center;gap:var(--s28);margin-top:var(--s6)}
 .rt-nav{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--ink-2);display:grid;place-items:center;cursor:pointer}
 .rt-nav svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.rt-tap{position:relative;width:104px;height:104px;border-radius:50%;border:0;background:color-mix(in srgb,var(--gold) 12%,transparent);color:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .12s ease}
+.rt-tap{position:relative;width:104px;height:104px;border-radius:50%;border:0;background:var(--chip-bg);color:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .12s ease}
 .rt-tap:active{transform:scale(.95)}
 .rt-ring{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
 .rt-ring circle{fill:none;stroke-width:4}
@@ -51,7 +51,7 @@ html.rt-on .sk-dhikr{display:none}
 .rt-pr{stroke:var(--gold-ink);stroke-linecap:round;transition:stroke-dashoffset .25s ease}
 .rt-n{position:relative;font:700 1.7rem/1 var(--font-ui)}
 .rt-tap small{position:relative;font-size:var(--t-xs);color:var(--ink-2);margin-top:var(--s4)}
-.rt-nav:focus-visible,.rt-tap:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.rt-nav:focus-visible,.rt-tap:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
 .rt-dots{display:flex;gap:var(--s6);margin-top:var(--s4)}
 .rt-dots i{width:6px;height:6px;border-radius:50%;background:var(--line)}
 .rt-dots i.on{background:var(--gold);width:16px;border-radius:var(--rd-2xs)}
@@ -68,7 +68,7 @@ html.rt-on .sk-dhikr{display:none}
 .w-dlg-ok{border:0;background:var(--primary);color:var(--on-dark)}
 .w-dlg-ok.danger{background:var(--danger,var(--danger))}
 .w-dlg-no{border:1px solid var(--line);background:transparent;color:var(--ink)}
-.w-dlg-b button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.w-dlg-b button:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 @keyframes wDlgIn{from{opacity:0}to{opacity:1}}
 @media (prefers-reduced-motion:reduce){.w-dlg{animation:none}.w-dlg.out{transition:none}}
 /* أدوات اتحوّلت من لوحة لصفحة كاملة: نفس هوامش جسم الصفحات */
@@ -99,11 +99,11 @@ html.rt-on .sk-dhikr{display:none}
 @keyframes wSpin{to{transform:rotate(360deg)}}
 @media (prefers-reduced-motion:reduce){.sh-row.st-upd.is-busy .nt-ic svg{animation:none}}
 /* بطاقة «التشغيل التلقائي» (شاومي وغيرها) */
-.oem-card{margin:0 0 var(--s14);padding:var(--s14) var(--s16);border-radius:var(--rd-m);background:color-mix(in srgb,var(--gold) 12%,var(--paper));border:1px solid color-mix(in srgb,var(--gold) 35%,transparent)}
+.oem-card{margin:0 0 var(--s14);padding:var(--s14) var(--s16);border-radius:var(--rd-m);background:var(--chip-bg);border:1px solid color-mix(in srgb,var(--gold) 35%,transparent)}
 .oem-card b{display:block;font-size:var(--t-base);color:var(--ink)}
 .oem-card p{margin:var(--s6) 0 0;font-size:var(--t-md);line-height:1.8;color:var(--ink-2,var(--muted))}
 .oem-b{display:flex;gap:var(--s8);margin-top:var(--s12);flex-wrap:wrap}
 .oem-b button{min-height:44px;padding:0 var(--s16);border-radius:var(--rd-s);font:inherit;font-weight:700;font-size:var(--t-md);cursor:pointer}
 .oem-go{border:0;background:var(--primary);color:var(--on-dark)}
 .oem-done{border:1px solid var(--line);background:transparent;color:var(--ink)}
-.oem-b button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.oem-b button:focus-visible{outline:3px solid var(--focus);outline-offset:2px}

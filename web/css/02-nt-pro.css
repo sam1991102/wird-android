@@ -16,9 +16,9 @@
 .nt-card .nt-sw{position:absolute;top:14px;left:14px}
 .nt-sw{width:46px;height:28px;border-radius:var(--rd-pill);border:0;background:var(--paper-2,var(--switch-off));position:relative;cursor:pointer;flex:none;transition:background .2s;padding:0}
 .nt-sw i{position:absolute;top:3px;right:3px;width:22px;height:22px;border-radius:50%;background:var(--knob);box-shadow:0 1px 3px color-mix(in srgb,var(--shade) 25%,transparent);transition:right .2s}
-.nt-sw.on{background:var(--gold-2,var(--gold))}.nt-sw.on i{right:21px}
+.nt-sw.on{background:var(--primary)}.nt-sw.on i{right:21px}
 html.dark .nt-sw:not(.on){background:var(--switch-off)}
-.nt-stat{display:flex;align-items:center;justify-content:space-between;gap:var(--s12);padding:var(--s14) var(--s16);border-radius:var(--rd-l);background:color-mix(in srgb,var(--gold) 14%,var(--paper));border:1px solid color-mix(in srgb,var(--gold) 35%,transparent)}
+.nt-stat{display:flex;align-items:center;justify-content:space-between;gap:var(--s12);padding:var(--s14) var(--s16);border-radius:var(--rd-l);background:var(--chip-bg);border:1px solid color-mix(in srgb,var(--gold) 35%,transparent)}
 .nt-stat div{display:flex;flex-direction:column;gap:var(--s2)}.nt-stat b{color:var(--ink)}.nt-stat span{font-size:var(--t-sm);color:var(--muted)}
 .nt-stat.ok{flex-direction:column;align-items:flex-start;gap:var(--s2);background:color-mix(in srgb,var(--success) 12%,var(--paper));border-color:color-mix(in srgb,var(--success) 35%,transparent)}
 .nt-note{margin:var(--s20) var(--s4) 0;font-size:var(--t-sm);line-height:1.8;color:var(--muted)}
@@ -51,4 +51,4 @@ input.og-sw{appearance:none;-webkit-appearance:none;margin:0;width:46px;height:2
 input.og-sw::before{content:"";position:absolute;top:3px;right:3px;width:22px;height:22px;border-radius:50%;background:var(--knob);box-shadow:0 1px 3px color-mix(in srgb,var(--shade) 25%,transparent);transition:right .2s}
 input.og-sw:checked{background:var(--gold-2,var(--gold))}input.og-sw:checked::before{right:21px}
 html.dark input.og-sw:not(:checked){background:var(--switch-off)}
-input.og-sw:focus-visible{outline:2px solid var(--gold-2,var(--gold));outline-offset:2px}
+input.og-sw:focus-visible{outline:2px solid var(--focus);outline-offset:2px}

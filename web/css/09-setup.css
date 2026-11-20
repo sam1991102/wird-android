@@ -34,7 +34,7 @@ html.su-on .wp-page{visibility:visible}
 .su-ov p.su-say{font-size:var(--t-base);color:var(--ink);opacity:.85;margin-top:clamp(4px,1.4vh,14px)}
 .su-tb{position:relative;width:clamp(170px,27vh,236px);aspect-ratio:1;border-radius:50%;border:0;padding:0;background:color-mix(in srgb,var(--primary) 14%,var(--bg));cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;transition:transform .15s}
 .su-tb:active{transform:scale(.97)}
-.su-tb:focus-visible{outline:3px solid var(--gold);outline-offset:4px}
+.su-tb:focus-visible{outline:3px solid var(--focus);outline-offset:4px}
 .su-tb svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
 .su-tb circle{fill:none;stroke-width:6}
 .su-tb .t{stroke:color-mix(in srgb,var(--primary) 30%,var(--bg))}
@@ -46,6 +46,6 @@ html.su-on .wp-page{visibility:visible}
 @media (prefers-reduced-motion:reduce){.su-tb .f{transition:none}}
 @media (max-height:700px){.su-icon{width:84px}.su-tb{width:min(170px,26vh)}.su-welcome .su-link{padding:var(--s4) var(--s14)}}
 .su-prev{min-height:46px;padding:0 var(--s16);border:1px solid var(--line);border-radius:var(--rd-m);background:transparent;color:var(--ink);font:inherit;font-size:var(--t-base);font-weight:700;cursor:pointer}
-.su-prev:focus-visible,.su-main:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.su-prev:focus-visible,.su-main:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 /* أثناء المعالج الرجوع بيبقى من زرار «السابق» تحت */
 html.su-on .wp-page .wp-back{visibility:hidden}
