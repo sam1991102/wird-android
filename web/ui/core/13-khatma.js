@@ -27,6 +27,22 @@ window.__openKhatma=()=>{const home=box.parentNode;const pg=__wPage({title:"ال
 /* edit: تغيير مدة الختمة الحالية (من غير ما يضيع اللي قريته) */
 let edit=false;
 const dLbl=n=>ar(n)+" "+(n>=3&&n<=10?"أيام":"يومًا");
+/* صفحة الختمة الكاملة: حلقة التقدّم، وِرد اليوم بالصفحات، والأجزاء الثلاثون (الستايل في css/21-mushaf-home.css) */
+const JZ=[1,22,42,62,82,102,121,142,162,182,201,222,242,262,282,302,322,342,362,382,402,422,442,462,482,502,522,542,562,582];
+const juzOf=pg=>{let j=1;JZ.forEach((x,i)=>{if(pg>=x)j=i+1});return j};
+function full(k,p){const d=Math.min(p.d,k.days-1),prev=d===0?k.sp-1:p.endFor(d-1),end=p.endFor(d),tot=Math.max(1,end-prev),rd=Math.max(0,Math.min(tot,k.pos-prev)),cj=juzOf(Math.min(TOT,k.pos+1));
+ const R=46,C=2*Math.PI*R,off=C*(1-Math.min(100,p.pct)/100);
+ const leaves=tot<=40?Array.from({length:tot},(_,i)=>`<i class="${i<rd?"r":""}"></i>`).join(""):`<span class="mh-kx-bar"><i style="width:${Math.round(rd/tot*100)}%"></i></span>`;
+ box.innerHTML=`<div class="mh-kx">
+ <div class="mh-kx-hero"><div class="mh-kx-ring"><svg viewBox="0 0 110 110" aria-hidden="true"><circle cx="55" cy="55" r="${R}" class="t"/><circle cx="55" cy="55" r="${R}" class="v" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${off.toFixed(1)}"/></svg><b>${ar(p.pct)}٪</b><small>من الختمة</small></div>
+  <div class="mh-kx-st"><div><small>اليوم</small><b>${ar(p.dayNo)} من ${ar(k.days)}</b></div><div><small>وصلت إلى</small><b>صفحة ${ar(Math.max(1,k.pos))}</b></div><div><small>${p.left>0?"المتبقي":"المدة"}</small><b>${p.left>0?dLbl(p.left):"انتهت"}</b></div></div></div>
+ <div class="mh-kx-today"><div class="mh-kx-th"><b>${p.ahead?"أنجزت وِرد اليوم ✓":"وِرد اليوم"}</b><span>صفحة ${ar(prev+1)} – ${ar(end)}</span></div>
+  <div class="mh-kx-pages" aria-label="قرأت ${ar(rd)} من ${ar(tot)} صفحة">${leaves}</div>
+  <small>${p.ahead?"أنت متقدّم على الخطة، بارك الله فيك":"قرأت "+ar(rd)+" من "+ar(tot)+" صفحة، والباقي "+ar(tot-rd)}</small>
+  <button type="button" class="btn btn-primary mh-kx-go" data-k="read">${p.ahead?"واصل القراءة":"اقرأ وِرد اليوم"}</button></div>
+ <div class="mh-kx-juz"><div class="mh-kx-th"><b>الأجزاء</b><span>الجزء ${ar(cj)}</span></div><div class="mh-kx-grid">${JZ.map((x,i)=>{const e=i<29?JZ[i+1]-1:TOT;return`<span class="${e<=k.pos?"d":i+1===cj?"c":""}">${ar(i+1)}</span>`}).join("")}</div></div>
+ <div class="mh-kx-row">${p.ahead?"":`<button type="button" class="btn btn-ghost" data-k="mark">أتممت وِرد اليوم</button>`}<button type="button" class="btn btn-ghost" data-k="edit">تغيير المدة</button></div>
+ <button type="button" class="mh-kx-stop" data-k="stop">إلغاء الختمة</button></div>`}
 function render(){const k=load();
  if(!k||edit){const cur=edit&&k?k.days:30,from=edit&&k?k.pos+1:curPage();
   box.innerHTML=`<div class="kh-card kh-new"><div class="kh-top"><span class="kh-k">الختمة</span><strong>${edit?"غيّر مدة الختمة":"ابدأ ختمة جديدة"}</strong><small>${edit?"اختار المدة الجديدة، وهنقسّم الباقي من المصحف عليها.":"اختار تختم في كام يوم، ونقسّملك المصحف وِرد يومي بالصفحات ونتابع تقدّمك وانت بتقرا."}</small></div>
@@ -36,6 +52,7 @@ function render(){const k=load();
  <div class="kh-act"><button type="button" class="btn btn-primary" id="khStart">${edit?"احفظ المدة":"ابدأ الختمة"}</button>${edit?'<button type="button" class="btn btn-ghost" data-k="back">رجوع</button>':""}</div></div>`;return}
  const p=plan(k);
  if(p.done){box.innerHTML=`<div class="kh-card kh-done"><span class="kh-k">الختمة</span><strong>مبارك! أتممت ختم القرآن الكريم</strong><small>تقبّل الله منك. عدد ختماتك في وِرد: ${ar(k.count||1)}</small><div class="kh-act"><button type="button" class="btn btn-primary" data-k="new">ختمة جديدة</button></div></div>`;return}
+ if(box.closest(".kh-page")){full(k,p);return}
  box.innerHTML=`<div class="kh-card"><div class="kh-row"><div><span class="kh-k">الختمة · اليوم ${ar(p.dayNo)} من ${ar(k.days)}</span><strong>${p.ahead?"أنجزت وِرد اليوم ✓":"وِرد اليوم: صفحة "+ar(p.from)+" – "+ar(p.to)}</strong><small>${p.ahead?"أنت متقدّم على الخطة، بارك الله فيك":"باقي "+ar(p.to-p.from+1)+" صفحة لإتمام وِرد اليوم"}</small></div><div class="kh-ring" style="--p:${p.pct}"><span>${ar(p.pct)}٪</span></div></div>
  <div class="kh-bar"><i style="width:${p.pct}%"></i></div>
  <div class="kh-meta"><span>وصلت إلى صفحة ${ar(k.pos)}</span><span>${p.left>0?"متبقٍ "+ar(p.left)+" يومًا":"انتهت المدة — أكمل بإذن الله"}</span></div>
