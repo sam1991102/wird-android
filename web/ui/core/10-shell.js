@@ -55,7 +55,8 @@ function go(v){
  window.__setView(v);scrollTo({top:0,behavior:"instant"});
 }
 function backFromList(){const h=history.state;if(!window.__IOSA&&h&&h.w&&!h.ov&&h.v==="library"&&h.lib==="list")history.back();else{toGrid();push()}}
-nav.addEventListener("click",e=>{const a=e.target.closest("[data-tab]");if(!a)return;e.preventDefault();go(a.dataset.tab)});
+/* composedPath بيحتفظ بمسار الضغطة حتى لو الأيقونة اتبدّلت أثناءها */
+nav.addEventListener("click",e=>{const a=(e.composedPath?e.composedPath():[e.target]).find(n=>n&&n.dataset&&n.dataset.tab&&nav.contains(n));if(!a)return;e.preventDefault();go(a.dataset.tab)});
 sub.querySelector(".sb-back").addEventListener("click",backFromList);
 new MutationObserver(ms=>{mark();if(ms.some(m=>m.attributeName==="data-lib"))syncTitle();
  if(ms.some(m=>m.attributeName==="data-view"&&R.dataset.view==="mushaf"))updMv();

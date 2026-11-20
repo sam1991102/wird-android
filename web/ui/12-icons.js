@@ -10,5 +10,5 @@ function draw(){
  document.querySelectorAll(".bottom-nav.nav5>[data-tab]").forEach(function(a){var k=a.dataset.tab,ni=a.querySelector(".ni");if(!ni||!R[k])return;var so=a.parentNode.classList.contains("st-on");var on=a.classList.contains("nv-x")?so:(!so&&(a.classList.contains("active")||a.hasAttribute("aria-current")));var w=on?"f":"r";if(ni.dataset.ph===k+w)return;ni.innerHTML=svg(on?F[k]:R[k]);ni.dataset.ph=k+w})}
 __wOnDom(draw);__wOnView(draw);
 /* حالة أيقونات الشريط السفلي (صفحة مفتوحة/راديو شغّال) بتتغيّر بالـclass: مراقب على الشريط بس مش الصفحة كلها */
-__wWait(function(){return document.querySelector(".bottom-nav")},function(n){new MutationObserver(draw).observe(n,{subtree:true,attributes:true,attributeFilter:["class","aria-current"]})},15000);
+__wWait(function(){return document.querySelector(".bottom-nav")},function(n){/* في الفريم الجاي مش فورًا: لو استبدلنا الأيقونة جوه نفس الضغطة، الضغطة بتفقد هدفها والشريط ما يفتحش الصفحة */var q=0;new MutationObserver(function(){if(!q)q=requestAnimationFrame(function(){q=0;draw()})}).observe(n,{subtree:true,attributes:true,attributeFilter:["class","aria-current"]})},15000);
 })();
