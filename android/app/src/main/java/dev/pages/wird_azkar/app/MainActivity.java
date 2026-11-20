@@ -81,6 +81,8 @@ public class MainActivity extends BridgeActivity {
         }
         if (path == null) return;
         i.removeExtra("wird_path");
+        /* مسار داخلي بس: «/…» من غير بروتوكول (يمنع javascript: أو موقع تاني من تطبيق خارجي) */
+        if (!path.startsWith("/") || path.startsWith("//") || path.contains("\\")) return;
         final String q = org.json.JSONObject.quote(path); // نص JS آمن (يمنع حقن كود عبر Intent)
         WebView wv = getBridge() != null ? getBridge().getWebView() : null;
         if (wv == null) return;

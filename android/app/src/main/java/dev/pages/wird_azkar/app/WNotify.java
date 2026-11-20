@@ -79,7 +79,7 @@ final class WNotify {
 
     /* ===== ذكر الساعة ===== */
     static final String ACT_DHIKR = "dev.pages.wird_azkar.app.DHIKR";
-    static final int DHIKR_NID = 4242;
+    static final int DHIKR_NID = 4243; // غير 4242 بتاع إشعار تشغيل الأذان
     private static final String P_DATE = "dh_taps_date", P_N = "dh_taps_n", P_KEY = "dh_cur_key", P_DONE = "dh_cur_done", P_EV = "dh_cur_ev";
 
     private static String today() { return new SimpleDateFormat("yyyy-MM-dd", Locale.US).format(new Date()); }
