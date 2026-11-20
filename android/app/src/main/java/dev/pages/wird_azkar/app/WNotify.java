@@ -151,12 +151,12 @@ final class WNotify {
         if (reps > 1) {
             b.setProgress(reps, Math.min(done, reps), false);
             if (done > 0) b.setSubText("ذكر الساعة · " + ar(Math.min(done, reps)) + " من " + ar(reps));
-            b.addAction(0, "قلتها ✓", tapIntent(c, 1, Math.max(1, reps - done), true));
+            b.addAction(0, "ذكرتُها ✓", tapIntent(c, 1, Math.max(1, reps - done), true));
             b.addAction(0, "+" + ar(10), tapIntent(c, 2, 10, false));
         } else {
-            b.addAction(0, "قلتها ✓", tapIntent(c, 1, 1, true));
+            b.addAction(0, "ذكرتُها ✓", tapIntent(c, 1, 1, true));
         }
-        b.addAction(0, "بعدين", laterIntent(c, AdhanStore.prefs(c).getString(P_EV, ""), DHIKR_NID));
+        b.addAction(0, "لاحقًا", laterIntent(c, AdhanStore.prefs(c).getString(P_EV, ""), DHIKR_NID));
         NotificationManager nm = (NotificationManager) c.getSystemService(Context.NOTIFICATION_SERVICE);
         nm.notify(DHIKR_NID, b.build());
     }

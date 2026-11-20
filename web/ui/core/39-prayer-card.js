@@ -44,7 +44,7 @@ function nav(){var list=document.getElementById("prayerList");if(!list)return;va
 function day(){var bar=document.getElementById("pcDay"),list=document.getElementById("prayerList");if(!bar||!list)return;
  var d=fmtDay(off),b=bar.querySelector("b"),s=bar.querySelector("small");if(b.textContent!==d[0])b.textContent=d[0];if(s.textContent!==d[1])s.textContent=d[1];
  bar.querySelector(".pc-dt").setAttribute("aria-label",off?"رجوع لليوم":"");bar.classList.toggle("is-other",!!off);list.classList.toggle("pc-other",!!off);
- /* يوم تاني: نكتب مواقيته في نفس الصفوف (والحالة والعلامات بتختفي)، والنهارده: app.js بيكتب الأصلي */
+ /* يوم مرة أخرى: نكتب مواقيته في نفس الصفوف (والحالة والعلامات بتختفي)، واليوم: app.js بيكتب الأصلي */
  var t;try{t=prayerDay(off).t}catch(e){return}
  KEYS.forEach(function(k){var li=list.querySelector("li."+k),st=li&&li.querySelector("strong");if(!st)return;if(off){if(!st.dataset.o)st.dataset.o=st.textContent;var v=hm(t[k]);if(st.textContent!==v)st.textContent=v}});
  if(!off&&list.querySelector("strong[data-o]")&&typeof renderPrayer==="function")try{renderPrayer()}catch(e){}
@@ -63,7 +63,7 @@ function extras(t){var list=document.getElementById("prayerList");if(!list)retur
 
 function run(){if(!head())return;paint();nav()}
 __wOnDom(function(){var h=head();if(h&&h.querySelector(".w-skyl")&&!h.querySelector(".pc-arc"))run();var L=document.getElementById("prayerList");if(L&&!document.getElementById("pcDay"))nav();
- /* app.js بيعيد رسم القائمة بمواقيت النهارده؛ لو المستخدم على يوم تاني نرجّع مواقيت اليوم ده */
+ /* app.js بيعيد رسم القائمة بمواقيت اليوم؛ لو المستخدم على يوم مرة أخرى نرجّع مواقيت اليوم ده */
  else if(L&&off){var s0=L.querySelector("strong");if(s0&&!s0.dataset.o)day()}});
 var n=0;__wEverySec(function(){if((document.documentElement.dataset.view||"")!=="prayer")return;paint();if(++n%60===0&&!off)day()});
 __wOnView(function(){if(document.documentElement.dataset.view==="prayer"){if(off){off=0}run()}});

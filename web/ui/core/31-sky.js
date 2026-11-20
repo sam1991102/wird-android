@@ -67,7 +67,7 @@ function paint(){var el=build();if(!el)return;var st=state(),d=hDay();if(el.data
   var gp=F.gr.formatToParts(now);put(el,".sk-gr",gv(gp,"day")+" "+gv(gp,"month"));put(el,".sk-gy",gv(gp,"year"))}catch(e){}}
  var ch=document.querySelector(".tb-strip .tp-chip b");put(el,".sk-period",ch?ch.textContent:"");
  var n=next();if(n){put(el,".sk-np",PN[n.k]+" بعد");put(el,".sk-cd",fmt(n.left))}}
-paint();if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",paint);/* كارت السماء في الرئيسية بس: مفيش داعي يتحسب كل ثانية وهو مش ظاهر */__wEverySec(function(){if(!document.hidden&&(document.documentElement.dataset.view||"home")==="home")paint()});document.addEventListener("visibilitychange",function(){if(!document.hidden){last="";paint()}});
+paint();if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",paint);/* كارت السماء في الرئيسية بس: لا يوجد داعي يتحسب كل ثانية وهو مش ظاهر */__wEverySec(function(){if(!document.hidden&&(document.documentElement.dataset.view||"home")==="home")paint()});document.addEventListener("visibilitychange",function(){if(!document.hidden){last="";paint()}});
 window.__skyCard=paint;})();
 
 

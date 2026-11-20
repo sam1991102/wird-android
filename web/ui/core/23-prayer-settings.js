@@ -10,7 +10,7 @@ window.__wirdGeo=function(silent){return new Promise(function(res){if(!navigator
   var moved=P.city!=="geo"||P.pick||Math.hypot(la-P.lat,(lo-P.lng)*Math.cos(la*Math.PI/180))>0.03;
   P=Object.assign({},P,moved?{city:"geo",name:"موقعي الحالي",pick:0,lat:la,lng:lo,tz:tz||P.tz}:{},P.mUser?{}:{method:__nearMethod(la,lo)},{geoT:Date.now()});
   savePrayer();try{window.__wirdPush&&__wirdPush.sync(true)}catch(e){}if(!silent&&window.toast)toast("تم ضبط المواقيت حسب موقعك");res(true)},
- function(){if(!silent&&window.toast)toast("ما قدرناش نحدد موقعك — ابحث عن مدينتك");res(false)},{timeout:15000,maximumAge:3*3600e3})})};
+ function(){if(!silent&&window.toast)toast("تعذّر تحديد موقعك — ابحث عن مدينتك");res(false)},{timeout:15000,maximumAge:3*3600e3})})};
 function stale(){return P.city==="geo"&&!P.pick&&(!P.geoT||Date.now()-P.geoT>FRESH)}
 function auto(){if(P.pick)return;/* مدينة اختارها المستخدم بنفسه */
  var q=navigator.permissions&&navigator.permissions.query?navigator.permissions.query({name:"geolocation"}):Promise.reject();

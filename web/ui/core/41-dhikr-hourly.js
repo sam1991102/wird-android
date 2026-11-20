@@ -68,20 +68,20 @@ function opt(v,cur,t){return'<option value="'+v+'"'+(String(v)===String(cur)?" s
 function html(s){var sw=function(id,on){return'<label class="st-sw"><input type="checkbox" id="'+id+'"'+(on?" checked":"")+'><span></span></label>'};
  var row=function(l,h,c){return'<div class="st-row"><div class="st-l"><strong>'+l+'</strong>'+(h?'<small>'+h+'</small>':'')+'</div><div class="st-c">'+c+'</div></div>'};
  var a=L[new Date().getHours()%L.length];
- return'<h2>ذكر الساعة</h2><p class="st-note">ذكر قصير من السنة كل فترة، بيتغيّر على حسب وقت اليوم ومش بيتكرر في نفس اليوم. تقدر تعدّه من الإشعار نفسه من غير ما تفتح التطبيق.</p>'+
+ return'<h2>ذكر الساعة</h2><p class="st-note">ذكر قصير من السنة كل فترة، يتغيّر بحسب وقت اليوم ولا يتكرر في اليوم نفسه، ويمكنك عدّه من الإشعار نفسه دون فتح التطبيق.</p>'+
  row("تفعيل ذكر الساعة","",sw("drOn",s.on))+
  '<div class="dh-more"'+(s.on?"":" hidden")+'>'+
- row("كل قد إيه","",'<select id="drEv" class="st-sel">'+opt(1,s.every,"كل ساعة")+opt(2,s.every,"كل ساعتين")+opt(3,s.every,"كل ٣ ساعات")+'</select>')+
+ row("التكرار","",'<select id="drEv" class="st-sel">'+opt(1,s.every,"كل ساعة")+opt(2,s.every,"كل ساعتين")+opt(3,s.every,"كل ٣ ساعات")+'</select>')+
  row("من","",'<select id="drFrom" class="st-sel">'+TIMES.map(function(x){return opt(x,s.from,lbl(x))}).join("")+'</select>')+
- row("لحد","مفيش تذكير برّه الفترة دي",'<select id="drTo" class="st-sel">'+TIMES.map(function(x){return opt(x,s.to,lbl(x))}).join("")+'</select>')+
- (window.__WIRD_NATIVE?row("يظهر فوق الشاشة","ولو قفلته يوصل بهدوء في الإشعارات",sw("drHeads",s.heads)):"")+
- '<p class="st-note">مش بيوصلك في الربع ساعة اللي بعد الأذان، ولا والتطبيق مفتوح.</p>'+
- '<div class="dh-prev" aria-label="مثال للإشعار"><div class="dh-top"><span class="dh-app">و</span>وِرد · ذكر الساعة</div><b>'+a.title+'</b><p class="dh-tx">'+a.text+'</p><small>'+[a.fadl,a.src].filter(Boolean).join(" — ")+'</small><div class="dh-act"><span>قلتها ✓</span><span>+'+ar(10)+'</span><span>بعدين</span></div></div>'+
+ row("حتى","لا تذكير خارج هذه الفترة",'<select id="drTo" class="st-sel">'+TIMES.map(function(x){return opt(x,s.to,lbl(x))}).join("")+'</select>')+
+ (window.__WIRD_NATIVE?row("يظهر فوق الشاشة","وإن أوقفته يصل بهدوء في الإشعارات",sw("drHeads",s.heads)):"")+
+ '<p class="st-note">لا يصلك خلال ربع الساعة التي تلي الأذان، ولا أثناء فتح التطبيق.</p>'+
+ '<div class="dh-prev" aria-label="مثال للإشعار"><div class="dh-top"><span class="dh-app">و</span>وِرد · ذكر الساعة</div><b>'+a.title+'</b><p class="dh-tx">'+a.text+'</p><small>'+[a.fadl,a.src].filter(Boolean).join(" — ")+'</small><div class="dh-act"><span>ذكرتُها ✓</span><span>+'+ar(10)+'</span><span>لاحقًا</span></div></div>'+
  '</div>'}
 function build(){var st=document.querySelector(".st"),ad=st&&st.querySelector("#st-adhan");if(!ad||document.getElementById("st-dr"))return;
  var sec=document.createElement("section");sec.className="st-sec";sec.id="st-dr";sec.innerHTML=html(get());ad.after(sec);
  sec.addEventListener("change",function(e){var s=get(),t=e.target;
-  if(t.id==="drOn"){s.on=t.checked;sec.querySelector(".dh-more").hidden=!s.on;if(s.on){var p=window.__wirdPush&&__wirdPush.state&&__wirdPush.state();if(p&&!p.on&&window.toast)toast("فعّل الإشعارات الأول من «الإشعارات»")}}
+  if(t.id==="drOn"){s.on=t.checked;sec.querySelector(".dh-more").hidden=!s.on;if(s.on){var p=window.__wirdPush&&__wirdPush.state&&__wirdPush.state();if(p&&!p.on&&window.toast)toast("فعّل الإشعارات أولًا من «الإشعارات»")}}
   else if(t.id==="drEv")s.every=+t.value;else if(t.id==="drFrom")s.from=t.value;else if(t.id==="drTo")s.to=t.value;else if(t.id==="drHeads")s.heads=t.checked?1:0;else return;
   set(s)})}
 build();__wOnDom(build);

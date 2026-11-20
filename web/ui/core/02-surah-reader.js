@@ -13,7 +13,7 @@ const norm=t=>t.replace(/[ً-ٰٟۖ-ۭـ]/g,"").replace(/[ٱأإآ]/g,"ا").repl
 const meta=()=>window.__qMeta||(window.__qMeta=fetch("/mushaf/meta.json").then(r=>{if(!r.ok)throw 0;return r.json()}).catch(e=>{window.__qMeta=null;throw e}));
 async function openSurahN(n,from,opt){
  let pg=0;try{const m=await meta();pg=m.p&&m.p[n-1]&&m.p[n-1][0]}catch(e){}
- if(!pg){typeof toast==="function"&&toast("تعذّر فتح السورة، اتأكد من النت وجرّب تاني");return}
+ if(!pg){typeof toast==="function"&&toast("تعذّر فتح السورة، تحقّق من الاتصال وأعد المحاولة");return}
  if(!(opt&&opt.side))try{localStorage.setItem("wird-last-surah",n)}catch(e){}
  if(ix&&!ix.hidden)closeIdx();window.__openPage(pg,from,opt);updateLast()}
 let ix;

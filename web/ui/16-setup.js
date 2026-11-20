@@ -5,7 +5,7 @@ var R=document.documentElement,K="wird-setup-done";
 var STEPS=[
  {id:"st-prayer",t:"الموقع وطريقة الحساب",s:"اختر مدينتك وطريقة حساب المواقيت ووقت الإقامة"},
  {id:"notif",t:"الأذان والتنبيهات",s:"فعّل الأذان لكل صلاة، والتنبيه قبل الأذان"},
- {id:"st-adhan",t:"صوت الأذان",s:"اختر المؤذن واستمع له قبل ما تثبّته"},
+ {id:"st-adhan",t:"صوت الأذان",s:"اختر المؤذن واستمع له قبل اعتماده"},
  {id:"st-alarm",t:"منبّه الفجر",s:"منبّه مستمر مع غفوة حتى تستيقظ"},
  {id:"st-dr",t:"تذكير بالذكر",s:"كم مرة يذكّرك وِرد بالذكر خلال اليوم"},
  {id:"st-qari",t:"القرآن والقارئ",s:"اختر صوت التلاوة واتجاه تقليب الصفحات"},
@@ -43,15 +43,15 @@ function end(){mark();ov&&ov.remove();ov=null;bar&&bar.remove();bar=null;close()
 /* أثناء المعالج: سهم الرجوع مخفي، وزرار الرجوع في الموبايل (اللي بيضغط السهم) بيبقى «السابق» بدل ما يقفل الصفحة ويلخبط الخطوات */
 function prev(){if(i<=0){bar&&bar.remove();bar=null;close();welcome()}else step(i-1)}
 /* زرار الرجوع في الموبايل أثناء خطوات المعالج = «السابق» (قبل ما الصفحة تتعامل معاه) */
-window.__suBack=function(){if(!bar||i<0)return false;/* نرجّع المدخل اللي اتسحب، علشان الرجوع ما يخرجش من التطبيق وسط المعالج */try{history.pushState(Object.assign({},history.state||{w:1,v:"home"},{w:1,ov:1,ovd:1}),"",location.href)}catch(x){}prev();return true};
+window.__suBack=function(){if(!bar||i<0)return false;/* نرجّع المدخل اللي اتسحب، لكي الرجوع ما يخرجش من التطبيق وسط المعالج */try{history.pushState(Object.assign({},history.state||{w:1,v:"home"},{w:1,ov:1,ovd:1}),"",location.href)}catch(x){}prev();return true};
 document.addEventListener("click",function(e){if(!bar||i<0||!e.target.closest||!e.target.closest(".wp-back"))return;e.preventDefault();e.stopImmediatePropagation();prev()},true);
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-su]");if(!b)return;e.preventDefault();var a=b.dataset.su;
  if(a==="go")step(0);else if(a==="next")step(i+1);else if(a==="prev")prev();else if(a==="all")finish();else if(a==="skip"||a==="end")end();
  else if(a==="tasbih"){if(ov.classList.contains("su-did"))return;ov.classList.add("su-did");try{navigator.vibrate&&navigator.vibrate(18)}catch(x){}
-  ov.querySelector(".su-say").textContent="كده بدأت وِردك";setTimeout(function(){var o=ov&&ov.querySelector(".su-ok");if(o)o.textContent="تقبّل الله منك"},450)}
+  ov.querySelector(".su-say").textContent="بدأتَ وِردك";setTimeout(function(){var o=ov&&ov.querySelector(".su-ok");if(o)o.textContent="تقبّل الله منك"},450)}
  else if(a==="restore"){mark();ov&&ov.remove();ov=null;R.classList.remove("su-on");window.__openSettingsPage&&__openSettingsPage("st-data")}});
 /* شاشة «جهّز وِرد في دقيقة» القديمة: المعالج حلّ محلها */
-function oldSheet(){[].forEach.call(document.querySelectorAll('[role="dialog"],.wd-sheet,.onb,.sheet,.modal,div'),function(d){if(d.dataset.suOld||d.children.length>40)return;var h=d.querySelector&&d.querySelector("h1,h2,h3,strong");if(!h||!/جهّز وِرد في دقيقة/.test(h.textContent))return;var box=d.closest('[role="dialog"],.wd-sheet,.onb')||d;if(box.dataset.suOld)return;box.dataset.suOld=1;var later=[].find.call(box.querySelectorAll("button"),function(b){return b.textContent.trim()==="بعدين"});later&&later.click();setTimeout(function(){box.remove();document.querySelectorAll(".wd-scrim,.scrim,.backdrop").forEach(function(x){x.remove()});R.classList.remove("ov-lock")},50)})}
+function oldSheet(){[].forEach.call(document.querySelectorAll('[role="dialog"],.wd-sheet,.onb,.sheet,.modal,div'),function(d){if(d.dataset.suOld||d.children.length>40)return;var h=d.querySelector&&d.querySelector("h1,h2,h3,strong");if(!h||!/جهّز وِرد في دقيقة/.test(h.textContent))return;var box=d.closest('[role="dialog"],.wd-sheet,.onb')||d;if(box.dataset.suOld)return;box.dataset.suOld=1;var later=[].find.call(box.querySelectorAll("button"),function(b){return b.textContent.trim()==="لاحقًا"});later&&later.click();setTimeout(function(){box.remove();document.querySelectorAll(".wd-scrim,.scrim,.backdrop").forEach(function(x){x.remove()});R.classList.remove("ov-lock")},50)})}
 __wOnDom(oldSheet);
 window.__openSetup=function(){i=-1;welcome()};
 /* زر معالج الإعداد بقى صف في صفحة الإعدادات الرئيسية (05-st-hub) */

@@ -8,7 +8,7 @@ function settingsOpen(){return[].some.call(document.querySelectorAll(".st"),func
 function current(){if(document.querySelector(".wp-page.rd-page"))return"radio";if(settingsOpen())return"settings";return R.dataset.view||"home"}
 function paint(k){var n=bar();if(!n)return;if(n.dataset.lit===k&&n.querySelector(".is-lit"))return;n.dataset.lit=k;[].forEach.call(n.children,function(c){var on=key(c)===k;c.classList.toggle("is-lit",on);c.classList.toggle("active",on);on?c.setAttribute("aria-current","page"):c.removeAttribute("aria-current")})}
 var q=0;function update(){if(q)return;q=requestAnimationFrame(function(){q=0;paint(current())})}
-/* data-view للتبويبات، و class عشان st-open/wp-open لما الإعدادات أو صفحة فوقية تتفتح */
+/* data-view للتبويبات، و class لكي st-open/wp-open لما الإعدادات أو صفحة فوقية تتفتح */
 new MutationObserver(update).observe(R,{attributes:true,attributeFilter:["data-view","class"]});
 __wOnDom(update);
 document.addEventListener("click",function(e){var c=e.target.closest&&e.target.closest(".bottom-nav.nav5>*");if(!c)return;var k=key(c);

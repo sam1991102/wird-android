@@ -14,7 +14,7 @@ function prayer(){var card=document.querySelector("#prayer .prayer-card"),head=c
  var cd=document.getElementById("countdown");if(cd&&/[٠-٩]/.test(cd.textContent))[].forEach.call(document.querySelectorAll("#prayerList li *"),function(e){if(!e.children.length&&/\d/.test(e.textContent))e.textContent=ar(e.textContent)})}
 var q=0;function run(){q=0;tiles();if((document.documentElement.dataset.view||"")==="prayer")prayer()}
 function later(){if(!q)q=requestAnimationFrame(run)}
-/* المربعات بتتبني من جديد في كل زيارة لصفحة الأذكار: نبدّل الأيقونة في نفس اللحظة (قبل الرسم) عشان ما تظهرش القديمة ثم الجديدة */
+/* المربعات بتتبني من جديد في كل زيارة لصفحة الأذكار: نبدّل الأيقونة في نفس اللحظة (قبل الرسم) لكي ما تظهرش القديمة ثم الجديدة */
 var L=document.getElementById("library");L&&new MutationObserver(tiles).observe(L,{childList:true,subtree:true});
 __wOnDom(later);__wOnView(later);
 __wEvery(30,function(){if(document.documentElement.dataset.view==="prayer")prayer()});run();

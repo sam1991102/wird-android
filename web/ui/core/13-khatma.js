@@ -23,7 +23,7 @@ window.__khatma={load,plan,TOT};
 if($("#khatma"))return;
 /* كارت الختمة: بيتعرض في كارت المصحف في الرئيسية (33-mushaf-card.js)، وبيتفتح في صفحة لوحده من شريط الأجزاء في صفحة المصحف */
 const box=document.createElement("div");box.id="khatma";box.className="kh";
-window.__openKhatma=()=>{const home=box.parentNode;const pg=__wPage({title:"الختمة",sub:"وِرد يومي بالصفحات لحد ما تختم",cls:"kh-page",onClose:()=>{const q=$("#quranCard");(q||home)&&(q||home).appendChild(box)}});pg.body.appendChild(box);render()};
+window.__openKhatma=()=>{const home=box.parentNode;const pg=__wPage({title:"الختمة",sub:"وِرد يومي بالصفحات حتى تختم",cls:"kh-page",onClose:()=>{const q=$("#quranCard");(q||home)&&(q||home).appendChild(box)}});pg.body.appendChild(box);render()};
 /* edit: تغيير مدة الختمة الحالية (من غير ما يضيع اللي قريته) */
 let edit=false;
 const dLbl=n=>ar(n)+" "+(n>=3&&n<=10?"أيام":"يومًا");
@@ -45,10 +45,10 @@ function full(k,p){const d=Math.min(p.d,k.days-1),prev=d===0?k.sp-1:p.endFor(d-1
  <button type="button" class="mh-kx-stop" data-k="stop">إلغاء الختمة</button></div>`}
 function render(){const k=load();
  if(!k||edit){const cur=edit&&k?k.days:30,from=edit&&k?k.pos+1:curPage();
-  box.innerHTML=`<div class="kh-card kh-new"><div class="kh-top"><span class="kh-k">الختمة</span><strong>${edit?"غيّر مدة الختمة":"ابدأ ختمة جديدة"}</strong><small>${edit?"اختار المدة الجديدة، وهنقسّم الباقي من المصحف عليها.":"اختار تختم في كام يوم، ونقسّملك المصحف وِرد يومي بالصفحات ونتابع تقدّمك وانت بتقرا."}</small></div>
+  box.innerHTML=`<div class="kh-card kh-new"><div class="kh-top"><span class="kh-k">الختمة</span><strong>${edit?"غيّر مدة الختمة":"ابدأ ختمة جديدة"}</strong><small>${edit?"اختر المدة الجديدة، وسنقسّم الباقي من المصحف عليها.":"اختر مدة الختمة بالأيام، فنقسّم لك المصحف وِردًا يوميًا بالصفحات ونتابع تقدّمك أثناء القراءة."}</small></div>
  <div class="kh-opts" role="radiogroup" aria-label="مدة الختمة">${[3,7,10,15,20,30,40,60].map(n=>`<button type="button" role="radio" aria-checked="${n===cur}" data-days="${n}">${dLbl(n)}<small>${ar(Math.ceil((TOT-(edit?from:1)+1)/n))} ص/يوم</small></button>`).join("")}</div>
- <label class="kh-from kh-custom">مدة تانية: <input type="number" id="khDays" min="1" max="365" inputmode="numeric" placeholder="${ar(cur)}"> يوم</label>
- <label class="kh-from"><input type="checkbox" id="khFromCur" ${edit?"checked":""}> ${edit?"كمّل من حيث وصلت في الختمة (صفحة "+ar(from)+")":"ابدأ من صفحتي الحالية ("+ar(from)+") بدل الفاتحة"}</label>
+ <label class="kh-from kh-custom">مدة أخرى: <input type="number" id="khDays" min="1" max="365" inputmode="numeric" placeholder="${ar(cur)}"> يوم</label>
+ <label class="kh-from"><input type="checkbox" id="khFromCur" ${edit?"checked":""}> ${edit?"أكمل من حيث وصلت في الختمة (صفحة "+ar(from)+")":"ابدأ من صفحتي الحالية ("+ar(from)+") بدل الفاتحة"}</label>
  <div class="kh-act"><button type="button" class="btn btn-primary" id="khStart">${edit?"احفظ المدة":"ابدأ الختمة"}</button>${edit?'<button type="button" class="btn btn-ghost" data-k="back">رجوع</button>':""}</div></div>`;return}
  const p=plan(k);
  if(p.done){box.innerHTML=`<div class="kh-card kh-done"><span class="kh-k">الختمة</span><strong>مبارك! أتممت ختم القرآن الكريم</strong><small>تقبّل الله منك. عدد ختماتك في وِرد: ${ar(k.count||1)}</small><div class="kh-act"><button type="button" class="btn btn-primary" data-k="new">ختمة جديدة</button></div></div>`;return}
@@ -61,13 +61,13 @@ box.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return
  if(b.dataset.days){box.querySelectorAll("[data-days]").forEach(x=>x.setAttribute("aria-checked",x===b));return}
  if(b.id==="khStart"){const sel=box.querySelector('[data-days][aria-checked="true"]'),cu=+String(box.querySelector("#khDays").value||"").replace(/[٠-٩]/g,__en);const days=cu>=1&&cu<=365?Math.round(cu):+(sel?sel.dataset.days:30);const fc=box.querySelector("#khFromCur").checked;const old=load();
   const sp=edit&&old?(fc?old.pos+1:1):(fc?curPage():1);const was=edit;edit=false;
-  save({d0:dayIdx(),days,sp,pos:sp-1,count:(old&&old.count)||0});render();resync();toast((was?"اتغيّرت المدة":"بدأت الختمة")+" — وِرد يومي "+ar(Math.ceil((TOT-sp+1)/days))+" صفحة");return}
+  save({d0:dayIdx(),days,sp,pos:sp-1,count:(old&&old.count)||0});render();resync();toast((was?"تغيّرت المدة":"بدأت الختمة")+" — وِرد يومي "+ar(Math.ceil((TOT-sp+1)/days))+" صفحة");return}
  if(b.dataset.k==="edit"){edit=true;render();return}
  if(b.dataset.k==="back"){edit=false;render();return}
  const k=load();if(!k)return;const p=plan(k);
  if(b.dataset.k==="read"){window.__openPage&&__openPage(Math.min(TOT,k.pos+1))}
  else if(b.dataset.k==="mark"){k.pos=Math.max(k.pos,p.to);if(k.pos>=TOT)k.count=(k.count||0)+1;save(k);render();resync();toast("تقبّل الله")}
- else if(b.dataset.k==="stop"){(window.__wConfirm?__wConfirm:function(m){return Promise.resolve(confirm(m))})("إلغاء الختمة الحالية؟\nهيتمسح تقدّمك في الختمة دي.",{ok:"إلغاء الختمة",cancel:"رجوع",danger:true}).then(y=>{if(y){save(null);render();resync()}})}
+ else if(b.dataset.k==="stop"){(window.__wConfirm?__wConfirm:function(m){return Promise.resolve(confirm(m))})("إلغاء الختمة الحالية؟\nسيُحذف تقدّمك في هذه الختمة.",{ok:"إلغاء الختمة",cancel:"رجوع",danger:true}).then(y=>{if(y){save(null);render();resync()}})}
  else if(b.dataset.k==="new"){const c=k.count||1;save(null);render();const s=load();}});
 /* تتبّع تلقائي: عند إغلاق صفحة المصحف نحدّث آخر صفحة مقروءة */
 let wasOpen=false;

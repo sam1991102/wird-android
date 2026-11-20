@@ -21,7 +21,7 @@ function leafText(p){return meta().then(function(m){var v=onPage(m,p);if(!v.leng
  return sura(s).then(function(d){return{s:s,a:v[0][1],t:v.filter(function(x){return x[0]===s}).map(function(x){return(d[x[1]-1]||"")+" ۝"}).join(" ")}}).catch(function(){return{s:s,a:v[0][1],t:""}})}).catch(function(){return{s:0,t:""}})}
 function when(t){if(!t)return"";var d=new Date(+t),n=new Date(),y=new Date(n);y.setDate(n.getDate()-1);
  var hm=d.getHours()%12||12,mm=String(d.getMinutes()).padStart(2,"0"),ap=d.getHours()<12?"ص":"م",tm=ar(hm+":"+mm)+" "+ap;
- return d.toDateString()===n.toDateString()?"النهارده "+tm:d.toDateString()===y.toDateString()?"امبارح "+tm:ar(d.getDate()+"/"+(d.getMonth()+1))}
+ return d.toDateString()===n.toDateString()?"اليوم "+tm:d.toDateString()===y.toDateString()?"أمس "+tm:ar(d.getDate()+"/"+(d.getMonth()+1))}
 var I={search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',bm:'<path d="M7 3h10v18l-5-4-5 4z"/>',go:'<path d="M15 5 8 12l7 7z"/>'};
 var svg=function(d,c){return'<svg viewBox="0 0 24 24"'+(c?' class="'+c+'"':"")+' aria-hidden="true">'+d+'</svg>'};
 /* سور اليوم: الجمعة الكهف، وبالليل الملك */
@@ -51,7 +51,7 @@ function build(){v=document.getElementById("mushafView");if(!v||built)return;bui
   (window.__mvResolve?__mvResolve(q):Promise.resolve(null)).then(function(r){if(r&&r.p){inp.blur();__openPage(r.p);return}
    /* مش سورة/صفحة/آية: نبحث بالكلمة في الآيات */
    if(window.__openSearch){__openSearch();setTimeout(function(){var s=document.querySelector(".tl-sheet input[type=search],.se-in input,.tl-sheet input");if(s){s.value=q;s.dispatchEvent(new Event("input",{bubbles:true}))}},250)}
-   else msg.textContent=r&&r.err||"ما لقيناش نتيجة"})});
+   else msg.textContent=r&&r.err||"لا توجد نتائج"})});
  addEventListener("scroll",mini,{passive:true});
  draw()}
 function click(e){var b=e.target.closest("[data-a],[data-s],[data-j]");if(!b||!v.contains(b))return;
@@ -78,14 +78,14 @@ function draw(){if(!v)return;var p=page(),start=!p,P=p||1,R=P%2===0?P-1:P,Lp=Mat
  var k=window.__khatma&&__khatma.load(),strip=v.querySelectorAll(".mh-strip [data-j]");
  if(k&&k.pos<TOT){var pl=__khatma.plan(k),cj=juzOf(Math.min(TOT,k.pos+1));
   var d=pl.d,prev=d===0?k.sp-1:pl.endFor(Math.min(d,k.days-1)-1),tot=Math.max(1,pl.endFor(Math.min(d,k.days-1))-prev),rd=Math.max(0,Math.min(tot,k.pos-prev));
-  put("kl","ختمتك "+ar(pl.pct)+"٪ · الجزء "+ar(cj));put("kr","وِرد النهارده "+ar(rd)+" من "+ar(tot)+" صفحة");
+  put("kl","ختمتك "+ar(pl.pct)+"٪ · الجزء "+ar(cj));put("kr","وِرد اليوم "+ar(rd)+" من "+ar(tot)+" صفحة");
   strip.forEach(function(b,i){var j=i+1,end=j<30?JUZ[j]-1:TOT;b.className=end<=k.pos?"d":j===cj?"c":""})}
  else{put("kl",k?"أتممت الختمة · ابدأ ختمة جديدة":"ابدأ ختمة");put("kr",p?"أنت في الجزء "+ar(juzOf(P)):"");var cj2=p?juzOf(P):0;strip.forEach(function(b,i){b.className=i+1===cj2?"c":""})}
  v.querySelector(".mh-lb [data-a=kh]").classList.toggle("lnk",!(k&&k.pos<TOT));
  /* كارت الختمة: المدة والخطة، وبيفتح صفحة الختمة (تبدأ/تغيّر المدة/تلغي) */
- if(k&&k.pos<TOT){var q=__khatma.plan(k);put("kt","ختمة في "+ar(k.days)+(k.days>=3&&k.days<=10?" أيام":" يوم")+" · اليوم "+ar(q.dayNo)+" من "+ar(k.days));put("ks",q.ahead?"أنجزت وِرد النهارده ✓":"وِرد النهارده: صفحة "+ar(q.from)+" – "+ar(q.to));put("kb","الخطة")}
+ if(k&&k.pos<TOT){var q=__khatma.plan(k);put("kt","ختمة في "+ar(k.days)+(k.days>=3&&k.days<=10?" أيام":" يوم")+" · اليوم "+ar(q.dayNo)+" من "+ar(k.days));put("ks",q.ahead?"أنجزت وِرد اليوم ✓":"وِرد اليوم: صفحة "+ar(q.from)+" – "+ar(q.to));put("kb","الخطة")}
  else if(k){put("kt","مبارك، أتممت الختمة");put("ks","عدد ختماتك: "+ar(k.count||1));put("kb","ختمة جديدة")}
- else{put("kt","ابدأ ختمة");put("ks","اختار تختم في كام يوم، ونقسّملك وِرد يومي");put("kb","ابدأ")}
+ else{put("kt","ابدأ ختمة");put("ks","اختر مدة الختمة بالأيام، ونقسّم لك وِردًا يوميًا");put("kb","ابدأ")}
  /* سور اليوم */
  var td=today();put("tl",td.label);var g=v.querySelector('[data-k="today"]'),h=td.list.map(function(x){return tile(x.n,x.sub,x.hl)}).join("");if(g.dataset.h!==h){g.innerHTML=h;g.dataset.h=h}}
 /* وقت آخر قراءة */

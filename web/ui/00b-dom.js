@@ -23,7 +23,7 @@ window.__wOnView=function(fn){views.push(fn)};
 
 var secs=[];
 function sec(){streak=0;if(document.hidden)return;for(var i=0;i<secs.length;i++){try{secs[i]()}catch(e){console.error(e)}}}
-/* نبدأ على أول الثانية عشان كل العدّادات تتغيّر مع بعض */
+/* نبدأ على أول الثانية لكي كل العدّادات تتغيّر مع بعض */
 setTimeout(function(){sec();setInterval(sec,1000)},1000-Date.now()%1000);
 document.addEventListener("visibilitychange",function(){if(!document.hidden)sec()});
 window.__wEverySec=function(fn){secs.push(fn)};

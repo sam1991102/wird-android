@@ -4,7 +4,7 @@
  const T=m=>typeof toast==="function"&&toast(m);const ar=__ar;
  const J=(k,v)=>{try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||"null");localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}};
  const esc=t=>String(t).replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[m]);
- const PG={"hj-sheet":"تقويم أم القرى وأيامه المميزة","nm-sheet":"تسعة وتسعون اسمًا ومعانيها","bm-sheet":"الآيات اللي حفظتها من المصحف"};
+ const PG={"hj-sheet":"تقويم أم القرى وأيامه المميزة","nm-sheet":"تسعة وتسعون اسمًا ومعانيها","bm-sheet":"الآيات التي حفظتها من المصحف"};
  /* المحتوى اللي بيتقري بيفتح صفحة كاملة بنفس شكل باقي الصفحات؛ البحث يفضل لوحة سريعة */
  const open=(cls,html)=>{if(PG[cls]&&window.__wPage){document.querySelectorAll(".wp-page."+cls).forEach(x=>x.remove());
    const m=html.match(/^<div class="tl-h">([^<]*)<\/div>/);const title=m?m[1]:"";const body=m?html.slice(m[0].length):html;let s=null;
@@ -43,7 +43,7 @@
 
 (function(){
  const T=m=>typeof toast==="function"&&toast(m);const esc=t=>String(t).replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[m]);
- const PG={"hj-sheet":"تقويم أم القرى وأيامه المميزة","nm-sheet":"تسعة وتسعون اسمًا ومعانيها","bm-sheet":"الآيات اللي حفظتها من المصحف"};
+ const PG={"hj-sheet":"تقويم أم القرى وأيامه المميزة","nm-sheet":"تسعة وتسعون اسمًا ومعانيها","bm-sheet":"الآيات التي حفظتها من المصحف"};
  /* المحتوى اللي بيتقري بيفتح صفحة كاملة بنفس شكل باقي الصفحات؛ البحث يفضل لوحة سريعة */
  const open=(cls,html)=>{if(PG[cls]&&window.__wPage){document.querySelectorAll(".wp-page."+cls).forEach(x=>x.remove());
    const m=html.match(/^<div class="tl-h">([^<]*)<\/div>/);const title=m?m[1]:"";const body=m?html.slice(m[0].length):html;let s=null;
@@ -87,7 +87,7 @@
 (function(NAMES,RUM){
  const T=m=>typeof toast==="function"&&toast(m);const ar=__ar;const esc=t=>String(t).replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[m]);
  const J=(k,v)=>{try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||"null");localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}};
- const PG={"hj-sheet":"تقويم أم القرى وأيامه المميزة","nm-sheet":"تسعة وتسعون اسمًا ومعانيها","bm-sheet":"الآيات اللي حفظتها من المصحف"};
+ const PG={"hj-sheet":"تقويم أم القرى وأيامه المميزة","nm-sheet":"تسعة وتسعون اسمًا ومعانيها","bm-sheet":"الآيات التي حفظتها من المصحف"};
  /* المحتوى اللي بيتقري بيفتح صفحة كاملة بنفس شكل باقي الصفحات؛ البحث يفضل لوحة سريعة */
  const open=(cls,html)=>{if(PG[cls]&&window.__wPage){document.querySelectorAll(".wp-page."+cls).forEach(x=>x.remove());
    const m=html.match(/^<div class="tl-h">([^<]*)<\/div>/);const title=m?m[1]:"";const body=m?html.slice(m[0].length):html;let s=null;

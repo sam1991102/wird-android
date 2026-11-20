@@ -11,7 +11,7 @@ bot.parentElement.insertBefore(bar,bot);
 function cur(){try{return F.list[F.i]}catch(e){return null}}
 function paint(){var t=cur();if(!t)return;var on=favorites.has(t.id);var b=bar.querySelector('[data-a="fav"]');b.classList.toggle("on",on);b.querySelector("span").textContent=on?"في وِردي":"وِردي"}
 bar.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;e.stopPropagation();var t=cur();if(!t)return;var k=b.dataset.a;
-if(k==="fav"){favorites.has(t.id)?favorites.delete(t.id):favorites.add(t.id);try{store.set("wird-favorites",[...favorites]);updateFav()}catch(x){}paint();window.toast&&toast(favorites.has(t.id)?"اتضاف لوِردي ✓":"اتشال من وِردي")}
+if(k==="fav"){favorites.has(t.id)?favorites.delete(t.id):favorites.add(t.id);try{store.set("wird-favorites",[...favorites]);updateFav()}catch(x){}paint();window.toast&&toast(favorites.has(t.id)?"اتضاف لوِردي ✓":"أُزيل من وِردي")}
 else if(k==="img"){window.__shareImg&&__shareImg(t.text,[t.fadl,t.source].filter(Boolean).join(" — "))}
 else if(k==="copy"){try{copyText(t.text)}catch(x){}}
 else if(k==="share"){try{shareText(t.text)}catch(x){}}

@@ -43,7 +43,7 @@ if(st){const w=document.createElement("div");w.className="backup";w.innerHTML='<
   const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(data)],{type:"application/json"}));a.download="wird-backup-"+new Date().toISOString().slice(0,10)+".json";document.body.append(a);a.click();a.remove();msg("تم تنزيل النسخة الاحتياطية")};
  const fi=document.getElementById("bkFile");document.getElementById("bkIn").onclick=()=>fi.click();
  fi.onchange=async()=>{const f=fi.files[0];fi.value="";if(!f)return;try{const j=JSON.parse(await f.text());if(j.app!=="wird"||!j.data)throw 0;
-  if(!(await (window.__wConfirm?__wConfirm:function(m){return Promise.resolve(confirm(m))})("استرجاع النسخة الاحتياطية؟\nتقدّمك الحالي هيتبدل بالموجود في الملف.",{ok:"استرجاع",danger:true})))return;
+  if(!(await (window.__wConfirm?__wConfirm:function(m){return Promise.resolve(confirm(m))})("استرجاع النسخة الاحتياطية؟\nسيُستبدل تقدّمك الحالي بما في الملف.",{ok:"استرجاع",danger:true})))return;
   Object.keys(localStorage).filter(k=>k.startsWith("wird-")).forEach(k=>localStorage.removeItem(k));for(const k in j.data)if(k.startsWith("wird-"))localStorage.setItem(k,j.data[k]);
   msg("تم الاسترجاع، جارٍ إعادة التحميل…");setTimeout(()=>location.reload(),900)}catch(e){msg("الملف غير صالح. اختر ملف نسخة وِرد الاحتياطية.")}}}
 })();
