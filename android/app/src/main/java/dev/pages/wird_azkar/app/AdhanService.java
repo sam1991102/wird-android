@@ -220,6 +220,6 @@ public class AdhanService extends Service {
 
     static boolean isMuted(Context c) {
         AudioManager am = (AudioManager) c.getSystemService(Context.AUDIO_SERVICE);
-        return am.getStreamVolume(AudioManager.STREAM_ALARM) == 0;
+        return am != null && am.getStreamVolume(AudioManager.STREAM_ALARM) == 0;
     }
 }

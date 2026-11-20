@@ -1,7 +1,7 @@
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:minWidth="110dp" android:minHeight="110dp" android:minResizeWidth="110dp" android:minResizeHeight="110dp"
     android:targetCellWidth="2" android:targetCellHeight="2"
-    android:updatePeriodMillis="1800000" android:initialLayout="@layout/w_mushaf" android:previewLayout="@layout/w_mushaf"
+    android:updatePeriodMillis="0" android:initialLayout="@layout/w_mushaf" android:previewLayout="@layout/w_mushaf"
     android:resizeMode="horizontal|vertical" android:widgetCategory="home_screen|keyguard"
     android:configure="dev.pages.wird_azkar.app.WidgetConfigActivity"
     android:widgetFeatures="reconfigurable|configuration_optional"

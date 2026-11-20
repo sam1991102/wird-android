@@ -22,12 +22,17 @@ final class WidgetData {
     static String get(Context c, String k) { return p(c).getString("k:" + k, null); }
 
     static void put(Context c, String k, String v) {
+        if (store(c, k, v)) refreshAll(c);
+    }
+
+    /** يحفظ من غير ما يحدّث الويدجت (للدفعات: نحدّث مرة واحدة في الآخر). true لو القيمة اتغيّرت */
+    static boolean store(Context c, String k, String v) {
         String old = get(c, k);
-        if (v == null ? old == null : v.equals(old)) return;
+        if (v == null ? old == null : v.equals(old)) return false;
         SharedPreferences.Editor e = p(c).edit();
         if (v == null) e.remove("k:" + k); else e.putString("k:" + k, v);
         e.apply();
-        refreshAll(c);
+        return true;
     }
 
     static JSONObject prayer(Context c) {

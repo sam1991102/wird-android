@@ -20,13 +20,15 @@ public class AdhanReceiver extends BroadcastReceiver {
         AdhanStore.ensureChannels(c);
 
         if (Intent.ACTION_BOOT_COMPLETED.equals(action)
+                || "android.intent.action.LOCKED_BOOT_COMPLETED".equals(action) /* قبل فتح القفل */
                 || action.endsWith(".QUICKBOOT_POWERON") /* شاومي وغيرها */
                 || Intent.ACTION_MY_PACKAGE_REPLACED.equals(action)
                 || Intent.ACTION_TIME_CHANGED.equals(action)
                 || Intent.ACTION_TIMEZONE_CHANGED.equals(action)
                 || "android.app.action.SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED".equals(action)) {
             AdhanStore.armAll(c);
-            AdhanStore.extendIfNeeded(c);
+            /* التمديد بيقرا بيانات الويدجت، ودي مش متاحة قبل فتح القفل: نسيبه لـBOOT_COMPLETED */
+            try { AdhanStore.extendIfNeeded(c); } catch (Exception ignored) {}
             return;
         }
 

@@ -36,8 +36,24 @@ public final class AdhanStore {
 
     private AdhanStore() {}
 
+    private static volatile boolean dpReady = false;
+
+    /** جدول الأذان في التخزين المتاح قبل فتح القفل (Direct Boot)، علشان الأذان يرجع بعد إعادة التشغيل
+     *  حتى لو محدش فتح قفل الموبايل. أول مرة بننقل الملف القديم ليه. */
     static SharedPreferences prefs(Context c) {
-        return c.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
+        if (Build.VERSION.SDK_INT < 24) return c.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
+        Context dp = c.createDeviceProtectedStorageContext();
+        if (!dpReady) {
+            try {
+                SharedPreferences d = dp.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
+                if (!d.getBoolean("dp_v", false)) {
+                    dp.moveSharedPreferencesFrom(c, PREFS);
+                    dp.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit().putBoolean("dp_v", true).apply();
+                }
+                dpReady = true;
+            } catch (Exception ignored) { /* لسه مقفول: نجرّب تاني المرة الجاية */ }
+        }
+        return dp.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
     }
 
     static void ensureChannels(Context c) {
@@ -177,7 +193,10 @@ public final class AdhanStore {
         try {
             JSONObject copy = new JSONObject(ev.toString());
             copy.put("t", System.currentTimeMillis() + minutes * 60_000L);
-            copy.put("id", 900000 + (int) (System.currentTimeMillis() / 1000 % 90000));
+            SharedPreferences p = prefs(c);
+            int n = (p.getInt("snooze_n", 0) + 1) % 90000;
+            p.edit().putInt("snooze_n", n).apply();
+            copy.put("id", 900000 + n);
             AlarmManager am = c.getSystemService(AlarmManager.class);
             PendingIntent pi = fireIntent(c, copy.getInt("id"), copy);
             if (canExact(c)) {

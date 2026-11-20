@@ -73,8 +73,10 @@ final class WNotify {
         PendingIntent pi = PendingIntent.getBroadcast(c, 30_000 + nid, fire, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
         AlarmManager am = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
         long at = System.currentTimeMillis() + LATER_MS;
-        if (Build.VERSION.SDK_INT >= 23) am.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, at, pi);
-        else am.set(AlarmManager.RTC_WAKEUP, at, pi);
+        try {
+            if (AdhanStore.canExact(c)) am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, at, pi);
+            else am.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, at, pi);
+        } catch (Exception e) { am.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, at, pi); }
     }
 
     /* ===== ذكر الساعة ===== */

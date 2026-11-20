@@ -203,17 +203,18 @@ public class WirdAdhanPlugin extends Plugin {
     @PluginMethod
     public void setData(PluginCall call) {
         Context c = getContext();
+        boolean changed = false;
         try {
             com.getcapacitor.JSObject items = call.getObject("items");
             if (items != null) {
                 java.util.Iterator<String> it = items.keys();
-                while (it.hasNext()) { String k = it.next(); WidgetData.put(c, k, items.isNull(k) ? null : items.getString(k)); }
+                while (it.hasNext()) { String k = it.next(); changed |= WidgetData.store(c, k, items.isNull(k) ? null : items.getString(k)); }
             } else {
                 String k = call.getString("key");
-                if (k != null) WidgetData.put(c, k, call.getString("value"));
+                if (k != null) changed = WidgetData.store(c, k, call.getString("value"));
             }
         } catch (Exception ignored) {}
-        WidgetData.refreshAll(c);
+        if (changed) WidgetData.refreshAll(c);
         call.resolve();
     }
 
