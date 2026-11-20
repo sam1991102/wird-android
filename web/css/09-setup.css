@@ -21,7 +21,6 @@
 .su-btns .su-main{min-width:0;flex:1;padding:var(--s12)}
 html.su-on .bottom-nav.nav5{display:none!important}
 html.su-on .wp-page{padding-bottom:150px!important}
-.su-again{display:block;margin:var(--s12) auto 0;padding:var(--s10) var(--s16);border-radius:var(--rd-s);border:1px solid var(--line);background:transparent;color:var(--ink);font:inherit;cursor:pointer}
 html.su-on .wp-page,html.su-on .st{transition:none!important;animation:none!important}
 html.su-on .st:not([hidden]){visibility:hidden}
 html.su-on .wp-page{visibility:visible}

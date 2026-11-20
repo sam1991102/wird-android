@@ -89,4 +89,4 @@ html.dark .mh-kx-pages i{background:#16201b;border-color:#9d8344}
 .mh-kx-grid span{aspect-ratio:1;border-radius:7px;display:grid;place-items:center;font-size:11px;font-weight:700;background:var(--paper-2);border:1px solid var(--line);color:var(--muted)}
 .mh-kx-grid span.d{background:var(--primary);border-color:var(--primary);color:#ffffffc0}.mh-kx-grid span.c{background:var(--gold);border-color:var(--gold);color:#fff}
 .mh-kx-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.mh-kx-row .btn:only-child{grid-column:1/-1}
-.mh-kx-stop{border:1px solid color-mix(in srgb,var(--danger) 40%,transparent);background:color-mix(in srgb,var(--danger) 8%,transparent);color:var(--danger-ink);border-radius:14px;padding:12px;font-weight:800!important;font-size:14px!important}
+.mh-kx-stop{border:1px solid color-mix(in srgb,var(--danger) 40%,transparent);background:color-mix(in srgb,var(--danger) 8%,transparent);color:var(--danger-ink);border-radius:14px;padding:12px;font-weight:800;font-size:14px}

@@ -3,7 +3,7 @@
    --sk-top / --sk-mid / --sk-low / --sk-glow على .w-sky. والجو الفعلي (اختياري) في data-wx.
    الكارت متصمّم بألوانه (مستثنى من قفل الألوان)، والكلام عليه دايمًا فاتح فوق طبقة تغميق. */
 .w-sky{--sk-top:#1f6fc4;--sk-mid:#3b8fe0;--sk-low:#7cb8ee;--sk-glow:rgba(255,240,200,.35);--sk-gx:30%;--sk-gy:40%;color:var(--on-dark)}
-.w-sky .sk-bg{background:radial-gradient(70% 55% at var(--sk-gx) var(--sk-gy),var(--sk-glow),transparent 65%),linear-gradient(180deg,var(--sk-top) 0%,var(--sk-mid) 52%,var(--sk-low) 100%)!important;transition:filter 1.2s ease}
+.w-sky .sk-bg{background:radial-gradient(70% 55% at var(--sk-gx) var(--sk-gy),var(--sk-glow),transparent 65%),linear-gradient(180deg,var(--sk-top) 0%,var(--sk-mid) 52%,var(--sk-low) 100%);transition:filter 1.2s ease}
 /* تغميق خفيف تحت الكلام: يخلّي النص مقروء في أفتح سما */
 .w-sky .sk-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,12,30,.16),rgba(6,12,30,.05) 40%,rgba(6,12,30,.28))}
 .w-sky .sk-next,.w-sky .sk-next *{color:var(--on-dark)!important}

@@ -12,7 +12,7 @@
 .pc-v2 .countdown{order:4;margin-top:var(--s10);display:inline-flex;align-items:center;gap:var(--s6);padding:var(--s4) var(--s14);border-radius:var(--rd-pill);font-size:var(--t-md)!important;font-weight:800;color:var(--on-dark)!important;background:color-mix(in srgb,var(--on-dark) 16%,transparent);border:1px solid color-mix(in srgb,var(--on-dark) 22%,transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);line-height:1.6}
 .pc-v2 .countdown::before{content:"المتبقي";font-weight:700;opacity:.85}
 /* اتنقلوا للقائمة تحت (التاريخ، التوقيت) أو بقى القوس بيقولهم (وقت إيه ومضى قد إيه) */
-.pc-v2 #prayerPlace{display:none!important}
+.pc-v2 #prayerPlace{display:none}
 /* فوق: المدينة يمين، والإعدادات والجو شمال */
 .pc2 .prayer-head.pc-v2.w-sky>.pc-city{position:absolute;top:var(--s16);right:var(--s16);z-index:2;font-size:var(--t-sm);font-weight:700;opacity:.9}
 .pc-v2 #prayerSettingsBtn{top:var(--s12);inset-inline-end:auto;left:var(--s12);width:36px;height:36px;padding:0!important;display:grid;place-items:center;font-size:0!important;border-radius:var(--rd-pill);color:var(--on-dark)!important;background:color-mix(in srgb,var(--on-dark) 16%,transparent)!important;border:1px solid color-mix(in srgb,var(--on-dark) 22%,transparent)!important}
