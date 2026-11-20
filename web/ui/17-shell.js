@@ -10,7 +10,7 @@ __wOnDom(drawer);
 (function(){var R=document.documentElement;function g(){if(R.dataset.view==="settings"&&window.__setView)__setView("home",false)}new MutationObserver(g).observe(R,{attributes:true,attributeFilter:["data-view"]});g()})();
 (function(){var R=document.documentElement;
 /* كل الطبقات اللي بتتفتح فوق الصفحة في مكان واحد: أي طبقة جديدة تتضاف هنا علشان الرجوع والشريط السفلي يقفلوها */
-var SEL='.wp-page,.st,.wd-sheet:not(.dr2),#focus,.reader,.qx,.mt-sheet,.lp-ov';
+var SEL='.wp-page,.st,.wd-sheet:not(.dr2),#focus,.reader,.mp,.qx,.mt-sheet,.lp-ov';
 function openOv(){return[].slice.call(document.querySelectorAll(SEL)).filter(function(o){if(o.hidden)return false;var c=getComputedStyle(o);return c.display!=="none"&&c.visibility!=="hidden"})}
 /* fast: من غير ضغط زرار الرجوع (الشريط السفلي بيستخدمه علشان ما يحصلش history.back وسط التنقل) */
 function closeAll(fast){openOv().forEach(function(o){var b=(!fast||o.classList.contains("st"))&&o.querySelector("[data-x],.wp-back,.wd-x,#fClose,[data-m=close]");if(b)b.click();if(o.classList.contains("wp-page")||o.classList.contains("lp-ov")||o.classList.contains("mt-sheet")||(o.classList.contains("wd-sheet")&&fast)){o.remove()}else if(!o.hidden&&getComputedStyle(o).display!=="none"){o.hidden=true}});R.classList.remove("ov-lock","reader-open","wp-open")}

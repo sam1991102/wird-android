@@ -25,7 +25,7 @@ new MutationObserver(()=>{if(!done.hidden)celebrate()}).observe(done,{attributes
 (()=>{"use strict";
 const root=document.documentElement,btn=document.getElementById("themeBtn"),meta=document.querySelector('meta[name="theme-color"]');
 const set=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
-function apply(m){root.classList.toggle("dark",m==="dark");root.classList.toggle("sepia",m==="sepia");set("wird-dark",m==="dark");set("wird-sepia",m==="sepia");meta.content=m==="dark"?"#0b1310":m==="sepia"?"#efe3c7":"#0f3d2e";btn.setAttribute("aria-label",m==="light"?"المظهر: فاتح":m==="dark"?"المظهر: داكن":"المظهر: ورقي مريح للعين")}
+function apply(m){root.classList.toggle("dark",m==="dark");root.classList.toggle("sepia",m==="sepia");set("wird-dark",m==="dark");set("wird-sepia",m==="sepia");meta.content=m==="dark"?"#0a110e":m==="sepia"?"#efe3c7":"#0d2a21";btn.setAttribute("aria-label",m==="light"?"المظهر: فاتح":m==="dark"?"المظهر: داكن":"المظهر: ورقي مريح للعين")}
 btn.addEventListener("click",e=>{e.stopImmediatePropagation();const cur=root.classList.contains("dark")?"dark":root.classList.contains("sepia")?"sepia":"light";const next={light:"dark",dark:"sepia",sepia:"light"}[cur];apply(next);const t=document.getElementById("toast");t.textContent={light:"المظهر الفاتح",dark:"المظهر الداكن",sepia:"المظهر الورقي، مريح للقراءة ليلًا"}[next];t.classList.add("show");clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove("show"),1800)},true);
 const S=[
  {t:"اضغط لتعُدّ",p:"تحت كل ذكر دائرة، كل ضغطة تحسب مرة، وتمتلئ الدائرة حتى يكتمل العدد.",a:'<div class="oa-ring"><b>2</b><small>من 3</small></div>'},

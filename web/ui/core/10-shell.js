@@ -17,23 +17,12 @@ nav.addEventListener("click",e=>{const b=e.target.closest(".nv-x");if(!b)return;
  if(b.dataset.tab==="settings"){window.__openSettings&&__openSettings();return}
  if(document.querySelector(".wp-page.rd-page"))return;window.__closeOverlays&&__closeOverlays();setTimeout(()=>window.__openRadio&&__openRadio(),120)});
 (document.querySelector("footer")||main).after(nav);
-const pageNow=()=>{const v=parseInt(String(localStorage.getItem("wird-mushaf-page")||"").replace(/\D/g,""),10);return v>=1&&v<=604?v:1};
 const mv=document.createElement("section");mv.id="mushafView";mv.className="container mv";mv.dataset.v="mushaf";
-mv.innerHTML=`<header class="vh-head"><h2>المصحف الشريف</h2><p>صفحات مصحف المدينة كما تعرفها، أو اختر سورة.</p></header>
-<div class="mv-actions">
-<button type="button" class="mv-card mv-primary" data-mv="cont"><span class="mv-ic">${icon("quran")}</span><span class="mv-tx"><strong id="mvTitle">متابعة القراءة</strong><small id="mvPage"></small></span><span class="mv-go" aria-hidden="true">‹</span></button>
-<button type="button" class="mv-card" data-mv="index"><span class="mv-ic">${icon("list")}</span><span class="mv-tx"><strong>فهرس السور</strong><small>١١٤ سورة مع البحث في الآيات</small></span><span class="mv-go" aria-hidden="true">‹</span></button>
-<button type="button" class="mv-card" data-mv="first"><span class="mv-ic">${icon("all")}</span><span class="mv-tx"><strong>من أول المصحف</strong><small>سورة الفاتحة — صفحة ١</small></span><span class="mv-go" aria-hidden="true">‹</span></button>
-</div>`;
-const surahs=$("#surahs");main.insertBefore(mv,surahs||null);
-if(surahs){mv.appendChild(surahs);surahs.dataset.v="mushaf";surahs.classList.add("mv-surahs")}
-const updMv=()=>{const p=pageNow();$("#mvTitle").textContent=p>1?"متابعة القراءة":"ابدأ القراءة";$("#mvPage").textContent=p>1?"صفحة "+ar(p)+" من ٦٠٤":"المصحف المدني بالصفحات"};
-mv.addEventListener("click",e=>{const b=e.target.closest("[data-mv]");if(!b)return;const k=b.dataset.mv;
- if(k==="index")window.__openMushaf&&__openMushaf();else window.__openPage&&__openPage(k==="first"?1:pageNow())});
-updMv();
+/* محتوى صفحة المصحف بيتبني في 42-mushaf-home.js */
+main.insertBefore(mv,$("#tasbih")||null);
 const lib=$("#library"),grid=$("#catGrid");
 if(grid&&!$(".mine-tile")){const t=document.createElement("button");t.type="button";t.className="mine-tile";
- t.innerHTML=`<span class="mt-ic">${icon("mine")}</span><span class="mt-tx"><strong>وِردي</strong><small>أذكارك المحفوظة بترتيبك</small></span><span class="mv-go" aria-hidden="true">‹</span>`;
+ t.innerHTML=`<span class="mt-ic">${icon("mine")}</span><span class="mt-tx"><strong>وِردي</strong><small>أذكارك المحفوظة بترتيبك</small></span><span class="mt-go" aria-hidden="true">‹</span>`;
  t.addEventListener("click",()=>setCategory("mine"));grid.before(t)}
 const sub=document.createElement("div");sub.className="subbar";
 sub.innerHTML=`<button type="button" class="sb-back" aria-label="رجوع إلى أقسام الأذكار"><span aria-hidden="true">→</span> الأقسام</button><strong class="sb-title"></strong>`;
@@ -59,7 +48,6 @@ function backFromList(){const h=history.state;if(!window.__IOSA&&h&&h.w&&!h.ov&&
 nav.addEventListener("click",e=>{const a=(e.composedPath?e.composedPath():[e.target]).find(n=>n&&n.dataset&&n.dataset.tab&&nav.contains(n));if(!a)return;e.preventDefault();go(a.dataset.tab)});
 sub.querySelector(".sb-back").addEventListener("click",backFromList);
 new MutationObserver(ms=>{mark();if(ms.some(m=>m.attributeName==="data-lib"))syncTitle();
- if(ms.some(m=>m.attributeName==="data-view"&&R.dataset.view==="mushaf"))updMv();
  push()}).observe(R,{attributes:true,attributeFilter:["data-view","data-lib"]});
 const OV="#focus,.mp,.reader,.st,.qx,.sheet,.ig-sheet,.install-sheet,.adhan-ov,.wd-sheet,.wp-page,.w-dlg";
 const vis=el=>{if(!el.isConnected||el.hidden||!el.getClientRects().length)return false;const s=getComputedStyle(el);return s.visibility!=="hidden"&&s.display!=="none"&&(s.animationName!=="none"||+s.opacity>0.05)&&s.pointerEvents!=="none"};

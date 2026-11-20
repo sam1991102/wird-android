@@ -13,12 +13,6 @@ async function resolve(q){q=dg(q).trim();if(!q)return null;var m=await meta(),P=
  var nm=q.match(/^(.*?)\s*(\d+)?$/),key=nz(nm[1]),i=NZ.indexOf(key);if(i<0)i=NZ.findIndex(function(x){return x.indexOf(key)===0});if(i<0)return {err:"لم أجد سورة بهذا الاسم"};
  return ay(i+1,nm[2]?+nm[2]:1,P)}
 function ay(s,a,P){if(s<1||s>114)return {err:"السور من ١ إلى ١١٤"};if(a<1||a>P[s-1].length)return {err:"سورة "+N[s-1]+" "+ar(P[s-1].length)+" آية"};return {p:P[s-1][a-1],l:"سورة "+N[s-1]+" · آية "+ar(a)}}
-function ui(){var v=document.getElementById("mushafView");if(!v||document.getElementById("mvJump"))return;var ref=v.querySelector(".mv-actions");if(!ref)return;
- var f=document.createElement("form");f.id="mvJump";f.className="mv-jump";f.setAttribute("role","search");
- f.innerHTML='<label for="mvJq" class="mv-jl">انتقل إلى</label><div class="mv-jr"><input id="mvJq" type="search" inputmode="text" autocomplete="off" placeholder="صفحة ٢٥٠ · البقرة ٢٥٥ · ٢:٢٥٥ · جزء ١٥"><button type="submit" class="btn btn-primary">اذهب</button></div><p class="mv-jm" aria-live="polite"></p>';
- ref.parentElement.insertBefore(f,ref);var inp=f.querySelector("input"),msg=f.querySelector(".mv-jm");
- inp.addEventListener("input",async function(){var r=await resolve(inp.value);msg.textContent=!inp.value.trim()?"":r&&r.err?r.err:r?r.l+" ← صفحة "+ar(r.p):"";msg.classList.toggle("err",!!(r&&r.err))});
- f.addEventListener("submit",async function(e){e.preventDefault();var r=await resolve(inp.value);if(!r||r.err){msg.textContent=r?r.err:"اكتب رقم صفحة أو اسم سورة";msg.classList.add("err");return}inp.blur();window.__openPage&&window.__openPage(r.p)})}
-__wOnDom(ui);
+
 window.__mvResolve=resolve;
 })();

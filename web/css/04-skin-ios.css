@@ -46,7 +46,7 @@ html.ios .sh-row:active,html.ios .rd-card:active,html.ios .dr-i2:active{backgrou
 html.ios .dr2 .wd-x,html.ios .dr2 [data-x]{color:var(--ink)!important;background:var(--paper)!important;border:.5px solid var(--line)!important}
 
 html.ios .m-sepia{display:none!important}
-html.ios.dark #phraseChips button.active,html.ios.dark .mv-card.mv-primary,html.ios.dark #targetSeg button.active{background:var(--primary)!important;color:var(--on-primary)!important}html.ios.dark .mv-card.mv-primary *{color:var(--on-primary)!important}
+html.ios.dark #phraseChips button.active,html.ios.dark #targetSeg button.active{background:var(--primary)!important;color:var(--on-primary)!important}
 html.ios:not(.dark){--bg:#F3F5FA;--paper:#FFFFFF;--paper-2:#EEF1F8;--ink:#0F1B33;--ink-2:#33415C;--muted:#566079;--line:rgba(15,27,51,.12);--line-2:rgba(15,27,51,.07)}
 html.ios.dark{--bg:#0A1020;--paper:#131B2E;--paper-2:#1B2540;--ink:#E9EDF7;--ink-2:#C3CBE0;--muted:rgba(233,237,247,.6);--line:rgba(160,175,215,.18);--line-2:rgba(160,175,215,.1)}
 html.ios:not(.dark) .topbar,html.ios:not(.dark) .bottom-nav.nav5{background:var(--paper)!important;color:var(--ink)!important}

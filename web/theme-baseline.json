@@ -9,8 +9,8 @@
  },
  "01-mv-tidy.css": {
   "color": 0,
-  "font": 2,
-  "radius": 1,
+  "font": 1,
+  "radius": 0,
   "space": 0,
   "family": 0,
   "chip": 0
@@ -144,6 +144,22 @@
   "chip": 0
  },
  "19-prayer-page.css": {
+  "color": 0,
+  "font": 0,
+  "radius": 0,
+  "space": 0,
+  "family": 0,
+  "chip": 0
+ },
+ "20-dhikr.css": {
+  "color": 0,
+  "font": 0,
+  "radius": 0,
+  "space": 0,
+  "family": 0,
+  "chip": 0
+ },
+ "21-mushaf-home.css": {
   "color": 0,
   "font": 0,
   "radius": 0,

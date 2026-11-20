@@ -19,9 +19,8 @@ function top(){ensure();var last=+G("wird-mushaf-page",0),sura=G("wird-mushaf-su
  tp.innerHTML=h}
 function place(){ensure();var v=document.documentElement.dataset.view||"home",kh=document.getElementById("khatma");if(kh&&kh.parentNode!==el)el.appendChild(kh);
  var mv=document.getElementById("mushafView"),hp=document.getElementById("homePlus")||document.querySelector(".hero");
- if(v==="mushaf"&&mv){var a=mv.querySelector(".vh-head");if(el.parentNode!==mv||el.previousElementSibling!==a)(a?a.after(el):mv.prepend(el));el.classList.remove("container")}
- else if(hp&&el.previousElementSibling!==hp){hp.after(el);el.classList.add("container")}
- el.hidden=!(v==="home"||v==="mushaf")}
+ if(hp&&el.previousElementSibling!==hp){hp.after(el);el.classList.add("container")}
+ el.hidden=v!=="home"}
 function draw(){top();place()}
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",draw);else draw();
 __wOnView(place);

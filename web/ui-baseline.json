@@ -27,10 +27,6 @@
   "observer": 1,
   "interval": 0
  },
- "20-pages.js": {
-  "observer": 2,
-  "interval": 0
- },
  "23-focus.js": {
   "observer": 1,
   "interval": 0

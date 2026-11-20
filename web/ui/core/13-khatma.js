@@ -4,7 +4,7 @@
 const $=s=>document.querySelector(s),ar=n=>String(n).replace(/\d/g,__ar);
 const KEY="wird-khatma",TOT=604;
 const load=()=>{try{return JSON.parse(localStorage.getItem(KEY)||"null")}catch(e){return null}};
-const save=k=>{try{k?localStorage.setItem(KEY,JSON.stringify(k)):localStorage.removeItem(KEY)}catch(e){}};
+const save=k=>{try{k?localStorage.setItem(KEY,JSON.stringify(k)):localStorage.removeItem(KEY)}catch(e){}try{dispatchEvent(new Event("wird-khatma"))}catch(e){}};
 const dayIdx=()=>{try{const L=prayerDay(0).L;return Math.floor(Date.UTC(L.y,L.m-1,L.d)/864e5)}catch(e){return Math.floor((Date.now()+3*3600e3)/864e5)}};
 const curPage=()=>{const v=parseInt(String(localStorage.getItem("wird-mushaf-page")||"").replace(/\D/g,""),10);return v>=1&&v<=TOT?v:1};
 function plan(k){const d=Math.max(0,dayIdx()-k.d0),span=TOT-k.sp+1;
@@ -19,9 +19,11 @@ window.__khatmaEvents=days=>{const k=load();if(!k||k.pos>=TOT)return[];const out
  return out};
 const resync=()=>{try{window.__wirdPush&&__wirdPush.sync(true)}catch(e){}};
 /* واجهة */
-const mv=$("#mushafView");if(!mv||$("#khatma"))return;
+window.__khatma={load,plan,TOT};
+if($("#khatma"))return;
+/* كارت الختمة: بيتعرض في كارت المصحف في الرئيسية (33-mushaf-card.js)، وبيتفتح في صفحة لوحده من شريط الأجزاء في صفحة المصحف */
 const box=document.createElement("div");box.id="khatma";box.className="kh";
-(mv.querySelector(".vh-head")||mv.firstChild).after(box);
+window.__openKhatma=()=>{const home=box.parentNode;const pg=__wPage({title:"الختمة",sub:"وِرد يومي بالصفحات لحد ما تختم",cls:"kh-page",onClose:()=>{const q=$("#quranCard");(q||home)&&(q||home).appendChild(box)}});pg.body.appendChild(box);render()};
 function render(){const k=load();
  if(!k){box.innerHTML=`<div class="kh-card kh-new"><div class="kh-top"><span class="kh-k">الختمة</span><strong>ابدأ ختمة جديدة</strong><small>نقسّم لك المصحف وِردًا يوميًا بالصفحات، ونتابع تقدّمك تلقائيًا وأنت تقرأ.</small></div>
  <div class="kh-opts" role="radiogroup" aria-label="مدة الختمة">${[7,10,15,30,60].map((n,i)=>`<button type="button" role="radio" aria-checked="${n===30}" data-days="${n}">${ar(n)} ${n===10?"أيام":n<11?"أيام":"يومًا"}<small>${ar(Math.ceil(TOT/n))} ص/يوم</small></button>`).join("")}</div>

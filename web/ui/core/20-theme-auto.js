@@ -5,7 +5,7 @@
  const R=document.documentElement,mq=matchMedia("(prefers-color-scheme: dark)");const ls=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);v===null?localStorage.removeItem(k):localStorage.setItem(k,v)}catch(e){}};
  if(!ls("wird-theme-v2")){ls("wird-theme-mode","auto");ls("wird-dark",null);ls("wird-sepia",null);ls("wird-theme-v2","1")}if(!ls("wird-theme-mode"))ls("wird-theme-mode","auto");
  const mode=()=>ls("wird-theme-mode")||"auto";
- const meta=()=>{const m=document.querySelector('meta[name="theme-color"]');if(m)m.content=R.classList.contains("dark")?"#0b1310":"#0f3d2e"};
+ const meta=()=>{const m=document.querySelector('meta[name="theme-color"]');if(m)m.content=R.classList.contains("dark")?"#0a110e":"#0d2a21"};
  const devDark=()=>typeof window.__sysDark==="boolean"?window.__sysDark:mq.matches;
  const timeDark=()=>{try{const t=prayerDay(0).t,h=__nowH();if(isFinite(t.sunrise)&&isFinite(t.maghrib))return!(h>=t.sunrise&&h<t.maghrib)}catch(e){}return devDark()};
  const apply=()=>{const m=mode();if(m!=="auto"&&m!=="device")return;R.classList.remove("sepia");R.classList.toggle("dark",m==="auto"?timeDark():devDark());meta()};

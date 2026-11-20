@@ -55,8 +55,6 @@
   /* ١) الرئيسية */
   const main=$("main");const td=$(".tools-day"),hp=$("#homePlus");if(main&&td&&hp&&!td.dataset.re){td.dataset.re=1;td.innerHTML='<div class="sc-row"></div>';const r=td.querySelector(".sc-row");r.append(chip("qibla","القبلة",()=>__openQibla()),chip("hijri","التقويم",()=>__openHijri()),chip("alarm","منبّه الفجر",openAlarm),chip("khatma","الختمة",goKh));hp.after(td)}
   const dotd=[...document.querySelectorAll('main > section[data-v="home"]')].find(s=>!s.classList.contains("ayah-day")&&!s.classList.contains("tools-day")&&!s.classList.contains("hero")&&s.id!=="homePlus"&&s.id!=="stats"&&/ذكر اليوم/.test(s.textContent.slice(0,40)));const hd=$(".hadith-day");if(dotd&&hd&&!dotd.dataset.re){dotd.dataset.re=1;hd.after(dotd)}
-  /* المصحف: آياتي المحفوظة */
-  const ma=$("#mushafView .mv-actions");if(ma&&!$("#mushafView .mv-bm")){const b=document.createElement("button");b.type="button";b.className="mv-bm";b.innerHTML='<span class="mv-bm-ic">'+I(IC.bm)+'</span><span class="mv-bm-t"><b>آياتي المحفوظة</b><small>الآيات التي حفظتها وملاحظاتك عليها</small></span><span class="mv-bm-a">‹</span>';b.onclick=()=>__openBookmarks();ma.after(b)}
   /* الأذكار: الحج والأسماء */
   const li=$("#library .lib-intro");if(li&&!$("#library .lib-more")){const w=document.createElement("div");w.className="pr-tools lib-more";w.append(chip("hajj","الحج والعمرة",()=>__openHajj()),chip("names","أسماء الله الحسنى",()=>__openNames()));li.after(w)}
   /* ٤) الشريط العلوي */
