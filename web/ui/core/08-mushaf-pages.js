@@ -54,7 +54,7 @@ function getZ(){var z=1;try{z=+localStorage.getItem("wird-mp-zoom")||1}catch(e){
 function mpZoom(p,fs){var z=getZ(),on=z>1.01,box=p.querySelector(".mp-lines");p.classList.toggle("mp-zoom",on);ov.querySelector(".mp-stage").classList.toggle("mp-zs",on);if(!on)return;box.style.fontSize=(fs*z)+"px";box.querySelectorAll(".mp-line").forEach(function(l){l.style.justifyContent="center";l.style.gap=(fs*z*.2)+"px"});ov.querySelectorAll("[data-m=zout]").forEach(function(b){b.disabled=!on})}
 function setZ(z){z=Math.round(Math.min(2.4,Math.max(1,z))*10)/10;var st=ov.querySelector(".mp-stage"),r=st.scrollHeight>st.clientHeight?st.scrollTop/(st.scrollHeight-st.clientHeight):0;try{localStorage.setItem("wird-mp-zoom",z)}catch(e){}var p=ov.querySelector(".mp-page:not(.mp-out)");layout(p);st.scrollTop=r*(st.scrollHeight-st.clientHeight);ov.querySelectorAll("[data-m=zout]").forEach(function(b){b.disabled=z<=1});ov.querySelectorAll("[data-m=zin]").forEach(function(b){b.disabled=z>=2.4});typeof toast==="function"&&toast(z<=1?"حجم الصفحة الأصلي":"حجم الخط "+AR(Math.round(z*100))+"٪")}
 function label(){const it=CACHE[cur].verses[0];const [s]=it.verse_key.split(":").map(Number);ov.querySelector(".mp-title strong").textContent="سورة "+nm(s);ov.querySelector(".mp-title small").textContent="صفحة "+AR(cur)+" · الجزء "+AR(it.juz_number);ov.querySelector(".mp-jump input").value=String(cur).replace(/\d/g,__ar);
- try{localStorage.setItem(LAST,cur);localStorage.setItem("wird-mushaf-sura",nm(s));dispatchEvent(new CustomEvent("wird-mp-page",{detail:cur}))}catch(_){}
+ if(!side)try{localStorage.setItem(LAST,cur);localStorage.setItem("wird-mushaf-sura",nm(s));dispatchEvent(new CustomEvent("wird-mp-page",{detail:cur}))}catch(_){}
  ov.querySelectorAll(".mp-edge.mp-prev,[data-m=prev]").forEach(b=>b.disabled=cur<=1);ov.querySelectorAll("[data-m=next]").forEach(b=>b.disabled=cur>=604)}
 async function go(n,dir){if(busy||n<1||n>604||n===cur&&ov.querySelector(".mp-page"))return;busy=true;const book=ov.querySelector(".mp-book"),old=book.querySelector(".mp-page");
  ov.classList.add("mp-loading");let el;try{el=await pageEl(n)}catch(e){busy=false;ov.classList.remove("mp-loading");typeof toast==="function"&&toast("تعذّر تحميل الصفحة. المصحف يحتاج اتصالًا بالإنترنت أول مرة.");return}
@@ -73,7 +73,8 @@ function repLbl(){const b=ov&&ov.querySelector(".mp-rep");if(!b)return;const v=+
 function stopPlay(){pl.on=false;pl.c=1;repLbl&&repLbl();if(audio)audio.pause();setBtn(false);unmark()}
 function play(){if(pl.on){stopPlay();return}pl.on=true;setBtn(true);startPage()}
 window.__mpReplay=()=>{if(pl.on)playI()};
-let lf;async function open(n,from){lf=from||document.activeElement;if(!ov)build();repLbl();ov.hidden=false;document.documentElement.classList.add("reader-open");ov.querySelector(".mp-book").innerHTML="";cur=0;await go(n||1,0);ov.querySelector("[data-m=close]").focus()}
+/* side: فتح سورة من «سور اليوم» أو كروت السور: بتقرا من غير ما يتغيّر مكان «أكمل القراءة» ولا تتحسب في الختمة */
+let lf,side=false;async function open(n,from,opt){side=!!(opt&&opt.side);lf=from||document.activeElement;if(!ov)build();repLbl();ov.hidden=false;document.documentElement.classList.add("reader-open");ov.querySelector(".mp-book").innerHTML="";cur=0;await go(n||1,0);ov.querySelector("[data-m=close]").focus()}
 function close(){ov.hidden=true;stopPlay();if(!document.querySelector(".reader:not([hidden]),.mushaf-index:not([hidden])"))document.documentElement.classList.remove("reader-open");lf&&lf.focus&&lf.focus()}
 window.__openPage=open;
 document.addEventListener("click",async e=>{const ix=e.target.closest(".mushaf-index");if(!ix)return;const b=e.target.closest(".mi-list [data-n],.mi-last");if(!b)return;e.preventDefault();e.stopImmediatePropagation();

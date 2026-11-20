@@ -31,12 +31,12 @@ html.dark .mh-leaf{color:#d9cfb6}
 html:not([data-view="mushaf"]) .mh-mini{display:none}
 /* شريط الأجزاء = الختمة */
 .mh-jz{padding:16px 18px 6px}
-.mh-lb{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted);margin-bottom:8px;gap:8px}
-.mh-lb button{border:0;background:none;padding:0;color:var(--ink);font-weight:700!important;font-size:12.5px!important}
+.mh-lb{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin-bottom:10px;gap:4px 8px}
+.mh-lb button{border:0;background:none;padding:0;color:var(--ink);font-weight:800!important;font-size:14px!important}
 .mh-lb button.lnk{color:var(--primary-ink);text-decoration:underline}
-.mh-strip{display:flex;gap:3px}
-.mh-strip button{flex:1;height:26px;border-radius:5px;background:var(--paper-2);border:1px solid var(--line);font-size:8.5px!important;display:grid;place-items:end center;color:var(--muted);padding:0 0 1px;min-width:0}
-.mh-strip button.d{background:var(--mh-done);border-color:var(--mh-done);color:transparent}
+.mh-strip{display:grid;grid-template-columns:repeat(15,1fr);gap:4px}
+.mh-strip button{height:30px;border-radius:7px;background:var(--paper-2);border:1px solid var(--line);font-size:11px!important;font-weight:700!important;display:grid;place-items:center;color:var(--muted);padding:0;min-width:0;font-variant-numeric:tabular-nums}
+.mh-strip button.d{background:var(--mh-done);border-color:var(--mh-done);color:#ffffffb3}
 .mh-strip button.c{background:var(--gold);border-color:var(--gold);color:#fff}
 /* البحث */
 .mh-find{margin:14px 18px 0;display:flex;align-items:center;gap:10px;padding:12px 14px;border:1px solid var(--line);border-radius:14px;color:var(--muted);font-size:14.5px}
@@ -48,12 +48,12 @@ html:not([data-view="mushaf"]) .mh-mini{display:none}
 /* السور */
 .mh-sec{display:flex;justify-content:space-between;align-items:baseline;margin:18px 18px 8px}
 .mh-sec b{font-size:14px;color:var(--ink)}.mh-sec small{color:var(--muted);font-size:12px}
-.mh-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 18px 22px}
-.mh-sc{border:1px solid var(--line);border-radius:16px;padding:12px;display:flex;align-items:center;gap:10px;background:var(--bg);color:var(--ink);text-align:start}
+.mh-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 18px 22px}
+.mh-sc{border:1px solid var(--line);border-radius:12px;padding:7px 10px;display:flex;align-items:center;gap:9px;background:var(--bg);color:var(--ink);text-align:start;min-width:0}
 .mh-sc[hidden]{display:none}
-.mh-med{width:38px;height:38px;flex:none;display:grid;place-items:center;font-size:12px;font-weight:800;color:var(--gold);background:center/contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M20 2l5 6 8-1-1 8 6 5-6 5 1 8-8-1-5 6-5-6-8 1 1-8-6-5 6-5-1-8 8 1z' fill='none' stroke='%23b8923f' stroke-width='1.4'/%3E%3C/svg%3E")}
-.mh-sc b{font-family:Amiri,serif;font-size:19px;display:block;line-height:1.2;font-weight:400}
-.mh-sc small{font-size:11px;color:var(--muted)}
+.mh-med{width:28px;height:28px;font-size:10px!important;flex:none;display:grid;place-items:center;font-size:12px;font-weight:800;color:var(--gold);background:center/contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M20 2l5 6 8-1-1 8 6 5-6 5 1 8-8-1-5 6-5-6-8 1 1-8-6-5 6-5-1-8 8 1z' fill='none' stroke='%23b8923f' stroke-width='1.4'/%3E%3C/svg%3E")}
+.mh-sc b{font-family:Amiri,serif;font-size:16px;display:block;line-height:1.3;font-weight:400;white-space:nowrap}
+.mh-sc small{font-size:10.5px;color:var(--muted);white-space:nowrap}
 .mh-sc.today{border-color:var(--gold);background:linear-gradient(160deg,color-mix(in srgb,var(--gold) 12%,transparent),transparent 60%)}
 #mushafView.mh :focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){.mh-mini{transition:none}}

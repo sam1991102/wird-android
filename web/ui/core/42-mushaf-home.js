@@ -55,7 +55,7 @@ function build(){v=document.getElementById("mushafView");if(!v||built)return;bui
  addEventListener("scroll",mini,{passive:true});
  draw()}
 function click(e){var b=e.target.closest("[data-a],[data-s],[data-j]");if(!b||!v.contains(b))return;
- if(b.dataset.s){window.__openSurahN(+b.dataset.s,b);return}
+ if(b.dataset.s){window.__openSurahN(+b.dataset.s,b,{side:true});return}
  if(b.dataset.j){__openPage(JUZ[+b.dataset.j-1],b);return}
  var a=b.dataset.a;
  if(a==="go")__openPage(page()||1,b);
