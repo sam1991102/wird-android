@@ -5,6 +5,8 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        // نسخة احتياطية من Maven Central على خوادم جوجل، لو المستودع الأساسي وقع
+        maven { url "https://maven-central.storage-download.googleapis.com/maven2/" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:8.9.1'
@@ -21,6 +23,8 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        // نسخة احتياطية من Maven Central على خوادم جوجل، لو المستودع الأساسي وقع
+        maven { url "https://maven-central.storage-download.googleapis.com/maven2/" }
     }
 }
 
