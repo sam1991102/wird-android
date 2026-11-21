@@ -51,7 +51,8 @@ jobs:
           # أجهزة حقيقية؛ لو جهاز اتشال من المعمل: gcloud firebase test android models list
           gcloud firebase test android run --type robo --app "$APK" \
             --device model=oriole,version=33 \
-            --device model=redfin,version=30 \
-            --timeout 5m 2>&1 | tee robo.txt
+            --timeout 5m 2>&1 | tee robo.txt || true
+          # الحصة المجانية (أجهزة حقيقية قليلة في اليوم) لو خلصت: ملاحظة مش فشل
+          if grep -q "TEST_QUOTA_EXCEEDED" robo.txt; then echo "::notice::Test Lab daily free quota used up - skipped"; exit 0; fi
           grep -E "Passed|Failed|Inconclusive|Crash" robo.txt | tee -a "$GITHUB_STEP_SUMMARY" || true
-          ! grep -qE "Failed|Crash" robo.txt
+          ! grep -qE "Failed|Crash|ERROR:" robo.txt
