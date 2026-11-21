@@ -43,13 +43,15 @@ jobs:
         env:
           PROJECT: ${{ secrets.FIREBASE_PROJECT_ID }}
         run: |
-          APK=$(ls art/*/wird-*.apk | grep -v '/wird.apk$' | head -1)
+          set -o pipefail
+          APK=$(find art -name 'wird-*.apk' ! -name 'wird.apk' | head -1)
+          [ -n "$APK" ] || { echo "::error::APK not found in artifact"; ls -R art; exit 1; }
           echo "APK: $APK"
           gcloud config set project "$PROJECT"
-          # أجهزة حقيقية (physical) من ماركات مختلفة؛ لو جهاز اتشال من المعمل، شوف: gcloud firebase test android models list
+          # أجهزة حقيقية؛ لو جهاز اتشال من المعمل: gcloud firebase test android models list
           gcloud firebase test android run --type robo --app "$APK" \
             --device model=oriole,version=33 \
             --device model=redfin,version=30 \
-            --timeout 5m 2>&1 | tee robo.txt || true
-          grep -E "Passed|Failed|Inconclusive|Crash" robo.txt | tee -a "$GITHUB_STEP_SUMMARY"
-          ! grep -q "Failed" robo.txt
+            --timeout 5m 2>&1 | tee robo.txt
+          grep -E "Passed|Failed|Inconclusive|Crash" robo.txt | tee -a "$GITHUB_STEP_SUMMARY" || true
+          ! grep -qE "Failed|Crash" robo.txt
