@@ -127,10 +127,11 @@ try {
     // سجل حي للنظام: لو المحاكي/التطبيق وقع هنا نعرف آخر حاجة حصلت (كان بيقع في الخطوة دي في كل مرة)
     const live = fs.openSync(`${OUT}/live-logcat.txt`, 'w'); adb('logcat -c', true);
     const lc = spawn('adb', ['logcat', '-v', 'time'], { stdio: ['ignore', live, live] }); lc.unref();
-    await js(`__wirdGo('library');true`); await sleep(2500); await snap('fresh-9a-library');
+    await js(`try{__closeOverlays(true)}catch(e){};__wirdGo('library');true`); await sleep(2500); await snap('fresh-9a-library');
     res('fresh: adhkar library opens', true, adb(`shell dumpsys meminfo ${PKG} | grep -E "TOTAL PSS|TOTAL:"`, true).trim().slice(0, 120));
     await js(`openFocus('morning');true`); await sleep(3500); await snap('fresh-9-morning');
     res('fresh: morning adhkar opens (app still alive)', !!adb(`shell pidof ${PKG}`, true).trim(), adb(`shell dumpsys meminfo ${PKG} | grep -E "TOTAL PSS|TOTAL:"`, true).trim().slice(0, 120));
+    res('fresh: morning adhkar is on screen', await js(`!!(document.getElementById('focus')||{}).offsetParent`));
     const shake = await js(`new Promise(r=>{let n=0;const f=document.getElementById('focus');const mo=new MutationObserver(l=>n+=l.length);mo.observe(f,{attributes:true,subtree:true,attributeFilter:['class']});setTimeout(()=>{mo.disconnect();r(n)},2000)})`);
     res('fresh: morning adhkar screen is steady (no shaking)', shake <= 4, 'class changes in 2s: ' + shake);
     for (let i = 0; i < 3; i++) { await js(`document.getElementById('fStage').click();true`); await sleep(400) }
