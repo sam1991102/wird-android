@@ -69,7 +69,7 @@ jobs:
           arch: x86_64
           profile: pixel_6
           disable-animations: true
-          emulator-options: -no-window -gpu swiftshader_indirect -no-boot-anim -camera-back none -camera-front none -no-snapshot-save
+          emulator-options: -no-window -gpu guest -no-boot-anim -camera-back none -camera-front none -no-snapshot-save
           script: node qa/device/run.mjs old.apk new.apk
 
       - name: Host memory diagnostics

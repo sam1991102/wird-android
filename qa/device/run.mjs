@@ -115,6 +115,15 @@ try {
     const rd = await js(`__wirdReady.refresh().then(L=>L.map(x=>x.id+':'+(x.ok?'ok':'NO')).join(' '))`);
     res('fresh: adhan fully ready after the wizard', !/NO/.test(rd), rd);
     // رحلات المستخدم اليومية
+    await js(`try{__closeOverlays(true)}catch(e){};__openPage(300);true`); await sleep(3000); await snap('fresh-11-mushaf-300');
+    await js(`try{__closeOverlays(true)}catch(e){};__openSurahN(18,null,{side:true});true`); await sleep(3000); await snap('fresh-12-kahf');
+    const last = await js(`localStorage.getItem('wird-mushaf-page')`);
+    res('fresh: reading Al-Kahf on Friday does not lose your place', String(last) === '300', 'saved page ' + last);
+    await js(`try{__closeOverlays(true)}catch(e){};__openKhatma();true`); await sleep(2000); await snap('fresh-13-khatma');
+    for (const [n, c] of [['hub', '__openSettings()'], ['adhan', '__openSettingsPage("st-adhan")'], ['notif', '__openNotif()'], ['prayer', '__openSettingsPage("st-prayer")'], ['alarm', '__openSettingsPage("st-alarm")']]) {
+      await js(`try{__closeOverlays(true)}catch(e){};${c};true`).catch(e => res('fresh: settings ' + n, false, e.message)); await sleep(1800); await snap('fresh-14-set-' + n);
+      if (n === 'adhan') res('fresh: adhan settings page shows «الأذان جاهز»', await js(`!!document.querySelector('#azReady.rdy-card.ok')`));
+    }
     // سجل حي للنظام: لو المحاكي/التطبيق وقع هنا نعرف آخر حاجة حصلت (كان بيقع في الخطوة دي في كل مرة)
     const live = fs.openSync(`${OUT}/live-logcat.txt`, 'w'); adb('logcat -c', true);
     const lc = spawn('adb', ['logcat', '-v', 'time'], { stdio: ['ignore', live, live] }); lc.unref();
@@ -126,15 +135,6 @@ try {
     res('fresh: morning adhkar screen is steady (no shaking)', shake <= 4, 'class changes in 2s: ' + shake);
     for (let i = 0; i < 3; i++) { await js(`document.getElementById('fStage').click();true`); await sleep(400) }
     await snap('fresh-10-counted');
-    await js(`try{__closeOverlays(true)}catch(e){};__openPage(300);true`); await sleep(3000); await snap('fresh-11-mushaf-300');
-    await js(`try{__closeOverlays(true)}catch(e){};__openSurahN(18,null,{side:true});true`); await sleep(3000); await snap('fresh-12-kahf');
-    const last = await js(`localStorage.getItem('wird-mushaf-page')`);
-    res('fresh: reading Al-Kahf on Friday does not lose your place', String(last) === '300', 'saved page ' + last);
-    await js(`try{__closeOverlays(true)}catch(e){};__openKhatma();true`); await sleep(2000); await snap('fresh-13-khatma');
-    for (const [n, c] of [['hub', '__openSettings()'], ['adhan', '__openSettingsPage("st-adhan")'], ['notif', '__openNotif()'], ['prayer', '__openSettingsPage("st-prayer")'], ['alarm', '__openSettingsPage("st-alarm")']]) {
-      await js(`try{__closeOverlays(true)}catch(e){};${c};true`).catch(e => res('fresh: settings ' + n, false, e.message)); await sleep(1800); await snap('fresh-14-set-' + n);
-      if (n === 'adhan') res('fresh: adhan settings page shows «الأذان جاهز»', await js(`!!document.querySelector('#azReady.rdy-card.ok')`));
-    }
     stopApp(); adb(`uninstall ${PKG}`, true);
   }
 
