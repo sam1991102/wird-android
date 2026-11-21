@@ -1,7 +1,7 @@
 // اختبار تطبيق الأندرويد الحقيقي على محاكي: ترقية من غير ضياع بيانات، من غير إنترنت، الأذان والمنبّه، روابط الإشعارات.
 // بيكلّم صفحة التطبيق من جوه عن طريق WebView DevTools (نسخة debug)، وبياخد صور شاشة بـ adb.
 // الاستخدام (جوه android-emulator-runner): node qa/device/run.mjs old.apk new.apk
-import { execSync } from 'node:child_process';
+import { execSync, spawn } from 'node:child_process';
 import fs from 'node:fs';
 
 const [OLD, NEW] = process.argv.slice(2);
@@ -115,7 +115,13 @@ try {
     const rd = await js(`__wirdReady.refresh().then(L=>L.map(x=>x.id+':'+(x.ok?'ok':'NO')).join(' '))`);
     res('fresh: adhan fully ready after the wizard', !/NO/.test(rd), rd);
     // رحلات المستخدم اليومية
-    await js(`__wirdGo('library');openFocus('morning');true`); await sleep(2500); await snap('fresh-9-morning');
+    // سجل حي للنظام: لو المحاكي/التطبيق وقع هنا نعرف آخر حاجة حصلت (كان بيقع في الخطوة دي في كل مرة)
+    const live = fs.openSync(`${OUT}/live-logcat.txt`, 'w'); adb('logcat -c', true);
+    const lc = spawn('adb', ['logcat', '-v', 'time'], { stdio: ['ignore', live, live] }); lc.unref();
+    await js(`__wirdGo('library');true`); await sleep(2500); await snap('fresh-9a-library');
+    res('fresh: adhkar library opens', true, adb(`shell dumpsys meminfo ${PKG} | grep -E "TOTAL PSS|TOTAL:"`, true).trim().slice(0, 120));
+    await js(`openFocus('morning');true`); await sleep(3500); await snap('fresh-9-morning');
+    res('fresh: morning adhkar opens (app still alive)', !!adb(`shell pidof ${PKG}`, true).trim(), adb(`shell dumpsys meminfo ${PKG} | grep -E "TOTAL PSS|TOTAL:"`, true).trim().slice(0, 120));
     const shake = await js(`new Promise(r=>{let n=0;const f=document.getElementById('focus');const mo=new MutationObserver(l=>n+=l.length);mo.observe(f,{attributes:true,subtree:true,attributeFilter:['class']});setTimeout(()=>{mo.disconnect();r(n)},2000)})`);
     res('fresh: morning adhkar screen is steady (no shaking)', shake <= 4, 'class changes in 2s: ' + shake);
     for (let i = 0; i < 3; i++) { await js(`document.getElementById('fStage').click();true`); await sleep(400) }
