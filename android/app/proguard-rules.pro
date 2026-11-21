@@ -19,3 +19,22 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# --- وِرد ---
+# كود التطبيق نفسه (الإضافات بتتنادى من الجافاسكربت بالانعكاس، والمستقبِلات والخدمات من المانيفست)
+-keep class dev.pages.wird_azkar.app.** { *; }
+# Capacitor: الجسر والإضافات بتتنادى بالاسم من الويب
+-keep class com.getcapacitor.** { *; }
+-keep @com.getcapacitor.annotation.CapacitorPlugin public class * {
+    @com.getcapacitor.PluginMethod public <methods>;
+    @com.getcapacitor.annotation.PermissionCallback <methods>;
+    @com.getcapacitor.annotation.ActivityCallback <methods>;
+}
+-keepclassmembers class * { @android.webkit.JavascriptInterface <methods>; }
+# أرقام السطور في تقارير Crashlytics (ملف الخريطة بيترفع تلقائي مع البناء)
+-keepattributes *Annotation*,SourceFile,LineNumberTable,Signature,InnerClasses,EnclosingMethod
+-renamesourcefileattribute SourceFile
+# الإضافات بتتحمّل بالاسم من capacitor.plugins.json (Class.forName)، ومكتبات Cordova بالانعكاس
+-keep @com.getcapacitor.annotation.CapacitorPlugin class * { *; }
+-keep class com.capacitorjs.** { *; }
+-keep class org.apache.cordova.** { *; }
