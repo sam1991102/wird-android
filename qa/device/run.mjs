@@ -89,8 +89,8 @@ try {
     adb('emu geo fix 46.6753 24.7136', true); // الرياض
     await su('locate'); const g = await tapText(/While using the app|Only this time|أثناء استخدام التطبيق|هذه المرة فقط/); await snap('fresh-2-geo-dialog');
     res('fresh: Android asks for location only after the button', !!g, g || 'no location dialog');
-    await sleep(6000); let t = await suText();
-    res('fresh: location found or a clear message', !/جارٍ تحديد/.test(t), t);
+    await sleep(17000); let t = await suText();
+    res('fresh: location found or a clear message', !/جارٍ تحديد موقعك…/.test(t), t);
     if (/أين تصلّي/.test(t)) { await su('next'); await sleep(1500) }
     t = await suText(); await snap('fresh-3-adhan');
     res('fresh: adhan screen', /الأذان في وقته/.test(t), t);
@@ -196,7 +196,7 @@ try {
   // ٥) الأذان والمنبّه: صوت واحد بس، والإيقاف بيوقف كله
   await js(`try{__closeOverlays()}catch(e){};true`);
   // نعدّ الأصوات الشغالة بتاعة تطبيقنا بس (بالـ uid)، مش أصوات النظام
-  const uid = (adb(`shell dumpsys package ${PKG}`, true).match(/userId=(\d+)/) || [])[1];
+  const uid = (adb(`shell dumpsys package ${PKG}`, true).match(/(?:userId|appId)=(\d+)/) || [])[1];
   const players = () => adb('shell dumpsys audio', true).split('\n').filter(l => /AudioPlaybackConfiguration/.test(l) && new RegExp('u/pid:' + uid + '/|uid:' + uid + '\\b').test(l) && /state:started/.test(l)).length;
   const p0 = players();
   const svc = () => /AdhanService/.test(adb(`shell dumpsys activity services ${PKG}`, true));

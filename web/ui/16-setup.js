@@ -49,7 +49,7 @@ document.addEventListener("change",function(e){if(!ov||!e.target.classList.conta
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-su]");if(!b||!ov||!ov.contains(b))return;e.preventDefault();var a=b.dataset.su;
  if(a==="next")go(cur+1);
  else if(a==="city"){window.__wirdCity&&__wirdCity(function(){paintGeo("")})}
- else if(a==="locate"){b.disabled=true;paintGeo("جارٍ تحديد موقعك…");(window.__wirdGeo?__wirdGeo(true):Promise.resolve(false)).then(function(ok){b.disabled=false;if(ok){paintGeo("");setTimeout(function(){cur===0&&go(1)},700)}else paintGeo("تعذّر تحديد موقعك. اضغط «تغيير» واختر مدينتك.")})}
+ else if(a==="locate"){b.disabled=true;paintGeo("جارٍ تحديد موقعك…");setTimeout(function(){if(b.disabled&&cur===0)paintGeo("يأخذ وقتًا داخل المباني… انتظر قليلًا، أو اضغط «تغيير» واختر مدينتك.")},6000);(window.__wirdGeo?__wirdGeo(true):Promise.resolve(false)).then(function(ok){b.disabled=false;if(ok){paintGeo("");setTimeout(function(){cur===0&&go(1)},700)}else paintGeo("تعذّر تحديد موقعك. اضغط «تغيير» واختر مدينتك.")})}
  else if(a==="restore"){mark();ov.remove();ov=null;R.classList.remove("su-on");window.__openSettingsPage&&__openSettingsPage("st-data")}
  else if(a==="play"){var x=snd(),sel=ov.querySelector(".su-sel"),k=sel?sel.value:x.k,u=(x.A[k]||{}).u;if(pv){stopPv();return}if(!u)return;pv=new Audio(u);b.classList.add("on");pv.play().catch(function(){stopPv()});pv.addEventListener("ended",stopPv)}
  else if(a==="enable"){stopPv();var L=RD()?RD().steps():[];if(L[0]&&L[0].ok){go(2);return}
