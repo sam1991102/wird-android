@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://azkar.islam-a-elshehery.workers.dev/sitemap.xml
