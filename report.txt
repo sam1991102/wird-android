@@ -1,0 +1,144 @@
+مشاكل: 11
+
+[classic-light/mushaf] زر القراءة مش في أول الصفحة: المصحف الشريفسورة ٱلفاتحةبِسْم | ابدأ من الفاتحةصفحة ١ابدأ no-module
+[classic-dark/mushaf] زر القراءة مش في أول الصفحة: المصحف الشريفسورة ٱلفاتحةبِسْم | ابدأ من الفاتحةصفحة ١ابدأ no-module
+[creative-light/mushaf] زر القراءة مش في أول الصفحة: المصحف الشريفسورة ٱلفاتحةبِسْم | ابدأ من الفاتحةصفحة ١ابدأ no-module
+[creative-dark/mushaf] زر القراءة مش في أول الصفحة: المصحف الشريفسورة ٱلفاتحةبِسْم | ابدأ من الفاتحةصفحة ١ابدأ no-module
+[creative-dark/js] Failed to load resource: net::ERR_TIMED_OUT
+[reader] اللمسة على المكان الفاضي ما خبّتش الشريطين
+[reader] زر الوضع الليلي مش شغال
+[classic-dark/st-remind] أزرار مغطّية مش بتتضغط: INPUT ← LI.
+[creative-light/st-look] أزرار مغطّية مش بتتضغط: عادي ← P.wl-p
+[creative-dark/st-remind] أزرار مغطّية مش بتتضغط: INPUT ← LI.
+[creative-dark/st-look] أزرار مغطّية مش بتتضغط: عادي ← LI.
+
+--- ملاحظات ---
+classic-light تبويبات: آية اليوم / حديث اليوم
+classic-light قائمة «الصلاة القادمةالظهر · ١١:٣٨ ص» ← view=prayer
+classic-light قائمة «ابحث في الأذكار والسور والأدعية» ← view=prayer
+classic-light قائمة «الرئيسية» ← view=home
+classic-light قائمة «الأذكار والأدعية» ← view=library
+classic-light قائمة «المصحف الشريف» ← view=mushaf
+classic-light قائمة «السبحة» ← view=tasbih
+classic-light قائمة «مواقيت الصلاة» ← view=prayer
+classic-light قائمة «اتجاه القبلة» ← view=prayer
+classic-light قائمة «التقويم الهجري» ← →التقويم الهجريتقويم أم القرى وأيامه الم
+classic-light قائمة «منبّه الفجر» ← الصلاة والتنبيهات
+classic-light قائمة «الختمة» ← view=mushaf
+classic-light قائمة «آياتي المحفوظة» ← →آياتي المحفوظةالآيات التي حفظتها من الم
+classic-light قائمة «أدوات المسلم» ← →أدوات المسلمكل ما تحتاجه في مكان واحد
+classic-light قائمة «إذاعة القرآن الكريم» ← الإذاعة
+classic-light قائمة «رُكن الأطفال» ← →رُكن الأطفالتعلّم وقصص من القرآن والسير
+classic-light قائمة «تعليم العبادات» ← →تعليم العباداتخطوة بخطوة من القرآن والس
+classic-light قائمة «مكتبة الأحاديث» ← →مكتبة الأحاديثنصوص موثّقة مع مصادرها
+classic-light قائمة «الحج والعمرة» ← →الحج والعمرةدليلك خطوة بخطوة
+classic-light قائمة «الرقية الشرعية» ← →الرقية الشرعيةمن القرآن والسنة الصحيحة
+classic-light قائمة «أسماء الله الحسنى» ← →أسماء الله الحسنىتسعة وتسعون اسمًا ومعا
+classic-light قائمة «التنبيهات» ← →الإشعاراتلكل صلاةٍ أذانُها وتنبيهُها
+classic-light قائمة «الإعدادات» ← الصلاة والتنبيهات
+classic-light قائمة «تحقّق من التحديث» ← →عن وِردالمبادئ والمصادر والتواصل
+classic-light قائمة «تثبيت التطبيق» ← view=mushaf
+classic-light قائمة «شارك وِرد مع غيرك» ← view=mushaf
+classic-dark تبويبات: آية اليوم / حديث اليوم
+creative-light تبويبات: آية اليوم / حديث اليوم
+creative-dark تبويبات: آية اليوم / حديث اليوم
+creative-dark قائمة «الصلاة القادمةالظهر · ١١:٣٩ ص» ← view=prayer
+creative-dark قائمة «ابحث في الأذكار والسور والأدعية» ← view=prayer
+creative-dark قائمة «الرئيسية» ← view=home
+creative-dark قائمة «الأذكار والأدعية» ← view=library
+creative-dark قائمة «المصحف الشريف» ← view=mushaf
+creative-dark قائمة «السبحة» ← view=tasbih
+creative-dark قائمة «مواقيت الصلاة» ← view=prayer
+creative-dark قائمة «اتجاه القبلة» ← view=prayer
+creative-dark قائمة «التقويم الهجري» ← →التقويم الهجريتقويم أم القرى وأيامه الم
+creative-dark قائمة «منبّه الفجر» ← الصلاة والتنبيهات
+creative-dark قائمة «الختمة» ← view=mushaf
+creative-dark قائمة «آياتي المحفوظة» ← →آياتي المحفوظةالآيات التي حفظتها من الم
+creative-dark قائمة «أدوات المسلم» ← →أدوات المسلمكل ما تحتاجه في مكان واحد
+creative-dark قائمة «إذاعة القرآن الكريم» ← الإذاعة
+creative-dark قائمة «رُكن الأطفال» ← →رُكن الأطفالتعلّم وقصص من القرآن والسير
+creative-dark قائمة «تعليم العبادات» ← →تعليم العباداتخطوة بخطوة من القرآن والس
+creative-dark قائمة «مكتبة الأحاديث» ← →مكتبة الأحاديثنصوص موثّقة مع مصادرها
+creative-dark قائمة «الحج والعمرة» ← →الحج والعمرةدليلك خطوة بخطوة
+creative-dark قائمة «الرقية الشرعية» ← →الرقية الشرعيةمن القرآن والسنة الصحيحة
+creative-dark قائمة «أسماء الله الحسنى» ← →أسماء الله الحسنىتسعة وتسعون اسمًا ومعا
+creative-dark قائمة «التنبيهات» ← →الإشعاراتلكل صلاةٍ أذانُها وتنبيهُها
+creative-dark قائمة «الإعدادات» ← الصلاة والتنبيهات
+creative-dark قائمة «تحقّق من التحديث» ← →عن وِردالمبادئ والمصادر والتواصل
+creative-dark قائمة «تثبيت التطبيق» ← view=mushaf
+creative-dark قائمة «شارك وِرد مع غيرك» ← view=mushaf
+READER:
+no .mp
+LS: wird-tasbih wird-theme-mode wird-adhl wird-skin wird-theme wird-onboarded wird-setup wird-visits wird-anon wird-fs wird-prayer wird-theme-v2 wird-ping wird-setup-later wird-hd-25 wird-setup-done wird-def-v wird-push
+GLOBALS: prayerDay renderPrayer tickPrayer savePrayer __nextPrayer __MUSHAF_IDX __openMushaf __ADHANS __wirdAdhan __openAdhanSettings __QARI __qariUrl __pickQari __openPrayerSettings __openNotif __adhanFor
+classic-light sweep pages: notif,st-prayer,st-adhan,st-dr,st-remind,st-look,st-qari,st-data,x-setup,st-about
+classic-light/notif: 26 عناصر
+classic-light/st-prayer: 15 عناصر
+classic-light/st-adhan: 9 عناصر
+classic-light/st-dr: 3 عناصر
+classic-light/st-remind: 10 عناصر
+classic-light/st-look: «123» أعاد تحميل الصفحة
+classic-light/st-look: 16 عناصر
+classic-light/st-qari: 0 عناصر
+classic-light/st-data: 3 عناصر
+classic-light/st-about: 1 عناصر
+classic-dark sweep pages: notif,st-prayer,st-adhan,st-dr,st-remind,st-look,st-qari,st-data,x-setup,st-about
+classic-dark/notif: 26 عناصر
+classic-dark/st-prayer: 15 عناصر
+classic-dark/st-adhan: 9 عناصر
+classic-dark/st-dr: 3 عناصر
+classic-dark/st-remind: 10 عناصر
+classic-dark/st-look: «123» أعاد تحميل الصفحة
+classic-dark/st-look: 16 عناصر
+classic-dark/st-qari: 0 عناصر
+classic-dark/st-data: 3 عناصر
+classic-dark/st-about: 1 عناصر
+creative-light sweep pages: notif,st-prayer,st-adhan,st-dr,st-remind,st-look,st-qari,st-data,x-setup,st-about
+creative-light/notif: 26 عناصر
+creative-light/st-prayer: 15 عناصر
+creative-light/st-adhan: 9 عناصر
+creative-light/st-dr: 3 عناصر
+creative-light/st-remind: 10 عناصر
+creative-light/st-look: «123» أعاد تحميل الصفحة
+creative-light/st-look: 15 عناصر
+creative-light/st-qari: 0 عناصر
+creative-light/st-data: 3 عناصر
+creative-light/st-about: 1 عناصر
+creative-dark sweep pages: notif,st-prayer,st-adhan,st-dr,st-remind,st-look,st-qari,st-data,x-setup,st-about
+creative-dark/notif: 26 عناصر
+creative-dark/st-prayer: 15 عناصر
+creative-dark/st-adhan: 9 عناصر
+creative-dark/st-dr: 3 عناصر
+creative-dark/st-remind: 10 عناصر
+creative-dark/st-look: «123» أعاد تحميل الصفحة
+creative-dark/st-look: 15 عناصر
+creative-dark/st-qari: 0 عناصر
+creative-dark/st-data: 3 عناصر
+creative-dark/st-about: 1 عناصر
+FOCUS:
+div#focus.focus.f-long 0/839 flex/visible/normal
+  div.focus-top 14/54 flex/visible/space-between
+    button#fList.icon-btn 26/42 grid/visible/normal [عرض كقائمة]
+      svg 36/22 block/hidden/normal
+        path 42/11 inline/visible/normal «»
+    button#fClose.icon-btn 26/42 grid/visible/normal [إغلاق]
+      svg 36/22 block/hidden/normal
+        path 42/11 inline/visible/normal «»
+    button#fCalm.icon-btn 26/42 grid/visible/normal [وضع القراءة الهادئة]
+      svg 36/22 block/hidden/normal
+        path 40/14 inline/visible/normal «»
+    div.focus-meta 28/38 grid/visible/normal
+      strong#fCat 28/21 block/visible/normal «أذكار الصباح»
+      span#fPos 49/17 block/visible/normal «١ / ٢٠»
+    button#fFont.icon-btn 26/42 grid/visible/normal «أ» [حجم الخط]
+  div.focus-bar 80/4 block/hidden/normal
+    span#fBar 80/4 block/visible/normal «»
+  div#fStage.focus-stage 84/627 flex/auto/flex-start
+    p#fText.focus-text 221/278 block/visible/normal «أَعُوذُ بِاللَّهِ مِ»
+    p#fFadl.focus-fadl 519/28 block/visible/normal «من قالها حين يصبح أُ»
+    p#fSrc.focus-src 553/21 block/visible/normal «آية الكرسي — رواه ال»
+  button.f-more 0/0 none/visible/normal [باقي النص]
+    svg 0/0 inline/hidden/normal
+      path 0/0 inline/visible/normal «»
+    span 0/0 inline/visible/normal «باقي النص»
+FOCUS-CHECK {"long":true,"textTop":137,"acts":"none"}
