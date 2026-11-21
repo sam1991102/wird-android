@@ -34,7 +34,7 @@ import com.getcapacitor.annotation.PermissionCallback;
 })
 public class WirdGeoPlugin extends Plugin {
     private static final long FRESH_MS = 30 * 60 * 1000L;
-    private static final long TIMEOUT_MS = 20000L;
+    private static final long TIMEOUT_MS = 12000L; // المستخدم مايستناش أكتر من كده؛ بعدها آخر موقع معروف أو رسالة واضحة
 
     private LocationManager lm() {
         return (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
@@ -91,14 +91,14 @@ public class WirdGeoPlugin extends Plugin {
     }
 
     private void locate(PluginCall call) {
-        if (!on()) { call.reject("خدمة الموقع مقفولة", "off"); return; }
+        if (!on()) { call.reject("خدمة الموقع متوقفة", "off"); return; }
         Location last = best();
         if (last != null && System.currentTimeMillis() - last.getTime() < FRESH_MS) { send(call, last); return; }
         LocationManager m = lm();
         String provider = m.isProviderEnabled(LocationManager.NETWORK_PROVIDER) ? LocationManager.NETWORK_PROVIDER
                 : m.isProviderEnabled(LocationManager.GPS_PROVIDER) ? LocationManager.GPS_PROVIDER : null;
         if (provider == null) {
-            if (last != null) send(call, last); else call.reject("خدمة الموقع مقفولة", "off");
+            if (last != null) send(call, last); else call.reject("خدمة الموقع متوقفة", "off");
             return;
         }
         final boolean[] done = { false };

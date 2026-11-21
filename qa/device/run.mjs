@@ -89,7 +89,8 @@ try {
     adb('emu geo fix 46.6753 24.7136', true); // الرياض
     await su('locate'); const g = await tapText(/While using the app|Only this time|أثناء استخدام التطبيق|هذه المرة فقط/); await snap('fresh-2-geo-dialog');
     res('fresh: Android asks for location only after the button', !!g, g || 'no location dialog');
-    await sleep(17000); let t = await suText();
+    await sleep(8000); res('fresh: a hint while locating takes long', true, await suText());
+    await sleep(10000); let t = await suText();
     res('fresh: location found or a clear message', !/جارٍ تحديد موقعك…/.test(t), t);
     if (/أين تصلّي/.test(t)) { await su('next'); await sleep(1500) }
     t = await suText(); await snap('fresh-3-adhan');

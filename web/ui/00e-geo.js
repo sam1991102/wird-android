@@ -12,8 +12,8 @@ navigator.geolocation.getCurrentPosition=function(ok,fail){
  var user=!navigator.userActivation||navigator.userActivation.isActive;
  get().then(function(r){ok&&ok({coords:{latitude:r.lat,longitude:r.lng,accuracy:r.acc,altitude:null,altitudeAccuracy:null,heading:null,speed:null},timestamp:r.t||Date.now()})},
  function(e){var c=e&&e.code;
-  if(c==="off"){user&&ask("خدمة الموقع (GPS) مقفولة في الموبايل.\nتفتح الإعدادات وتشغّلها؟",function(){G.openSettings()});fail&&fail(err(2,"off"))}
-  else if(c==="denied"){user&&G.state().then(function(s){if(s.perm==="denied")ask("إذن الموقع مرفوض لـ«وِرد».\nتفتح إعدادات التطبيق وتسمح بالموقع؟",function(){G.openAppSettings()})}).catch(function(){});fail&&fail(err(1,"denied"))}
+  if(c==="off"){user&&ask("خدمة الموقع (GPS) متوقفة في الهاتف.\nهل تريد فتح الإعدادات لتشغيلها؟",function(){G.openSettings()});fail&&fail(err(2,"off"))}
+  else if(c==="denied"){user&&G.state().then(function(s){if(s.perm==="denied")ask("إذن الموقع مرفوض لـ«وِرد».\nهل تريد فتح إعدادات التطبيق والسماح بالموقع؟",function(){G.openAppSettings()})}).catch(function(){});fail&&fail(err(1,"denied"))}
   else fail&&fail(err(3,(e&&e.message)||"timeout"))})};
 navigator.geolocation.watchPosition=function(ok,fail,o){navigator.geolocation.getCurrentPosition(ok,fail,o);return 1};
 navigator.geolocation.clearWatch=function(){};
