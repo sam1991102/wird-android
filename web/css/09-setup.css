@@ -1,50 +1,62 @@
 
-/*setup*/
-.su-ov{position:fixed;inset:0;z-index:2147483500;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--s12);padding:32px 28px calc(32px + env(safe-area-inset-bottom,0px));background:var(--bg,#F7F5EF);color:var(--ink);text-align:center}
-.su-ov h1{margin:var(--s4) 0 0;font-size:26px;color:var(--ink)}
-.su-ov p{margin:0;max-width:340px;font-size:var(--t-base);line-height:1.9;color:var(--muted)}
-.su-logo{display:flex;align-items:center;justify-content:center;width:88px;height:88px;border-radius:var(--rd-xl);background:radial-gradient(circle at 50% 40%,#2A8466,#0F3D2E 55%,#06201A);color:#E2C27F;font-size:30px;font-weight:700;margin-bottom:var(--s6)}
-.su-check{display:flex;align-items:center;justify-content:center;width:84px;height:84px;border-radius:50%;background:var(--primary);color:var(--on-dark)}
-.su-check svg{width:44px;height:44px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
-.su-main{min-width:220px;padding:var(--s14) var(--s24);border:0;border-radius:var(--rd-m);background:var(--primary);color:var(--on-dark);font:inherit;font-size:var(--t-base);font-weight:700;cursor:pointer}
+/*setup — معالج الإعداد (٤ شاشات) */
+.su-ov{position:fixed;inset:0;z-index:2147483500;display:flex;flex-direction:column;align-items:stretch;gap:var(--s12);overflow-y:auto;padding:calc(56px + env(safe-area-inset-top,0px)) 24px calc(24px + env(safe-area-inset-bottom,0px));background:var(--bg);color:var(--ink);text-align:center}
+.su-ov h1{margin:0;font-family:var(--font-accent);font-size:var(--t-3xl);line-height:1.35;color:var(--gold-2,var(--gold));outline:0}
+.su-ov>p{margin:0 auto;max-width:340px;font-size:var(--t-md);line-height:1.8;color:var(--muted)}
+.su-dots{position:absolute;top:calc(22px + env(safe-area-inset-top,0px));left:0;right:0;display:flex;gap:var(--s6);justify-content:center}
+.su-dots i{width:26px;height:5px;border-radius:var(--rd-pill);background:var(--line)}
+.su-dots i.on{background:var(--primary)}
+.su-ic{width:76px;height:76px;margin:var(--s8) auto var(--s4);border-radius:var(--rd-xl);display:grid;place-items:center;background:var(--paper-2);border:1px solid var(--line)}
+.su-ic svg,.su-play svg{width:36px;height:36px;fill:none;stroke:var(--gold-2,var(--gold));stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.su-okic{background:var(--primary);border-color:var(--primary)}
+.su-okic svg{stroke:var(--on-dark);stroke-width:2.2}
+.su-card{width:100%;max-width:380px;margin:var(--s4) auto 0;padding:var(--s14);border-radius:var(--rd-l);background:var(--paper);border:1px solid var(--line);text-align:start}
+.su-cr{display:flex;align-items:center;gap:var(--s12)}
+.su-cr>div{flex:1;min-width:0}
+.su-cr b,.su-opt b{display:block;font-size:var(--t-base);color:var(--ink)}
+.su-cr small{display:block;margin-top:var(--s2);font-size:var(--t-sm);color:var(--muted)}
+.su-chip{flex:none;padding:var(--s6) var(--s12);border-radius:var(--rd-pill);border:1px solid var(--line);background:var(--paper-2);color:var(--primary-ink,var(--primary));font:inherit;font-size:var(--t-sm);cursor:pointer}
+.su-play{flex:none;width:44px;height:44px;border-radius:50%;border:0;background:var(--primary);display:grid;place-items:center;cursor:pointer}
+.su-play svg{width:18px;height:18px;fill:var(--on-dark);stroke:none}
+.su-play.on{background:var(--gold)}
+.su-sel{width:100%;margin-top:var(--s6);padding:var(--s8);border-radius:var(--rd-s);border:1px solid var(--line);background:var(--paper-2);color:var(--ink);font:inherit;font-size:var(--t-sm)}
+.su-msg{min-height:1.4em;margin:0;font-size:var(--t-sm);color:var(--gold)}
+.su-opt ul{margin:var(--s6) 0 0;padding-inline-start:var(--s18);font-size:var(--t-sm);line-height:2;color:var(--muted)}
+.su-foot{margin-top:auto;padding-top:var(--s12);display:flex;flex-direction:column;align-items:center;gap:var(--s4)}
+.su-main{width:100%;max-width:380px;padding:var(--s14) var(--s24);border:0;border-radius:var(--rd-m);background:var(--primary);color:var(--on-dark);font:inherit;font-size:var(--t-base);font-weight:700;cursor:pointer}
+.su-main:disabled{opacity:.6}
 .su-link{padding:var(--s8) var(--s14);border:0;background:transparent;color:var(--muted);font:inherit;font-size:var(--t-md);cursor:pointer}
-.su-dots{display:flex;gap:var(--s6);justify-content:center}
-.su-dots i{width:7px;height:7px;border-radius:var(--rd-2xs);background:var(--line)}
-.su-dots i.on{width:18px;background:var(--primary)}
-.su-ov .su-dots{position:absolute;top:calc(20px + env(safe-area-inset-top,0px));left:0;right:0}
-.su-bar{position:fixed;left:0;right:0;bottom:0;z-index:2147483500;display:flex;flex-direction:column;gap:var(--s10);padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));background:var(--paper);border-top:1px solid var(--line);box-shadow:0 -6px 20px rgba(0,0,0,.08)}
-.su-tx{display:flex;flex-direction:column;gap:var(--s2)}
-.su-tx small{font-size:var(--t-xs);color:var(--primary);font-weight:700}
-.su-tx b{font-size:var(--t-base);color:var(--ink)}
-.su-tx span{font-size:var(--t-sm);color:var(--muted)}
-.su-btns{display:flex;gap:var(--s8);align-items:center;justify-content:space-between}
-.su-btns .su-main{min-width:0;flex:1;padding:var(--s12)}
+.su-sm{font-size:var(--t-sm)}
+.su-main:focus-visible,.su-link:focus-visible,.su-chip:focus-visible,.su-play:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
 html.su-on .bottom-nav.nav5{display:none!important}
-html.su-on .wp-page{padding-bottom:150px!important}
-html.su-on .wp-page,html.su-on .st{transition:none!important;animation:none!important}
-html.su-on .st:not([hidden]){visibility:hidden}
-html.su-on .wp-page{visibility:visible}
-/* الترحيب: الشعار + الحديث + أول تسبيحة */
-.su-welcome{gap:clamp(8px,1.6vh,14px);overflow-y:auto;justify-content:safe center;padding-top:calc(48px + env(safe-area-inset-top,0px))}
-.su-icon{width:clamp(92px,15vh,128px);height:auto;aspect-ratio:1;border-radius:28%;box-shadow:0 10px 30px #0f3d2e40;margin-bottom:clamp(2px,1vh,10px)}
-.su-hd{margin:0;display:flex;flex-direction:column;gap:var(--s4)}
-.su-hd p{margin:0;max-width:none;font-weight:700;font-size:clamp(21px,3.2vh,27px);line-height:1.6;color:var(--ink)}
-.su-hd cite{font-style:normal;font-size:var(--t-sm);line-height:1.6;color:var(--muted)}
-.su-ov p.su-say{font-size:var(--t-base);color:var(--ink);opacity:.85;margin-top:clamp(4px,1.4vh,14px)}
-.su-tb{position:relative;width:clamp(170px,27vh,236px);aspect-ratio:1;border-radius:50%;border:0;padding:0;background:color-mix(in srgb,var(--primary) 14%,var(--bg));cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;transition:transform .15s}
-.su-tb:active{transform:scale(.97)}
-.su-tb:focus-visible{outline:3px solid var(--focus);outline-offset:4px}
-.su-tb svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
-.su-tb circle{fill:none;stroke-width:6}
-.su-tb .t{stroke:color-mix(in srgb,var(--primary) 30%,var(--bg))}
-.su-tb .f{stroke:var(--gold,#d8b86c);stroke-linecap:round;stroke-dasharray:704;stroke-dashoffset:704;transition:stroke-dashoffset .6s ease}
-.su-did .su-tb .f{stroke-dashoffset:0}
-.su-tb span{position:relative;font-weight:700;font-size:clamp(22px,3.6vh,30px);line-height:1.5;color:var(--ink)}
-.su-ov p.su-ok{min-height:24px;font-size:var(--t-base);font-weight:700;color:var(--gold-ink,var(--gold))}
-.su-welcome .su-main{margin-top:clamp(2px,1vh,10px)}
-@media (prefers-reduced-motion:reduce){.su-tb .f{transition:none}}
-@media (max-height:700px){.su-icon{width:84px}.su-tb{width:min(170px,26vh)}.su-welcome .su-link{padding:var(--s4) var(--s14)}}
-.su-prev{min-height:46px;padding:0 var(--s16);border:1px solid var(--line);border-radius:var(--rd-m);background:transparent;color:var(--ink);font:inherit;font-size:var(--t-base);font-weight:700;cursor:pointer}
-.su-prev:focus-visible,.su-main:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
-/* أثناء المعالج الرجوع بيبقى من زرار «السابق» تحت */
-html.su-on .wp-page .wp-back{visibility:hidden}
+html.su-on .cp-ov{z-index:2147483600}
+
+/* قائمة خطوات ضمان الأذان (المعالج + ورقة الخطوات) */
+.rdy-list{padding:var(--s4) var(--s14)}
+.rdy-st{display:flex;gap:var(--s12);align-items:flex-start;padding:var(--s12) 0;border-bottom:1px solid var(--line);text-align:start}
+.rdy-st:last-child{border-bottom:0}
+.rdy-n{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:var(--t-sm);font-weight:700;background:var(--paper-2);color:var(--muted);border:1px solid var(--line)}
+.rdy-st.ok .rdy-n{background:var(--primary);border-color:var(--primary);color:var(--on-dark)}
+.rdy-st.now .rdy-n{border-color:var(--gold);color:var(--gold)}
+.rdy-st.later{opacity:.5}
+.rdy-b{flex:1;min-width:0}
+.rdy-b b{display:block;font-size:var(--t-base);color:var(--ink)}
+.rdy-b small{display:block;margin-top:var(--s2);font-size:var(--t-sm);line-height:1.7;color:var(--muted)}
+.rdy-st.ok small{color:var(--primary-ink,var(--primary))}
+.rdy-go{margin-top:var(--s8);padding:var(--s8) var(--s14);border:0;border-radius:var(--rd-s);background:var(--gold);color:var(--brand,var(--ink));font:inherit;font-size:var(--t-sm);font-weight:700;cursor:pointer}
+.rdy-go:disabled{opacity:.6}
+.rdy-h{margin:0 0 var(--s4);font-size:var(--t-xl);color:var(--ink)}
+.rdy-p{margin:0 0 var(--s8);font-size:var(--t-sm);line-height:1.7;color:var(--muted)}
+.rdy-sheet .rdy-list{padding:0}
+.rdy-done{width:100%;margin-top:var(--s12);padding:var(--s12);border:0;border-radius:var(--rd-m);background:var(--primary);color:var(--on-dark);font:inherit;font-weight:700;cursor:pointer}
+
+/* بطاقة حالة الأذان (صفحة الأذان والإشعارات والمواقيت) */
+.rdy-card{display:flex;align-items:center;gap:var(--s12);padding:var(--s14);margin-bottom:var(--s14);border-radius:var(--rd-l);background:var(--paper);border:1px solid color-mix(in srgb,var(--gold) 45%,var(--line))}
+.rdy-card.ok{border-color:var(--line)}
+.rdy-i{flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-weight:800;background:color-mix(in srgb,var(--gold) 20%,transparent);color:var(--gold)}
+.rdy-card.ok .rdy-i{background:var(--primary);color:var(--on-dark)}
+.rdy-tx{flex:1;min-width:0}
+.rdy-tx b{display:block;font-size:var(--t-base);color:var(--ink)}
+.rdy-tx small{display:block;margin-top:var(--s2);font-size:var(--t-sm);color:var(--muted)}
+.rdy-card .rdy-go{margin:0;flex:none}
+.rdy-off{flex:none;padding:var(--s6) var(--s12);border:1px solid var(--line);border-radius:var(--rd-pill);background:transparent;color:var(--muted);font:inherit;font-size:var(--t-sm);cursor:pointer}

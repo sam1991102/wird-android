@@ -1,62 +1,68 @@
-
 /*setup*/(function(){
-/* معالج الإعداد الأول: يمرّ على صفحات الإعدادات الحقيقية بالترتيب */
-var R=document.documentElement,K="wird-setup-done";
-var STEPS=[
- {id:"st-prayer",t:"الموقع وطريقة الحساب",s:"اختر مدينتك وطريقة حساب المواقيت ووقت الإقامة"},
- {id:"notif",t:"الأذان والتنبيهات",s:"فعّل الأذان لكل صلاة، والتنبيه قبل الأذان"},
- {id:"st-adhan",t:"صوت الأذان",s:"اختر المؤذن واستمع له قبل اعتماده"},
- {id:"st-alarm",t:"منبّه الفجر",s:"منبّه مستمر مع غفوة حتى تستيقظ"},
- {id:"st-dr",t:"تذكير بالذكر",s:"كم مرة يذكّرك وِرد بالذكر خلال اليوم"},
- {id:"st-qari",t:"القرآن والقارئ",s:"اختر صوت التلاوة واتجاه تقليب الصفحات"},
- {id:"st-look",t:"المظهر",s:"النمط والوضع الليلي وحجم الخط والأرقام"}];
-/* منبّه الفجر في تطبيق أندرويد بس؛ على الموقع ما يتعدّش خطوة */
-STEPS=STEPS.filter(function(x){return window.__WIRD_NATIVE||x.id!=="st-alarm"});
-var N=STEPS.length+2,ov=null,bar=null,i=-1;
+/* معالج الإعداد الأول — ٤ شاشات: الموقع ← الأذان ← خطوات ضمان الأذان (الناقص فقط) ← جاهز.
+   كل إذن بيتطلب في لحظته ومعاه سببه، وباقي الإعدادات (القارئ، المظهر، ذكر الساعة…) اختيارية بعدين. */
+var R=document.documentElement,K="wird-setup-done",ov=null,cur=0,listPaint=null,stack=[];
 var ar=__ar;
 function done(){try{return localStorage.getItem(K)==="1"}catch(e){return true}}
 function mark(){try{localStorage.setItem(K,"1");localStorage.setItem("wird-onboarded","1")}catch(e){}}
-function el(h,c){var d=document.createElement("div");d.className=c;d.innerHTML=h;return d}
-function close(){var p=document.querySelectorAll(".wp-page.sh-page,.wp-page.nt-page");[].forEach.call(p,function(x){x.remove()});window.__closeOverlays&&__closeOverlays()}
-function dots(k){var h="";for(var j=0;j<N;j++)h+='<i class="'+(j<=k?"on":"")+'"></i>';return'<div class="su-dots" aria-hidden="true">'+h+"</div>"}
-function screen(html){ov&&ov.remove();ov=el(html,"su-ov");ov.setAttribute("role","dialog");ov.setAttribute("aria-modal","true");document.body.appendChild(ov);R.classList.add("su-on")}
-function welcome(){var onb=document.getElementById("onb");if(onb)onb.hidden=true;
- /* الترحيب: الشعار، ثم الحديث، ثم أول ذكر يقوله المستخدم بنفسه */
- screen(dots(0)+'<img class="su-icon" src="/icon-512.png" alt="وِرد" width="120" height="120">'+
-  '<blockquote class="su-hd"><p>«لا يزالُ لسانُك رطبًا من ذكرِ الله»</p><cite>رواه الترمذي (٣٣٧٥) وابن ماجه (٣٧٩٣)، وصحّحه الألباني</cite></blockquote>'+
-  '<p class="su-say" aria-live="polite">ابدأ بأول ذكر: اضغط على الدائرة</p>'+
-  '<button type="button" class="su-tb" data-su="tasbih" aria-label="اضغط واذكر: سبحان الله وبحمده"><svg viewBox="0 0 244 244" aria-hidden="true"><circle class="t" cx="122" cy="122" r="112"/><circle class="f" cx="122" cy="122" r="112"/></svg><span>سبحان الله<br>وبحمده</span></button>'+
-  '<p class="su-ok" aria-live="polite"></p>'+
-  '<button type="button" class="su-main" data-su="go">ابدأ الإعداد</button><button type="button" class="su-link" data-su="restore">عندي نسخة احتياطية</button><button type="button" class="su-link" data-su="skip">تخطَّ الآن</button>');
- ov.classList.add("su-welcome");ov.setAttribute("aria-label","أهلًا بك في وِرد")}
-function finish(){bar&&bar.remove();bar=null;close();
- var A=!!window.__WIRD_NATIVE;
- screen(dots(N-1)+'<div class="su-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><h1>جاهز</h1><p>'+(A?"لضمان وصول الأذان في وقته على أندرويد، اسمح بالإشعارات والمنبّهات الدقيقة، وأوقف توفير البطارية لوِرد من صفحة الأذان.":"تم حفظ إعداداتك. تقبّل الله منك.")+'</p><button type="button" class="su-main" data-su="end">ابدأ وِردك</button>')}
-function step(k){i=k;if(k>=STEPS.length){finish();return}ov&&ov.remove();ov=null;[].forEach.call(document.querySelectorAll(".wp-page.sh-page,.wp-page.nt-page"),function(x){x.remove()});
- var s=STEPS[k];if(!bar){bar=el("","su-bar");document.body.appendChild(bar)}
- bar.innerHTML=dots(k+1)+'<div class="su-row"><div class="su-tx"><small>الخطوة '+ar(k+1)+" من "+ar(STEPS.length)+"</small><b>"+s.t+"</b><span>"+s.s+'</span></div></div><div class="su-btns"><button type="button" class="su-link" data-su="all">إنهاء</button><button type="button" class="su-prev" data-su="prev">السابق</button><button type="button" class="su-main" data-su="next">'+(k===STEPS.length-1?"إنهاء الإعداد":"التالي")+"</button></div>";
- go(s.id)}
-/* يفتح صفحة الخطوة من الإعدادات؛ لو الصفحة مش موجودة على الجهاز ده (منبّه الفجر على أندرويد بس مثلًا) يعدّيها */
-function go(id){var tries=0;(function t(){var hub=[].find.call(document.querySelectorAll(".st"),function(x){return!x.hidden&&x.offsetHeight}),row=hub&&hub.querySelector('.sh-row[data-id="'+id+'"]');
- if(row){row.click();return}if(!hub&&tries===0&&window.__openSettings){tries++;__openSettings();setTimeout(t,350);return}step(i+1)})()}
-function end(){mark();ov&&ov.remove();ov=null;bar&&bar.remove();bar=null;close();R.classList.remove("su-on");window.__wirdGo&&__wirdGo("home")}
-/* أثناء المعالج: سهم الرجوع مخفي، وزرار الرجوع في الموبايل (اللي بيضغط السهم) بيبقى «السابق» بدل ما يقفل الصفحة ويلخبط الخطوات */
-function prev(){if(i<=0){bar&&bar.remove();bar=null;close();welcome()}else step(i-1)}
-/* زرار الرجوع في الموبايل أثناء خطوات المعالج = «السابق» (قبل ما الصفحة تتعامل معاه) */
-window.__suBack=function(){if(!bar||i<0)return false;/* نرجّع المدخل اللي اتسحب، لكي الرجوع ما يخرجش من التطبيق وسط المعالج */try{history.pushState(Object.assign({},history.state||{w:1,v:"home"},{w:1,ov:1,ovd:1}),"",location.href)}catch(x){}prev();return true};
-document.addEventListener("click",function(e){if(!bar||i<0||!e.target.closest||!e.target.closest(".wp-back"))return;e.preventDefault();e.stopImmediatePropagation();prev()},true);
-document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-su]");if(!b)return;e.preventDefault();var a=b.dataset.su;
- if(a==="go")step(0);else if(a==="next")step(i+1);else if(a==="prev")prev();else if(a==="all")finish();else if(a==="skip"||a==="end")end();
- else if(a==="tasbih"){if(ov.classList.contains("su-did"))return;ov.classList.add("su-did");try{navigator.vibrate&&navigator.vibrate(18)}catch(x){}
-  ov.querySelector(".su-say").textContent="بدأتَ وِردك";setTimeout(function(){var o=ov&&ov.querySelector(".su-ok");if(o)o.textContent="تقبّل الله منك"},450)}
- else if(a==="restore"){mark();ov&&ov.remove();ov=null;R.classList.remove("su-on");window.__openSettingsPage&&__openSettingsPage("st-data")}});
-/* شاشة «جهّز وِرد في دقيقة» القديمة: المعالج حلّ محلها */
-function oldSheet(){[].forEach.call(document.querySelectorAll('[role="dialog"],.wd-sheet,.onb,.sheet,.modal,div'),function(d){if(d.dataset.suOld||d.children.length>40)return;var h=d.querySelector&&d.querySelector("h1,h2,h3,strong");if(!h||!/جهّز وِرد في دقيقة/.test(h.textContent))return;var box=d.closest('[role="dialog"],.wd-sheet,.onb')||d;if(box.dataset.suOld)return;box.dataset.suOld=1;var later=[].find.call(box.querySelectorAll("button"),function(b){return b.textContent.trim()==="لاحقًا"});later&&later.click();setTimeout(function(){box.remove();document.querySelectorAll(".wd-scrim,.scrim,.backdrop").forEach(function(x){x.remove()});R.classList.remove("ov-lock")},50)})}
-__wOnDom(oldSheet);
-window.__openSetup=function(){i=-1;welcome()};
-/* زر معالج الإعداد بقى صف في صفحة الإعدادات الرئيسية (05-st-hub) */
+function RD(){return window.__wirdReady}
+function dots(k){var h="";for(var j=0;j<4;j++)h+='<i class="'+(j<=k?"on":"")+'"></i>';return'<div class="su-dots" aria-hidden="true">'+h+"</div>"}
+function svg(d){return'<svg viewBox="0 0 24 24" aria-hidden="true">'+d+"</svg>"}
+var IC={geo:svg('<path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>'),
+ adhan:svg('<path d="M6 17V11a6 6 0 0 1 12 0v6l1.5 2h-15z"/><path d="M10 21h4"/>'),ok:svg('<path d="M5 12.5l4.5 4.5L19 7.5"/>')};
+function city(){try{return P.name||"—"}catch(e){return"—"}}
+function times(){try{var t=prayerDay(0).t;return"الفجر "+fmtT(t.fajr)+" · الظهر "+fmtT(t.dhuhr)+" · العصر "+fmtT(t.asr)}catch(e){return""}}
+function snd(){var S=window.__wirdPush?__wirdPush.state():{},A=window.__ADHANS||{};return{S:S,A:A,k:S.sound&&A[S.sound]?S.sound:"none"}}
+function show(html,cls){if(listPaint&&RD()){RD().off(listPaint);listPaint=null}ov&&ov.remove();ov=document.createElement("div");ov.className="su-ov "+(cls||"");ov.setAttribute("role","dialog");ov.setAttribute("aria-modal","true");ov.innerHTML=html;document.body.appendChild(ov);R.classList.add("su-on");var h=ov.querySelector("h1");h&&h.setAttribute("tabindex","-1");h&&h.focus({preventScroll:true})}
+
+function geo(){cur=0;
+ show(dots(0)+'<div class="su-ic">'+IC.geo+'</div><h1>أين تصلّي؟</h1><p>نحسب مواقيت الصلاة والقبلة من مدينتك. الموقع يبقى على جهازك.</p>'+
+  '<div class="su-card"><div class="su-cr"><div><b class="su-city">'+city()+'</b><small class="su-t">'+times()+'</small></div><button type="button" class="su-chip" data-su="city">تغيير</button></div></div>'+
+  '<p class="su-msg" aria-live="polite"></p>'+
+  '<div class="su-foot"><button type="button" class="su-main" data-su="locate">تحديد موقعي تلقائيًا</button><button type="button" class="su-link" data-su="next">المدينة صحيحة، التالي</button><button type="button" class="su-link su-sm" data-su="restore">عندي نسخة احتياطية</button></div>')}
+function paintGeo(msg){if(!ov||cur!==0)return;ov.querySelector(".su-city").textContent=city();ov.querySelector(".su-t").textContent=times();if(msg!=null)ov.querySelector(".su-msg").textContent=msg}
+
+function adhan(){cur=1;var x=snd();
+ var opts=Object.keys(x.A).filter(function(k){return k!=="none"}).map(function(k){return'<option value="'+k+'"'+(k===x.k?" selected":"")+">"+x.A[k].n+"</option>"}).join("");
+ var on=RD()&&RD().steps()[0].ok;
+ show(dots(1)+'<div class="su-ic">'+IC.adhan+'</div><h1>الأذان في وقته</h1><p>'+(on?"الأذان مفعّل. اختر الصوت الذي تحبّه.":"نُشعرك بالأذان عند كل صلاة. سيسألك هاتفك بعد قليل عن السماح بالإشعارات.")+'</p>'+
+  '<div class="su-card"><div class="su-cr"><button type="button" class="su-play" data-su="play" aria-label="استماع">'+svg('<path d="M8 5v14l11-7z"/>')+'</button><div class="su-grow"><b>صوت الأذان</b><select class="su-sel" aria-label="صوت الأذان">'+(opts||'<option value="none">صوت التنبيه المعتاد</option>')+'</select></div></div></div>'+
+  '<p class="su-msg" aria-live="polite"></p>'+
+  '<div class="su-foot"><button type="button" class="su-main" data-su="enable">'+(on?"التالي":"تفعيل الأذان")+'</button><button type="button" class="su-link" data-su="later">لاحقًا</button></div>')}
+
+function ready(){cur=2;
+ show(dots(2)+'<h1>خطوات ليصل الأذان دائمًا</h1><p>هاتفك يوقف التطبيقات لتوفير البطارية. خطوة بخطوة، وكل خطوة تأخذ ثوانٍ.</p><div class="su-card su-steps rdy-list"></div>'+
+  '<div class="su-foot"><button type="button" class="su-main" data-su="fin">متابعة</button><button type="button" class="su-link su-skip" data-su="fin">تخطَّ الآن (قد يتأخر الأذان)</button></div>');
+ var box=ov.querySelector(".su-steps");listPaint=function(){RD().list(box);var m=RD().missing();var b=ov&&ov.querySelector(".su-main");if(b)b.textContent=m?"متابعة":"تمّ — التالي";var k=ov&&ov.querySelector(".su-skip");if(k)k.hidden=!m};
+ RD().on(listPaint);listPaint();RD().bindList(box);RD().refresh()}
+
+function fin(){cur=3;var L=RD()?RD().steps():[],on=L[0]&&L[0].ok,m=RD()?RD().missing():0;
+ show(dots(3)+'<div class="su-ic su-okic">'+IC.ok+'</div><h1>وِرد جاهز</h1><p>'+(on?(m?"الأذان مفعّل في "+city()+". تقدر تكمّل الخطوات الناقصة من صفحة الأذان في أي وقت.":"الأذان مفعّل في "+city()+"، وكل شيء تمام."):"تقدر تفعّل الأذان في أي وقت من الإعدادات.")+'</p>'+
+  '<div class="su-card su-opt"><b>اختياري، تضبطه بعدين من الإعدادات:</b><ul>'+(window.__WIRD_NATIVE?"<li>منبّه الفجر بالشاشة الكاملة</li>":"")+'<li>ذكر قصير كل ساعة</li><li>القارئ والمظهر وحجم الخط</li></ul></div>'+
+  '<div class="su-foot"><button type="button" class="su-main" data-su="end">ابدأ وِردك</button></div>')}
+
+function go(k){stack.push(cur);if(k===2){/* لو الأذان مش مفعّل أو مافيش ناقص، نعدّي شاشة الخطوات */var L=RD()?RD().steps():[];if(!(L[0]&&L[0].ok)||!RD().missing()){fin();return}}[geo,adhan,ready,fin][k]()}
+function end(){mark();stopPv();if(listPaint&&RD())RD().off(listPaint);listPaint=null;ov&&ov.remove();ov=null;R.classList.remove("su-on");window.__wirdGo&&__wirdGo("home")}
+var pv=null;function stopPv(){if(pv){pv.pause();pv=null}var b=ov&&ov.querySelector(".su-play");b&&b.classList.remove("on")}
+
+document.addEventListener("change",function(e){if(!ov||!e.target.classList.contains("su-sel"))return;stopPv();var S=window.__wirdPush&&__wirdPush.state();if(!S)return;S.sound=e.target.value;try{localStorage.setItem("wird-push",JSON.stringify(S))}catch(x){}if(S.on)__wirdPush.sync(true).catch(function(){})});
+document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-su]");if(!b||!ov||!ov.contains(b))return;e.preventDefault();var a=b.dataset.su;
+ if(a==="next")go(cur+1);
+ else if(a==="city"){window.__wirdCity&&__wirdCity(function(){paintGeo("")})}
+ else if(a==="locate"){b.disabled=true;paintGeo("جارٍ تحديد موقعك…");(window.__wirdGeo?__wirdGeo(true):Promise.resolve(false)).then(function(ok){b.disabled=false;if(ok){paintGeo("");setTimeout(function(){cur===0&&go(1)},700)}else paintGeo("تعذّر تحديد موقعك. اضغط «تغيير» واختر مدينتك.")})}
+ else if(a==="restore"){mark();ov.remove();ov=null;R.classList.remove("su-on");window.__openSettingsPage&&__openSettingsPage("st-data")}
+ else if(a==="play"){var x=snd(),sel=ov.querySelector(".su-sel"),k=sel?sel.value:x.k,u=(x.A[k]||{}).u;if(pv){stopPv();return}if(!u)return;pv=new Audio(u);b.classList.add("on");pv.play().catch(function(){stopPv()});pv.addEventListener("ended",stopPv)}
+ else if(a==="enable"){stopPv();var L=RD()?RD().steps():[];if(L[0]&&L[0].ok){go(2);return}
+  b.disabled=true;var msg=ov.querySelector(".su-msg");msg.textContent="";
+  RD().act("on").then(function(){b.disabled=false;var s=RD().steps()[0];if(s.ok){go(2);return}msg.textContent=s.block||"لم يُسمح بالإشعارات. تقدر تفعّلها لاحقًا من الإعدادات."})}
+ else if(a==="later"){stopPv();fin()}
+ else if(a==="fin")fin();
+ else if(a==="end")end()});
+/* زرار الرجوع في الموبايل أثناء المعالج = الشاشة السابقة */
+window.__suBack=function(){if(!ov)return false;try{history.pushState(Object.assign({},history.state||{w:1,v:"home"},{w:1,ov:1,ovd:1}),"",location.href)}catch(x){}if(stack.length){stopPv();[geo,adhan,ready,fin][stack.pop()]()}return true};
+window.__openSetup=function(){stack=[];geo()};
 /* يظهر مرة واحدة للمستخدم الجديد فقط */
 function first(){var old=false;try{old=!!(localStorage.getItem("wird-onboarded")||localStorage.getItem("wird-history")||localStorage.getItem("wird-prayer"))}catch(e){}
- if(done())return;if(old){mark();return}setTimeout(welcome,600)}
+ if(done())return;if(old){mark();return}setTimeout(geo,600)}
 document.readyState==="loading"?document.addEventListener("DOMContentLoaded",first):first();
 })();

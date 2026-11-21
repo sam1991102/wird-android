@@ -74,27 +74,6 @@ html.sepia .focus-text{color:var(--on-dark)}
 .i-sepia{display:none}
 html.sepia .i-sun,html.sepia .i-moon{display:none}html.sepia .i-sepia{display:inline}
 html.dark .i-sepia{display:none}
-.onb{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:var(--s20);background:#04140ecc;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
-body.onb-open{overflow:hidden}
-.onb-card{position:relative;width:min(420px,100%);background:var(--paper);border-radius:var(--rd-xl);padding:var(--s32) var(--s24) var(--s24);text-align:center;box-shadow:var(--sh-3);animation:onbIn .45s cubic-bezier(.2,.9,.3,1)}
-@keyframes onbIn{from{opacity:0;transform:translateY(24px) scale(.97)}}
-.onb-skip{position:absolute;top:14px;inset-inline-start:14px;font:inherit;font-size:var(--t-md);font-weight:700;background:none;border:0;color:var(--muted);cursor:pointer;padding:var(--s6) var(--s8)}
-.onb-art{height:150px;display:grid;place-items:center;margin:var(--s8) 0 var(--s10)}
-.onb-card h2{font-family:var(--font-text);font-size:30px;color:var(--primary);margin-bottom:var(--s8)}
-.onb-card p{color:var(--ink-2);margin:0 auto var(--s20);max-width:32ch}
-.onb-dots{display:flex;justify-content:center;gap:var(--s6);margin-bottom:var(--s16)}
-.onb-dots i{width:8px;height:8px;border-radius:var(--rd-pill);background:var(--line);transition:width .3s,background .3s}
-.onb-dots i.on{width:24px;background:var(--primary)}
-.onb-next{width:100%}
-.oa-ring{width:120px;height:120px;border-radius:50%;display:grid;place-content:center;justify-items:center;color:var(--primary);background:radial-gradient(closest-side,var(--paper) 80%,transparent 82%),conic-gradient(var(--primary) 66%,var(--line-2) 0)}
-.oa-ring b{font-size:40px;line-height:1}.oa-ring small{color:var(--muted)}
-.oa-focus{width:110px;height:150px;border-radius:var(--rd-l);background:linear-gradient(180deg,#1e4466,#9a6232);display:grid;align-content:center;gap:var(--s10);padding:0 var(--s20)}
-.oa-focus span{height:7px;border-radius:var(--rd-xs);background:#ffffffcc}.oa-focus span:nth-child(2){width:80%;margin-inline-start:auto}.oa-focus span:nth-child(3){width:55%;margin-inline-start:auto;background:#ffd38a}
-.oa-week{display:flex;gap:var(--s8)}
-.oa-week i{width:22px;height:60px;border-radius:var(--rd-pill);background:var(--line-2)}
-.oa-week i.on{background:linear-gradient(180deg,var(--gold-2),var(--gold))}
-.oa-week i.t{outline:2px solid var(--primary);outline-offset:2px}
-@media (prefers-reduced-motion:reduce){.onb-card{animation:none}}
 .chip[data-cat="mine"]{border-style:dashed}
 .chip[data-cat="mine"].active{border-style:solid}
 .adhkar-list.is-mine .dhikr-number{background:var(--gold-50);color:var(--gold-ink)}
@@ -696,7 +675,7 @@ html.adhan-open,html.adhan-open body{overflow:hidden!important;overscroll-behavi
 .adhan-card{touch-action:manipulation;max-height:calc(100dvh - 48px);overflow:auto;overscroll-behavior:contain;animation:none!important}
 @keyframes adFade{from{opacity:0}to{opacity:1}}
 html.ov-lock,html.ov-lock body{overflow:hidden!important;overscroll-behavior:none}
-#focus,.mp,.reader,.st,.qx,.adhan-ov,#onb,.tasbih-full{overscroll-behavior:contain}
+#focus,.mp,.reader,.st,.qx,.adhan-ov,.tasbih-full{overscroll-behavior:contain}
 /* overscroll-behavior على الحاويات الخارجية بس (السطر اللي فوق). على كل العناصر جوه كان بيقفل السحب على أندرويد: أي عنصر overflow:hidden (زي كارت قائمة الإعدادات) بيوقف التمرير */
 #focus{animation:wFade .2s ease-out!important}
 .tasbih-full{animation:wFade .2s ease-out!important}
@@ -729,11 +708,6 @@ html[data-view]:not([data-view="home"]) main{padding-top:var(--s28);min-height:c
 @media (min-width:761px) and (max-width:1000px){body{padding-inline-start:104px}.bottom-nav.nav5{width:76px;right:12px;inset-inline:auto 12px}.nav5 .ni{width:42px}}
 #fontBtn,#themeBtn{display:none!important}
 .az-more.dim{opacity:1}
-.ntf-card{display:flex;align-items:center;gap:var(--s12);margin:var(--s14) 0;padding:var(--s14);border-radius:var(--rd-l);background:var(--chip-bg);border:1px solid color-mix(in srgb,var(--gold) 45%,var(--line))}
-.ntf-ic{flex:none;display:grid;place-items:center;width:44px;height:44px;border-radius:var(--rd-m)}
-.ntf-ic .ic{width:22px;height:22px}
-.ntf-tx{flex:1;min-width:0}.ntf-tx strong{display:block;font-size:var(--t-base)}.ntf-tx small{display:block;color:var(--muted);font-size:var(--t-md);line-height:1.6}
-html.dark .ntf-card{background:var(--chip-bg)}
 @media (min-width:761px){.bottom-nav.nav5{inset:84px 18px auto auto!important}}
 @media (min-width:761px) and (max-width:1000px){.bottom-nav.nav5{inset:84px 12px auto auto!important}}
 .hero-actions .hero-lib{display:none!important}
@@ -1005,22 +979,6 @@ html.dark .l2-s{background:var(--paper-2);border-color:var(--line)}
 
 .dr2 .dr-ft a,.dr2 .dr-ft span,.dr2 .dr-ver{color:var(--on-dark-2)!important}
 .f-acts{display:flex;justify-content:center;gap:var(--s6);padding:var(--s4) var(--s10) var(--s2);flex-wrap:wrap}.f-acts button{display:flex;flex-direction:column;align-items:center;gap:var(--s4);min-width:58px;padding:var(--s8) var(--s6);border:0;border-radius:var(--rd-m);background:color-mix(in srgb,var(--on-dark) 8%,transparent);color:inherit;font-size:var(--t-2xs);font-weight:700;cursor:pointer;opacity:.92}.f-acts svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}.f-acts button.on{color:var(--gold-3);background:color-mix(in srgb,var(--on-hero-acc) 16%,transparent)}.f-acts button.on svg{fill:var(--gold-3)}html:not(.dark) .f-acts button{background:color-mix(in srgb,var(--deep) 6%,transparent)}
-html.wsu-open{overflow:hidden}
-.wsu{position:fixed;inset:0;z-index:2147483100;background:rgba(5,15,12,.6);display:flex;align-items:flex-end;justify-content:center;animation:wsuIn .25s ease}
-@keyframes wsuIn{from{opacity:0}to{opacity:1}}
-.wsu-c{width:100%;max-width:480px;max-height:92vh;overflow:auto;background:var(--bg);border-radius:28px 28px 0 0;padding:0 18px calc(18px + env(safe-area-inset-bottom));color:var(--brand)}
-html.dark .wsu-c{background:var(--paper);color:var(--on-dark-1)}
-.wsu-top{margin:0 -18px var(--s14);padding:var(--s24) var(--s20) var(--s20);text-align:center;background:linear-gradient(135deg,var(--hero-a),var(--hero-b));border-radius:28px 28px 0 0;color:var(--on-dark)}
-.wsu-logo{height:52px}.wsu-top h2{margin:var(--s6) 0 var(--s2);font-size:21px;color:var(--on-hero-acc)}.wsu-top p{margin:0;color:var(--on-dark-2);font-size:var(--t-sm)}
-.wsu-s{display:flex;align-items:center;gap:var(--s12);padding:var(--s14) var(--s12);margin-bottom:var(--s10);border-radius:var(--rd-l);background:#fff;border:1px solid var(--line)}
-html.dark .wsu-s{background:var(--paper-2)}
-.wsu-n{width:32px;height:32px;flex:none;border-radius:50%;display:grid;place-items:center;background:rgba(196,154,75,.16);color:var(--gold-ink);font-weight:800}
-.wsu-s.ok .wsu-n{background:var(--emerald-700);color:var(--on-dark)}
-.wsu-b{flex:1;min-width:0;display:flex;flex-direction:column;gap:var(--s4)}.wsu-b b{font-size:var(--t-base)}.wsu-b small{font-size:var(--t-xs);color:var(--muted)}
-.wsu-b select{width:100%;margin-top:var(--s4);padding:var(--s8) var(--s8);border-radius:var(--rd-s);border:1px solid var(--line);background:transparent;color:inherit;font:inherit;font-size:var(--t-md)}
-.wsu-s.ok button{background:var(--emerald-700)!important;color:var(--on-dark)!important}
-.wsu-ap{display:flex;align-items:center;gap:var(--s8);padding:var(--s6) var(--s6) var(--s12);font-size:var(--t-md)}.wsu-ap input{width:18px;height:18px;accent-color:var(--emerald-700)}
-.wsu-f{display:flex;gap:var(--s10)}.wsu-f .btn{flex:1}
 #prayerList li{position:relative}
 .sl-chk{width:28px;height:28px;flex:none;margin-inline-start:var(--s10);border-radius:50%;border:2px solid color-mix(in srgb,var(--gold) 60%,transparent);background:transparent;color:var(--on-dark);font-weight:900;font-size:var(--t-md);cursor:pointer;display:inline-grid;place-items:center;vertical-align:middle}
 .sl-chk.on{background:var(--emerald-700);border-color:var(--emerald-700)}
@@ -1240,7 +1198,7 @@ html.dark{--primary-ink:#8fd3b5;--danger-ink:#ff8a80}
 /* الليلي والورقي: الخلفية الخفيفة بلون دهبي دافي (ماشية مع ألوانهم) */
 html.sepia{--tint:color-mix(in srgb,var(--gold) 10%,transparent);--tint-2:color-mix(in srgb,var(--gold) 6%,transparent);--tint-line:color-mix(in srgb,var(--gold) 32%,transparent)}html.dark{--tint:var(--paper);--tint-2:var(--paper-2);--tint-line:var(--line)}
 /* عناوين الصفحات وصفحة الترحيب بـ«خط اللمسة» (الأميري) في كل المظاهر — من هوية التطبيق. صفحة جديدة؟ ضيف عنوانها هنا */
-.wp-h h1,html.ios .wp-page .wp-h h1,.l2-t,.tasbih-copy>h2,.rd-tab .rd-top h1,html.ios .rd-tab .rd-top h1,.st-bar #stT,.su-ov h1,.su-hd p,.su-tb span{font-family:var(--font-accent)!important;font-weight:400!important}
+.wp-h h1,html.ios .wp-page .wp-h h1,.l2-t,.tasbih-copy>h2,.rd-tab .rd-top h1,html.ios .rd-tab .rd-top h1,.st-bar #stT,.su-ov h1{font-family:var(--font-accent)!important;font-weight:400!important}
 /* ===== مكوّنات موحّدة (كل الصفحات) =====
    قاعدة واحدة لكل نوع، عشان كل الصفحات تبان من نفس التطبيق:
    - مربع الأيقونة: خلفية فاتحة من اللون الأساسي والأيقونة باللون الأساسي (--chip-bg / --chip-ink). نوع جديد؟ ضيف كلاسه هنا، ماتدّيلوش لون خاص.
@@ -1248,7 +1206,7 @@ html.sepia{--tint:color-mix(in srgb,var(--gold) 10%,transparent);--tint-2:color-
    - رأس الصفحات الفرعية: خلفية الصفحة والعنوان بخط اللمسة (زي الصفحات الرئيسية).
    الاستثناءات المقصودة: كروت السما (.w-sky)، رسومات الأطفال، صفحات المصحف. */
 :root{--chip-bg:color-mix(in srgb,var(--primary) 10%,transparent);--chip-ink:var(--primary-ink)}
-.l2-si,.l2-ic,.tl-ic,.tl-e,.pl-ic,.ct-ic,.mt-ic,.hp-ic,.ntf-ic,.lr-num,.lr-big,.nt-ic,.rd-fl,.dr-ic,.sc-chip span,.wp-back{background:var(--chip-bg);color:var(--chip-ink);border:0;box-shadow:none}
+.l2-si,.l2-ic,.tl-ic,.tl-e,.pl-ic,.ct-ic,.mt-ic,.hp-ic,.lr-num,.lr-big,.nt-ic,.rd-fl,.dr-ic,.sc-chip span,.wp-back{background:var(--chip-bg);color:var(--chip-ink);border:0;box-shadow:none}
 .l2-si svg,.tl-e svg,.rd-fl svg{stroke:currentColor}
 .pc2 .prayer-list li.next .pl-ic{background:var(--primary);color:var(--on-primary)}
 /* سفاري على الآيفون بياخد لون شريط الحالة من خلفية html: نخليها بلون الشريط العلوي بدل الأبيض (body فاضل بلون الصفحة) */

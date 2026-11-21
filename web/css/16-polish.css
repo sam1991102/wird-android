@@ -28,7 +28,6 @@ html.ios:not(.dark) .tb-strip{background:color-mix(in srgb,var(--primary) 6%,tra
 .cp-l small{opacity:.7;font-size:var(--t-sm)}
 .cp-s{margin:0;opacity:.75;font-size:var(--t-md);text-align:center}
 .cp-s:empty{display:none}
-.wsu-geo2{display:flex;flex-direction:column;gap:var(--s6)}
 .cp-geo{display:flex;align-items:center;justify-content:center;gap:var(--s8)}.cp-geo .ic{width:18px;height:18px}
 /* بطاقة «اجعل لسانك رطبًا» في الرئيسية */
 html.rt-on .sk-dhikr{display:none}

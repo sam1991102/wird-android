@@ -56,7 +56,7 @@ const closeOv=el=>{const b=el.querySelector("#fClose,[data-x],.close,[aria-label
 let lockY=0,locked=false;
 const lock=()=>{if(locked)return;locked=true;lockY=scrollY;const b=document.body.style;b.position="fixed";b.top=-lockY+"px";b.left="0";b.right="0";b.width="100%";R.classList.add("ov-lock")};
 const unlock=()=>{if(!locked)return;locked=false;const b=document.body.style;b.position=b.top=b.left=b.right=b.width="";R.classList.remove("ov-lock");scrollTo(0,lockY)};
-const LOCKSEL=OV+",#onb,.tasbih-full";
+const LOCKSEL=OV+",.tasbih-full";
 const needLock=()=>[...document.querySelectorAll(LOCKSEL)].some(vis);
 let raf=0;const check=()=>{raf=0;const n=openOv().length;(n>0||needLock())?lock():unlock();
  if(n>ovDepth){for(let i=ovDepth;i<n;i++)_ps({...cur(),ov:1,ovd:i+1},"",location.href)}

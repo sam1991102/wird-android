@@ -19,7 +19,7 @@ function tools(){var card=document.querySelector("#prayer .prayer-card");if(!car
  T.forEach(function(t){var b=document.createElement("button");b.type="button";b.className="pt-tool";b.innerHTML='<span class="pt-tool-ic">'+I(IC[t[0]])+'</span>'+t[1];b.onclick=t[2];w.appendChild(b)});
  card.appendChild(w)}
 /* ترتيب ثابت للأقسام اللي بتتبني من ملفات مختلفة */
-var ORDER=["#pcDay","#prayerList","#pcMore","#slWeek",".ntf-card","#ptTools"];
+var ORDER=["#pcDay","#prayerList","#pcMore","#slWeek",".rdy-card","#ptTools"];
 function order(){var card=document.querySelector("#prayer .prayer-card");if(!card)return;var prev=card.querySelector(".prayer-head");if(!prev)return;
  ORDER.forEach(function(s){var e=card.querySelector(":scope > "+s);if(!e)return;if(prev.nextElementSibling!==e)prev.after(e);prev=e})}
 function gear(){var b=document.getElementById("prayerSettingsBtn");if(b&&!b.dataset.pt){b.dataset.pt=1;b.addEventListener("click",function(){window.__openPrayerSettings()})}}

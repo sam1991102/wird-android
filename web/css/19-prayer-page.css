@@ -28,7 +28,7 @@
 .sl-dots i.t{outline:2px solid color-mix(in srgb,var(--primary) 35%,transparent);outline-offset:1px}
 
 /* «فعّل الأذان» بنفس هامش باقي الأقسام */
-.prayer-card>.ntf-card{margin:var(--s10) var(--s16) 0}
+.prayer-card>.rdy-card{margin:var(--s10) var(--s16) 0}
 
 /* الأدوات */
 .pt-tools{display:grid;grid-template-columns:repeat(var(--n,4),1fr);gap:var(--s8);margin:var(--s12) var(--s16) var(--s16)}

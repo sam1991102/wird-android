@@ -46,7 +46,7 @@ __wOnDom(function(){if(document.getElementById("st-look")&&!document.getElementB
 var ERR=window.__wirdErrors||(window.__wirdErrors=[]);addEventListener("error",function(e){ERR.push(String(e.message||e))});addEventListener("unhandledrejection",function(e){ERR.push("promise: "+String(e.reason))});
 async function selfTest(){window.__wirdTesting=1;try{return await runTest()}finally{window.__wirdTesting=0}}
 async function runTest(){var out=[];function ok(n,c,d){out.push({n:n,ok:!!c,d:d||""})}
- var G=["openFocus","closeFocus","renderFocus","catItems","catPct","catName","prayerDay","fmtT","__openTools","__openHajj","__openRuqya","__openNames","__openSettings","__openDrawer","__wirdSetup","__shareImg","__hijriEvents"];
+ var G=["openFocus","closeFocus","renderFocus","catItems","catPct","catName","prayerDay","fmtT","__openTools","__openHajj","__openRuqya","__openNames","__openSettings","__openDrawer","__shareImg","__hijriEvents"];
  var TY={openFocus:typeof openFocus,closeFocus:typeof closeFocus,renderFocus:typeof renderFocus,catItems:typeof catItems,catPct:typeof catPct,catName:typeof catName,prayerDay:typeof prayerDay,fmtT:typeof fmtT};var gm=G.filter(function(g){return (TY[g]||typeof window[g])!=="function"});ok("الدوال الأساسية موجودة ("+ar(G.length)+")",!gm.length,gm.join("، "));
  try{ok("الأذكار محمّلة",adhkar.length>150,ar(adhkar.length)+" ذكر");var bad=adhkar.filter(function(a){return !a.text||!a.source||!(a.repeat>0)});ok("كل ذكر له نص ومصدر وعدد",!bad.length,bad.slice(0,5).map(function(a){return a.id}).join("، "))}catch(e){ok("الأذكار محمّلة",false,e.message)}
  var cats=[];try{cats=categories.map(function(c){return c.id}).filter(function(c){return c!=="all"&&c!=="mine"})}catch(e){}

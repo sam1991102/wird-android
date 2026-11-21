@@ -5,23 +5,7 @@
  const sa=matchMedia("(display-mode: standalone)").matches||navigator.standalone===true;
  const ios=/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
  const sheet=(html)=>{const s=document.createElement("div");s.className="wd-sheet pm-sheet";s.setAttribute("role","dialog");s.setAttribute("aria-modal","true");s.innerHTML='<div class="wd-card"><button type="button" class="wd-x" data-x aria-label="إغلاق">×</button>'+html+'</div>';s.addEventListener("click",e=>{if(e.target===s||e.target.closest("[data-x]"))s.remove()});document.body.appendChild(s);return s};
- /* ===== الصلاحيات بعد التثبيت ===== */
- const perms=()=>{if(document.querySelector(".pm-perm"))return;
-  const nOK=()=>"Notification" in window&&Notification.permission==="granted";
-  const s=sheet('<div class="pm-perm"><div class="wd-word" style="font-size:1.6rem">أهلًا بك في وِرد</div><p class="wd-meta" style="margin-bottom:1rem">فعّل هذه الصلاحيات ليعمل التطبيق بكامل مزاياه. يمكنك تغييرها لاحقًا من الإعدادات.</p>'+
-   '<div class="pm-row"><div><b>الإشعارات</b><small>تنبيه الأذان والأذكار وورد الختمة</small></div><button type="button" class="btn btn-sm" data-p="n">تفعيل</button></div>'+
-   '<div class="pm-row"><div><b>الموقع</b><small>لحساب مواقيت الصلاة بدقة لمدينتك</small></div><button type="button" class="btn btn-sm" data-p="g">السماح</button></div>'+
-   '<div style="text-align:center;margin-top:1.1rem"><button type="button" class="btn btn-ghost" data-x>تم</button></div></div>');
-  const mark=(b,ok,t)=>{b.textContent=ok?"✓ تم":t;b.disabled=!!ok;b.classList.toggle("btn-ghost",!!ok)};
-  if(!("Notification" in window)||!window.__wirdPush)s.querySelector('[data-p="n"]').closest(".pm-row").hidden=true;else if(nOK())mark(s.querySelector('[data-p="n"]'),1);
-  if(!navigator.geolocation)s.querySelector('[data-p="g"]').closest(".pm-row").hidden=true;
-  s.addEventListener("click",async e=>{const b=e.target.closest("[data-p]");if(!b)return;b.disabled=true;
-   if(b.dataset.p==="n"){try{await __wirdPush.enable();mark(b,1);T("تم تفعيل الإشعارات")}catch(x){mark(b,0,"تفعيل");T(x&&x.message==="denied"?"تم رفض الإذن، يمكنك تفعيله من إعدادات الجهاز":"الإشعارات غير مدعومة على هذا الجهاز")}}
-   else __wirdGeo(false).then(ok=>mark(b,ok,"السماح"))});
-  ls("wird-perm","1")};
- window.__wirdPerms=perms;
  window.addEventListener("appinstalled",()=>ls("wird-installed","1"));
- if(sa&&!ls("wird-perm"))setTimeout(()=>{if(!document.querySelector("#onb:not([hidden])"))perms();else{const o=document.querySelector("#onb");new MutationObserver((r,mo)=>{if(o.hidden){mo.disconnect();perms()}}).observe(o,{attributes:true,attributeFilter:["hidden"]})}},1800);
  /* ===== دعوة التثبيت (آيفون وأندرويد) ===== */
  if(sa)return;let bip=null;window.addEventListener("beforeinstallprompt",e=>{bip=e});
  const snooze=+(ls("wird-inst-snz")||0);const visits=(+(ls("wird-visits")||0))+1;ls("wird-visits",String(visits));

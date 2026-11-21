@@ -103,34 +103,22 @@ if(qp&&PR.includes(qp)){setTimeout(()=>showAdhan(qp,false),600);try{history.repl
 navigator.serviceWorker&&navigator.serviceWorker.addEventListener("message",e=>{if(e.data&&e.data.type==="adhan"&&PR.includes(e.data.p))showAdhan(e.data.p,false)});
 
 /* ---- واجهة الإعدادات ---- */
-const html=()=>`<section class="st-sec" id="st-adhan"><h2>الأذان والتنبيهات</h2>
-<div class="az-status" id="azStatus"></div>
-<div class="st-row"><div class="st-l"><strong>تنبيهات الصلاة</strong><small>تصلك حتى والتطبيق مغلق</small></div><div class="st-c"><button type="button" class="btn btn-primary btn-sm" id="azMain"></button></div></div>
+const html=()=>`<section class="st-sec" id="st-adhan"><h2>الأذان</h2>
+<div id="azReady"></div>
 <div class="az-more" id="azMore">
-<div class="st-row"><div class="st-l"><strong>الصلوات</strong></div><div class="st-c az-chips">${PR.map(p=>`<label class="az-chip"><input type="checkbox" data-pr="${p}" ${S.pr[p]?"checked":""}><span>${PN(p,false)}</span></label>`).join("")}</div></div>
-<div class="st-row"><div class="st-l"><strong>تنبيه قبل الأذان</strong></div><div class="st-c"><select id="azPre">${[0,5,10,15,20,30].map(m=>`<option value="${m}" ${+S.pre===m?"selected":""}>${m?ar(m)+" دقيقة":"بدون"}</option>`).join("")}</select></div></div>
-<div class="st-row"><div class="st-l"><strong>تذكير بالأذكار</strong></div><div class="st-c az-chips">
-<label class="az-chip"><input type="checkbox" data-o="morning" ${S.morning?"checked":""}><span>الصباح</span></label>
-<label class="az-chip"><input type="checkbox" data-o="evening" ${S.evening?"checked":""}><span>المساء</span></label>
-<label class="az-chip"><input type="checkbox" data-o="sleep" ${S.sleep?"checked":""}><span>النوم</span></label>
-<label class="az-chip"><input type="checkbox" data-o="kahf" ${S.kahf?"checked":""}><span>الكهف (الجمعة)</span></label></div></div>
-<div class="st-row"><div class="st-l"><strong>صوت الأذان</strong><small>يُشغَّل عند دخول الوقت والتطبيق مفتوح، أو عند فتح الإشعار</small></div><div class="st-c az-snd"><select id="azSound">${Object.entries(ADHANS).map(([k,v])=>`<option value="${k}" ${S.sound===k?"selected":""}>${v.n}</option>`).join("")}</select><button type="button" class="btn btn-ghost btn-sm" id="azPrev">استماع</button></div></div>
+<div class="st-row"><div class="st-l"><strong>الصوت الافتراضي</strong><small>يُشغَّل عند دخول الوقت والتطبيق مفتوح، أو عند فتح الإشعار</small></div><div class="st-c az-snd"><select id="azSound">${Object.entries(ADHANS).map(([k,v])=>`<option value="${k}" ${S.sound===k?"selected":""}>${v.n}</option>`).join("")}</select><button type="button" class="btn btn-ghost btn-sm" id="azPrev">استماع</button></div></div>
 <div class="st-row"><div class="st-l"><strong>الأذان داخل التطبيق</strong></div><div class="st-c"><label class="az-chip"><input type="checkbox" data-o="inapp" ${S.inapp?"checked":""}><span>شاشة الأذان عند دخول الوقت</span></label></div></div>
 <div class="st-row"><div class="st-l"><strong>تجربة</strong></div><div class="st-c"><button type="button" class="btn btn-ghost btn-sm" id="azTest">إرسال تنبيه تجريبي</button></div></div>
 <p class="az-note">صوت الإشعار نفسه هو صوت تنبيهات جهازك؛ أما الأذان الكامل فيُشغَّل داخل وِرد. </p>
 </div></section>`;
 function paint(sec){
-  const st=sec.querySelector("#azStatus"),main=sec.querySelector("#azMain"),more=sec.querySelector("#azMore");
-  const perm=supported?Notification.permission:"x";
-  let msg="",cls="";
-  if(!supported){msg=isIOS&&!standalone?"على الآيفون: ثبّت وِرد على الشاشة الرئيسية أولًا (مشاركة ← إضافة إلى الشاشة الرئيسية)، ثم افتحه من الأيقونة وفعّل التنبيهات.":"متصفحك لا يدعم الإشعارات. جرّب Chrome أو ثبّت التطبيق.";cls="warn";main.hidden=true}
-  else if(perm==="denied"){msg="الإشعارات محظورة لهذا الموقع. فعّلها من إعدادات المتصفح/الجهاز ثم عُد هنا.";cls="warn";main.hidden=true}
-  else if(S.on&&perm==="granted"){msg="التنبيهات مفعّلة ✓"+(S.last?" — آخر تحديث للمواقيت: "+new Date(S.last).toLocaleDateString("ar-EG"):"");cls="ok";main.hidden=false;main.textContent="إيقاف التنبيهات";main.className="btn btn-ghost btn-sm"}
-  else{msg="فعّل التنبيهات ليصلك الأذان وتذكير الأذكار في وقتها.";main.hidden=false;main.textContent="تفعيل التنبيهات";main.className="btn btn-primary btn-sm"}
-  st.textContent=msg;st.className="az-status "+cls;
-  more.classList.toggle("dim",!(S.on&&perm==="granted"));
-  sec.querySelector("#azTest").disabled=!(S.on&&perm==="granted");
+  /* الحالة والتفعيل والخطوات الناقصة كلها في بطاقة «جاهزية الأذان» (43-ready.js) — نفس قائمة معالج الإعداد */
+  const rd=sec.querySelector("#azReady");if(rd&&window.__wirdReady&&!rd.dataset.rdyOn)__wirdReady.card(rd,{off:true});
+  const ok=S.on&&supported&&Notification.permission==="granted";
+  sec.querySelector("#azTest").disabled=!ok;
 }
+const repaint=()=>{const sec=document.getElementById("st-adhan");sec&&paint(sec)};
+window.__wirdReady&&__wirdReady.on(repaint);
 function inject(){
   const ov=document.querySelector(".st");if(!ov||document.getElementById("st-adhan"))return;/* ممكن يكون منقول لصفحته، فالفحص على الصفحة كلها */
   const body=ov.querySelector(".st-body");if(!body)return;
@@ -139,15 +127,9 @@ function inject(){
   const sec=body.querySelector("#st-adhan");paint(sec);
   const changed=()=>{save(S);if(S.on)sync(true).catch(()=>{})};
   sec.addEventListener("change",e=>{const el=e.target;
-    if(el.dataset.pr){S.pr[el.dataset.pr]=el.checked?1:0;changed()}
-    else if(el.dataset.o){S[el.dataset.o]=el.checked?1:0;changed()}
-    else if(el.id==="azPre"){S.pre=+el.value;changed()}
+    if(el.dataset.o){S[el.dataset.o]=el.checked?1:0;changed()}
     else if(el.id==="azSound"){S.sound=el.value;save(S)}});
   sec.addEventListener("click",async e=>{const b=e.target.closest("button");if(!b)return;
-    if(b.id==="azMain"){b.disabled=true;const st=sec.querySelector("#azStatus");let why="";
-      try{if(S.on&&Notification.permission==="granted"){await disable();toast("أُوقفت التنبيهات")}else{st.textContent="جارٍ التفعيل…";await Promise.race([enable(),new Promise((_,j)=>setTimeout(()=>j(new Error("timeout")),45000))]);toast("تم تفعيل التنبيهات")}}
-      catch(err){const m=err&&err.message;why=m==="denied"?"لم يُسمح بالإشعارات. لو ظهرلك سؤال واخترت «عدم السماح»، فعّلها من إعدادات الموبايل ← وِرد ← الإشعارات.":m==="ios"?"على الآيفون: ثبّت وِرد على الشاشة الرئيسية الأول (مشاركة ← إضافة إلى الشاشة الرئيسية)، وافتحه من الأيقونة.":m==="sw"||m==="timeout"?"تأخّر التفعيل. تحقّق من الاتصال بالإنترنت، ثم أغلق الصفحة وافتحها مرة أخرى.":"تعذّر تفعيل التنبيهات ("+(m||"خطأ")+"). أعد المحاولة.";S.on=false;save(S)}
-      b.disabled=false;paint(sec);if(why){st.textContent=why;st.className="az-status warn"}}
     if(b.id==="azTest"){b.disabled=true;try{await sync(true);const sub=await getSub(false);const r=await fetch("/api/push/test",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({endpoint:sub&&sub.endpoint})}).then(r=>r.json());toast(r.ok?"أُرسل التنبيه — سيصلك خلال ثوانٍ":"تعذّر الإرسال")}catch(err){toast("تعذّر الإرسال")}b.disabled=false}
     if(b.id==="azPrev"){const k=(document.getElementById("azSound")||{}).value||S.sound,src=(ADHANS[k]||{}).u;if(!src){toast("اختر صوتًا أولًا");return}if(!window.__pv){const p=window.__pv=new Audio();p.preload="auto";p.addEventListener("playing",()=>{const x=document.getElementById("azPrev");if(x){x.textContent="إيقاف";x.disabled=false}});p.addEventListener("waiting",()=>{const x=document.getElementById("azPrev");if(x&&!p.paused)x.textContent="جارٍ التحميل…"});const rs=()=>{const x=document.getElementById("azPrev");if(x){x.textContent="استماع";x.disabled=false}};p.addEventListener("pause",rs);p.addEventListener("ended",rs);p.addEventListener("error",()=>{rs();toast("تعذّر التشغيل، تأكد من الاتصال بالإنترنت")})}const p=window.__pv;if(!p.paused&&p.dataset.k===k){p.pause();return}p.pause();p.dataset.k=k;p.src=src;b.textContent="جارٍ التحميل…";p.play().catch(e=>{if(e&&e.name!=="AbortError"){b.textContent="استماع";toast("تعذّر التشغيل")}})}
   });
@@ -168,19 +150,9 @@ document.addEventListener("change",e=>{if(e.target&&/city|method|asr/i.test(e.ta
 const $=s=>document.querySelector(s);
 const openAdhanSettings=()=>{window.__openSettingsPage&&__openSettingsPage("st-adhan")};
 window.__openAdhanSettings=openAdhanSettings;
-/* بطاقة «فعّل الأذان» في تبويب المواقيت: تظهر بس لو التنبيهات مقفولة */
+/* بطاقة «جاهزية الأذان» في تبويب المواقيت: تظهر بس لو الأذان متوقف أو فيه خطوة ناقصة */
 const pc=$("#prayer .prayer-card");
-if(pc&&!$(".ntf-card")){const c=document.createElement("div");c.className="ntf-card";
- c.innerHTML='<span class="ntf-ic" aria-hidden="true">'+(()=>{try{return ic("clock")}catch(e){return""}})()+'</span><div class="ntf-tx"><strong>الأذان والتنبيهات</strong><small id="ntfState"></small></div><button type="button" class="btn btn-primary btn-sm" id="ntfBtn"></button>';
- pc.append(c);
- const paint=()=>{const S=window.__wirdPush?__wirdPush.state():{};const ok=S.on&&("Notification"in window)&&Notification.permission==="granted";
-  $("#ntfState").textContent=ok?"مفعّلة — يصلك الأذان وتذكير الأذكار في وقتها":"فعّلها ليصلك الأذان حتى والتطبيق مغلق";
-  const b=$("#ntfBtn");b.textContent=ok?"الإعدادات":"تفعيل";b.className=ok?"btn btn-ghost btn-sm":"btn btn-primary btn-sm";c.hidden=!!ok};
- paint();document.addEventListener("visibilitychange",paint);
- c.querySelector("#ntfBtn").addEventListener("click",async()=>{const S=window.__wirdPush&&__wirdPush.state();const ok=S&&S.on&&Notification.permission==="granted";
-  if(ok||!window.__wirdPush){openAdhanSettings();return}
-  try{await __wirdPush.enable();toast("تم تفعيل التنبيهات")}catch(e){if(e.message==="ios"||e.message==="unsupported"||e.message==="denied")openAdhanSettings();else toast("تعذّر التفعيل")}paint()});
- __wOnView(paint);}
+if(pc&&!$("#prayer .rdy-card")&&window.__wirdReady){const c=document.createElement("div");pc.append(c);__wirdReady.card(c,{hideOk:true})}
 /* زر "ذكّرني يوميًا" في الرئيسية يفتح التنبيهات الحديثة */
 const rb=$("#remind .remind-open");
 if(rb){rb.childNodes.forEach(n=>{if(n.nodeType===3&&/ذكّرني/.test(n.textContent))n.textContent=" تنبيهات الأذان والأذكار"});

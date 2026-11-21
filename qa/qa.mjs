@@ -226,8 +226,16 @@ for (const sk of SKINS) {
   await wait(2500); await shot(page, 'wizard-0');
   if (!(await vis(page, '.su-ov'))) bad('wizard', 'المعالج ما ظهرش لمستخدم جديد');
   else {
-    await page.click('[data-su="go"]');
-    for (let s = 1; s <= 7; s++) { const t0 = Date.now(); await wait(1500); await shot(page, 'wizard-' + s); if (await vis(page, '.su-ov')) break; const has = await page.evaluate(() => [...document.querySelectorAll('.wp-page.sh-page,.wp-page.nt-page,.su-ov')].filter(e => e.offsetWidth).length); if (!has) bad('wizard', `الخطوة ${s} ما فتحتش صفحتها`); const nx = await page.$('[data-su="next"],[data-su="end"]'); if (!nx) break; await nx.click() }
+    // ٤ شاشات: الموقع ← الأذان ← (خطوات الضمان) ← جاهز. «لاحقًا» في الأذان بيودّي على «جاهز» على طول
+    const steps = [['geo', '[data-su="next"]'], ['adhan', '[data-su="later"]'], ['done', '[data-su="end"]']];
+    for (const [name, sel] of steps) {
+      await wait(900); await shot(page, 'wizard-' + name);
+      const b = await page.$('.su-ov ' + sel);
+      if (!b) { bad('wizard', `شاشة «${name}» ناقصة زرار ${sel}`); break }
+      await b.click();
+    }
+    await wait(900);
+    if (await vis(page, '.su-ov')) bad('wizard', 'المعالج ما قفلش بعد «ابدأ وِردك»');
   }
   [...new Set(errs)].forEach(e => bad('wizard/js', e));
   await ctx.close();

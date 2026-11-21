@@ -67,7 +67,7 @@ public class WirdAdhanPlugin extends Plugin {
         r.put("alarmMuted", AdhanService.isMuted(c));
         r.put("fullScreen", AdhanStore.canFullScreen(c));
         r.put("oem", Build.MANUFACTURER == null ? "" : Build.MANUFACTURER.toLowerCase(java.util.Locale.ROOT));
-        r.put("autostart", autostartIntent(c) != null);
+        r.put("autostart", needsAutostart());
         try { r.put("version", c.getPackageManager().getPackageInfo(c.getPackageName(), 0).versionName); } catch (Exception ignored) {}
         call.resolve(r);
     }
@@ -105,39 +105,39 @@ public class WirdAdhanPlugin extends Plugin {
         call.resolve();
     }
 
-    /** صفحة «التشغيل التلقائي» عند الشركات اللي بتقفل التطبيقات في الخلفية (شاومي، أوبو، فيفو، هواوي...). */
-    static Intent autostartIntent(Context c) {
-        String[][] T = {
-            {"com.miui.securitycenter", "com.miui.permcenter.autostart.AutoStartManagementActivity"},
-            {"com.coloros.safecenter", "com.coloros.safecenter.permission.startup.StartupAppListActivity"},
-            {"com.coloros.safecenter", "com.coloros.safecenter.startupapp.StartupAppListActivity"},
-            {"com.oplus.safecenter", "com.oplus.safecenter.permission.startup.StartupAppListActivity"},
-            {"com.vivo.permissionmanager", "com.vivo.permissionmanager.activity.BgStartUpManagerActivity"},
-            {"com.iqoo.secure", "com.iqoo.secure.ui.phoneoptimize.AddWhiteListActivity"},
-            {"com.huawei.systemmanager", "com.huawei.systemmanager.startupmgr.ui.StartupNormalAppListActivity"},
-            {"com.huawei.systemmanager", "com.huawei.systemmanager.optimize.process.ProtectActivity"},
-            {"com.hihonor.systemmanager", "com.hihonor.systemmanager.startupmgr.ui.StartupNormalAppListActivity"},
-            {"com.letv.android.letvsafe", "com.letv.android.letvsafe.AutobootManageActivity"},
-            {"com.asus.mobilemanager", "com.asus.mobilemanager.autostart.AutoStartActivity"}};
-        for (String[] t : T) {
-            Intent i = new Intent().setComponent(new android.content.ComponentName(t[0], t[1])).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            try { if (!c.getPackageManager().queryIntentActivities(i, 0).isEmpty()) return i; } catch (Exception ignored) {}
-        }
-        return null;
+    /** صفحات «التشغيل التلقائي» عند الشركات اللي بتقفل التطبيقات في الخلفية.
+     *  بنفتحها مباشرة بالترتيب من غير ما نستعلم عن تطبيقات الحماية (الاستعلام ده بيخلّي Play Protect يشكّ في التطبيق). */
+    static final String[][] AUTOSTART = {
+        {"com.miui.securitycenter", "com.miui.permcenter.autostart.AutoStartManagementActivity"},
+        {"com.coloros.safecenter", "com.coloros.safecenter.permission.startup.StartupAppListActivity"},
+        {"com.coloros.safecenter", "com.coloros.safecenter.startupapp.StartupAppListActivity"},
+        {"com.oplus.safecenter", "com.oplus.safecenter.permission.startup.StartupAppListActivity"},
+        {"com.vivo.permissionmanager", "com.vivo.permissionmanager.activity.BgStartUpManagerActivity"},
+        {"com.iqoo.secure", "com.iqoo.secure.ui.phoneoptimize.AddWhiteListActivity"},
+        {"com.huawei.systemmanager", "com.huawei.systemmanager.startupmgr.ui.StartupNormalAppListActivity"},
+        {"com.huawei.systemmanager", "com.huawei.systemmanager.optimize.process.ProtectActivity"},
+        {"com.hihonor.systemmanager", "com.hihonor.systemmanager.startupmgr.ui.StartupNormalAppListActivity"},
+        {"com.letv.android.letvsafe", "com.letv.android.letvsafe.AutobootManageActivity"},
+        {"com.asus.mobilemanager", "com.asus.mobilemanager.autostart.AutoStartActivity"}};
+
+    /** الشركات اللي عندها «تشغيل تلقائي» لازم يتفعّل عشان الأذان مايتقفلش. */
+    static boolean needsAutostart() {
+        String m = Build.MANUFACTURER == null ? "" : Build.MANUFACTURER.toLowerCase(java.util.Locale.ROOT);
+        return m.matches(".*(xiaomi|redmi|poco|oppo|realme|oneplus|vivo|iqoo|huawei|honor|letv|asus).*");
     }
 
     @PluginMethod
     public void openAutostart(PluginCall call) {
         Context c = getContext();
-        Intent i = autostartIntent(c);
-        try {
-            if (i == null) i = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + c.getPackageName())).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            c.startActivity(i);
-            call.resolve();
-        } catch (Exception e) {
-            try { c.startActivity(new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + c.getPackageName())).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)); call.resolve(); }
-            catch (Exception x) { call.reject("no settings"); }
+        for (String[] t : AUTOSTART) {
+            try {
+                c.startActivity(new Intent().setComponent(new android.content.ComponentName(t[0], t[1])).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                call.resolve();
+                return;
+            } catch (Exception ignored) {}
         }
+        try { c.startActivity(new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + c.getPackageName())).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)); call.resolve(); }
+        catch (Exception x) { call.reject("no settings"); }
     }
 
     @PluginMethod

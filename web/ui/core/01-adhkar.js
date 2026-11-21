@@ -29,17 +29,6 @@ const root=document.documentElement,btn=document.getElementById("themeBtn"),meta
 const set=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
 function apply(m){root.classList.toggle("dark",m==="dark");root.classList.toggle("sepia",m==="sepia");set("wird-dark",m==="dark");set("wird-sepia",m==="sepia");meta.content=m==="dark"?"#0a110e":m==="sepia"?"#efe3c7":"#0d2a21";btn.setAttribute("aria-label",m==="light"?"المظهر: فاتح":m==="dark"?"المظهر: داكن":"المظهر: ورقي مريح للعين")}
 btn.addEventListener("click",e=>{e.stopImmediatePropagation();const cur=root.classList.contains("dark")?"dark":root.classList.contains("sepia")?"sepia":"light";const next={light:"dark",dark:"sepia",sepia:"light"}[cur];apply(next);const t=document.getElementById("toast");t.textContent={light:"المظهر الفاتح",dark:"المظهر الداكن",sepia:"المظهر الورقي، مريح للقراءة ليلًا"}[next];t.classList.add("show");clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove("show"),1800)},true);
-const S=[
- {t:"اضغط لتعُدّ",p:"تحت كل ذكر دائرة، كل ضغطة تحسب مرة، وتمتلئ الدائرة حتى يكتمل العدد.",a:'<div class="oa-ring"><b>2</b><small>من 3</small></div>'},
- {t:"اقرأ ذكرًا بعد ذكر",p:"افتح القراءة المتتابعة: ذكر واحد على الشاشة، تضغط على النص فيُحسب، وينتقل وحده إلى ما بعده.",a:'<div class="oa-focus"><span></span><span></span><span></span></div>'},
- {t:"وِردك محفوظ كل يوم",p:"يتجدّد التقدّم كل صباح، وتظهر أيامك المتواصلة ومواقيت الصلاة في مدينتك. كل ذلك على جهازك فقط.",a:'<div class="oa-week"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i class="t"></i></div>'}];
-const onb=document.getElementById("onb");let seen=false;try{seen=!!localStorage.getItem("wird-onboarded")}catch(e){}
-if(!seen&&!location.pathname.replace(/\//g,"")){let i=0;const show=()=>{const s=S[i];document.getElementById("onbArt").innerHTML=s.a;document.getElementById("onbTitle").textContent=s.t;document.getElementById("onbText").textContent=s.p;[...document.querySelectorAll("#onbDots i")].forEach((d,k)=>d.classList.toggle("on",k===i));document.getElementById("onbNext").textContent=i<S.length-1?"التالي":"ابدأ الآن"};
- const close=()=>{onb.hidden=true;document.body.classList.remove("onb-open");set("wird-onboarded",1)};
- document.getElementById("onbNext").addEventListener("click",()=>{if(i<S.length-1){i++;show()}else close()});
- document.getElementById("onbSkip").addEventListener("click",close);
- onb.addEventListener("keydown",e=>{if(e.key==="Escape")close()});
- setTimeout(()=>{show();onb.hidden=false;document.body.classList.add("onb-open");document.getElementById("onbNext").focus()},600)}
 })();
 (()=>{"use strict";
 const IMG='<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v14H4zM4 15l4.5-4.5 4 4 2.5-2.5L20 17M15.5 9.5h.01"/></svg>';
