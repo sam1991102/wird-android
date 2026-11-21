@@ -1,0 +1,41 @@
+# اختبار التطبيق على محاكي أندرويد
+
+30 من 37 نجحوا
+
+- ❌ emulator has internet
+- ✅ device still connected — `device`
+- ✅ old app opens the live site — `https://wird-azkar.pages.dev/?app=android`
+- ✅ old app keeps data after reopen (control) — `keep-me-123`
+- ✅ upgrade keeps user data (localStorage) — `before {"m":"keep-me-123","n":17} after {"m":"keep-me-123","n":19,"fav":"[\"m1\",\"e3\"]","n2":19}`
+- ✅ new app runs on the same origin — `https://wird-azkar.pages.dev/`
+- ✅ native flag + UA
+- ✅ online: library opens — `library|16`
+- ✅ online: mushaf opens — `mushaf|16`
+- ✅ online: prayer opens — `prayer|16`
+- ✅ online: settings opens — `prayer|16`
+- ✅ online: radio opens — `prayer|17`
+- ✅ airplane mode on
+- ✅ offline: app opens with content — `{"title":"وِرد | أذكار الصباح والمساء ومواقيت الصلاة","today":true,"txt":1140,"ui":"function"}`
+- ✅ offline: library — `text 1060`
+- ✅ offline: list — `text 1060`
+- ✅ offline: prayer — `text 522`
+- ✅ offline: tasbih — `text 456`
+- ✅ offline: qibla — `text 677`
+- ✅ offline: settings — `text 892`
+- ✅ offline: bundled surah file readable — `["بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ","ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ`
+- ✅ offline: /api answers 503 instead of hanging — `503`
+- ✅ alarm starts the service and plays — `uid 10145, players before 0, after alarm 1`
+- ❌ second adhan never plays on top of the first — `players after alarm 1, after adhan 0`
+- ✅ stop really stops everything — `players 0`
+- ❌ radio plays through the native service — `players 0`
+- ❌ radio keeps playing 30s after Home + screen off — `players 0, service true`
+- ❌ lock-screen media controls exist — `state=PlaybackState {state=7`
+- ✅ radio stop really stops — `players 0`
+- ❌ page radio plays: stream.radiojar.com — `play,error`
+- ✅ page radio plays: backup.qurango.net — `play,playing,pause`
+- ✅ native media log — `11-21 08:05:41.407  6726  6726 E WirdMedia: Caused by: java.io.IOException: Cleartext HTTP traffic to n12.radiojar.com not permitted | 11-21 08:05:41.407  6726  6726 E WirdMedia: 	at com.android.okhttp.HttpHandler$CleartextURLFilter.checkURLPermitted(HttpHandler.java:127) | 11-21 08:05:41.407  6726 `
+- ✅ page uses native background audio (after site deploy) — `window.__BgAudio: function`
+- ✅ alarm notification link shows the alarm screen
+- ❌ no JavaScript errors in the app — `TypeError: Cannot read property 'catch' of undefined @ https://wird-azkar.pages.dev/ui.js:1535:9 showAlarm`
+- ✅ no blocking confirm/alert dialogs
+- ✅ no native crashes (logcat crash buffer)
