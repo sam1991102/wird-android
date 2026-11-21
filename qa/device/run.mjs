@@ -51,6 +51,19 @@ async function js(expr, retry = 1) {
   try { r = await cdp('Runtime.evaluate', { expression: expr, awaitPromise: true, returnByValue: true }) }
   catch (e) { if (!retry) throw e; adb('reconnect', true); adb('wait-for-device', true); adb('shell am broadcast -a android.intent.action.CLOSE_SYSTEM_DIALOGS', true); await sleep(5000); await connect(); return js(expr, 0) }
   if (r.result?.exceptionDetails) throw new Error(r.result.exceptionDetails.exception?.description || 'eval error'); return r.result?.result?.value }
+// نوافذ النظام (أذونات أندرويد) مش جوه الـ WebView: بنقراها بـ uiautomator ونضغط بالنص زي المستخدم
+const tapText = async (re, tries = 6) => {
+  for (let i = 0; i < tries; i++) {
+    adb('shell uiautomator dump /sdcard/ui.xml', true); const x = adb('shell cat /sdcard/ui.xml', true);
+    const nodes = [...x.matchAll(/<node [^>]*>/g)].map(m => m[0]);
+    const n = nodes.find(t => { const tx = (t.match(/ text="([^"]*)"/) || [])[1] || ''; return re.test(tx) });
+    if (n) { const b = n.match(/bounds="\[(\d+),(\d+)\]\[(\d+),(\d+)\]"/); const cx = (+b[1] + +b[3]) >> 1, cy = (+b[2] + +b[4]) >> 1; adb(`shell input tap ${cx} ${cy}`, true); return (n.match(/ text="([^"]*)"/) || [])[1] }
+    await sleep(1500);
+  }
+  return null;
+};
+const su = async (act) => js(`(()=>{const b=document.querySelector('.su-ov [data-su="${act}"],.su-ov [data-rdy="${act}"]');if(!b)return false;b.click();return true})()`);
+const suText = () => js(`(document.querySelector('.su-ov')||{}).innerText?.replace(/\\s+/g,' ').slice(0,160)||''`);
 const launch = async (extra = '') => { adb(`shell am start -W -n ${PKG}/.MainActivity ${extra}`, true); await sleep(4000); const u = await connect(); await sleep(2500); return u };
 const stopApp = () => { adb(`shell am force-stop ${PKG}`, true) };
 const net = on => { adb(`shell cmd connectivity airplane-mode ${on ? 'disable' : 'enable'}`, true); adb(`shell svc wifi ${on ? 'enable' : 'disable'}`, true); adb(`shell svc data ${on ? 'enable' : 'disable'}`, true) };
@@ -64,6 +77,59 @@ try {
   adb('shell am broadcast -a android.intent.action.CLOSE_SYSTEM_DIALOGS', true); adb('shell input keyevent KEYCODE_HOME', true);
   adb('shell settings put global window_animation_scale 0', true); adb('shell settings put global transition_animation_scale 0', true); adb('shell settings put global animator_duration_scale 0', true);
   res('emulator has internet', await online() || /200|301|302/.test(adb('shell curl -s -o /dev/null -w %{http_code} https://wird-azkar.pages.dev/', true)));
+
+  // ٠) مستخدم جديد بالظبط: تثبيت من غير أي إذن مسبق، والمعالج من أوله، وأذونات أندرويد الحقيقية
+  {
+    adb(`uninstall ${PKG}`, true);
+    adb(`install ${NEW}`);
+    let u0 = await launch(); await sleep(2500); await snap('fresh-1-geo');
+    res('fresh: wizard opens for a new user', await js(`!!document.querySelector('.su-ov')`), await suText());
+    res('fresh: no other sheet on top of the wizard', await js(`!document.querySelector('.wd-sheet,#onb:not([hidden]),.wsu')`));
+    // الموقع: زرار «تحديد موقعي» ← نافذة أندرويد ← «أثناء استخدام التطبيق»
+    adb('emu geo fix 46.6753 24.7136', true); // الرياض
+    await su('locate'); const g = await tapText(/While using the app|Only this time|أثناء استخدام التطبيق|هذه المرة فقط/); await snap('fresh-2-geo-dialog');
+    res('fresh: Android asks for location only after the button', !!g, g || 'no location dialog');
+    await sleep(6000); let t = await suText();
+    if (/أين تصلّي/.test(t)) { await su('next'); await sleep(1500) }
+    t = await suText(); await snap('fresh-3-adhan');
+    res('fresh: adhan screen', /الأذان في وقته/.test(t), t);
+    // تفعيل الأذان ← نافذة الإشعارات (أندرويد ١٣+) ← «سماح»
+    await su('enable'); const n = await tapText(/^(Allow|سماح|السماح)$/); await sleep(5000); await snap('fresh-4-after-notif');
+    res('fresh: Android asks for notifications after «تفعيل الأذان»', !!n, n || 'no notification dialog');
+    t = await suText(); res('fresh: ready-steps screen lists only what is missing', /خطوات ليصل الأذان/.test(t) || /وِرد جاهز/.test(t), t);
+    // كل خطوة: نضغط زرارها، نصوّر صفحة الإعدادات اللي اتفتحت، نعمل اللي المستخدم هيعمله، ونرجع
+    for (const [id, grant] of [['exact', `shell appops set ${PKG} SCHEDULE_EXACT_ALARM allow`], ['battery', `shell dumpsys deviceidle whitelist +${PKG}`]]) {
+      if (!(await su(id))) { res(`fresh: step «${id}»`, true, 'not needed on this phone'); continue }
+      await sleep(3000); await snap('fresh-5-settings-' + id);
+      const top = adb('shell dumpsys activity activities | grep -m1 -E "topResumedActivity|mResumedActivity"', true);
+      res(`fresh: «${id}» opens the right Android settings page`, /settings/i.test(top) && !/wird_azkar/.test(top), top.trim().slice(0, 140));
+      adb(grant, true); adb('shell input keyevent KEYCODE_BACK', true); await sleep(3500);
+      const ok = await js(`(()=>{const L=__wirdReady.steps();const s=L.find(x=>x.id==='${id}');return !s||s.ok})()`);
+      res(`fresh: step «${id}» ticks ✓ by itself after coming back`, ok); await snap('fresh-6-back-' + id);
+    }
+    t = await suText(); if (/خطوات ليصل/.test(t)) await su('fin'); await sleep(1500); await snap('fresh-7-done');
+    res('fresh: done screen', /وِرد جاهز/.test(await suText()), await suText());
+    await su('end'); await sleep(2000); await snap('fresh-8-home');
+    res('fresh: wizard closes to home', await js(`!document.querySelector('.su-ov')`));
+    const rd = await js(`__wirdReady.refresh().then(L=>L.map(x=>x.id+':'+(x.ok?'ok':'NO')).join(' '))`);
+    res('fresh: adhan fully ready after the wizard', !/NO/.test(rd), rd);
+    // رحلات المستخدم اليومية
+    await js(`__wirdGo('library');openFocus('morning');true`); await sleep(2500); await snap('fresh-9-morning');
+    const shake = await js(`new Promise(r=>{let n=0;const f=document.getElementById('focus');const mo=new MutationObserver(l=>n+=l.length);mo.observe(f,{attributes:true,subtree:true,attributeFilter:['class']});setTimeout(()=>{mo.disconnect();r(n)},2000)})`);
+    res('fresh: morning adhkar screen is steady (no shaking)', shake <= 4, 'class changes in 2s: ' + shake);
+    for (let i = 0; i < 3; i++) { await js(`document.getElementById('fStage').click();true`); await sleep(400) }
+    await snap('fresh-10-counted');
+    await js(`try{__closeOverlays(true)}catch(e){};__openPage(300);true`); await sleep(3000); await snap('fresh-11-mushaf-300');
+    await js(`try{__closeOverlays(true)}catch(e){};__openSurahN(18,null,{side:true});true`); await sleep(3000); await snap('fresh-12-kahf');
+    const last = await js(`localStorage.getItem('wird-mushaf-page')`);
+    res('fresh: reading Al-Kahf on Friday does not lose your place', String(last) === '300', 'saved page ' + last);
+    await js(`try{__closeOverlays(true)}catch(e){};__openKhatma();true`); await sleep(2000); await snap('fresh-13-khatma');
+    for (const [n, c] of [['hub', '__openSettings()'], ['adhan', '__openSettingsPage("st-adhan")'], ['notif', '__openNotif()'], ['prayer', '__openSettingsPage("st-prayer")'], ['alarm', '__openSettingsPage("st-alarm")']]) {
+      await js(`try{__closeOverlays(true)}catch(e){};${c};true`).catch(e => res('fresh: settings ' + n, false, e.message)); await sleep(1800); await snap('fresh-14-set-' + n);
+      if (n === 'adhan') res('fresh: adhan settings page shows «الأذان جاهز»', await js(`!!document.querySelector('#azReady.rdy-card.ok')`));
+    }
+    stopApp(); adb(`uninstall ${PKG}`, true);
+  }
 
   // ١) النسخة القديمة (بتفتح الموقع من الإنترنت) + بيانات تجربة
   adb(`install -r -g ${OLD}`);
@@ -180,5 +246,6 @@ try {
   const pass = rows.filter(r => r.pass).length;
   const md = `# اختبار التطبيق على محاكي أندرويد\n\n${pass} من ${rows.length} نجحوا\n\n` + rows.map(r => `- ${r.pass ? '✅' : '❌'} ${r.name}${r.detail ? ' — `' + String(r.detail).replace(/`/g, "'").slice(0, 300) + '`' : ''}`).join('\n') + '\n';
   fs.writeFileSync(`${OUT}/report.md`, md); console.log('\n' + md);
-  process.exitCode = rows.every(r => r.pass) ? 0 : 1;
+  try { ws && ws.close() } catch (e) { }
+  process.exit(rows.every(r => r.pass) ? 0 : 1);
 }
