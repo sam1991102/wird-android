@@ -90,6 +90,7 @@ try {
     await su('locate'); const g = await tapText(/While using the app|Only this time|أثناء استخدام التطبيق|هذه المرة فقط/); await snap('fresh-2-geo-dialog');
     res('fresh: Android asks for location only after the button', !!g, g || 'no location dialog');
     await sleep(6000); let t = await suText();
+    res('fresh: location found or a clear message', !/جارٍ تحديد/.test(t), t);
     if (/أين تصلّي/.test(t)) { await su('next'); await sleep(1500) }
     t = await suText(); await snap('fresh-3-adhan');
     res('fresh: adhan screen', /الأذان في وقته/.test(t), t);

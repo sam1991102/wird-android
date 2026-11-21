@@ -68,6 +68,7 @@ public class WirdAdhanPlugin extends Plugin {
         r.put("fullScreen", AdhanStore.canFullScreen(c));
         r.put("oem", Build.MANUFACTURER == null ? "" : Build.MANUFACTURER.toLowerCase(java.util.Locale.ROOT));
         r.put("autostart", needsAutostart());
+        r.put("sdk", Build.VERSION.SDK_INT);
         try { r.put("version", c.getPackageManager().getPackageInfo(c.getPackageName(), 0).versionName); } catch (Exception ignored) {}
         call.resolve(r);
     }
@@ -142,8 +143,12 @@ public class WirdAdhanPlugin extends Plugin {
 
     @PluginMethod
     public void openBatterySettings(PluginCall call) {
-        try { // نفتح قائمة إعدادات البطارية ليختار المستخدم بنفسه (بدون الإذن المقيَّد في سياسة Google Play)
-            Intent i = new Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
+        try { // من غير الإذن المقيَّد في سياسة Google Play:
+              // أندرويد ١٢+: صفحة «معلومات التطبيق» لوِرد نفسه (البطارية ← غير مقيّد) بدل قايمة فيها كل التطبيقات
+              // الأقدم: قايمة «تحسين البطارية» يختار منها وِرد
+            Intent i = Build.VERSION.SDK_INT >= 31
+                    ? new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + getContext().getPackageName()))
+                    : new Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             getContext().startActivity(i);
         } catch (Exception e) {
