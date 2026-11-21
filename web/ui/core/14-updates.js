@@ -15,7 +15,8 @@
   ay.after(h);let full="";const key="wird-hd-"+n;
   const show=t=>{full=t.replace(/<br\s*\/?>/gi,"\n").replace(/<[^>]+>/g,"").replace(/\n\s*(\[[^\]\n]*\]\s*[،,]?\s*)+$/,"").replace(/\n{2,}/g,"\n").trim();const el=h.querySelector("#hdText"),mb=h.querySelector('[data-hd="more"]');if(full.length>320){el.textContent=full.slice(0,300).replace(/\s\S*$/,"")+"…";mb.hidden=false}else el.textContent=full};
   let c=null;try{c=localStorage.getItem(key)}catch(e){}
-  if(c)show(c);else fetch("https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/ara-nawawi/"+n+".json").then(r=>r.json()).then(j=>{const t=(j.hadiths&&j.hadiths[0]&&j.hadiths[0].text)||"";if(!t)throw 0;try{localStorage.setItem(key,t)}catch(e){}show(t)}).catch(()=>{h.hidden=true});
+  /* من ملف الأربعين النووية اللي جوّه الموقع — من غير أي خدمة خارجية */
+  if(c)show(c);else fetch("/nawawi.json").then(r=>r.json()).then(L=>{const x=L.find(o=>o.n===n),t=x&&x.text||"";if(!t)throw 0;try{localStorage.setItem(key,t)}catch(e){}show(t)}).catch(()=>{h.hidden=true});
   h.addEventListener("click",e=>{const b=e.target.closest("[data-hd]");if(!b||!full)return;const msg=full+"\n[الأربعون النووية: "+ar(n)+"]";
    if(b.dataset.hd==="more"){h.querySelector("#hdText").textContent=full;b.hidden=true}
    else if(b.dataset.hd==="copy"){typeof copyText==="function"?copyText(msg):navigator.clipboard&&navigator.clipboard.writeText(msg);typeof toast==="function"&&toast("تم النسخ")}

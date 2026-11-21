@@ -52,11 +52,13 @@ var IC={clear:'<circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2M12 19.5v2M2.5
  rain:'<path d="M7 15h10.5a4 4 0 0 0 0-8 6 6 0 0 0-11.4 1.8A3.2 3.2 0 0 0 7 15z"/><path d="M8 18l-1 2.5M12 18l-1 2.5M16 18l-1 2.5"/>',
  snow:'<path d="M7 15h10.5a4 4 0 0 0 0-8 6 6 0 0 0-11.4 1.8A3.2 3.2 0 0 0 7 15z"/><path d="M8 19h.01M12 20h.01M16 19h.01"/>',
  storm:'<path d="M7 14h10.5a4 4 0 0 0 0-8 6 6 0 0 0-11.4 1.8A3.2 3.2 0 0 0 7 14z"/><path d="M12.5 15l-2 3.5h3l-2 3.5"/>'};
-var KEY="wird-wx",TTL=30*6e4,busy=0;
+/* الطقس زينة مش أساسي: يتحدّث كل ٣ ساعات بالكتير، ولو الخدمة رفضت (زحمة ٤٢٩ أو عطل) نسكت ١٢ ساعة — عشان آلاف الفتحات مايضربوش open-meteo */
+var KEY="wird-wx",TTL=3*36e5,BACK="wird-wx-off",busy=0;
+function off(){try{return Date.now()<+(localStorage.getItem(BACK)||0)}catch(e){return false}}
 function coords(){try{if(typeof P==="undefined"||P.lat==null)return null;return[(+P.lat).toFixed(1),(+P.lng).toFixed(1)]}catch(e){return null}}
 function cached(c){try{var v=JSON.parse(localStorage.getItem(KEY)||"null");if(v&&v.k===c.join(","))return v}catch(e){}return null}
-function load(){var c=coords();if(!c)return;var v=cached(c);if(v)show(v);if((v&&Date.now()-v.at<TTL)||busy||!navigator.onLine)return;busy=1;
- fetch("https://api.open-meteo.com/v1/forecast?latitude="+c[0]+"&longitude="+c[1]+"&current=temperature_2m,weather_code,is_day&timezone=auto").then(function(r){return r.ok?r.json():null}).then(function(j){busy=0;if(!j||!j.current)return;
+function load(){var c=coords();if(!c)return;var v=cached(c);if(v)show(v);if((v&&Date.now()-v.at<TTL)||busy||!navigator.onLine||off())return;busy=1;
+ fetch("https://api.open-meteo.com/v1/forecast?latitude="+c[0]+"&longitude="+c[1]+"&current=temperature_2m,weather_code,is_day&timezone=auto").then(function(r){if(!r.ok){try{localStorage.setItem(BACK,String(Date.now()+12*36e5))}catch(e){}return null}return r.json()}).then(function(j){busy=0;if(!j||!j.current)return;
   var o={k:c.join(","),at:Date.now(),t:Math.round(j.current.temperature_2m),w:j.current.weather_code,d:j.current.is_day};try{localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}show(o)}).catch(function(){busy=0})}
 var lastWx=null;
 function show(o){lastWx=o;cards().forEach(function(el){showOn(el,o)})}

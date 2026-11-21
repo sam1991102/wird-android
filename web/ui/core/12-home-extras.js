@@ -38,7 +38,14 @@ const daily=$(".daily-card");const host=daily?daily.closest("main>section"):sec;
 const ay=document.createElement("section");ay.className="container section ayah-day";ay.dataset.v="home";
 ay.innerHTML=`<div class="dy-card"><div class="dy-head"><span class="dy-k">آية اليوم</span><span class="dy-ref">سورة ${sn} — الآية ${ar(a)}</span></div><p class="dy-text" id="ayText">…</p><p class="dy-tf" id="ayTf" hidden><b>التفسير الميسر: </b><span></span></p><div class="dy-act"><button type="button" class="btn btn-ghost btn-sm" data-ay="read">اقرأ السورة</button><button type="button" class="btn btn-ghost btn-sm" data-ay="copy">نسخ</button><button type="button" class="btn btn-ghost btn-sm" data-ay="share">مشاركة</button></div></div>`;
 host.after(ay);
-let txt="";fetch("https://api.quran.com/api/v4/verses/by_key/"+s+":"+a+"?fields=text_uthmani").then(r=>r.json()).then(j=>[j.verse.text_uthmani]).catch(()=>fetch("/mushaf/"+s+".json").then(r=>r.json()).then(j=>[j[a-1]])).then(j=>{txt=(j[0]||"").replace(/^۞\s*/,"");$("#ayText").textContent="﴿"+txt+"﴾";fetch("https://api.quran.com/api/v4/tafsirs/16/by_ayah/"+s+":"+a).then(r=>r.json()).then(j=>{const t=((j.tafsir&&j.tafsir.text)||"").replace(/<[^>]+>/g,"").trim();if(t){const e=$("#ayTf");e.querySelector("span").textContent=t;e.hidden=false}}).catch(()=>{})}).catch(()=>{ay.hidden=true});
+/* نص الآية من ملفات المصحف اللي جوّه الموقع، والتفسير مرة واحدة في اليوم ويتحفظ — عشان مليون مستخدم مايضربوش quran.com كل فتحة */
+let txt="";const TK="wird-ayd-tf",tfKey=s+":"+a;
+const showTf=t=>{if(!t)return;const e=$("#ayTf");e.querySelector("span").textContent=t;e.hidden=false};
+fetch("/mushaf/"+s+".json").then(r=>r.json()).then(j=>{txt=(j[a-1]||"").replace(/^۞\s*/,"");if(!txt)throw 0;$("#ayText").textContent="﴿"+txt+"﴾";
+ let c=null;try{c=JSON.parse(localStorage.getItem(TK)||"null")}catch(e){}
+ if(c&&c.k===tfKey){showTf(c.t);return}
+ if(!navigator.onLine)return;
+ fetch("https://api.quran.com/api/v4/tafsirs/16/by_ayah/"+tfKey).then(r=>r.ok?r.json():null).then(j=>{const t=((j&&j.tafsir&&j.tafsir.text)||"").replace(/<[^>]+>/g,"").trim();if(!t)return;try{localStorage.setItem(TK,JSON.stringify({k:tfKey,t:t}))}catch(e){}showTf(t)}).catch(()=>{})}).catch(()=>{ay.hidden=true});
 ay.addEventListener("click",e=>{const b=e.target.closest("[data-ay]");if(!b||!txt)return;const full="﴿"+txt+"﴾ ["+sn+": "+ar(a)+"]";
  if(b.dataset.ay==="read")window.__openSurahN&&__openSurahN(s);
  else if(b.dataset.ay==="copy"){try{copyText(full)}catch(x){navigator.clipboard&&navigator.clipboard.writeText(full);toast("تم النسخ")}}

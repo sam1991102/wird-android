@@ -39,7 +39,9 @@
  try{const S=JSON.parse(localStorage.getItem("wird-push")||"{}");const W=l.find(function(x){return/وديع/.test(x.name)})||l[0];const first=W?(W.tk?"k":"m")+W.id:"none";if(W&&localStorage.getItem("wird-def-v")!=="1"){S.sound=first;localStorage.setItem("wird-push",JSON.stringify(S));localStorage.setItem("wird-def-v","1");try{var M=window.__wirdPush&&__wirdPush.state();if(M)M.sound=first;var sl=document.getElementById("azSound");if(sl)sl.value=first}catch(e){}}if((/^[mk]\d+$/.test(S.sound||"")&&!A[S.sound])||!S.sound||/^(a\d|t\d|e\d|u\d)$/.test(S.sound)||(S.sound==="none"&&!localStorage.getItem("wird-snd-none"))){S.sound=first;localStorage.setItem("wird-push",JSON.stringify(S))}}catch(e){}
  const sel=document.getElementById("azSound");if(sel){Object.entries(A).forEach(([k,v])=>{if(/^[mk]\d+$/.test(k)&&!sel.querySelector('option[value="'+k+'"]')){const o=document.createElement("option");o.value=k;o.textContent=v.n;sel.appendChild(o)}})}return true};
  var had="";try{had=localStorage.getItem(K)||"";if(had)init(JSON.parse(had))}catch(e){}
- fetch("/api/adhans").then(function(r){return r.ok?r.json():null}).then(function(l){if(!Array.isArray(l)||!l.length)return;var j=JSON.stringify(l);if(j===had)return;try{localStorage.setItem(K,j)}catch(e){}
+ /* قايمة الأصوات بتتحدّث مرة في اليوم بس (مش كل فتحة) */
+ var day=new Date().toISOString().slice(0,10),got=null;try{got=localStorage.getItem("wird-adhl-at")}catch(e){}
+ if(!(had&&got===day))fetch("/api/adhans").then(function(r){return r.ok?r.json():null}).then(function(l){if(!Array.isArray(l)||!l.length)return;try{localStorage.setItem("wird-adhl-at",day)}catch(e){}var j=JSON.stringify(l);if(j===had)return;try{localStorage.setItem(K,j)}catch(e){}
   if(init(l))try{window.__wirdPush&&__wirdPush.sync(true)}catch(e){}}).catch(function(){})})();
 
 ;document.addEventListener("change",e=>{if(e.target&&e.target.id==="azSound"){try{e.target.value==="none"?localStorage.setItem("wird-snd-none","1"):localStorage.removeItem("wird-snd-none")}catch(x){}}});
