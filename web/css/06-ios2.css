@@ -77,7 +77,7 @@ html{--mp-paper:#FBF8EF}html.sepia{--mp-paper:#F6EAD0}html.dark{--mp-paper:#0E14
 html,html.dark,html.sepia,html.ios{--mihrab:none!important;--orn:none!important}
 body::before,body::after,main::before,main::after{background-image:none!important;-webkit-mask-image:none!important;mask-image:none!important}
 /* الرئيسية */
-.ay-hide{display:none!important}
+.ay-hide{display:none}
 #ayCard{margin:var(--s14) var(--s16) 0}
 #ayCard>:not(.ay-tabs){margin-left:0;margin-right:0}
 .ay-tabs{display:flex;gap:var(--s4);margin:0 0 var(--s8);padding:var(--s4);border-radius:var(--rd-m);background:var(--line-2)}

@@ -656,11 +656,6 @@ html[data-lib="list"] .lib-back{display:none!important}
 .adhan-act .btn-primary{background:#d9b45a!important;color:#2b2114!important;border-color:transparent!important}
 .adhan-act .btn-ghost{background:rgba(255,255,255,.08)!important;color:var(--on-dark)!important;border:1px solid rgba(255,255,255,.25)!important}
 .adhan-dua{margin:var(--s20) 0 0;font-size:var(--t-md);line-height:1.9;color:color-mix(in srgb,var(--on-dark) 78%,transparent)}
-.az-status{padding:var(--s12) var(--s14);border-radius:var(--rd-m);margin:0 0 var(--s10);background:color-mix(in srgb,var(--primary) 8%,transparent);line-height:1.7}
-.az-status.ok{background:color-mix(in srgb,#2e8b57 14%,transparent)}
-.az-status.warn{background:color-mix(in srgb,var(--gold-2) 22%,transparent)}
-
-.az-chips{display:flex;flex-wrap:wrap;gap:var(--s8)}
 .az-chip{display:inline-flex;align-items:center;gap:var(--s6);padding:var(--s8) var(--s12);border-radius:var(--rd-pill);border:1px solid var(--line);background:var(--paper);cursor:pointer;min-height:40px}
 .az-chip input{accent-color:var(--primary);width:18px;height:18px}
 .az-snd{display:flex;gap:var(--s8);align-items:center;flex-wrap:wrap}

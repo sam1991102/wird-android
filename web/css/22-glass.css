@@ -13,8 +13,8 @@ html.glass[data-sky="dusk"]{--sky:var(--sky-dusk)}
 html.glass.dark{--bg:#0c1a20;--paper:rgba(255,255,255,.10);--paper-2:rgba(255,255,255,.15);--line:rgba(255,255,255,.18);--line-2:rgba(255,255,255,.14);
  --ink:#f5f8f6;--ink-2:#efe3c4;--muted:rgba(236,242,239,.74);--emerald-50:rgba(255,255,255,.08);--emerald-100:rgba(255,255,255,.12);--gold-50:rgba(201,168,92,.16);
  --card-sh:inset 0 1px 0 rgba(255,255,255,.35),0 10px 28px rgba(0,0,0,.22);--glass-blur:blur(22px) saturate(170%);
- --glass-nav:rgba(16,32,38,.7);--glass-sheet:rgba(16,30,36,.9);--glass-on:rgba(255,255,255,.2);--glass-solid:rgba(12,26,32,.82);--glass-read:rgba(8,18,16,.55)}
-html.glass body,html.glass .wp-page,html.glass .st,html.glass .mp,html.glass .su-ov{background:var(--sky) fixed!important;background-color:var(--bg)!important}
+ --glass-nav:rgba(16,32,38,.7);--glass-sheet:rgba(16,30,36,.9);--glass-on:rgba(255,255,255,.2);--glass-solid:rgba(12,26,32,.82)}
+html.glass body,html.glass .wp-page,html.glass .st,html.glass .su-ov{background:var(--sky) fixed!important;background-color:var(--bg)!important}
 html.glass .wp-page .wp-h{background:transparent!important;border-bottom-color:var(--line)}
 html.glass .topbar{background:var(--glass-nav)!important;border-bottom:1px solid var(--line)}
 html.glass:not(.glass-lite) .topbar{-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur)}
@@ -32,5 +32,4 @@ html.glass :is(.wd-card,.al-in){background:var(--glass-sheet)!important}
 html.glass .bottom-nav.nav5{background:var(--glass-nav)!important;left:12px!important;right:12px!important;width:auto!important;max-width:none!important;margin:0!important;bottom:calc(10px + env(safe-area-inset-bottom,0px))!important;border-radius:var(--rd-pill)!important;padding-bottom:0!important}
 html.glass .bottom-nav.nav5 .on,html.glass .bottom-nav.nav5 [aria-current="page"]{background:var(--glass-on);border-radius:var(--rd-pill)}
 
-/* نصوص القرآن والأذكار: زجاج أكثف عشان الوضوح */
-html.glass :is(#focus .f-stage,.mv-page,.q-page){background:var(--glass-read)}
+/* قارئ المصحف (.mp) وشاشة الذِكر (#focus) بيفضلوا على ورقهم وخلفيتهم — وضوح النص أهم من الشفافية */

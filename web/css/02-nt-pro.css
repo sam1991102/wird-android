@@ -18,9 +18,6 @@
 .nt-sw i{position:absolute;top:3px;right:3px;width:22px;height:22px;border-radius:50%;background:var(--knob);box-shadow:0 1px 3px color-mix(in srgb,var(--shade) 25%,transparent);transition:right .2s}
 .nt-sw.on{background:var(--primary)}.nt-sw.on i{right:21px}
 html.dark .nt-sw:not(.on){background:var(--switch-off)}
-.nt-stat{display:flex;align-items:center;justify-content:space-between;gap:var(--s12);padding:var(--s14) var(--s16);border-radius:var(--rd-l);background:var(--chip-bg);border:1px solid color-mix(in srgb,var(--gold) 35%,transparent)}
-.nt-stat div{display:flex;flex-direction:column;gap:var(--s2)}.nt-stat b{color:var(--ink)}.nt-stat span{font-size:var(--t-sm);color:var(--muted)}
-.nt-stat.ok{flex-direction:column;align-items:flex-start;gap:var(--s2);background:color-mix(in srgb,var(--success) 12%,var(--paper));border-color:color-mix(in srgb,var(--success) 35%,transparent)}
 .nt-note{margin:var(--s20) var(--s4) 0;font-size:var(--t-sm);line-height:1.8;color:var(--muted)}
 .nt-entry{display:flex;align-items:center;gap:var(--s12);width:100%;text-align:start;margin:var(--s10) 0 var(--s6);padding:var(--s14);border-radius:var(--rd-l);background:var(--paper);border:1px solid color-mix(in srgb,var(--gold) 40%,transparent);cursor:pointer;font:inherit;color:inherit}
 .nt-entry .nt-tx{display:flex;flex-direction:column;flex:1;gap:var(--s2)}.nt-entry b{color:var(--ink)}.nt-entry small{font-size:var(--t-xs);color:var(--muted)}
