@@ -38,11 +38,28 @@ function state(){try{var t=prayerDay(0).t,h=cityH();if(h>=t.fajr&&h<t.sunrise)re
 /* الشمس بمكانها الحقيقي: بتطلع من الأفق تحت، تعلى لحد الظهر، وتنزل للأفق عند المغرب (ارتفاعها = جيب زاوية النهار) */
 function sunEl(f,s){f=Math.max(0,Math.min(1,f));var x=86-74*f,y=96-74*Math.sin(Math.PI*f);if(s==="dawn"){x=86;y=125}if(s==="twilight"){x=12;y=125}
  return'<div class="sk-sun sk-'+s+'" style="left:'+x.toFixed(1)+'%;top:'+y.toFixed(1)+'%"><i></i></div>'}
+/* قمر بملامحه الحقيقية: البحار (الأجزاء الغامقة) في أماكنها على الوجه المرئي، حوافها مش منتظمة،
+   سطح محبّب، الحافة أغمق من النص، وفوهتا كوبرنيكوس وتيخو مع أشعة تيخو الخفيفة. الإضاءة حسب طور القمر الحقيقي. */
+var MARIA=[[-.52,.02,.30,.62,-8],[-.30,-.40,.30,.25,-15],[.20,-.38,.17,.16,0],[.36,-.04,.23,.18,20],[.70,-.30,.11,.14,0],[.55,.22,.13,.20,15],[-.14,.45,.18,.13,0],[-.50,.47,.09,.08,0],[.02,-.72,.42,.07,0],[.18,.40,.10,.09,10]];
 function moonSVG(d){var k=(1-Math.cos(2*Math.PI*d/29.53))/2,wax=d<=15,r=40,c=44;var rx=(Math.abs(1-2*k)*r).toFixed(2);
  var lit="M"+c+" "+(c-r)+" A"+r+" "+r+" 0 0 "+(wax?1:0)+" "+c+" "+(c+r)+" A"+rx+" "+r+" 0 0 "+((k>0.5)===wax?1:0)+" "+c+" "+(c-r)+"Z";
- return'<svg class="sk-moon" viewBox="0 0 88 88" aria-hidden="true"><defs><radialGradient id="skMg" cx="40%" cy="38%" r="70%"><stop offset="0" stop-color="#fffdf2"/><stop offset=".55" stop-color="#ece6cf"/><stop offset="1" stop-color="#c9c2a8"/></radialGradient><mask id="skMm"><rect width="88" height="88" fill="#000"/><path d="'+lit+'" fill="#fff"/></mask><filter id="skMb"><feGaussianBlur stdDeviation="1.2"/></filter></defs>'+
- '<circle cx="'+c+'" cy="'+c+'" r="'+r+'" fill="#c9cfe0" fill-opacity=".13"/>'+
- '<g mask="url(#skMm)"><circle cx="'+c+'" cy="'+c+'" r="'+r+'" fill="url(#skMg)"/><g fill="#a9a28a" fill-opacity=".35" filter="url(#skMb)"><circle cx="30" cy="30" r="7"/><circle cx="55" cy="26" r="4.5"/><circle cx="58" cy="52" r="9"/><circle cx="33" cy="58" r="5"/><circle cx="46" cy="70" r="3.5"/><circle cx="68" cy="38" r="3"/></g></g></svg>'}
+ var mar=MARIA.map(function(m){return'<ellipse cx="'+(c+m[0]*r).toFixed(1)+'" cy="'+(c+m[1]*r).toFixed(1)+'" rx="'+(m[2]*r).toFixed(1)+'" ry="'+(m[3]*r).toFixed(1)+'" transform="rotate('+m[4]+' '+(c+m[0]*r).toFixed(1)+' '+(c+m[1]*r).toFixed(1)+')"/>'}).join("");
+ var ty=[c-.12*r,c+.72*r],rays="";for(var a=0;a<12;a++){var t=a*Math.PI/6+.3,L=r*(.35+.25*((a*7)%5)/4);rays+='<line x1="'+ty[0].toFixed(1)+'" y1="'+ty[1].toFixed(1)+'" x2="'+(ty[0]+Math.cos(t)*L).toFixed(1)+'" y2="'+(ty[1]+Math.sin(t)*L).toFixed(1)+'"/>'}
+ return'<svg class="sk-moon" viewBox="0 0 88 88" aria-hidden="true"><defs>'+
+  '<radialGradient id="skMg" cx="46%" cy="44%" r="58%"><stop offset="0" stop-color="#f3f0e6"/><stop offset=".7" stop-color="#e3dfd2"/><stop offset="1" stop-color="#a9a598"/></radialGradient>'+
+  '<radialGradient id="skMl" cx="50%" cy="50%" r="50%"><stop offset=".72" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".38"/></radialGradient>'+
+  '<filter id="skMr" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="3" seed="7"/><feDisplacementMap in="SourceGraphic" scale="9"/><feGaussianBlur stdDeviation="1.6"/></filter>'+
+  '<filter id="skMv"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="4" seed="11"/><feColorMatrix values="0 0 0 0 .5  0 0 0 0 .5  0 0 0 0 .47  0 0 0 -1.6 .9"/></filter>'+
+  '<filter id="skMn"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="3"/><feColorMatrix values="0 0 0 0 .45  0 0 0 0 .44  0 0 0 0 .40  0 0 0 -1.1 .62"/></filter>'+
+  '<clipPath id="skMc"><circle cx="'+c+'" cy="'+c+'" r="'+r+'"/></clipPath>'+
+  '<filter id="skMt"><feGaussianBlur stdDeviation="1.3"/></filter><mask id="skMm"><rect width="88" height="88" fill="#000"/><path d="'+lit+'" fill="#fff" filter="url(#skMt)"/></mask></defs>'+
+  '<circle cx="'+c+'" cy="'+c+'" r="'+r+'" fill="#c9cfe0" fill-opacity=".06"/>'+
+  '<g mask="url(#skMm)"><g clip-path="url(#skMc)"><circle cx="'+c+'" cy="'+c+'" r="'+r+'" fill="url(#skMg)"/>'+
+  '<g fill="#83837c" fill-opacity=".5" filter="url(#skMr)">'+mar+'</g>'+
+  '<rect width="88" height="88" filter="url(#skMv)" opacity=".5"/><rect width="88" height="88" filter="url(#skMn)" opacity=".35"/>'+
+  '<g stroke="#fbf9f2" stroke-opacity=".09" stroke-width=".6">'+rays+'</g>'+
+  '<circle cx="'+ty[0].toFixed(1)+'" cy="'+ty[1].toFixed(1)+'" r="1.3" fill="#fbf9f2" fill-opacity=".55"/><circle cx="'+(c-.30*r).toFixed(1)+'" cy="'+(c-.08*r).toFixed(1)+'" r="1.1" fill="#f6f3ea" fill-opacity=".4"/><circle cx="'+(c-.62*r).toFixed(1)+'" cy="'+(c-.18*r).toFixed(1)+'" r=".9" fill="#fbf9f2" fill-opacity=".45"/>'+
+  '<circle cx="'+c+'" cy="'+c+'" r="'+r+'" fill="url(#skMl)"/></g></g></svg>'}
 var PHN=function(d){return d<=1||d>=29?"محاق":d<7?"هلال":d<9?"تربيع أول":d<14?"أحدب متزايد":d<=16?"بدر":d<22?"أحدب متناقص":d<24?"تربيع ثانٍ":"هلال آخر الشهر"};
 function stars(){var h="";for(var i=0;i<26;i++){var x=(i*37%97)+1.5,y=(i*53%70)+3,s=(i%3)*.5+1;h+='<b style="left:'+x+'%;top:'+y+'%;width:'+s+'px;height:'+s+'px;animation-delay:'+(i%7)*.6+'s"></b>'}return'<div class="sk-stars">'+h+'</div>'}
 function build(){var hero=document.querySelector("section.hero");if(!hero)return null;var el=document.getElementById("skyCard");if(el)return el;
