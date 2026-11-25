@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     # الموقع متحزّم جوه التطبيق (web/app-bundle.mjs)، فأي تعديل في web/ لازم يطلع في نسخة أندرويد جديدة
-    paths-ignore: ['qa/**', '.github/workflows/deploy-web.yml', '.github/workflows/qa.yml']
+    paths-ignore: ['qa/**', 'worker/**', '.github/workflows/deploy-web.yml', '.github/workflows/qa.yml']
   workflow_dispatch:
 
 permissions:

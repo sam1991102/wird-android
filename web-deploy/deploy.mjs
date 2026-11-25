@@ -27,7 +27,7 @@ async function retry(what, fn, ok = /10013|5\d\d|upstream/) {
   }
 }
 
-// 1) الـ Worker المنشور: ربط قاعدة البيانات + كود التوجيه + الملفات الحالية (للمقارنة فقط)
+// 1) الـ Worker المنشور: ربط قاعدة البيانات + الملفات الحالية (للمقارنة فقط)
 const settings = await cf('/workers/scripts/azkar/settings');
 const d1 = (settings.bindings || []).find(b => b.type === 'd1');
 if (!d1) throw new Error('D1 binding not found on worker azkar');
@@ -41,7 +41,8 @@ if (!code || !code.startsWith('const FILES=')) throw new Error('unexpected worke
 const cut = code.indexOf(';\nconst ROUTES=');
 if (cut < 0) throw new Error('ROUTES marker not found in worker');
 const LIVE = JSON.parse(code.slice('const FILES='.length, cut));
-const tail = code.slice(cut);
+// منطق السيرفر من المستودع (worker/routes.js) — مش من النسخة المنشورة
+const tail = ';\n' + fs.readFileSync(new URL('../worker/routes.js', import.meta.url), 'utf8');
 
 // 2) البناء من المستودع
 const F = build();
