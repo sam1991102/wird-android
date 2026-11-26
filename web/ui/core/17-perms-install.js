@@ -28,6 +28,10 @@
  /* نظّف رابط ?u= بعد التحديث */
  try{const u=new URL(location.href);if(u.searchParams.has("u")){u.searchParams.delete("u");history.replaceState(history.state,"",u.pathname+u.search+u.hash);setTimeout(()=>T("تم تحديث التطبيق"),1200)}}catch(e){}
  document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")check()});setTimeout(check,4000);__wEvery(1200,check);
+ /* فحص من القائمة الجانبية: بيفحص في مكانه ويقول النتيجة، من غير ما يفتح صفحة */
+ window.__wirdCheck=async()=>{T("جارٍ التحقق من التحديث…");const[sv,lv]=await Promise.all([serverV(),localV()]);
+  if(!sv){T("تعذّر التحقق، تأكد من الاتصال بالإنترنت");return}
+  if(sv>lv||!lv){banner();T("فيه إصدار جديد ("+lbl(sv)+")")}else T("أنت على أحدث إصدار ("+lbl(lv)+")")};
  /* زر الإعدادات: فحص حقيقي من الخادم */
  document.addEventListener("click",async e=>{const b=e.target.closest("#updChk");if(!b)return;e.stopImmediatePropagation();e.preventDefault();const s=b.closest(".st-upd")&&b.closest(".st-upd").querySelector(".upd-s");b.disabled=true;b.classList.add("is-busy");s&&(s.textContent="جارٍ التحقق…");
   const[sv,lv]=await Promise.all([serverV(),localV()]);b.disabled=false;b.classList.remove("is-busy");

@@ -96,6 +96,7 @@ declare var __wirdAdhan: any;
 declare var __wirdAudios: any;
 declare var __wirdBackup: any;
 declare var __wirdCalm: any;
+declare var __wirdCheck: any;
 declare var __wirdCity: any;
 declare var __wirdCityApply: any;
 declare var __wirdErrors: any;
