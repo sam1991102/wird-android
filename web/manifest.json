@@ -241,7 +241,6 @@
   "core/41-dhikr-hourly.js",
   "core/42-mushaf-home.js",
   "core/43-ready.js",
-  "core/44-glass.js",
   "core/32-city-name.js",
   "core/33-mushaf-card.js",
   "core/34-kids.js",
@@ -291,7 +290,6 @@
   "18-prayer-card.css",
   "19-prayer-page.css",
   "20-dhikr.css",
-  "21-mushaf-home.css",
-  "22-glass.css"
+  "21-mushaf-home.css"
  ]
 }

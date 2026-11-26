@@ -8,7 +8,7 @@
  const meta=()=>{const m=document.querySelector('meta[name="theme-color"]');if(m)m.content=R.classList.contains("dark")?"#0a110e":"#0d2a21"};
  const devDark=()=>typeof window.__sysDark==="boolean"?window.__sysDark:mq.matches;
  const timeDark=()=>{try{const t=prayerDay(0).t,h=__nowH();if(isFinite(t.sunrise)&&isFinite(t.maghrib))return!(h>=t.sunrise&&h<t.maghrib)}catch(e){}return devDark()};
- const apply=()=>{if(window.__wirdGlass&&__wirdGlass.on()){__wirdGlass.apply();return}/* الزجاجي ليه سماؤه وألوانه */const m=mode();if(m!=="auto"&&m!=="device")return;R.classList.remove("sepia");R.classList.toggle("dark",m==="auto"?timeDark():devDark());meta()};
+ const apply=()=>{const m=mode();if(m!=="auto"&&m!=="device")return;R.classList.remove("sepia");R.classList.toggle("dark",m==="auto"?timeDark():devDark());meta()};
  apply();__wEvery(60,apply);try{mq.addEventListener("change",apply)}catch(e){mq.addListener&&mq.addListener(apply)}addEventListener("sysdark",apply);document.addEventListener("visibilitychange",()=>{if(!document.hidden)apply()});addEventListener("pageshow",apply);
  /* أزرار «تلقائي» و«الجهاز» جنب أزرار المظهر اليدوية في الإعدادات */
  const OPT=[["auto","تلقائي","تلقائي: فاتح من الشروق للمغرب، وليلي بعد المغرب"],["device","الجهاز","المظهر يتبع إعداد الهاتف (فاتح أو ليلي)"]];
@@ -17,8 +17,7 @@
   let prev=null;OPT.forEach(([v,t,msg])=>{const b=document.createElement("button");b.type="button";b.setAttribute("role","radio");b.dataset.v=v;b.className="st-auto"+(v==="device"?" st-dev":"");b.textContent=t;
    if(prev)prev.after(b);else s.insertBefore(b,s.firstChild);prev=b;
    b.addEventListener("click",e=>{e.stopPropagation();ls("wird-theme-mode",v);ls("wird-dark",null);ls("wird-sepia",null);apply();paint(s);typeof toast==="function"&&toast(msg)})});
-  /* اختيار وضع (فاتح/ورقي/ليلي/تلقائي/الجهاز) معناه المستخدم عايز المظهر العادي: نقفل الزجاجي */
-  s.addEventListener("click",e=>{if(!e.target.closest("button"))return;if(window.__wirdGlass&&__wirdGlass.on()){ls("wird-glass","0");R.classList.remove("glass","glass-lite");delete R.dataset.sky;const g=document.getElementById("stGlass");if(g)g.checked=false}
+  s.addEventListener("click",e=>{if(!e.target.closest("button"))return;
    if(e.target.closest('[data-seg="theme"]')){ls("wird-theme-mode","manual");setTimeout(()=>paint(s),0)}},true);
   /* app.js بيرسم اختياره اليدوي: نصحّح العلامات بعده لو الوضع تلقائي/الجهاز */
   new MutationObserver(()=>paint(s)).observe(s,{attributes:true,subtree:true,attributeFilter:["aria-checked"]});paint(s)};

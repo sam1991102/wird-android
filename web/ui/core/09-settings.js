@@ -18,7 +18,7 @@ function build(){ov=document.createElement("div");ov.className="st";ov.setAttrib
  const R1=JSON.parse(get("wird-rem2","{}"));const r=(k,d)=>R1[k]!=null?R1[k]:d;
  ov.innerHTML='<header class="st-bar"><button type="button" class="r-btn" data-x aria-label="إغلاق"><svg class="ic" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button><strong id="stT">الإعدادات</strong><span style="width:42px"></span></header>'+
  '<nav class="st-tabs" aria-label="أقسام الإعدادات"><a href="#st-look">المظهر</a><a href="#st-remind">التذكيرات</a><a href="#st-data">البيانات</a><a href="#st-about">عن وِرد</a></nav><div class="st-body">'+
- sec("look",I.sun,"المظهر",row("الوضع",seg("theme",[["light","فاتح"],["sepia","ورقي"],["dark","ليلي"]],themeNow()))+row("المظهر الزجاجي",sw("stGlass",get("wird-glass","0")==="1"),"زجاج شفاف فوق سماء تتغيّر مع وقت الصلاة")+row("حجم خط الأذكار",seg("size",[["0","صغير"],["1","عادي"],["2","كبير"],["3","أكبر"],["4","الأكبر"]],get("wird-fs","1")))+row("الأرقام",seg("digits",[["ar","١٢٣"],["latin","123"]],get("wird-digits","ar")),"يُطبَّق بعد إعادة تحميل الصفحة")+row("الاهتزاز عند العدّ",sw("stVib",get("wird-vib","1")!=="0"),"على الهواتف التي تدعمه"))+
+ sec("look",I.sun,"المظهر",row("الوضع",seg("theme",[["light","فاتح"],["sepia","ورقي"],["dark","ليلي"]],themeNow()))+row("حجم خط الأذكار",seg("size",[["0","صغير"],["1","عادي"],["2","كبير"],["3","أكبر"],["4","الأكبر"]],get("wird-fs","1")))+row("الأرقام",seg("digits",[["ar","١٢٣"],["latin","123"]],get("wird-digits","ar")),"يُطبَّق بعد إعادة تحميل الصفحة")+row("الاهتزاز عند العدّ",sw("stVib",get("wird-vib","1")!=="0"),"على الهواتف التي تدعمه"))+
  sec("remind",I.bell,"التذكيرات",'<p class="st-note">تُضاف التذكيرات إلى تقويم هاتفك فتصلك حتى لو لم تفتح الموقع. اختر ما تريد ثم اضغط «أضف إلى التقويم» وافتح الملف.</p>'+
   '<h3>الأذكار اليومية</h3>'+row("أذكار الصباح",sw("rm_m",r("m",1))+tm("rt_m",r("tm","06:30")))+row("أذكار المساء",sw("rm_e",r("e",1))+tm("rt_e",r("te","17:30")))+row("أذكار النوم",sw("rm_s",r("s",0))+tm("rt_s",r("ts","22:30")))+
   '<h3>الصلاة</h3>'+row("تنبيه عند كل صلاة",sw("rm_p",r("p",0)),"الفجر والظهر والعصر والمغرب والعشاء لمدة ٣٠ يومًا حسب مدينتك")+row("قبل الأذان بـ",'<select id="rt_pb" class="st-sel"><option value="0">عند الأذان</option><option value="5">٥ دقائق</option><option value="10">١٠ دقائق</option><option value="15">١٥ دقيقة</option></select>')+
@@ -37,7 +37,6 @@ function build(){ov=document.createElement("div");ov.className="st";ov.setAttrib
  ov.addEventListener("click",e=>{const b=e.target.closest("[data-seg]");if(b){const g=b.dataset.seg,v=b.dataset.v;b.parentElement.querySelectorAll("button").forEach(x=>x.setAttribute("aria-checked",x===b));apply(g,v)}
   const a=e.target.closest(".st-tabs a");if(a){e.preventDefault();ov.querySelector(a.getAttribute("href")).scrollIntoView({behavior:"smooth",block:"start"})}});
  ov.querySelector("#stVib").onchange=e=>{put("wird-vib",e.target.checked?"1":"0")};
-  ov.querySelector("#stGlass").onchange=e=>{window.__wirdGlass&&__wirdGlass.set(e.target.checked)};
  ov.querySelector(".st-add").onclick=addAll;
  ov.querySelector(".ab-share").onclick=async()=>{const u="https://wird-azkar.pages.dev",t="وِرد: أذكار وقرآن ومواقيت الصلاة، مجاني من غير إعلانات";
   try{if(navigator.share){await navigator.share({title:"وِرد",text:t,url:u});return}}catch(e){if(e&&e.name==="AbortError")return}
