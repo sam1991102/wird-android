@@ -57,11 +57,11 @@ function build(){var hero=document.querySelector("section.hero");if(!hero)return
    فبنقيس أعلى نقطة في الحروف فعلًا ونزوّد المسافة فوقها لحد ما تبقى جوه الكارت بهامش ثابت */
 var wdKey="";function fitWd(el){var w=el.querySelector(".sk-wd");if(!w||!w.textContent)return;var cs=getComputedStyle(w),k=w.textContent+"|"+cs.fontSize+"|"+cs.fontFamily;if(k===wdKey)return;
  /* لازم نستنى خط اسم اليوم نفسه يتحمّل، وإلا القياس بيطلع على خط بديل أقصر وبيتقص على الموبايل */
- (document.fonts&&document.fonts.load?document.fonts.load(cs.fontSize+" "+cs.fontFamily,w.textContent):Promise.resolve()).then(function(){try{if(document.fonts&&!document.fonts.check(cs.fontSize+" "+cs.fontFamily,w.textContent))return setTimeout(function(){fitWd(el)},500);var c=document.createElement("canvas").getContext("2d");c.font=cs.fontSize+" "+cs.fontFamily;var mt=c.measureText(w.textContent),rg=document.createRange();rg.selectNodeContents(w);var rw=rg.getBoundingClientRect().width;
+ (document.fonts&&document.fonts.load?document.fonts.load(cs.fontSize+" "+cs.fontFamily,w.textContent):Promise.resolve()).then(function(){try{var c=document.createElement("canvas").getContext("2d");c.font=cs.fontSize+" "+cs.fontFamily;var mt=c.measureText(w.textContent),rg=document.createRange();rg.selectNodeContents(w);var rw=rg.getBoundingClientRect().width;
   /* أندرويد بيكبّر الخط حسب «حجم الخط» في إعدادات الموبايل من غير ما يغيّر font-size المحسوب، فبنقيس التكبير الفعلي من عرض الكلمة على الشاشة */
   var zoom=mt.width>0&&rw>0?rw/mt.width:1,asc=mt.actualBoundingBoxAscent*zoom;
-  w.style.paddingTop="0px";var m=document.createElement("span");m.style.cssText="display:inline-block;width:0;height:0;vertical-align:baseline";w.appendChild(m);var base=m.getBoundingClientRect().top,card=el.getBoundingClientRect().top;m.remove();
-  var need=Math.ceil(asc+parseFloat(cs.fontSize)*zoom*.4-(base-card));w.style.paddingTop=Math.max(0,need)+"px";wdKey=k}catch(e){}})}
+  w.style.paddingTop="";var p0=parseFloat(getComputedStyle(w).paddingTop)||0;w.style.paddingTop="0px";var m=document.createElement("span");m.style.cssText="display:inline-block;width:0;height:0;vertical-align:baseline";w.appendChild(m);var base=m.getBoundingClientRect().top,card=el.getBoundingClientRect().top;m.remove();
+  var need=Math.ceil(asc+parseFloat(cs.fontSize)*zoom*.4-(base-card));w.style.paddingTop=Math.max(p0,need)+"px";wdKey=k}catch(e){w.style.paddingTop=""}})}
 var last="",dKey="",FM={};
 /* بنكتب النص بس لو اتغيّر (الكتابة بتعيد رسم الكارت) */
 function put(el,sel,v){var e=el.querySelector(sel);if(e&&e.textContent!==v)e.textContent=v}
