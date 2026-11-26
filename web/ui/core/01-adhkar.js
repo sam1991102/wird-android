@@ -62,7 +62,9 @@ const saveOrder=()=>{try{localStorage.setItem(KEY,JSON.stringify(order))}catch(e
 const mineList=()=>{const fav=[...favorites];order=order.filter(id=>fav.includes(id));fav.forEach(id=>{if(!order.includes(id))order.push(id)});return order.map(id=>adhkar.find(a=>a.id===id)).filter(Boolean)};
 const MINE={id:"mine",name:"وِردي الخاص",icon:"",desc:"أذكار اخترتها"};
 categories.splice(1,0,MINE);catById.mine=MINE;
-const orig=catItems;catItems=function(c){return c==="mine"?mineList():orig(c)};
+const orig=catItems;
+// @ts-expect-error مقصود: بنلفّ دالة app.js عشان نضيف قسم «وِردي»
+catItems=function(c){return c==="mine"?mineList():orig(c)};
 document.getElementById("jumpFavorites").addEventListener("click",e=>{e.stopImmediatePropagation();setCategory("mine");document.getElementById("library").scrollIntoView({behavior:"smooth"})},true);
 const list=document.getElementById("adhkarList"),empty=document.getElementById("emptyState");
 const UP='<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>',DN='<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>';

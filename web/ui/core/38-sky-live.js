@@ -32,7 +32,7 @@ function glowAt(h){try{var t=prayerDay(0).t;if(h>=t.sunrise-.5&&h<=t.maghrib+.5)
 function cards(){var a=[],k=document.getElementById("skyCard"),p=document.querySelector("#prayer .pc2 .prayer-head");if(k)a.push(k);if(p)a.push(p);return a}
 /* كارت المواقيت: طبقة سما ورا المحتوى (نفس طبقات كارت اليوم) */
 function layer(el){if(el.id==="skyCard"||el.querySelector(".w-skyl"))return;var l=document.createElement("div");l.className="w-skyl";l.setAttribute("aria-hidden","true");l.innerHTML='<div class="sk-bg"></div><div class="sk-scene"></div><div class="sk-clouds"></div>';el.insertBefore(l,el.firstChild)}
-var lastSky="";
+var lastSky=-1;
 function paintSky(force){var h;try{h=__nowH()}catch(e){return}
  var k=Math.round(h*30);if(k===lastSky&&!force)return;lastSky=k;/* كل دقيقتين كفاية: التغيير بطيء */
  var c;try{c=colors(h)}catch(e){return}var g=glowAt(h),ph=phase(h);

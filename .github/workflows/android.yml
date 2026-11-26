@@ -25,6 +25,9 @@ jobs:
         with:
           node-version: '22'
 
+      - name: TypeScript lock (real bugs only)
+        run: npm i -g typescript@5.9.3 >/dev/null && node web/ts-lint.mjs
+
       - name: Bundle the website inside the app (works offline)
         run: node web/app-bundle.mjs
 

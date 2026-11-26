@@ -69,10 +69,13 @@
    if(pages.length)h+='<div class="se-g">الأقسام</div>'+pages.map(([n,k])=>'<button type="button" class="se-r" data-go="'+k+'"><b>'+n+'</b></button>').join("");
    h+='<button type="button" class="btn btn-ghost se-q" data-quran="1">ابحث عن «'+esc(inp.value.trim())+'» في آيات القرآن</button>';
    res.innerHTML=h}
+  /* نتائج «الأقسام» في البحث: كل مفتاح بيفتح صفحته (كانت بتنادي go غير معرّفة فالضغط مكانش بيعمل حاجة) */
+  const openSection=k=>{const O={hijri:window.__openHijri,qibla:window.__openQibla,duas:window.__openDuas,hajj:window.__openHajj,set:window.__openSettings,mushaf:window.__openMushaf};
+   if(O[k])O[k]();else window.__wirdGo&&__wirdGo(k)};
   res.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
    if(b.dataset.sura){closeAll();window.__openSurahN&&__openSurahN(+b.dataset.sura)}
    else if(b.dataset.dh){const id=+b.dataset.dh,d=adhkar.find(x=>x.id===id);closeAll();if(d)setTimeout(()=>{try{openFocus(d.cat);const k=F.list.findIndex(x=>x.id===id);if(k>=0){F.i=k;renderFocus()}}catch(x){}},80)}
-   else if(b.dataset.go){closeAll();setTimeout(()=>go(b.dataset.go),80)}
+   else if(b.dataset.go){closeAll();setTimeout(()=>openSection(b.dataset.go),80)}
    else if(b.dataset.quran){const q=inp.value.trim();closeAll();setTimeout(()=>{window.__openMushaf&&__openMushaf();__wWait(()=>{const i=document.querySelector(".mi-search input");return i&&i.offsetParent!==null&&i},i=>{i.value=q;i.dispatchEvent(new Event("input",{bubbles:true}))})},80)}})};
  window.__openSearch=searchSheet;
  /* ===== القائمة الجانبية ===== */

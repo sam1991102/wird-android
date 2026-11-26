@@ -73,7 +73,7 @@ function fmts(z){var k=z||"";return FM[k]||(FM[k]={wd:new Intl.DateTimeFormat("a
 /* المشهد (شمس بمكانها الحقيقي / قمر بطوره / نجوم) — بيستخدمه كارت اليوم وكارت المواقيت */
 function scene(){var st=state(),d=hDay();return{key:st.s+"|"+(st.s==="night"?d:Math.round(st.f*60)),html:(st.s==="night"||st.s==="twilight"?stars():"")+(st.s==="night"?moonSVG(((Date.now()/864e5-10962.76)%29.530589+29.530589)%29.530589):sunEl(st.f,st.s))}}
 window.__skyScene=function(){return scene()};
-var hd={k:"",v:15};function hDay(){var k=Math.floor(Date.now()/6e4);if(hd.k!==k){hd.k=k;hd.v=hijriDay()}return hd.v}
+var hd={k:-1,v:15};function hDay(){var k=Math.floor(Date.now()/6e4);if(hd.k!==k){hd.k=k;hd.v=hijriDay()}return hd.v}
 function paint(){var el=build();if(!el)return;var st=state(),d=hDay();if(el.dataset.sky!==st.s)el.dataset.sky=st.s;
  var sn=scene();if(sn.key!==last){last=sn.key;var sc=el.querySelector(".sk-scene");sc.innerHTML=sn.html;
   put(el,".sk-label",st.s==="night"?"القمر الليلة: "+PHN(d):st.s==="dawn"?"قبيل الشروق":st.s==="twilight"?"بعد الغروب":st.s==="dusk"?"الشمس تميل إلى الغروب":"الشمس "+(st.f<.3?"في أول النهار":st.f<.7?"في كبد السماء":"بعد الزوال"))}

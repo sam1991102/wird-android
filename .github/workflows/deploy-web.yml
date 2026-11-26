@@ -19,6 +19,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: TypeScript lock (real bugs only)
+        run: npm i -g typescript@5.9.3 >/dev/null && node web/ts-lint.mjs
       - name: Deploy wird-azkar
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}

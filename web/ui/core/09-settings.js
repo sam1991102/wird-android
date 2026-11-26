@@ -100,7 +100,9 @@ function renderGrid(){const fav=typeof favorites!=="undefined"?favorites.size:0;
 const lt=document.getElementById("libTitle");function mode(m){R.dataset.lib=m;if(m==="grid"){renderGrid();lt.textContent="أقسام الأذكار"}else if(lt.textContent==="أقسام الأذكار"&&typeof activeCategory!=="undefined")lt.textContent=activeCategory==="all"?"كل الأذكار":catName(activeCategory)}
 grid.addEventListener("click",e=>{const t=e.target.closest("[data-tile]");if(!t)return;setCategory(t.dataset.tile);mode("list");scrollTo({top:0,behavior:"instant"})});
 back.addEventListener("click",()=>{search.value="";search.dispatchEvent(new Event("input"));mode("grid");scrollTo({top:0,behavior:"instant"})});
-const orig=setCategory;window.setCategory=setCategory=function(...a){const r=orig.apply(this,a);if(R.dataset.lib==="grid")mode("list");return r};
+const orig=setCategory;
+// @ts-expect-error مقصود: بنلفّ دالة app.js عشان نفتح القائمة بعد اختيار القسم
+window.setCategory=setCategory=function(...a){const r=orig.apply(this,a);if(R.dataset.lib==="grid")mode("list");return r};
 search.addEventListener("input",()=>{if(search.value.trim())mode("list")});
 document.addEventListener("click",e=>{if(e.target.closest('.bottom-nav.nav5 [data-tab="library"]')){search.value="";mode("grid")}},true);
 mode(slugFromPath()?"list":"grid");
