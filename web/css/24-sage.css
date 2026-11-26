@@ -1,0 +1,10 @@
+/*sage — ألوان الوضع الفاتح: أخضر شعار إذاعة القرآن الكريم من القاهرة اللي اختاره Sam، مع خلفيتهم وبطاقاتهم:
+  الأخضر #32735C، الخلفية #F5F2EC، البطاقات #F8F7F3 بظل خفيف، النص #2A3331، الدهبي #C5AC5F.
+  الوضع الداكن ومشهد السماء وشاشة الذِكر زي ما هم. */
+html:not(.dark){
+ --brand:#32735c;--deep:#32735c;--primary:#32735c;--primary-2:#32735c;
+ --emerald-900:#32735c;--emerald-800:#32735c;--emerald-700:#32735c;--emerald-600:#3f8169;--emerald-100:#dde6df;--emerald-50:#ebf0ec;
+ --bg:#f5f2ec;--paper:#f8f7f3;--paper-2:#efebe4;
+ --ink:#2a3331;--ink-2:#45504d;--muted:#767e7b;--line:#e4dfd5;--line-2:#ece8e0;
+ --gold:#c5ac5f;--gold-2:#c5ac5f;--gold-ink:#8a6f24;
+ --sh-1:0 1px 2px rgba(42,51,49,.07),0 3px 10px rgba(42,51,49,.08)}
