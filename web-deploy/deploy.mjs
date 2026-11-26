@@ -44,6 +44,9 @@ if (cut < 0) throw new Error('end of FILES not found in worker');
 const LIVE = JSON.parse(code.slice('const FILES='.length, cut));
 // منطق السيرفر من المستودع (worker/routes.js) — مش من النسخة المنشورة
 const tail = ';\n' + fs.readFileSync(new URL('../worker/routes.js', import.meta.url), 'utf8');
+// تعديل في كود السيرفر لوحده (من غير ملفات) لازم يتنشر برضه
+const routesChanged = code.slice(cut) !== tail;
+if (routesChanged) console.log('worker/routes.js changed');
 
 // 2) البناء من المستودع
 const F = build();
@@ -93,7 +96,7 @@ console.log('built', out.length, 'bytes');
   console.log('snapshot: site-source written', skipped.length ? '(skipped for safety: ' + skipped.join(', ') + ')' : '');
 }
 if (DRY) { console.log('dry run: nothing deployed'); process.exit(0); }
-if (!changed.length) { console.log('nothing changed: skipping upload'); process.exit(0); }
+if (!changed.length && !routesChanged) { console.log('nothing changed: skipping upload'); process.exit(0); }
 
 // 6) Worker azkar
 await retry('worker upload', async () => {
@@ -117,3 +120,18 @@ const r = await retry('pages upload', () => {
   return cf('/pages/projects/wird-azkar/deployments', { method: 'POST', body: fd });
 });
 console.log('pages: deployed', r.url || r.id);
+
+// 8) IndexNow: نبلّغ Bing وYandex (ومن بياخد منهم) بكل صفحات خريطة الموقع عشان يزحفوا عليها فورًا.
+//    المفتاح عام بطبيعته وملفه بيتقدّم من worker/routes.js. فشل الإبلاغ مش بيفشّل النشر.
+{
+  const SITE = 'https://wird-azkar.pages.dev', KEY = '697fdf0010e539a98af74280271d7069';
+  const sm = F['sitemap.xml'] ? F['sitemap.xml'][1] : '';
+  const urls = [...sm.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1].replace(/^https?:\/\/[^/]+/, SITE));
+  if (urls.length) {
+    try {
+      const res = await fetch('https://api.indexnow.org/indexnow', { method: 'POST', headers: { 'content-type': 'application/json; charset=utf-8' },
+        body: JSON.stringify({ host: 'wird-azkar.pages.dev', key: KEY, keyLocation: SITE + '/' + KEY + '.txt', urlList: urls.slice(0, 10000) }) });
+      console.log('indexnow:', res.status, urls.length, 'urls');
+    } catch (e) { console.log('::warning::indexnow failed: ' + e.message); }
+  }
+}
