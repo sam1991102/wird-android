@@ -1,1 +1,12 @@
 
+
+/*seo-ix — فهرس أذكار القسم في آخر صفحات الأقسام (/morning…): روابط لصفحة كل ذكر. السيرفر بيضيفه (worker/routes.js ← seoIndex) */
+.seo-ix{max-width:640px;margin:var(--s32) auto calc(var(--s48) + var(--s48));padding:var(--s20);background:var(--paper);border:1px solid var(--line);border-radius:var(--rd-l);color:var(--ink);line-height:1.9}
+.seo-ix h1{font-size:var(--fs-lg);margin:0 0 var(--s12)}
+.seo-ix h2{font-size:var(--fs-md);margin:var(--s20) 0 var(--s8)}
+.seo-ix ol{margin:0;padding-inline-start:var(--s20)}
+.seo-ix li+li{margin-top:var(--s4)}
+.seo-ix a{color:var(--ink-2);text-decoration:none}
+.seo-ix a:hover,.seo-ix a:focus-visible{text-decoration:underline}
+.seo-ix-cats{display:flex;flex-wrap:wrap;gap:var(--s8);margin:0}
+.seo-ix-cats a{padding:var(--s4) var(--s12);border:1px solid var(--line);border-radius:var(--rd-pill);font-size:var(--fs-sm)}

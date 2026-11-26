@@ -71,6 +71,18 @@ document.getElementById("dpShare").onclick=function(){if(navigator.share)navigat
 </body></html>`;
 }
 const OLD_ORIGIN="https://azkar.islam-a-elshehery.workers.dev";
+/* فهرس ثابت لأذكار القسم: روابط حقيقية لصفحة كل ذكر يقرأها جوجل من غير ما يشغّل التطبيق،
+   ويشوفها الزائر في آخر الصفحة. مع ItemList عشان نتائج البحث تفهم إنها قائمة. */
+function seoIndex(slug,name,origin){
+  const items=ADHKAR.filter(x=>x.cat===slug);if(!items.length)return"";
+  const first=x=>{const w=plain(x.text).replace(/^بسم الله الرحمن الرحيم[.،]?\s*/,"").split(/\s+/);return w.slice(0,9).join(" ")+(w.length>9?"…":"")};
+  const ld={"@context":"https://schema.org","@type":"ItemList","name":name,"numberOfItems":items.length,"itemListElement":items.map((x,i)=>({"@type":"ListItem","position":i+1,"url":origin+"/d/"+x.id,"name":first(x)}))};
+  const other=Object.keys(ROUTES).filter(k=>k!==slug&&ADHKAR.some(x=>x.cat===k));
+  return '<section class="seo-ix" aria-labelledby="seoIxH"><h1 id="seoIxH">'+esc(name)+' مكتوبة</h1><ol>'+
+    items.map(x=>'<li><a href="/d/'+x.id+'">'+esc(first(x))+'</a></li>').join("")+'</ol>'+
+    '<h2>أقسام أخرى</h2><p class="seo-ix-cats">'+other.map(k=>'<a href="/'+k+'">'+esc(ROUTES[k])+'</a>').join("")+'</p></section>'+
+    '<script type="application/ld+json">'+JSON.stringify(ld).replace(/</g,"\\u003c")+'</script>';
+}
 function pageFor(html,slug,name,origin){
   const title=name+" مكتوبة كاملة مع الفضل والمصدر | وِرد";
   const desc=name+" مكتوبة كاملة بالتشكيل مع عدّاد لكل ذكر، وفضله ومصدره من القرآن والسنة. اقرأها ذكرًا بعد ذكر، وتعمل دون إنترنت.";
@@ -82,7 +94,8 @@ function pageFor(html,slug,name,origin){
     .replace(/(<meta property="og:description" content=")[^"]*/,"$1"+desc)
     .replace(/(<meta property="og:url" content=")[^"]*/,"$1"+url)
     .replace(/(<meta property="og:image" content=")[^"]*/,"$1"+img)
-    .replace(/(<meta name="twitter:image" content=")[^"]*/,"$1"+img);
+    .replace(/(<meta name="twitter:image" content=")[^"]*/,"$1"+img)
+    .replace('<div id="toast"',seoIndex(slug,name,origin)+'\n<div id="toast"');
 }
 const VAPID_PUBLIC="BBryBL4-vPUiJfuOZGWBXOEawUBZ6TJfXuEiEyRJ3i-CgfbN7OS_iTfYA_EQgf-EZls4kx4xYiMGbHJe0bYyddU";
 const PUSH_HOSTS=/(^|\.)(fcm\.googleapis\.com|push\.services\.mozilla\.com|web\.push\.apple\.com|notify\.windows\.com|push\.apple\.com)$/;
