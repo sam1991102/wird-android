@@ -62,6 +62,10 @@
    "type": "image/png"
   },
   {
+   "name": "moon.jpg",
+   "type": "image/jpeg"
+  },
+  {
    "name": "icon-maskable-512.png",
    "type": "image/png"
   },
