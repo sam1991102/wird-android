@@ -38,8 +38,9 @@ if ((res.headers.get('content-type') || '').includes('multipart')) {
   for (const [k, v] of await res.formData()) if (typeof v !== 'string' && /\.m?js$/.test(v.name || k)) { code = await v.text(); break; }
 } else code = await res.text();
 if (!code || !code.startsWith('const FILES=')) throw new Error('unexpected worker content: ' + String(code).slice(0, 80));
-const cut = code.indexOf(';\nconst ROUTES=');
-if (cut < 0) throw new Error('ROUTES marker not found in worker');
+// JSON مفيهوش سطر جديد حقيقي، فأول «;» بعدها سطر جديد هي نهاية FILES
+const cut = code.indexOf(';\n');
+if (cut < 0) throw new Error('end of FILES not found in worker');
 const LIVE = JSON.parse(code.slice('const FILES='.length, cut));
 // منطق السيرفر من المستودع (worker/routes.js) — مش من النسخة المنشورة
 const tail = ';\n' + fs.readFileSync(new URL('../worker/routes.js', import.meta.url), 'utf8');
