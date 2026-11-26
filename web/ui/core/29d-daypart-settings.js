@@ -1,0 +1,14 @@
+;(function(){/* فترة اليوم حسب الصلاة (data-tp) وخيارات قسم المظهر */
+/* ---------- ٣) data-tp: فترة اليوم حسب الصلاة (ألوان بعض العناصر). الفاتح/الليلي نفسه في 20-theme-auto.js ---------- */
+function period(){try{var t=prayerDay(0).t,h=__nowH();if(h>=t.fajr&&h<t.sunrise)return"fajr";if(h>=t.sunrise&&h<t.dhuhr)return"duha";if(h>=t.dhuhr&&h<t.asr)return"day";if(h>=t.asr&&h<t.maghrib)return"asr";if(h>=t.maghrib&&h<t.isha+.5)return"maghrib";return"night"}catch(e){return"day"}}
+function theme(){var r=document.documentElement,p=period();if(r.getAttribute("data-tp")!==p)r.setAttribute("data-tp",p)}
+theme();__wEvery(60,theme);document.addEventListener("visibilitychange",function(){if(!document.hidden)theme()});
+/* خيارات داخل قسم «المظهر» الأصلي + تشغيل تبويبات الإعدادات */
+function stUI(){var lk=document.getElementById("st-look");if(!lk||document.getElementById("tpOn"))return;var w=document.createElement("div");w.id="stLook";w.innerHTML='<span id="tpOn" hidden></span><label class="st-row st-tg"><span><b>وضع القراءة الهادئة</b><small>نص أكبر بدون أزرار — اضغط على الذكر للعدّ</small></span><input type="checkbox" id="calmOn"'+(__wirdCalm.on()?" checked":"")+'></label>';lk.appendChild(w);w.querySelector("#calmOn").onchange=function(){__wirdCalm.set(this.checked)}}
+function stTabs(){var st=document.querySelector(".st");if(!st)return;var nav=st.querySelector(".st-tabs"),body=st.querySelector(".st-body");if(!nav||!body||nav.dataset.ok)return;nav.dataset.ok=1;var L=[].slice.call(nav.querySelectorAll("a[href^='#']"));
+ var ALT={"#st-remind":["#st-dr","#st-alarm","#st-fast"]};function tgt(a){var h=a.getAttribute("href"),t=body.querySelector(h);if(t&&t.offsetParent)return t;var L2=ALT[h]||[];for(var i=0;i<L2.length;i++){var x=body.querySelector(L2[i]);if(x&&x.offsetParent)return x}return t}
+ function mark(a){L.forEach(function(x){var on=x===a;x.classList.toggle("on",on);if(on){x.setAttribute("aria-current","true");try{x.scrollIntoView({inline:"center",block:"nearest"})}catch(e){}}else x.removeAttribute("aria-current")})}
+ var lock=0;L.forEach(function(a){a.addEventListener("click",function(e){var t=tgt(a);if(!t)return;e.preventDefault();e.stopImmediatePropagation();var y=t.getBoundingClientRect().top-body.getBoundingClientRect().top+body.scrollTop-8;lock=Date.now();body.scrollTop=Math.max(0,y);mark(a)},true)});
+ body.addEventListener("scroll",function(){if(Date.now()-lock<900)return;var bt=body.getBoundingClientRect().top,cur=null;L.forEach(function(a){var t=tgt(a);if(t&&t.getBoundingClientRect().top-bt<=60)cur=a});if(!cur&&L.length)cur=L[0];if(body.scrollTop+body.clientHeight>=body.scrollHeight-4){var vis=L.filter(function(a){var t=tgt(a);return t&&t.getBoundingClientRect().top<bt+body.clientHeight});cur=vis[vis.length-1]||cur}mark(cur)},{passive:true});mark(L[0])}
+__wOnDom(function(){if(document.getElementById("st-look")&&!document.getElementById("tpOn"))stUI();stTabs()});
+})();

@@ -99,7 +99,7 @@
   "observer": 1,
   "interval": 0
  },
- "core/29-fixes.js": {
+ "core/29b-resume.js": {
   "observer": 1,
   "interval": 0
  },
