@@ -66,6 +66,12 @@ function build(){var hero=document.querySelector("section.hero");if(!hero)return
  el=document.createElement("section");el.className="container sky-card";el.id="skyCard";el.dataset.v="home";el.setAttribute("aria-label","حالة السماء والصلاة القادمة");
  el.innerHTML='<div class="sk-bg"></div><div class="sk-scene"></div><div class="sk-clouds" aria-hidden="true"></div><div class="sk-info"><div class="sk-day"><b class="sk-wd"></b><small class="sk-city"></small></div><div class="sk-dates"><div><b class="sk-hj"></b><small class="sk-hy"></small></div><div><b class="sk-gr"></b><small class="sk-gy"></small></div></div><a class="sk-next" href="#prayer"><span class="sk-np"></span><b class="sk-cd"></b></a><div class="sk-meta"><span class="sk-label"></span><span class="sk-period"></span></div></div>';
  hero.parentNode.insertBefore(el,hero);window.__placeDayArc&&__placeDayArc();return el}
+/* خط اسم اليوم (ديواني) حروفه العالية بتطلع فوق سطره بكتير، وبتختلف حسب اليوم ومقاس الخط في الموبايل،
+   فبنقيس أعلى نقطة في الحروف فعلًا ونزوّد المسافة فوقها لحد ما تبقى جوه الكارت بهامش ثابت */
+var wdKey="";function fitWd(el){var w=el.querySelector(".sk-wd");if(!w||!w.textContent)return;var cs=getComputedStyle(w),k=w.textContent+"|"+cs.fontSize+"|"+cs.fontFamily;if(k===wdKey)return;
+ (document.fonts&&document.fonts.ready||Promise.resolve()).then(function(){try{var c=document.createElement("canvas").getContext("2d");c.font=cs.fontSize+" "+cs.fontFamily;var asc=c.measureText(w.textContent).actualBoundingBoxAscent;
+  w.style.paddingTop="0px";var m=document.createElement("span");m.style.cssText="display:inline-block;width:0;height:0;vertical-align:baseline";w.appendChild(m);var base=m.getBoundingClientRect().top,card=el.getBoundingClientRect().top;m.remove();
+  var need=Math.ceil(asc+parseFloat(cs.fontSize)*.4-(base-card));w.style.paddingTop=Math.max(0,need)+"px";wdKey=k}catch(e){}})}
 var last="",dKey="",FM={};
 /* بنكتب النص بس لو اتغيّر (الكتابة بتعيد رسم الكارت) */
 function put(el,sel,v){var e=el.querySelector(sel);if(e&&e.textContent!==v)e.textContent=v}
@@ -79,7 +85,7 @@ function paint(){var el=build();if(!el)return;var st=state(),d=hDay();if(el.data
   put(el,".sk-label",st.s==="night"?"القمر الليلة: "+PHN(d):st.s==="dawn"?"قبيل الشروق":st.s==="twilight"?"بعد الغروب":st.s==="dusk"?"الشمس تميل إلى الغروب":"الشمس "+(st.f<.3?"في أول النهار":st.f<.7?"في كبد السماء":"بعد الزوال"))}
  /* التواريخ بتتغيّر مرة في اليوم: بنحسبها مرة في الدقيقة بس، والمنسّقات بتتعمل مرة لكل منطقة زمنية */
  var mk=Math.floor(Date.now()/6e4)+"|"+tz();if(mk!==dKey){dKey=mk;try{var z=tz(),now=new Date(),F=fmts(z),gv=function(p,k){return(p.find(function(x){return x.type===k})||{}).value||""};
-  put(el,".sk-wd",F.wd.format(now));put(el,".sk-city",(typeof P!=="undefined"&&P.name)?P.name:"");
+  put(el,".sk-wd",F.wd.format(now));fitWd(el);put(el,".sk-city",(typeof P!=="undefined"&&P.name)?P.name:"");
   var hp=F.hj.formatToParts(now);put(el,".sk-hj",gv(hp,"day")+" "+gv(hp,"month"));put(el,".sk-hy",gv(hp,"year")+" هـ");
   var gp=F.gr.formatToParts(now);put(el,".sk-gr",gv(gp,"day")+" "+gv(gp,"month"));put(el,".sk-gy",gv(gp,"year"))}catch(e){}}
  var ch=document.querySelector(".tb-strip .tp-chip b");put(el,".sk-period",ch?ch.textContent:"");
