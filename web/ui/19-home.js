@@ -61,7 +61,7 @@ function render(box){if(!box)return;var t=null;try{t=prayerDay(0).t}catch(e){}
  var night=now<t.fajr||now>=t.isha,cur=night?"sleep":now>=t.asr?"evening":now>=t.sunrise+1/3&&now<t.dhuhr-1/6?"duha":"morning",sun=pos(now);
  var g='<svg class="da-svg" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="مسار اليوم">'
   +'<path class="da-track" d="'+arc(0,1)+'"/>'+(night?"":'<path class="da-done" d="'+arc(0,sun)+'"/>');
- if(!night){var s=pt(sun);g+='<circle class="da-sun" cx="'+s[0].toFixed(1)+'" cy="'+s[1].toFixed(1)+'" r="5"/>'}
+ if(!night&&now<t.maghrib){var s=pt(sun);/* بعد المغرب الشمس غربت: مفيش نقطة شمس */g+='<circle class="da-sun" cx="'+s[0].toFixed(1)+'" cy="'+s[1].toFixed(1)+'" r="5"/>'}
  st.forEach(function(x){var p=pt(pos(x.at)),on=x.k===cur,past=!on&&now>=t.fajr&&now<t.isha+24&&(x.k==="morning"?now>=t.sunrise+1/3:x.k==="duha"?now>=t.dhuhr-1/6:x.k==="evening"?now>=t.isha:false),r=on?21:16;
   g+='<g class="da-st'+(on?" is-now":"")+(past?" is-past":"")+'" data-k="'+x.k+'" tabindex="0" role="button" aria-label="أذكار '+x.n+'"><circle class="da-halo" cx="'+p[0]+'" cy="'+p[1]+'" r="'+(r+7)+'"/><circle class="da-dot" cx="'+p[0]+'" cy="'+p[1]+'" r="'+r+'"/><svg x="'+(p[0]-r*.6)+'" y="'+(p[1]-r*.6)+'" width="'+(r*1.2)+'" height="'+(r*1.2)+'" viewBox="0 0 24 24" fill="none" class="da-ic">'+(x.ic==="duha"?DUHA:IC[x.ic])+'</svg></g>'});
  g+="</svg>";

@@ -56,7 +56,8 @@ function build(){var hero=document.querySelector("section.hero");if(!hero)return
 /* خط اسم اليوم (ديواني) حروفه العالية بتطلع فوق سطره بكتير، وبتختلف حسب اليوم ومقاس الخط في الموبايل،
    فبنقيس أعلى نقطة في الحروف فعلًا ونزوّد المسافة فوقها لحد ما تبقى جوه الكارت بهامش ثابت */
 var wdKey="";function fitWd(el){var w=el.querySelector(".sk-wd");if(!w||!w.textContent)return;var cs=getComputedStyle(w),k=w.textContent+"|"+cs.fontSize+"|"+cs.fontFamily;if(k===wdKey)return;
- (document.fonts&&document.fonts.ready||Promise.resolve()).then(function(){try{var c=document.createElement("canvas").getContext("2d");c.font=cs.fontSize+" "+cs.fontFamily;var asc=c.measureText(w.textContent).actualBoundingBoxAscent;
+ /* لازم نستنى خط اسم اليوم نفسه يتحمّل، وإلا القياس بيطلع على خط بديل أقصر وبيتقص على الموبايل */
+ (document.fonts&&document.fonts.load?document.fonts.load(cs.fontSize+" "+cs.fontFamily,w.textContent):Promise.resolve()).then(function(){try{if(document.fonts&&!document.fonts.check(cs.fontSize+" "+cs.fontFamily,w.textContent))return setTimeout(function(){fitWd(el)},500);var c=document.createElement("canvas").getContext("2d");c.font=cs.fontSize+" "+cs.fontFamily;var asc=c.measureText(w.textContent).actualBoundingBoxAscent;
   w.style.paddingTop="0px";var m=document.createElement("span");m.style.cssText="display:inline-block;width:0;height:0;vertical-align:baseline";w.appendChild(m);var base=m.getBoundingClientRect().top,card=el.getBoundingClientRect().top;m.remove();
   var need=Math.ceil(asc+parseFloat(cs.fontSize)*.4-(base-card));w.style.paddingTop=Math.max(0,need)+"px";wdKey=k}catch(e){}})}
 var last="",dKey="",FM={};
