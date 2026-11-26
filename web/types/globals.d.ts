@@ -63,6 +63,7 @@ declare var __openSetup: any;
 declare var __openSurahN: any;
 declare var __openTools: any;
 declare var __pickQari: any;
+declare var __placeDayArc: any;
 declare var __pv: any;
 declare var __qLocal: any;
 declare var __qMeta: any;
