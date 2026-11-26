@@ -75,6 +75,7 @@ declare var __renderDayArc: any;
 declare var __setFS: any;
 declare var __setView: any;
 declare var __shareImg: any;
+declare var __shareWird: any;
 declare var __showAlarm: any;
 declare var __skyCard: any;
 declare var __skyDraw: any;

@@ -38,9 +38,7 @@ function build(){ov=document.createElement("div");ov.className="st";ov.setAttrib
   const a=e.target.closest(".st-tabs a");if(a){e.preventDefault();ov.querySelector(a.getAttribute("href")).scrollIntoView({behavior:"smooth",block:"start"})}});
  ov.querySelector("#stVib").onchange=e=>{put("wird-vib",e.target.checked?"1":"0")};
  ov.querySelector(".st-add").onclick=addAll;
- ov.querySelector(".ab-share").onclick=async()=>{const u="https://wird-azkar.pages.dev",t="وِرد: أذكار وقرآن ومواقيت الصلاة، مجاني من غير إعلانات";
-  try{if(navigator.share){await navigator.share({title:"وِرد",text:t,url:u});return}}catch(e){if(e&&e.name==="AbortError")return}
-  try{await navigator.clipboard.writeText(t+"\n"+u);toast("نُسخ رابط وِرد، أرسله لمن تحب")}catch(e){toast(u)}};
+ ov.querySelector(".ab-share").onclick=()=>window.__shareWird();
  ov.querySelector(".st-reset").onclick=()=>{(window.__wConfirm?__wConfirm:function(m){return Promise.resolve(confirm(m))})("حذف كل العدّ والإحصائيات؟\nستُحذف من هذا الجهاز ولا يمكن استرجاعها.",{ok:"حذف",danger:true}).then(y=>{if(!y)return;Object.keys(localStorage).filter(k=>/^wird-(day|progress|history|tasbih|counter)$/.test(k)).forEach(k=>localStorage.removeItem(k));location.reload()})};
  document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!ov.hidden)close()})}
 function apply(g,v){if(g==="theme"){const tb=document.getElementById("themeBtn");for(let i=0;i<3&&themeNow()!==v;i++)tb&&tb.click()}

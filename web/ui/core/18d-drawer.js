@@ -8,7 +8,7 @@
  /* القائمة الجانبية الجديدة */
  const act={home:()=>__wirdGo("home"),library:()=>__wirdGo("library"),mushaf:()=>__wirdGo("mushaf"),tasbih:()=>__wirdGo("tasbih"),prayer:()=>__wirdGo("prayer"),hijri:()=>__openHijri(),qibla:()=>__openQibla(),duas:()=>__openDuas(),hajj:()=>__openHajj(),names:()=>__openNames(),bm:()=>__openBookmarks(),alarm:()=>window.__openAlarm&&__openAlarm(),khatma:()=>{__wirdGo("mushaf");setTimeout(()=>{const k=document.querySelector("#mushafView .kh");k&&k.scrollIntoView({block:"start",behavior:"smooth"})},300)},search:()=>__openSearch(),adhan:()=>__openAdhanSettings(),set:()=>__openSettings(),install:()=>__wirdInstall(),
   update:()=>{__openSettings();setTimeout(()=>{const b=document.getElementById("updChk");if(b){b.scrollIntoView({block:"center"});b.click()}},400)},
-  share:()=>{if(navigator.share)navigator.share({title:"وِرد",text:"📿 وِرد — أذكار الصباح والمساء والقرآن ومواقيت الصلاة وتنبيه الأذان. مجاني وبدون إعلانات، افتح الرابط وثبّته على شاشتك:",url:"https://wird-azkar.pages.dev/?i=1"}).catch(()=>{});else{navigator.clipboard&&navigator.clipboard.writeText("https://wird-azkar.pages.dev");T("تم نسخ الرابط")}}};
+  share:()=>window.__shareWird()};
  const G=[["",[["الرئيسية","home"],["الأذكار والأدعية","library"],["المصحف الشريف","mushaf"],["السبحة","tasbih"],["مواقيت الصلاة","prayer"]]],["الصلاة",[["اتجاه القبلة","qibla"],["التقويم الهجري","hijri"],["منبّه الفجر","alarm"]]],["القرآن",[["الختمة","khatma"],["آياتي المحفوظة","bm"]]],["الأذكار",[["الحج والعمرة","hajj"],["أسماء الله الحسنى","names"]]],["التطبيق",[["التنبيهات","adhan"],["الإعدادات","set"],["تحقّق من التحديث","update"],["تثبيت التطبيق","install"],["شارك وِرد مع غيرك","share"]]]];
  const hijriToday=()=>{try{return new Intl.DateTimeFormat("ar-SA-u-ca-islamic-umalqura",{day:"numeric",month:"long"}).format(new Date())}catch(e){return""}};
  const drawer=()=>{document.querySelectorAll(".dr-ov").forEach(x=>x.remove());const sa=matchMedia("(display-mode: standalone)").matches||navigator.standalone;const view=document.documentElement.dataset.view||"home";
@@ -24,6 +24,10 @@
   o.addEventListener("click",e=>{if(e.target===o||e.target.closest("[data-x]")){close();return}const b=e.target.closest("[data-n]");if(b){const k=b.dataset.n;close(()=>{try{act[k]()}catch(x){}})}});
   o.addEventListener("keydown",e=>{if(e.key==="Escape")close()});document.body.appendChild(o);setTimeout(()=>{const f=o.querySelector(".dr-i2.on")||o.querySelector(".dr-i2");f&&f.focus({preventScroll:true})},60)};
  window.__openDrawer=drawer;
+ /* مشاركة وِرد: كلام بسيط زي ما واحد بيبعت لصاحبه، من غير رموز ولا دعاية. واحدة بس للقائمة والإعدادات */
+ window.__shareWird=async()=>{const u="https://wird-azkar.pages.dev",t="وِرد: أذكار الصباح والمساء، والمصحف، ومواقيت الصلاة مع الأذان.";
+  try{if(navigator.share){await navigator.share({title:"وِرد",text:t,url:u});return}}catch(e){if(e&&e.name==="AbortError")return}
+  try{await navigator.clipboard.writeText(t+"\n"+u);T("اتنسخ الرابط، ابعته لمين ما تحب")}catch(e){T(u)}};
  const hook=()=>{const m=document.getElementById("menuBtn");if(m&&m.onclick!==drawer)m.onclick=drawer;fixTiles();const st=document.getElementById("searchBtn");if(st&&!st.dataset.f){st.dataset.f=1}};
  hook();__wOnDom(()=>{clearTimeout(hook.t);hook.t=setTimeout(hook,100)});
 })();
