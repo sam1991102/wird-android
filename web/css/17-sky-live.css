@@ -47,7 +47,7 @@
 .w-sky.sk-off *,.w-sky.sk-off *::after{animation-play-state:paused!important}
 @media (prefers-reduced-motion:reduce){.w-sky .sk-fx i,.w-sky .sk-fx::after,.w-sky .sk-clouds{animation:none!important}}
 /* ظل خفيف للكلام زي تطبيق الطقس: يفضل مقروء لو سحابة عدّت وراه */
-.w-sky .sk-info{text-shadow:0 1px 6px rgba(6,12,30,.35)}
+.w-sky .sk-info{text-shadow:var(--sk-ts)}
 
 /* كارت الصلاة القادمة: طبقة السما ورا المحتوى */
 .w-skyl{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;border-radius:inherit}
@@ -57,3 +57,18 @@
 .pc2 .prayer-head.w-sky{background:none!important;overflow:hidden;color:var(--on-dark);text-shadow:0 1px 6px color-mix(in srgb,var(--shade) 35%,transparent)}
 /* شارة الجو تحت زرار الإعدادات */
 .pc2 .prayer-head.w-sky .sk-wx{top:calc(var(--s24) + 44px);left:var(--s24)}
+
+/* أذكار اليوم جوه مشهد السماء (ui/19-home.js بينقل #homeAlerts جوه #skyCard): نفس السماء ونفس الشمس */
+#skyCard #homeAlerts{position:relative;margin:0;padding:0 var(--s12) var(--s20);max-width:none;width:auto;text-shadow:var(--sk-ts)}
+#skyCard .da-card{background:none!important;padding:var(--s6) 0 0;border-radius:0;
+ --da-ink:var(--on-dark);--da-mute:color-mix(in srgb,var(--on-dark) 68%,transparent);--da-gold:var(--gold)}
+#skyCard .da-card::before{display:none}
+/* شمس واحدة: بالنهار الشمس بتمشي على قوس اليوم نفسه (مكانها حسب الساعة)، فبنخفي شمس السماء اللي فوق. بالليل القمر بيفضل فوق */
+#skyCard{--sun-core:#fff4cf;--sun-glow:rgba(255,190,90,.85);--sk-ts:0 1px 6px rgba(6,12,30,.35)}
+#skyCard:has(#homeAlerts) .sk-scene .sk-sun{display:none}
+#skyCard .da-sun{r:9px;fill:var(--sun-core,var(--on-dark));filter:drop-shadow(0 0 6px var(--sun-glow,var(--on-dark))) drop-shadow(0 0 14px var(--sun-glow,var(--on-dark)))}
+/* «الآن» فوق سماء فاتحة: الدهبي مش واضح، فالاسم بالأبيض العريض والدهبي للأيقونة بس */
+#skyCard .da-lb.is-now b,#skyCard .da-lb.is-now small{color:var(--on-dark)}
+#skyCard .da-svg{overflow:visible}/* محطة النوم على طرف القوس: هالتها ما تتقصّش */
+#skyCard .da-hd{margin-inline:var(--s8)}
+#skyCard .da-go{width:calc(100% - var(--s16));margin-inline:var(--s8)}

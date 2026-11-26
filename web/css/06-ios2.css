@@ -40,7 +40,7 @@ html.ios .topbar .icon-btn{color:var(--primary)!important;background:transparent
 html.ios .topbar .icon-btn svg{stroke:currentColor!important;color:currentColor!important}
 html:not(.dark):not(.ios) .dr2 .dr-brand img{filter:brightness(.72) saturate(1.4)}
 .wp-page.in{transform:none!important}
-#skyCard .sk-wd{display:inline-block;padding-top:.32em;line-height:1.35}
+#skyCard .sk-wd{display:inline-block;padding-top:.6em;line-height:1.35}
 .sh-page .st-sec .st-row,.sh-page .st-sec .st-note,.sh-page .st-sec>p{padding-left:var(--s16)!important;padding-right:var(--s16)!important;box-sizing:border-box}
 .sh-page .st-sec{overflow:hidden}
 html.ios .st-sw span::after{display:none!important}

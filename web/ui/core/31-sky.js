@@ -65,7 +65,7 @@ function stars(){var h="";for(var i=0;i<26;i++){var x=(i*37%97)+1.5,y=(i*53%70)+
 function build(){var hero=document.querySelector("section.hero");if(!hero)return null;var el=document.getElementById("skyCard");if(el)return el;
  el=document.createElement("section");el.className="container sky-card";el.id="skyCard";el.dataset.v="home";el.setAttribute("aria-label","حالة السماء والصلاة القادمة");
  el.innerHTML='<div class="sk-bg"></div><div class="sk-scene"></div><div class="sk-clouds" aria-hidden="true"></div><div class="sk-info"><div class="sk-day"><b class="sk-wd"></b><small class="sk-city"></small></div><div class="sk-dates"><div><b class="sk-hj"></b><small class="sk-hy"></small></div><div><b class="sk-gr"></b><small class="sk-gy"></small></div></div><a class="sk-next" href="#prayer"><span class="sk-np"></span><b class="sk-cd"></b></a><div class="sk-meta"><span class="sk-label"></span><span class="sk-period"></span></div></div>';
- hero.parentNode.insertBefore(el,hero);return el}
+ hero.parentNode.insertBefore(el,hero);window.__placeDayArc&&__placeDayArc();return el}
 var last="",dKey="",FM={};
 /* بنكتب النص بس لو اتغيّر (الكتابة بتعيد رسم الكارت) */
 function put(el,sel,v){var e=el.querySelector(sel);if(e&&e.textContent!==v)e.textContent=v}

@@ -30,7 +30,9 @@ var ac0=document.getElementById("ayCard"),ays=ac0&&ac0.children.length>1?[]:find
 var ac=card(ays);
 var al=document.getElementById("homeAlerts");if(!al){al=document.createElement("section");al.id="homeAlerts";al.className="container";al.dataset.v="home";al.setAttribute("aria-label","أذكار اليوم");window.__renderDayArc&&__renderDayArc(al)}
 var prev=tsec&&tsec.parentNode===main?tsec:null;
-[al,ac].forEach(function(x){var want=prev?prev.nextSibling:main.firstChild;if(x!==want)main.insertBefore(x,want);prev=x});
+/* أذكار اليوم بتتحط جوه مشهد السماء لو موجود (window.__placeDayArc تحت)، وإلا مكانها العادي */
+var sky=document.getElementById("skyCard");if(sky&&al.parentElement!==sky)sky.appendChild(al);
+(sky?[ac]:[al,ac]).forEach(function(x){var want=prev?prev.nextSibling:main.firstChild;if(x!==want)main.insertBefore(x,want);prev=x});
 R.classList.add("home-v2")}
 function run(){order()}
 /* يعيد الترتيب كل ما محتوى الرئيسية يتغيّر (الحديث مثلًا بيوصل متأخر) — الترتيب نفسه ما بيحرّكش حاجة لو كل شيء في مكانه */
@@ -67,7 +69,11 @@ function render(box){if(!box)return;var t=null;try{t=prayerDay(0).t}catch(e){}
  var curS=st.filter(function(x){return x.k===cur})[0],fri=new Date().getDay()===5;
  var sky=night?"sky-night":now>=t.asr?"sky-sunset":"sky-dawn";
  box.innerHTML='<div class="da-card '+sky+'"><div class="da-hd"><h2>أذكار اليوم</h2>'+(fri?'<button type="button" class="da-kahf" data-sura="18"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">'+IC.book+'</svg>سورة الكهف</button>':"")+'</div>'+g+labels+'<button type="button" class="da-go" data-k="'+cur+'">'+(cur==="duha"?"حان وقت صلاة الضحى":"ابدأ أذكار "+curS.n)+'</button></div>';
- box.dataset.min=Math.floor(now*60);box._st=st}
+ box.dataset.min=Math.floor(now*60);box._st=st;
+ place()}
+/* القوس جزء من مشهد السماء نفسه: نفس السماء ونفس الشمس، مش بطاقة منفصلة. كارت السماء بيتبني بعدين، فبنتأكد مع كل تغيير في الصفحة */
+function place(){var box=document.getElementById("homeAlerts"),sky=document.getElementById("skyCard");if(box&&sky&&box.parentElement!==sky)sky.appendChild(box)}
+window.__placeDayArc=place;place();
 function open(k){var box=document.getElementById("homeAlerts"),x=(box&&box._st||[]).filter(function(s){return s.k===k})[0];if(!x)return;var id=cat(x.rx);if(!id&&k==='duha'){var g=box.querySelector('.da-go');if(g){g.textContent='صلاة الضحى: من ارتفاع الشمس حتى قبيل الظهر';g.classList.add('is-note')}return}try{openFocus(id||k)}catch(e){}}
 document.addEventListener("click",function(e){var el=e.target.closest&&e.target.closest("#homeAlerts [data-k],#homeAlerts [data-sura]");if(!el)return;if(el.dataset.sura){window.__openSurahN&&__openSurahN(+el.dataset.sura,el,{side:true});return}open(el.dataset.k)});
 document.addEventListener("keydown",function(e){if(e.key!=="Enter"&&e.key!==" ")return;var el=e.target.closest&&e.target.closest("#homeAlerts .da-st");if(el){e.preventDefault();open(el.dataset.k)}});
