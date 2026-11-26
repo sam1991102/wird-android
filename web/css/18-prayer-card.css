@@ -5,7 +5,8 @@
 .pc2 .prayer-head.pc-v2>.pc-main{display:flex;flex-direction:column;align-items:center}
 .pc-v2 #prayerTitle{display:contents}
 .pc-v2 .eyebrow{order:1;margin:0;opacity:.9}
-.pc2 .prayer-head.pc-v2 #nextName{order:2;font-size:calc(var(--t-4xl) * 1.4);line-height:1.1;margin-top:var(--s2)}
+/* خط اللمسة حروفه العالية (الفاء والألف) بتطلع فوق السطر: مسافة ثابتة فوقه عشان متركبش على «الصلاة القادمة» */
+.pc2 .prayer-head.pc-v2 #nextName{order:2;font-size:calc(var(--t-4xl) * 1.4);line-height:1.35;padding-top:.45em;margin-top:0}
 .pc-v2 #prayerTitle small{display:none}
 .pc2 .prayer-head.pc-v2 .ph-at{order:3;margin:0;font-size:var(--t-3xl);font-weight:800;color:var(--on-dark);font-variant-numeric:tabular-nums}
 /* المتبقي: نفس عنصر العدّاد، في شريحة زجاج */
@@ -18,6 +19,8 @@
 .pc-v2 #prayerSettingsBtn{top:var(--s12);inset-inline-end:auto;left:var(--s12);width:36px;height:36px;padding:0!important;display:grid;place-items:center;font-size:0!important;border-radius:var(--rd-pill);color:var(--on-dark)!important;background:color-mix(in srgb,var(--on-dark) 16%,transparent)!important;border:1px solid color-mix(in srgb,var(--on-dark) 22%,transparent)!important}
 .pc-v2 #prayerSettingsBtn svg{width:18px;height:18px}
 .pc2 .prayer-head.pc-v2.w-sky .sk-wx{top:var(--s16);left:60px}
+/* القمر تحت شريحة الجو على الشمال، بعيد عنها وعن العنوان */
+.pc2 .prayer-head.pc-v2 .sk-moon{left:var(--s20);top:68px;width:56px;height:56px}
 
 /* القوس والكثبان */
 .pc-arc{position:absolute;inset:0;width:100%;height:100%;z-index:3}

@@ -40,13 +40,15 @@ function sunEl(f,s){f=Math.max(0,Math.min(1,f));var x=86-74*f,y=96-74*Math.sin(M
  return'<div class="sk-sun sk-'+s+'" style="left:'+x.toFixed(1)+'%;top:'+y.toFixed(1)+'%"><i></i></div>'}
 /* القمر: صورة بدر حقيقية (Pixabay، رخصة Pixabay Content License، site/moon.jpg) والإضاءة حسب طور القمر الحقيقي.
    الجزء المضلم بيبان خافت جدًا زي ضوء الأرض الحقيقي، والخط بين النور والضلمة ناعم. */
-function moonSVG(d){var k=(1-Math.cos(2*Math.PI*d/29.53))/2,wax=d<=15,r=40,c=44;var rx=(Math.abs(1-2*k)*r).toFixed(2);
+/* كل قمر بـ ids خاصة بيه: القمر بيترسم في كارت الرئيسية والمواقيت، ولو اتكرر الـ id المتصفح بياخد أول واحد (المخفي) والقمر يطلع مربع */
+var mN=0;
+function moonSVG(d){var u="skM"+(++mN),k=(1-Math.cos(2*Math.PI*d/29.53))/2,wax=d<=15,r=40,c=44;var rx=(Math.abs(1-2*k)*r).toFixed(2);
  var lit="M"+c+" "+(c-r)+" A"+r+" "+r+" 0 0 "+(wax?1:0)+" "+c+" "+(c+r)+" A"+rx+" "+r+" 0 0 "+((k>0.5)===wax?1:0)+" "+c+" "+(c-r)+"Z";
  var img='<image href="/moon.jpg" x="'+(c-r)+'" y="'+(c-r)+'" width="'+2*r+'" height="'+2*r+'" preserveAspectRatio="xMidYMid slice"/>';
  return'<svg class="sk-moon" viewBox="0 0 88 88" aria-hidden="true"><defs>'+
-  '<clipPath id="skMc"><circle cx="'+c+'" cy="'+c+'" r="'+r+'"/></clipPath>'+
-  '<filter id="skMt"><feGaussianBlur stdDeviation="1.2"/></filter><mask id="skMm"><rect width="88" height="88" fill="#000"/><path d="'+lit+'" fill="#fff" filter="url(#skMt)"/></mask></defs>'+
-  '<g clip-path="url(#skMc)"><g opacity=".05">'+img+'</g><g mask="url(#skMm)">'+img+'</g></g></svg>'}
+  '<clipPath id="'+u+'c"><circle cx="'+c+'" cy="'+c+'" r="'+r+'"/></clipPath>'+
+  '<filter id="'+u+'t"><feGaussianBlur stdDeviation="1.2"/></filter><mask id="'+u+'m"><rect width="88" height="88" fill="#000"/><path d="'+lit+'" fill="#fff" filter="url(#'+u+'t)"/></mask></defs>'+
+  '<g clip-path="url(#'+u+'c)"><g opacity=".05">'+img+'</g><g mask="url(#'+u+'m)">'+img+'</g></g></svg>'}
 var PHN=function(d){return d<=1||d>=29?"محاق":d<7?"هلال":d<9?"تربيع أول":d<14?"أحدب متزايد":d<=16?"بدر":d<22?"أحدب متناقص":d<24?"تربيع ثانٍ":"هلال آخر الشهر"};
 function stars(){var h="";for(var i=0;i<26;i++){var x=(i*37%97)+1.5,y=(i*53%70)+3,s=(i%3)*.5+1;h+='<b style="left:'+x+'%;top:'+y+'%;width:'+s+'px;height:'+s+'px;animation-delay:'+(i%7)*.6+'s"></b>'}return'<div class="sk-stars">'+h+'</div>'}
 function build(){var hero=document.querySelector("section.hero");if(!hero)return null;var el=document.getElementById("skyCard");if(el)return el;
