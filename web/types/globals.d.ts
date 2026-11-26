@@ -31,6 +31,8 @@ declare var __mpBlk: any;
 declare var __mpEdge: any;
 declare var __mpFlip: any;
 declare var __mpReplay: any;
+declare var __mushafJuz: any;
+declare var __mushafLeaf: any;
 declare var __mvResolve: any;
 declare var __nearMethod: any;
 declare var __nextPrayer: any;

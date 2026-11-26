@@ -19,6 +19,7 @@ var TXT={};function sura(s){return TXT[s]?Promise.resolve(TXT[s]):fetch("/mushaf
 function onPage(m,p){var out=[];for(var s=0;s<114;s++){var P=m.p[s];if(!P||P[0]>p||P[P.length-1]<p)continue;for(var a=0;a<P.length;a++)if(P[a]===p)out.push([s+1,a+1])}return out}
 function leafText(p){return meta().then(function(m){var v=onPage(m,p);if(!v.length)return{s:0,t:""};var s=v[0][0];
  return sura(s).then(function(d){return{s:s,a:v[0][1],t:v.filter(function(x){return x[0]===s}).map(function(x){return(d[x[1]-1]||"")+" ۝"}).join(" ")}}).catch(function(){return{s:s,a:v[0][1],t:""}})}).catch(function(){return{s:0,t:""}})}
+window.__mushafLeaf=leafText;window.__mushafJuz=juzOf;
 function when(t){if(!t)return"";var d=new Date(+t),n=new Date(),y=new Date(n);y.setDate(n.getDate()-1);
  var hm=d.getHours()%12||12,mm=String(d.getMinutes()).padStart(2,"0"),ap=d.getHours()<12?"ص":"م",tm=ar(hm+":"+mm)+" "+ap;
  return d.toDateString()===n.toDateString()?"اليوم "+tm:d.toDateString()===y.toDateString()?"أمس "+tm:ar(d.getDate()+"/"+(d.getMonth()+1))}

@@ -1,6 +1,6 @@
 /* ===== صفحة المصحف: «المصحف المفتوح» — نفس التصوّر المعتمد بالظبط (ui/core/42-mushaf-home.js) ===== */
-#mushafView.mh{--mh-paper:#fbf8f0;--mh-frame:#c9a85c;--mh-done:var(--primary);padding:0;width:100%;max-width:560px;margin:calc(var(--s14) * -1) auto 0}
-html.dark #mushafView.mh{--mh-paper:#16201b;--mh-frame:#9d8344}
+#mushafView.mh,.qk{--mh-paper:#fbf8f0;--mh-frame:#c9a85c;--mh-ink:#3b311f;--mh-done:var(--primary);padding:0;width:100%;max-width:560px;margin:calc(var(--s14) * -1) auto 0}
+html.dark #mushafView.mh,html.dark .qk{--mh-paper:#16201b;--mh-frame:#9d8344;--mh-ink:#d9cfb6}
 #mushafView.mh button{font:inherit;cursor:pointer}
 /* المسرح الغامق والمصحف المفتوح */
 .mh-stage{background:var(--deep);padding:18px 18px 22px;position:relative;border-radius:0 0 28px 28px}
@@ -90,3 +90,12 @@ html.dark .mh-kx-pages i{background:#16201b;border-color:#9d8344}
 .mh-kx-grid span.d{background:var(--primary);border-color:var(--primary);color:#ffffffc0}.mh-kx-grid span.c{background:var(--gold);border-color:var(--gold);color:#fff}
 .mh-kx-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.mh-kx-row .btn:only-child{grid-column:1/-1}
 .mh-kx-stop{border:1px solid color-mix(in srgb,var(--danger) 40%,transparent);background:color-mix(in srgb,var(--danger) 8%,transparent);color:var(--danger-ink);border-radius:14px;padding:12px;font-weight:800;font-size:14px}
+/* بطاقة «تابع القراءة» في الرئيسية (ui/core/33-mushaf-card.js): ورقة صغيرة من الصفحة اللي وقفت عندها بنفس ورق وإطار المصحف المفتوح */
+.qk .qk-cont{display:grid;grid-template-columns:1fr auto;grid-template-areas:"leaf leaf" "meta go";gap:var(--s12);padding:var(--s12)}
+.qk .qk-leaf{grid-area:leaf;display:none;background:var(--mh-paper);color:var(--mh-ink);border:1px solid var(--mh-frame);outline:1px solid var(--mh-frame);outline-offset:-5px;border-radius:var(--rd-s);padding:var(--s12) var(--s16)}
+.qk .qk-leaf.on{display:block}
+.qk .qk-ln{display:block;font-family:var(--font-text);font-size:var(--t-md);line-height:2;text-align:center}
+.qk .qk-meta{grid-area:meta;display:flex;flex-direction:column;gap:var(--s4);min-width:0}
+.qk .qk-prog{display:block;height:4px;border-radius:var(--rd-pill);background:color-mix(in srgb,var(--on-dark) 22%,transparent);overflow:hidden;margin-top:var(--s4)}
+.qk .qk-prog i{display:block;height:100%;background:var(--gold);border-radius:inherit}
+.qk .qk-go{grid-area:go;align-self:center;font-size:var(--t-sm);font-weight:700;padding:var(--s6) var(--s14);border-radius:var(--rd-pill);background:var(--gold);color:var(--brand)}

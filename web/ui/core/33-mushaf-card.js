@@ -15,8 +15,15 @@ function ensure(){if(el)return el;el=document.createElement("div");el.className=
 function top(){ensure();var last=+G("wird-mushaf-page",0),sura=G("wird-mushaf-sura",""),off=G("wird-mushaf-offline","")==="1";
  var h='<div class="qk-h"><h2>المصحف</h2><button type="button" class="qk-dl'+(off?" ok":"")+'" data-q="dl" '+(off?"disabled":"")+'>'+(dl.on?"جارٍ التحميل "+AR(dl.n)+" من ٦٠٤ · إيقاف":off?"متاح بدون إنترنت ✓":"تحميل للقراءة بدون إنترنت")+'</button></div>';
  if(dl.on)h+='<div class="qk-bar"><i style="width:'+(dl.n/6.04)+'%"></i></div>';
- if(last)h+='<button type="button" class="qk-cont" data-q="cont"><span><b>أكمل القراءة</b><small>'+(sura?"سورة "+sura+" · ":"")+"صفحة "+AR(last)+'</small></span><span class="qk-go" aria-hidden="true">←</span></button>';
- tp.innerHTML=h}
+ /* «تابع القراءة»: سطر من الصفحة نفسها بخط المصحف (لو نصها متاح) + السورة والصفحة والجزء + مكانك في المصحف كله */
+ if(last){var jz=window.__mushafJuz?__mushafJuz(last):0;
+  h+='<button type="button" class="qk-cont" data-q="cont"><span class="qk-leaf" aria-hidden="true"><span class="qk-ln"></span></span>'+
+   '<span class="qk-meta"><b>'+(sura?"سورة "+sura:"أكمل القراءة")+'</b><small>صفحة '+AR(last)+(jz?" · الجزء "+AR(jz):"")+'</small>'+
+   '<span class="qk-prog" role="img" aria-label="'+AR(Math.round(last/6.04))+'٪ من المصحف"><i style="width:'+(last/6.04).toFixed(1)+'%"></i></span></span>'+
+   '<span class="qk-go" aria-hidden="true">تابع</span></button>'}
+ tp.innerHTML=h;
+ if(last&&window.__mushafLeaf)__mushafLeaf(last).then(function(r){var ln=tp.querySelector(".qk-ln");if(!ln||!r||!r.t)return;
+  ln.textContent=r.t.split(/\s+/).slice(0,14).join(" ")+"…";ln.parentNode.classList.add("on")})}
 function place(){ensure();var v=document.documentElement.dataset.view||"home",kh=document.getElementById("khatma");if(kh&&kh.parentNode!==el)el.appendChild(kh);
  var mv=document.getElementById("mushafView"),hp=document.getElementById("homePlus")||document.querySelector(".hero");
  if(hp&&el.previousElementSibling!==hp){hp.after(el);el.classList.add("container")}
