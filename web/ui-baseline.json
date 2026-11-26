@@ -79,10 +79,6 @@
   "observer": 1,
   "interval": 0
  },
- "core/17-perms-install.js": {
-  "observer": 1,
-  "interval": 0
- },
  "core/20-theme-auto.js": {
   "observer": 1,
   "interval": 0
@@ -91,7 +87,7 @@
   "observer": 3,
   "interval": 0
  },
- "core/25-hajj-ruqya.js": {
+ "core/25b-library-groups.js": {
   "observer": 3,
   "interval": 0
  },
