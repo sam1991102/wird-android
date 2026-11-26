@@ -15,12 +15,17 @@ function load(){var o={};try{o=JSON.parse(localStorage.getItem(K))||{}}catch(e){
 function save(o){try{localStorage.setItem(K,JSON.stringify(o))}catch(e){}}
 var S=load(),el=null;
 function total(){var t=0;for(var k in S.c)t+=S.c[k];return t}
-function ring(p){var r=34,c=2*Math.PI*r;return'<svg class="rt-ring" viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="'+r+'" class="rt-tr"/><circle cx="40" cy="40" r="'+r+'" class="rt-pr" stroke-dasharray="'+c.toFixed(1)+'" stroke-dashoffset="'+(c*(1-Math.min(p,1))).toFixed(1)+'"/></svg>'}
+/* حبّات سبحة (٣٣ حبّة) حوالين العدّاد: كل ضغطة بتنوّر حبّة، والحبّة اللي اتعدّت دلوقتي بتلمع لحظة.
+   بعد ٣٣ بتبدأ لفّة جديدة، والرقم في النص هو العدد الكلي. فوق: «الإمام» (الحبّة الطويلة) علامة البداية. */
+function beads(n){var N=33,R=35,lit=n>0?((n-1)%N)+1:0,o='<svg class="rt-ring" viewBox="0 0 80 80" aria-hidden="true"><rect class="rt-imam" x="38" y="-1.5" width="4" height="7" rx="2"/>';
+ for(var k=0;k<N;k++){var a=(k+.5)/N*2*Math.PI-Math.PI/2,x=40+R*Math.cos(a),y=40+R*Math.sin(a);
+  o+='<circle cx="'+x.toFixed(2)+'" cy="'+y.toFixed(2)+'" r="2.7" class="rt-b'+(k<lit?" on":"")+(k===lit-1?" now":"")+'"/>'}
+ return o+'</svg>'}
 function draw(){if(!el)return;S=load();var i=S.i%L.length,x=L[i],n=S.c[i]||0;
  el.innerHTML='<div class="rt-h"><h2 class="rt-k">اجعل لسانك رطبًا بذكر الله</h2><span class="rt-day">اليوم <b>'+AR(total())+'</b></span></div>'+
  '<p class="rt-t" aria-live="polite">'+x.t+'</p><p class="rt-f">'+x.f+(x.s?' <span>· '+x.s+'</span>':'')+'</p>'+
  '<div class="rt-row"><button type="button" class="rt-nav" data-r="prev" aria-label="الذكر السابق"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>'+
- '<button type="button" class="rt-tap" data-r="tap" aria-label="سبّح، العدد '+AR(n)+' من '+AR(x.g)+'">'+ring(n/x.g)+'<span class="rt-n">'+AR(n)+'</span><small>من '+AR(x.g)+'</small></button>'+
+ '<button type="button" class="rt-tap" data-r="tap" aria-label="سبّح، العدد '+AR(n)+' من '+AR(x.g)+'">'+beads(n)+'<span class="rt-n">'+AR(n)+'</span><small>من '+AR(x.g)+'</small></button>'+
  '<button type="button" class="rt-nav" data-r="next" aria-label="الذكر التالي"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button></div>'+
  '<div class="rt-dots" aria-hidden="true">'+L.map(function(_,k){return'<i'+(k===i?' class="on"':'')+'></i>'}).join("")+'</div>'+
  '<p class="rt-src">«لا يزالُ لسانُك رطبًا من ذكرِ الله» · الترمذي وابن ماجه</p>'}

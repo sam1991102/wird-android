@@ -44,10 +44,10 @@ html.rt-on .sk-dhikr{display:none}
 .rt-nav svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .rt-tap{position:relative;width:104px;height:104px;border-radius:50%;border:0;background:var(--chip-bg);color:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .12s ease}
 .rt-tap:active{transform:scale(.95)}
-.rt-ring{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
-.rt-ring circle{fill:none;stroke-width:4}
-.rt-tr{stroke:var(--line)}
-.rt-pr{stroke:var(--gold-ink);stroke-linecap:round;transition:stroke-dashoffset .25s ease}
+
+
+
+
 .rt-n{position:relative;font:700 1.7rem/1 var(--font-ui)}
 .rt-tap small{position:relative;font-size:var(--t-xs);color:var(--ink-2);margin-top:var(--s4)}
 .rt-nav:focus-visible,.rt-tap:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
@@ -55,7 +55,7 @@ html.rt-on .sk-dhikr{display:none}
 .rt-dots i{width:6px;height:6px;border-radius:50%;background:var(--line)}
 .rt-dots i.on{background:var(--gold);width:16px;border-radius:var(--rd-2xs)}
 .rt-src{margin:var(--s2) 0 0;font:400 .8rem/1.6 var(--font-text);color:var(--ink-2);opacity:.8}
-@media (prefers-reduced-motion:reduce){.rt-tap,.rt-pr{transition:none}}
+@media (prefers-reduced-motion:reduce){.rt-tap{transition:none}}
 /* رسالة التأكيد الموحّدة (بدل confirm بتاع النظام) */
 .w-dlg{position:fixed;inset:0;z-index:2147483640;display:flex;align-items:center;justify-content:center;padding:var(--s24);background:color-mix(in srgb,var(--shade) 50%,transparent);animation:wDlgIn .16s ease-out}
 .w-dlg.out{opacity:0;transition:opacity .15s}
@@ -106,3 +106,11 @@ html.rt-on .sk-dhikr{display:none}
 .oem-go{border:0;background:var(--primary);color:var(--on-dark)}
 .oem-done{border:1px solid var(--line);background:transparent;color:var(--ink)}
 .oem-b button:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+/* حبّات السبحة حوالين عدّاد «اجعل لسانك رطبًا» (ui/34-ratb.js ← beads) */
+.rt-ring{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.rt-b{fill:color-mix(in srgb,var(--ink) 16%,transparent);transition:fill .2s}
+.rt-b.on{fill:var(--gold-ink)}
+.rt-b.now{fill:var(--gold);transform-box:fill-box;transform-origin:center;animation:rtBead .45s ease-out}
+.rt-imam{fill:var(--gold-ink)}
+@keyframes rtBead{0%{transform:scale(1.9)}100%{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){.rt-b.now{animation:none}}
