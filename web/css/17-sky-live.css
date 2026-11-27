@@ -65,7 +65,7 @@
 #skyCard .da-card::before{display:none}
 /* شمس واحدة: بالنهار الشمس بتمشي على قوس اليوم نفسه (مكانها حسب الساعة)، فبنخفي شمس السماء اللي فوق. بالليل القمر بيفضل فوق */
 #skyCard{--sun-core:#fff4cf;--sun-glow:rgba(255,190,90,.85);--sk-ts:0 1px 6px rgba(6,12,30,.35)}
-#skyCard:has(#homeAlerts) .sk-scene .sk-sun{display:none}
+
 #skyCard .da-sun{r:9px;fill:var(--sun-core,var(--on-dark));filter:drop-shadow(0 0 6px var(--sun-glow,var(--on-dark))) drop-shadow(0 0 14px var(--sun-glow,var(--on-dark)))}
 /* «الآن» فوق سماء فاتحة: الدهبي مش واضح، فالاسم بالأبيض العريض والدهبي للأيقونة بس */
 #skyCard .da-lb.is-now b,#skyCard .da-lb.is-now small{color:var(--on-dark)}

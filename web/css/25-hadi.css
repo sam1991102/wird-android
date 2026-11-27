@@ -1,0 +1,47 @@
+/*hadi — مظهر «هادئ»: مدرسة تطبيق نسك بهوية وِرد. يتفعّل من الإعدادات ← نمط التصميم (html.hadi).
+  - خط IBM Plex Sans Arabic بأوزان خفيفة (٣٠٠–٦٠٠) بدل الوزن العريض.
+  - خلفية رمادية فاتحة جدًا وكروت بيضا بظل يكاد ما يبانش، واستدارة كبيرة (٢٤)، وأزرار وبحث مدوّرين بالكامل.
+  - شريط علوي فاتح بدل الأخضر المصمت، والأخضر بيظهر في حاجات قليلة بس.
+  - أيقونات بخط رفيع (Phosphor Light من ui/12-icons.js)، والتبويب المختار أيقونته مليانة بالدهبي.
+  السما في الرئيسية فاضلة زي ما هي: دي هوية وِرد. */
+@font-face{font-family:"Plex Arabic";font-weight:300;font-display:swap;src:url(/fonts/plex-arabic-300.woff2)format("woff2")}
+@font-face{font-family:"Plex Arabic";font-weight:400;font-display:swap;src:url(/fonts/plex-arabic-400.woff2)format("woff2")}
+@font-face{font-family:"Plex Arabic";font-weight:500;font-display:swap;src:url(/fonts/plex-arabic-500.woff2)format("woff2")}
+@font-face{font-family:"Plex Arabic";font-weight:600;font-display:swap;src:url(/fonts/plex-arabic-600.woff2)format("woff2")}
+html.hadi{--font-ui:"Plex Arabic",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;--rd-l:20px;--rd-xl:24px}
+html.hadi:not(.dark){
+ --bg:#f5f5f4;--paper:#ffffff;--paper-2:#f3f4f6;--card:#ffffff;
+ --ink:#222222;--ink-2:#384250;--muted:#6c737f;--line:#e5e7eb;--line-2:#eef0f2;
+ --brand:#32735c;--primary:#32735c;--primary-2:#32735c;--deep:#32735c;
+ --gold:#c5ac5f;--gold-2:#c5ac5f;--gold-ink:#8a6f24;
+ --chip-bg:#f3f4f6;--chip-ink:#384250;
+ --hd-bar:#ffffff;--hd-strip:#f8f4ef;--hd-btn:#f3f4f6;--hd-on:#c5ac5f;
+ --sh-1:0 1px 2px rgba(16,24,40,.04),0 1px 3px rgba(16,24,40,.03);--sh-2:0 8px 24px rgba(16,24,40,.06)}
+html.hadi.dark{--hd-bar:var(--bg);--hd-strip:var(--paper-2);--hd-btn:var(--paper-2);--hd-on:var(--gold)}
+
+/* الخط والأوزان: مفيش عريض، أقصى وزن ٦٠٠ */
+html.hadi body{font-family:var(--font-ui);font-weight:400;letter-spacing:0}
+html.hadi :is(b,strong,h1,h2,h3,h4,th,.btn){font-weight:600}
+html.hadi :is(h2,h3){font-weight:500}
+html.hadi small{font-weight:300}
+
+/* الشريط العلوي فاتح، والأزرار دواير رمادي فاتح */
+html.hadi .topbar{background:var(--hd-bar)!important;color:var(--ink)!important;box-shadow:none;border-bottom:1px solid var(--line)}
+html.hadi .topbar .brand,html.hadi .topbar .brand *{color:var(--primary)!important}
+html.hadi .topbar :is(.icon-btn,#menuBtn,#searchBtn){background:var(--hd-btn)!important;border-color:transparent!important;color:var(--ink-2)!important}
+html.hadi .topbar .tb-strip{background:var(--hd-strip)!important;color:var(--ink-2)!important;border-top:1px solid var(--line)}
+html.hadi .tb-strip .tb-np-k,html.hadi .tb-strip .tb-np-t{color:var(--muted)!important;border-color:var(--line)!important;font-weight:400}
+html.hadi .tb-strip .tb-np-n{color:var(--primary)!important;font-weight:600}
+html.hadi .tb-strip .tb-np-r{color:var(--ink)!important;font-weight:500}
+html.hadi .tb-strip svg{color:var(--muted)!important}
+
+/* الكروت: أبيض، استدارة ٢٤، ظل خفيف جدًا ومن غير إطار */
+html.hadi :is(.card,.cat-card,.tile,.kd-tile,.qk,.wp-card,.st-sec,.rd-grp,.mine-tile,.l2-shb){border-radius:var(--rd-xl)!important;box-shadow:var(--sh-1)!important;border-color:transparent!important}
+html.hadi :is(.btn,.chip,.da-go,.qk-go,input[type="search"],.search,.dr-search){border-radius:var(--rd-pill)!important}
+
+/* الشريط السفلي أبيض، الأيقونات رمادي والمختار دهبي مليان */
+html.hadi .bottom-nav.nav5{background:var(--hd-bar)!important;border-top:1px solid var(--line)!important}
+html.hadi .bottom-nav.nav5>*{color:var(--muted)!important;font-weight:400}
+html.hadi .bottom-nav.nav5>:is(.is-lit,.active){color:var(--ink)!important;font-weight:500}
+html.hadi .bottom-nav.nav5>:is(.is-lit,.active) .ni{color:var(--hd-on)!important}
+html.hadi .bottom-nav.nav5>:is(.is-lit,.active) .ni::before{display:none}

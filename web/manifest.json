@@ -74,6 +74,22 @@
    "type": "image/png"
   },
   {
+   "name": "fonts/plex-arabic-300.woff2",
+   "type": "font/woff2"
+  },
+  {
+   "name": "fonts/plex-arabic-400.woff2",
+   "type": "font/woff2"
+  },
+  {
+   "name": "fonts/plex-arabic-500.woff2",
+   "type": "font/woff2"
+  },
+  {
+   "name": "fonts/plex-arabic-600.woff2",
+   "type": "font/woff2"
+  },
+  {
    "name": "fonts/amiri-arabic-400-normal.woff2",
    "type": "font/woff2"
   },
@@ -308,6 +324,7 @@
   "20-dhikr.css",
   "21-mushaf-home.css",
   "23-motion.css",
-  "24-sage.css"
+  "24-sage.css",
+  "25-hadi.css"
  ]
 }

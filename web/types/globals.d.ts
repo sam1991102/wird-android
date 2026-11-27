@@ -20,6 +20,7 @@ declare var __en: any;
 declare var __fLock: any;
 declare var __goTab: any;
 declare var __hijriEvents: any;
+declare var __iconsRedraw: any;
 declare var __iqama: any;
 declare var __khTile: any;
 declare var __khatma: any;
