@@ -1,6 +1,6 @@
 
 /*skin-ios*/
-/* الإبداعي: خط النظام (خط الآيفون) في كل حاجة، ما عدا نص القرآن و«خط اللمسة» (اسم اليوم، «اجعل لسانك رطبًا»، عناوين الصفحات، صفحة الترحيب) */
+/* نمط الآيفون: خط النظام (خط الآيفون) في كل حاجة، ما عدا نص القرآن و«خط اللمسة» (اسم اليوم، «اجعل لسانك رطبًا»، عناوين الصفحات، صفحة الترحيب) */
 html.ios{--font-text:var(--font-ui);--font-deco:var(--font-ui);--font-kufi:var(--font-ui);--font-accent:"WirdNast","Amiri",serif}
 html.ios{--emerald-900:#14275E;--emerald-800:#1E3A8A;--emerald-700:#2A4AA3;--emerald-600:#3A5BA0;--emerald-100:#E3E8F5;--emerald-50:#F1F4FA;--gold:#1E3A8A;--gold-2:#1E3A8A;--gold-3:#1E3A8A;--gold-50:#E3E8F5;--bg:#F2F2F7;--paper:#FFFFFF;--paper-2:#FFFFFF;--ink:#000000;--ink-2:#3C3C43;--muted:rgba(60,60,67,.6);--line:rgba(60,60,67,.16);--line-2:rgba(60,60,67,.1);--primary:#1E3A8A;--primary-2:#2A4AA3;--accent:#1E3A8A;--on-dark:#fff;--on-dark-1:#fff;--on-dark-2:rgba(235,235,245,.82);--font-ui:system-ui,-apple-system,"SF Arabic","SF Pro Text","Segoe UI",Roboto,"Noto Sans Arabic",sans-serif;--sh-1:none;--sh-2:0 1px 2px rgba(0,0,0,.04);--sh-3:0 10px 30px rgba(0,0,0,.12)}
 html.ios.dark{--primary:#6B8BFF;--primary-2:#8AA3FF;--accent:#6B8BFF;--gold:#6B8BFF;--gold-2:#6B8BFF;--gold-3:#6B8BFF;--emerald-800:#6B8BFF;--emerald-700:#8AA3FF;--emerald-100:#1A2547;--emerald-50:#121829;--gold-50:#1A2547}
@@ -64,6 +64,6 @@ html.ios body::before,html.ios body::after,html.ios main::before{background-imag
 /* أسطح «البطل» الغامقة (رأس الصفحات، كارت الذكر الحالي، أيقونات الأدوات): ثابتة في الفاتح والليلي، ونصها ذهبي فاتح بدل الأزرق */
 html.ios,html.ios.dark{--hero-a:#2A4AA3;--hero-b:#14275E;--on-hero-acc:#F2CF83}
 
-/* الرموز الدلالية في «إبداعي»: الذهبي هنا كحلي، فالنص فوقه أبيض */
+/* الرموز الدلالية في «آيفون»: الذهبي هنا كحلي، فالنص فوقه أبيض */
 html.ios{--on-gold:#fff;--primary-ink:var(--primary)}
 html.ios.dark{--on-primary:#0A1020;--on-gold:#0A1020;--primary-ink:#AFC0FF;--danger-ink:#ff8a80}
