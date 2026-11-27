@@ -1,7 +1,7 @@
 
 #prayer .ph-at{margin:var(--s2) 0 var(--s6);font-size:var(--t-glyph);font-weight:700;color:var(--on-hero-acc);letter-spacing:.2px}
 
-/* نمط الآيفون الفاتح: شريط «الصلاة القادمة» بنفس لون الشريط العلوي بدل الرمادي */
+/* نمط «بسيط» الفاتح: شريط «الصلاة القادمة» بنفس لون الشريط العلوي بدل الرمادي */
 html.ios:not(.dark) .tb-strip{background:color-mix(in srgb,var(--primary) 6%,transparent)!important;border-top:1px solid color-mix(in srgb,var(--ink) 6%,transparent)}
 /* مساحة لمس كافية (٤٤ بكسل تقريبًا) للأزرار الصغيرة، من غير ما شكلها يتغيّر */
 .wp-reset{position:relative;min-width:36px;min-height:36px}
