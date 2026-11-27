@@ -39,7 +39,8 @@ html[data-vt-dir="back"]::view-transition-new(root){animation-name:vtInL}
 /* السما بتتحرك مع التمرير: القمر يطلع أبطأ والنجوم أبطأ منه، فيبان عمق */
 @supports (animation-timeline:scroll()){
  #skyCard .sk-moon{animation:skDrift linear both;animation-timeline:scroll(root);animation-range:0 420px}
- #skyCard .sk-stars{animation:skDrift2 linear both;animation-timeline:scroll(root);animation-range:0 420px}
+ /* الحركة بتخلّي طبقة النجوم هي المرجع لأماكن النجوم، فلازم تبقى بمقاس الكارت كله وإلا النجوم كلها تتلم في سطر فوق */
+ #skyCard .sk-stars{position:absolute;inset:0;pointer-events:none;animation:skDrift2 linear both;animation-timeline:scroll(root);animation-range:0 420px}
  @keyframes skDrift{to{translate:0 70px}}
  @keyframes skDrift2{to{translate:0 36px}}
  /* الشريط العلوي: ظل خفيف يظهر لما المحتوى يعدّي تحته */
