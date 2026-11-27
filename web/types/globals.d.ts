@@ -106,6 +106,7 @@ declare var __wirdGeo: any;
 declare var __wirdGo: any;
 declare var __wirdHardUpdate: any;
 declare var __wirdInstall: any;
+declare var __wirdLook: any;
 declare var __wirdNative: any;
 declare var __wirdPush: any;
 declare var __wirdReady: any;

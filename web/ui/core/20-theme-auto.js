@@ -13,7 +13,7 @@
  /* أزرار «تلقائي» و«الجهاز» جنب أزرار المظهر اليدوية في الإعدادات */
  const OPT=[["auto","تلقائي","تلقائي: فاتح من الشروق للمغرب، وليلي بعد المغرب"],["device","الجهاز","المظهر يتبع إعداد الهاتف (فاتح أو ليلي)"]];
  const paint=s=>{const m=mode(),man=m!=="auto"&&m!=="device";s.querySelectorAll("button").forEach(x=>{const v=x.dataset.v;const want=v==="auto"||v==="device"?String(v===m):(man?null:"false");if(want!==null&&x.getAttribute("aria-checked")!==want)x.setAttribute("aria-checked",want)})};
- const seg=()=>{const s=document.querySelector("#st-look .st-seg");if(!s||s.dataset.tm)return;s.dataset.tm=1;
+ const seg=()=>{const t0=document.querySelector('#st-look [data-seg="theme"]'),s=t0&&t0.parentElement;if(!s||s.dataset.tm)return;s.dataset.tm=1;
   let prev=null;OPT.forEach(([v,t,msg])=>{const b=document.createElement("button");b.type="button";b.setAttribute("role","radio");b.dataset.v=v;b.className="st-auto"+(v==="device"?" st-dev":"");b.textContent=t;
    if(prev)prev.after(b);else s.insertBefore(b,s.firstChild);prev=b;
    b.addEventListener("click",e=>{e.stopPropagation();ls("wird-theme-mode",v);ls("wird-dark",null);ls("wird-sepia",null);apply();paint(s);typeof toast==="function"&&toast(msg)})});
