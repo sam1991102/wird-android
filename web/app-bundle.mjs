@@ -24,6 +24,10 @@ for (const [name, [, body, bin]] of Object.entries(site)) {
   files.add('/' + name);
 }
 
+// ١أ) رقم نسخة التطبيق: نفس رقم البناء اللي بيتحط في versionCode واسم الإصدار v1.0.N، عشان «تحقق من التحديث» جوه التطبيق يقارنه بآخر إصدار على GitHub
+put('app-version.json', Buffer.from(JSON.stringify({ code: +(process.env.GITHUB_RUN_NUMBER || 0) })));
+files.add('/app-version.json');
+
 // ١ب) المصحف المدني (صفحات + خطوط) والتفسير الميسر من المستودع نفسه: app-data/qdata (tools/fetch-quran-data.mjs)
 const QD = path.join(ROOT, 'app-data/qdata');
 if (!process.env.SKIP_STATIC) {

@@ -25,7 +25,9 @@
 html[data-view]:not([data-view="home"]) #rdTile{display:none!important}
 
 /* الإذاعة كتبويب أساسي: نفس شكل الأذكار والمصحف */
-.wp-page.rd-tab{bottom:var(--nav-h,64px)!important;background:var(--bg,var(--bg))!important;animation:none!important;transform:none!important;box-shadow:none!important}
+html[data-view]:not([data-view="radio"]) main>section[data-v="radio"]{display:none}
+html[data-view="radio"] .footer{display:none}
+.rd-tab .nt-body{padding-bottom:var(--s40)}
 .rd-tab .rd-top{padding:var(--s20) var(--s20) var(--s6);text-align:start}
 .rd-tab .rd-top h1{margin:0;font-size:var(--t-4xl);line-height:1.3;color:var(--primary);font-weight:800}
 .rd-tab .rd-top p{margin:var(--s4) 0 0;font-size:var(--t-md);color:var(--muted)}

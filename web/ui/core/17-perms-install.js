@@ -17,7 +17,8 @@
 })();
 
 (function(){
- if(!("serviceWorker" in navigator))return;const T=m=>typeof toast==="function"&&toast(m);const ar=n=>__ar(String(n).replace(/\./g,"٫"));const lbl=v=>ar((1+Math.floor(Math.max(0,v-131)/10))+"."+(Math.max(0,v-131)%10)).replace("٢٫١٠","٣٫٠");
+ /* جوه تطبيق الأندرويد الملفات جوه الـAPK: التحديث هناك في 46-app-update.js */
+ if(!("serviceWorker" in navigator)||(window.Capacitor&&Capacitor.isNativePlatform&&Capacitor.isNativePlatform()))return;const T=m=>typeof toast==="function"&&toast(m);const ar=n=>__ar(String(n).replace(/\./g,"٫"));const lbl=v=>ar((1+Math.floor(Math.max(0,v-131)/10))+"."+(Math.max(0,v-131)%10)).replace("٢٫١٠","٣٫٠");
  const localV=()=>caches.keys().then(k=>Math.max(0,...k.map(x=>+((x.match(/^wird-v(\d+)$/)||[])[1]||0)))).catch(()=>0);
  const serverV=()=>fetch("/sw.js?_="+Date.now(),{cache:"no-store"}).then(r=>r.text()).then(t=>+((t.match(/wird-v(\d+)/)||[])[1]||0)).catch(()=>0);
  const hard=async()=>{T("جارٍ تنزيل التحديث…");try{const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.unregister()));const ks=await caches.keys();await Promise.all(ks.filter(k=>!/mushaf/.test(k)).map(k=>caches.delete(k)))}catch(e){}const u=new URL(location.href);u.searchParams.set("u",Date.now());location.replace(u.href)};
