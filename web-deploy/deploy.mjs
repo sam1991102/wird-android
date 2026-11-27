@@ -50,7 +50,9 @@ if (routesChanged) console.log('worker/routes.js changed');
 
 // 2) البناء من المستودع
 const F = build();
-const missing = Object.keys(LIVE).filter(k => !(k in F));
+// ملفات اتشالت من web/ عن قصد: لازم تتكتب هنا، وإلا الحماية بتوقف النشر عشان ما نمسحش حاجة بالغلط
+const RETIRED = JSON.parse(fs.readFileSync(new URL('./retired.json', import.meta.url), 'utf8'));
+const missing = Object.keys(LIVE).filter(k => !(k in F) && !RETIRED.includes(k));
 if (missing.length) throw new Error('files on the live site are missing from web/: ' + missing.join(', '));
 
 // حماية: أي صورة أو خط لازم يتعلّم إنه بايتات، وإلا هيوصل للمستخدم نص مكسور
