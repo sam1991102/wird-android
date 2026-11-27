@@ -8,6 +8,8 @@ window.__setView=function(v,top){
  if(R.dataset.view===v||rm.matches||document.hidden)return orig.apply(this,arguments);
  var args=arguments,self=this;R.dataset.vtDir=idx(v)>idx(R.dataset.view)?"fwd":"back";
  var t=document.startViewTransition(function(){orig.apply(self,args)});
- t.finished.finally(function(){delete R.dataset.vtDir});
+ /* انتقال اتلغى عشان جه بعده انتقال تاني: طبيعي، مش خطأ */
+ [t.ready,t.updateCallbackDone].forEach(function(p){p&&p.catch(function(){})});
+ t.finished.catch(function(){}).finally(function(){delete R.dataset.vtDir});
 };
 })();

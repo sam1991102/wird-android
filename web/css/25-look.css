@@ -1,0 +1,62 @@
+/*look — تخصيص المظهر (ui/core/47-look.js): كل اختيار كلاس مستقل على html، والكلاسيكي هو الافتراضي (من غير كلاسات).
+  الخط · وزن الخط · حجم الخط (بيتحسب في JS على رموز --t-*) · اللون الأساسي · الخلفية · الاستدارة · الشريط العلوي · الأيقونات.
+  «هادئ» مجرد مجموعة جاهزة من الاختيارات دي، على مدرسة تطبيق نسك. */
+
+/* ١) الخط: IBM Plex Sans Arabic. ملفات ٣٠٠/٤٠٠/٥٠٠ بس، والأوزان الأتقل بتترسم بملف ٥٠٠
+   عشان المتصفح ما يعملش «بولد» مزيّف أتقل من الخط نفسه */
+@font-face{font-family:"Plex Arabic";font-weight:100 300;font-display:swap;src:url(/fonts/plex-arabic-300.woff2)format("woff2")}
+@font-face{font-family:"Plex Arabic";font-weight:400;font-display:swap;src:url(/fonts/plex-arabic-400.woff2)format("woff2")}
+@font-face{font-family:"Plex Arabic";font-weight:500 900;font-display:swap;src:url(/fonts/plex-arabic-500.woff2)format("woff2")}
+html.f-plex{--font-ui:"Plex Arabic",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif}
+html.f-plex body{font-family:var(--font-ui);letter-spacing:0}
+html.f-plex :is(button,input,select,textarea){font-family:inherit}
+html :is(body){font-synthesis-weight:none}
+
+/* ٢) وزن خفيف: الكلام ٤٠٠ والعناوين ٥٠٠، ومفيش عريض */
+html.w-light body{font-weight:400}
+html.w-light :is(b,strong,h1,h2,h3,h4,th,.btn,[class*="-t"],[class*="title"],[class*="name"]){font-weight:500!important}
+html.w-light small{font-weight:300}
+
+/* ٣) اللون الأساسي (في الفاتح): رمز واحد --ac وكل درجات الأخضر بتتحسب منه */
+html.ac-on:not(.dark){--brand:var(--ac);--deep:var(--ac);--primary:var(--ac);--primary-2:var(--ac);--emerald-900:var(--ac);--emerald-800:var(--ac);--emerald-700:var(--ac);--emerald-600:color-mix(in srgb,var(--ac) 86%,white);--emerald-100:color-mix(in srgb,var(--ac) 16%,white);--emerald-50:color-mix(in srgb,var(--ac) 8%,white)}
+
+/* ٤) الخلفية (في الفاتح) */
+html.bg-white:not(.dark){--bg:#ffffff;--paper:#ffffff;--paper-2:#f6f7f8;--card:#ffffff;--line:#eceef1;--line-2:#f1f3f5}
+html.bg-gray:not(.dark){--bg:#f5f5f4;--paper:#ffffff;--paper-2:#f3f4f6;--card:#ffffff;--ink:#222222;--ink-2:#384250;--muted:#6c737f;--line:#e5e7eb;--line-2:#eef0f2;--chip-bg:#f3f4f6;--chip-ink:#384250;
+ --sh-1:0 1px 2px rgba(16,24,40,.04),0 1px 3px rgba(16,24,40,.03)}
+
+/* ٥) استدارة كبيرة: كروت ٢٤ وأزرار مدوّرة بالكامل، وظل خفيف من غير إطار */
+html.rd-round{--rd-l:20px;--rd-xl:24px}
+html.rd-round :is(.card,.cat-card,.tile,.kd-tile,.qk,.wp-card,.st-sec,.rd-grp,.mine-tile,.l2-shb){border-radius:var(--rd-xl)!important;box-shadow:var(--sh-1)!important;border-color:transparent!important}
+html.rd-round :is(.btn,.chip,.da-go,.qk-go,input[type="search"],.search,.dr-search){border-radius:var(--rd-pill)!important}
+
+/* ٦) شريط علوي فاتح بدل الأخضر المصمت، وشريط الصلاة تحته بيج */
+html.tb-light{--lk-bar:var(--paper);--lk-strip:#f8f4ef;--lk-btn:#f3f4f6}
+html.tb-light.dark{--lk-bar:var(--bg);--lk-strip:var(--paper-2);--lk-btn:var(--paper-2)}
+html.tb-light .topbar{background:var(--lk-bar)!important;color:var(--ink)!important;box-shadow:none;border-bottom:1px solid var(--line)}
+html.tb-light .topbar .brand,html.tb-light .topbar .brand *{color:var(--primary)!important}
+html.tb-light .topbar :is(.icon-btn,#menuBtn,#searchBtn){background:var(--lk-btn)!important;border-color:transparent!important;color:var(--ink-2)!important}
+html.tb-light .topbar .tb-strip{background:var(--lk-strip)!important;color:var(--ink-2)!important;border-top:1px solid var(--line)}
+html.tb-light .tb-strip :is(.tb-np-k,.tb-np-t){color:var(--muted)!important;border-color:var(--line)!important}
+html.tb-light .tb-strip .tb-np-n{color:var(--primary)!important}
+html.tb-light .tb-strip .tb-np-r{color:var(--ink)!important}
+html.tb-light .tb-strip svg{color:var(--muted)!important}
+html.tb-light .bottom-nav.nav5{background:var(--lk-bar)!important;border-top:1px solid var(--line)!important}
+
+/* ٧) أيقونات رفيعة (الرسم في ui/12-icons.js)، والتبويب المختار أيقونته مليانة بالدهبي */
+html.ic-thin .bottom-nav.nav5>*{color:var(--muted)!important}
+html.ic-thin .bottom-nav.nav5>:is(.is-lit,.active){color:var(--ink)!important}
+html.ic-thin .bottom-nav.nav5>:is(.is-lit,.active) .ni{color:var(--gold)!important}
+html.ic-thin .bottom-nav.nav5>:is(.is-lit,.active) .ni::before{display:none}
+
+/* صفحة التخصيص */
+.lk-row{display:block!important}
+.lk-sw{display:flex;flex-wrap:wrap;gap:var(--s8);margin-top:var(--s8)}
+.lk-sw button{width:34px;height:34px;border-radius:50%;border:2px solid var(--paper);box-shadow:0 0 0 1px var(--line);background:var(--sw);cursor:pointer}
+.lk-sw button[aria-checked="true"]{box-shadow:0 0 0 2px var(--ink)}
+.lk-sw label{width:34px;height:34px;border-radius:50%;box-shadow:0 0 0 1px var(--line);display:grid;place-items:center;overflow:hidden;cursor:pointer;background:conic-gradient(red,yellow,lime,cyan,blue,magenta,red)}
+.lk-sw input{opacity:0;width:100%;height:100%;cursor:pointer}
+.lk-range{display:flex;align-items:center;gap:var(--s10);margin-top:var(--s8)}
+.lk-range input{flex:1;accent-color:var(--primary)}
+.lk-range output{min-width:3.2em;text-align:center;color:var(--muted);font-size:var(--t-sm)}
+.lk-reset{margin-top:var(--s12)}

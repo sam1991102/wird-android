@@ -86,10 +86,6 @@
    "type": "font/woff2"
   },
   {
-   "name": "fonts/plex-arabic-600.woff2",
-   "type": "font/woff2"
-  },
-  {
    "name": "fonts/amiri-arabic-400-normal.woff2",
    "type": "font/woff2"
   },
@@ -271,6 +267,7 @@
   "core/43-ready.js",
   "core/45-motion.js",
   "core/46-app-update.js",
+  "core/47-look.js",
   "core/32-city-name.js",
   "core/33-mushaf-card.js",
   "core/34a-kids-art.js",
@@ -325,6 +322,6 @@
   "21-mushaf-home.css",
   "23-motion.css",
   "24-sage.css",
-  "25-hadi.css"
+  "25-look.css"
  ]
 }
