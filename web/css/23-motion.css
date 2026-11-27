@@ -1,0 +1,54 @@
+/*motion — حركة وِرد: زنبرك خفيف زي iOS، وانتقالات بخصائص المتصفح الحديثة من غير مكتبات:
+  View Transitions بين التبويبات (ui/core/45-motion.js)، و@starting-style لدخول النوافذ،
+  وحركة مربوطة بالتمرير (scroll-driven) للسما في كارت الرئيسية والشريط العلوي.
+  كله بيتقفل مع «تقليل الحركة»، واللي المتصفح مش بيدعمه بيرجع للشكل الثابت من غير ما يبوظ. */
+:root{
+ /* زنبرك: يوصل ويعدّي سنة صغيرة (٣٪) ويرجع يستقر */
+ --ease-spring:linear(0,.06 4%,.24 9%,.52 15%,.78 22%,.93 29%,1.01 36%,1.03 43%,1.02 52%,1.005 64%,1);
+ --ease-out-ios:cubic-bezier(.32,.72,0,1);
+ --dur-press:.12s;--dur-spring:.42s;--dur-view:.34s;--dur-page:.42s}
+
+/* ضغط الأزرار: بتنزل سنة وترجع بزنبرك */
+:is(.btn,.chip,.cat-card,.tile,.bottom-nav a,.bottom-nav button,.da-go,.qk-go){transition:transform var(--dur-spring) var(--ease-spring),background-color .2s,color .2s,opacity .2s}
+:is(.btn,.chip,.cat-card,.tile,.bottom-nav a,.bottom-nav button,.da-go,.qk-go):active{transform:scale(.96);transition-duration:var(--dur-press);transition-timing-function:ease-out}
+
+/* الصفحات الكاملة: دخول من الجنب بمنحنى iOS بدل الزحلقة الخطية الصغيرة */
+.wp-page{transform:translateX(-28%);transition:transform var(--dur-page) var(--ease-out-ios),opacity .26s ease-out}
+.wp-page.in{transform:none}
+
+/* النوافذ السفلية: بتطلع من تحت بزنبرك، والخلفية بتغمق بهدوء */
+.sheet-card{animation:none;transition:transform var(--dur-spring) var(--ease-spring),opacity .2s ease-out}
+.sheet{transition:background-color .25s ease-out}
+@starting-style{
+ .sheet-card{transform:translateY(48px);opacity:0}
+ .sheet{background-color:transparent}}
+
+/* التبويبات: الشاشة القديمة تخرج لجنب والجديدة تدخل من الجنب التاني، والشريطين ثابتين */
+.topbar{view-transition-name:wtop}
+.bottom-nav{view-transition-name:wnav}
+::view-transition-old(root),::view-transition-new(root){animation-duration:var(--dur-view);animation-timing-function:var(--ease-out-ios)}
+html[data-vt-dir="fwd"]::view-transition-old(root){animation-name:vtOutL}
+html[data-vt-dir="fwd"]::view-transition-new(root){animation-name:vtInR}
+html[data-vt-dir="back"]::view-transition-old(root){animation-name:vtOutR}
+html[data-vt-dir="back"]::view-transition-new(root){animation-name:vtInL}
+@keyframes vtOutL{to{transform:translateX(-14%);opacity:0}}
+@keyframes vtInR{from{transform:translateX(14%);opacity:0}}
+@keyframes vtOutR{to{transform:translateX(14%);opacity:0}}
+@keyframes vtInL{from{transform:translateX(-14%);opacity:0}}
+
+/* السما بتتحرك مع التمرير: القمر يطلع أبطأ والنجوم أبطأ منه، فيبان عمق */
+@supports (animation-timeline:scroll()){
+ #skyCard .sk-moon{animation:skDrift linear both;animation-timeline:scroll(root);animation-range:0 420px}
+ #skyCard .sk-stars{animation:skDrift2 linear both;animation-timeline:scroll(root);animation-range:0 420px}
+ @keyframes skDrift{to{translate:0 70px}}
+ @keyframes skDrift2{to{translate:0 36px}}
+ /* الشريط العلوي: ظل خفيف يظهر لما المحتوى يعدّي تحته */
+ .topbar{animation:tbShade linear both;animation-timeline:scroll(root);animation-range:0 80px}
+ @keyframes tbShade{from{box-shadow:none}to{box-shadow:var(--sh-1)}}}
+
+@media (prefers-reduced-motion:reduce){
+ :is(.btn,.chip,.cat-card,.tile,.bottom-nav a,.bottom-nav button,.da-go,.qk-go):active{transform:none}
+ .wp-page,.sheet-card{transition:opacity .2s}
+ .wp-page{transform:none}
+ #skyCard .sk-moon,#skyCard .sk-stars{animation:none}
+ ::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}}
