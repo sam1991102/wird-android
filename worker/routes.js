@@ -327,6 +327,14 @@ function seoIndex(slug,name,origin){
     '<h2>أسئلة شائعة عن '+esc(t)+'</h2><dl class="seo-ix-faq">'+faq.map(f=>'<dt>'+esc(f[0])+'</dt><dd>'+esc(f[1])+'</dd>').join("")+'</dl>'+
     '<h2>أقسام أخرى</h2><p class="seo-ix-cats">'+other.map(k=>'<a href="'+enc(catPath(k))+'">'+esc(TITLE[k]||ROUTES[k])+'</a>').join("")+'</p></section>'+data.map(ld).join("");
 }
+/* صفحة قسم الأذكار بقالب الموقع (المتصفح): نفس المحتوى الكامل والـ SEO، مع رأس الموقع والتذييل وزر فتح التطبيق */
+function catSitePage(slug,origin){
+  const t=TITLE[slug]||ROUTES[slug],n=ADHKAR.filter(x=>x.cat===slug).length,url=origin+enc(catPath(slug));
+  const desc=t+" مكتوبة كاملة بالتشكيل"+(n?" ("+AR(n)+" ذكرًا)":"")+" مع عدّاد لكل ذكر، وعدد مرات قوله ومصدره من القرآن والسنة."+(WHEN[slug]?" وقتها "+WHEN[slug]+".":"");
+  const body='<div class="w" style="padding-top:28px"><p class="pg-lead">'+esc(WHEN[slug]||"")+'</p><p><a class="b b-gold" href="/?app=1">افتح '+esc(t)+' في وِرد</a></p></div>'+
+    '<div class="w">'+seoIndex(slug,ROUTES[slug],origin)+'</div>';
+  return siteShell({origin,path:catPath(slug),url,title:t+" مكتوبة كاملة مع عداد | وِرد",desc,body});
+}
 function sitemap(origin){const day=new Date().toISOString().slice(0,10),u=(path,pr)=>"<url><loc>"+origin+enc(path)+"</loc><lastmod>"+day+"</lastmod>"+(pr?"<priority>"+pr+"</priority>":"")+"</url>";
  const pages=["/","/download","/التقويم-الهجري","/اتجاه-القبلة","/عداد-التسبيح","/ما-الجديد","/about.html","/privacy.html","/contact.html"].map(x=>u(x,x==="/"?"1.0":"0.6"));
  const cats=Object.keys(ROUTES).filter(k=>ADHKAR.some(x=>x.cat===k)).map(k=>u(catPath(k),"0.9"));
@@ -489,6 +497,7 @@ export default{
     if(ROUTES[p]&&CAT_SLUG[p])return Response.redirect(url.origin+enc(catPath(p)),301);
     {const om=p.match(/^d\/(\d+)$/);if(om){const d=ADHKAR.find(x=>x.id===+om[1]);if(d)return Response.redirect(url.origin+enc(dPath(d)),301)}}
     {const seg=dp.split("/"),k=SLUG_CAT[seg[0]];
+     if(k&&seg.length===1&&ROUTES[k]&&!url.search&&!/(?:^|;\s*)wird_pwa=1/.test(req.headers.get("cookie")||""))return new Response(catSitePage(k,url.origin),{headers:{...headers,...SITE_H(900)}});
      if(k&&seg.length===1&&ROUTES[k]){const html=FILES["index.html"][1].split(OLD_ORIGIN).join(url.origin);return new Response(pageFor(html,k,ROUTES[k],url.origin),{headers:{...headers,"content-type":"text/html; charset=utf-8","cache-control":"no-cache"}})}
      if(k&&seg.length===2){const id=SLUG_D[k+"/"+seg[1]],d=id&&ADHKAR.find(x=>x.id===id);if(d)return new Response(dhikrPage(d,url.origin),{headers:{...headers,"content-type":"text/html; charset=utf-8","cache-control":"public, max-age=3600"}})}}
     {const seg=dp.split("/");if(seg[0]===PRAY_ROOT){const H={...headers,"content-type":"text/html; charset=utf-8","cache-control":"public, max-age=900"};
