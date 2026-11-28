@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head><script>(function(){try{var m=location.hash.match(/^#wmig=(.+)$/);if(!m)return;var d=JSON.parse(decodeURIComponent(m[1]));for(var k in d){if(k.indexOf("wird")===0&&localStorage.getItem(k)===null)localStorage.setItem(k,d[k])}history.replaceState(null,"",location.pathname+location.search)}catch(e){}})()</script>
+<meta charset="utf-8"><script>try{localStorage.getItem("wird-skin")==="ios"&&document.documentElement.classList.add("ios")}catch(e){}</script><script id="wird-native">!function(){if(/WirdAndroid\//.test(navigator.userAgent)||!!(window.Capacitor&&window.Capacitor.isNativePlatform&&window.Capacitor.isNativePlatform())){window.__WIRD_NATIVE=!0,document.documentElement.classList.add("native-app");try{Object.defineProperty(navigator,"standalone",{get:function(){return!0}})}catch(t){}var t="wird-native-perm";Object.defineProperty(s,"permission",{get:u}),s.requestPermission=function(){return a(5e3).then(function(n){return n?n.requestPermissions().then(function(){var e=Date.now();return new Promise(function(r){!function i(){n.status().then(function(n){if(n.notifications){try{localStorage.setItem(t,"granted")}catch(t){}return r("granted")}if(Date.now()-e>25e3)return r("denied");setTimeout(i,700)},function(){r("denied")})}()})}):"denied"})},window.Notification=s,"PushManager"in window||(window.PushManager=function(){});var n={endpoint:"native://wird",toJSON:function(){return{endpoint:"native://wird",keys:{}}},unsubscribe:function(){return Promise.resolve(!0)}},e={getSubscription:function(){return Promise.resolve("granted"===u()?n:null)},subscribe:function(){return Promise.resolve(n)},permissionState:function(){return Promise.resolve("granted"===u()?"granted":"prompt")}};try{window.ServiceWorkerRegistration&&Object.defineProperty(ServiceWorkerRegistration.prototype,"pushManager",{configurable:!0,get:function(){return e}})}catch(t){}var r=0,i=window.fetch.bind(window);window.fetch=function(t,n){var e="string"==typeof t?t:t&&t.url||"";if(/\/api\/push\/sync(\?|$)/.test(e)){var u={};try{u=JSON.parse(n&&n.body||"{}")}catch(t){}return a(8e3).then(function(t){return t?t.schedule({events:(n=u.events,(n||[]).map(function(t){var n=t.tag||"",e=0===n.indexOf("alarm")?"alarm":0===n.indexOf("adhan-")?"adhan":0===n.indexOf("dhikr-")?"dhikr":"notif",r="adhan"===e?(window.__adhanFor?function(p){try{var S=JSON.parse(localStorage.getItem("wird-push")||"{}"),q=(S.cfg&&S.cfg[p]&&S.cfg[p].sound)||S.sound;return!q||"none"===q?"":window.__adhanFor(p,q)||""}catch(x){return c("fajr"===p)}}(n.slice(6)):c("adhan-fajr"===n)):"";return"adhan"!==e||r||(e="notif"),{id:d(n+"|"+t.t),t:t.t,kind:e,title:t.title||"وِرد",body:t.body||"",url:t.url||"/",sound:r,x:t.x||null,heads:t.heads?1:0}}).filter(function(t){return"notif"!==t.kind||"وِرد"!==t.title}).map(function(t){for(;this[t.id];)t.id=t.id>=800999?1e3:t.id+1;return this[t.id]=1,t},{}))}).then(function(t){return function(t){if(t&&!(Date.now()-r<216e5)){r=Date.now();window.__wirdReady&&__wirdReady.nudge()}}(t),new Response(JSON.stringify({ok:!0,armed:t.armed}),{status:200,headers:{"content-type":"application/json"}})}):new Response('{"ok":false}',{status:503});var n})}if(/\/api\/push\/remove(\?|$)/.test(e)){var s=o();return s&&s.schedule({events:[]}),Promise.resolve(new Response('{"ok":true}',{status:200,headers:{"content-type":"application/json"}}))}return i(t,n)},window.__wirdNative={test:function(t){var n=o();return n&&n.test({kind:t||"adhan",sound:"alarm"===t?"":c(!1)})},stop:function(){var t=o();return t&&t.stop()},status:function(){var t=o();return t?t.status():Promise.resolve(null)},settings:function(){var t=o();return t&&t.openChannelSettings()},sub:n},document.addEventListener("visibilitychange",function(){document.hidden||f()}),window.addEventListener("load",f),window.addEventListener("load",function(){setTimeout(function(){if(window.__wirdPush)try{window.__wirdPush.sync(!0)}catch(t){}},2500)})}function o(){return window.Capacitor&&window.Capacitor.Plugins&&window.Capacitor.Plugins.WirdAdhan}function a(t){return new Promise(function(n){var e=Date.now();!function r(){var i=o();if(i||Date.now()-e>t)return n(i);setTimeout(r,100)}()})}function u(){try{return localStorage.getItem(t)||"default"}catch(t){return"default"}}function s(){}function f(){/* حالة إذن الإشعارات من النظام كل مرة (لو المستخدم قفلها من الإعدادات) */var x=o();x&&x.status().then(function(y){try{y&&y.notifications?localStorage.setItem("wird-native-perm","granted"):localStorage.removeItem("wird-native-perm")}catch(e){}if(!document.hidden&&window.__wirdPush)try{window.__wirdPush.sync(!0)}catch(e){}},function(){})}function d(t){for(var n=0,e=0;e<t.length;e++)n=(n<<5)-n+t.charCodeAt(e)|0;return Math.abs(n)%8e5+1e3}function c(t){try{var n=JSON.parse(localStorage.getItem("wird-push")||"{}"),e=window.__ADHANS||{},r=n.sound||"none";return t&&n.soundFajr&&e[n.soundFajr]&&e[n.soundFajr].u?e[n.soundFajr].u:e[r]&&e[r].u||""}catch(t){return""}}}();</script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>وِرد | أذكار الصباح والمساء ومواقيت الصلاة</title>
+<meta name="description" content="وِرد: أذكار الصباح والمساء والنوم وبعد الصلاة وأدعية من القرآن والسنة، مع مواقيت الصلاة، ووضع قراءة متتابعة، وعدّاد مواظبة يومي. يعمل دون إنترنت.">
+<meta name="theme-color" content="#0d2a21">
+<link rel="canonical" href="https://azkar.islam-a-elshehery.workers.dev/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ar_AR">
+<meta property="og:site_name" content="وِرد">
+<meta property="og:title" content="وِرد | الأذكار اليومية">
+<meta property="og:description" content="رفيقك اليومي للذكر: أذكار الصباح والمساء ومواقيت الصلاة وعدّاد المواظبة.">
+<meta property="og:url" content="https://azkar.islam-a-elshehery.workers.dev/">
+<meta property="og:image" content="https://azkar.islam-a-elshehery.workers.dev/og/site.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://azkar.islam-a-elshehery.workers.dev/og/site.jpg">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icon.svg?v=3" type="image/svg+xml">
+<link rel="icon" href="/icon-192.png?v=3" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="وِرد">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="preload" href="/fonts/tajawal-arabic-400-normal.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/fonts/amiri-arabic-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/amiri-arabic-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/styles.css">
+<script>try{if(localStorage.getItem("wird-dark")==="true"||(localStorage.getItem("wird-dark")===null&&matchMedia("(prefers-color-scheme: dark)").matches))document.documentElement.classList.add("dark");if(localStorage.getItem("wird-sepia")==="true"){document.documentElement.classList.remove("dark");document.documentElement.classList.add("sepia")}if(localStorage.getItem("wird-large-text")==="true")document.documentElement.classList.add("large-text")}catch(e){}</script>
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"وِرد","alternateName":"وِرد — الأذكار اليومية","url":"https://wird-azkar.pages.dev/","inLanguage":"ar"},{"@context":"https://schema.org","@type":"WebApplication","name":"وِرد — الأذكار اليومية","url":"https://wird-azkar.pages.dev/","applicationCategory":"LifestyleApplication","operatingSystem":"Any","inLanguage":"ar","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"أذكار الصباح والمساء والنوم وبعد الصلاة مع العدّاد والفضل والمصدر، ومواقيت الصلاة، والقبلة، والمصحف المدني، والسبحة. مجاني بلا إعلانات ويعمل دون إنترنت."}]</script><style id="wSplashCss">#wSplash{position:fixed;inset:0;z-index:2147483600;display:flex;align-items:center;justify-content:center;background:radial-gradient(120% 80% at 50% 40%,#2A8466 0%,#0F3D2E 55%,#06201A 100%);transition:opacity .35s ease,visibility .35s}#wSplash.out{opacity:0;visibility:hidden}#wSplash .ws{display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center}#wSplash img{width:clamp(136px,21vh,176px);height:auto;aspect-ratio:1;border-radius:28%;box-shadow:0 18px 40px rgba(0,0,0,.35)}@font-face{font-family:WsAmiri;font-weight:700;font-display:block;src:url(/fonts/amiri-arabic-700-normal.woff2) format("woff2")}#wSplash p{margin:10px 0 0;padding:0 24px;font:700 clamp(22px,3.4vh,28px)/1.6 WsAmiri,Amiri,serif;color:#F2E6C8}#wSplash cite{font:400 12.5px/1.6 system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;font-style:normal;color:rgba(242,230,200,.62);margin-top:-10px}#wSplash .bar{width:64px;height:3px;border-radius:2px;background:rgba(242,213,151,.18);overflow:hidden}#wSplash .bar i{display:block;width:40%;height:100%;border-radius:2px;background:#E2C27F;animation:wsBar 1.1s ease-in-out infinite}@keyframes wsBar{0%{transform:translateX(160%)}100%{transform:translateX(-160%)}}@media (prefers-reduced-motion:reduce){#wSplash .bar i{animation:none;width:100%}#wSplash{transition:none}}html.ws-skip #wSplash{display:none}</style>
+</head>
+<body><div id="wSplash" aria-hidden="true"><div class="ws"><img src="/icon.svg?v=3" alt=""><p>«لا يزالُ لسانُك رطبًا من ذكرِ الله»</p><cite>رواه الترمذي وابن ماجه</cite><span class="bar"><i></i></span></div></div><script>(function(){var R=document.documentElement,K="wird-splash";try{if(sessionStorage.getItem(K))R.classList.add("ws-skip");sessionStorage.setItem(K,"1")}catch(e){}if(R.classList.contains("ws-skip"))return;var t0=Date.now(),done=0;function go(){if(done)return;done=1;var w=Math.max(0,1400-(Date.now()-t0));setTimeout(function(){var e=document.getElementById("wSplash");if(!e)return;e.classList.add("out");setTimeout(function(){e.remove()},400)},w)}new MutationObserver(function(){if(R.classList.contains("home-v2")||(R.dataset.view&&R.dataset.view!=="home"))go()}).observe(R,{attributes:true,attributeFilter:["class","data-view"]});addEventListener("load",function(){setTimeout(go,1200)});setTimeout(go,3000)})()</script><h1 id="pageH1" class="vh">وِرد — أذكار الصباح والمساء ومواقيت الصلاة والقبلة والمصحف</h1>
+<a class="skip-link" href="#main">تجاوز إلى المحتوى</a>
+
+<header class="topbar" id="top">
+  <div class="topbar-in">
+    <a class="brand" href="/" aria-label="وِرد — الرئيسية">
+      <img class="brand-logo" src="/icon.svg?v=3" alt="" width="40" height="40">
+      <span class="brand-name">وِرد<small>رفيق الذكر اليومي</small></span>
+    </a>
+    <a class="next-pill" id="nextPill" href="#prayer" hidden><span class="dot"></span><span id="nextPillText"></span></a>
+    <div class="top-actions">
+      <button id="fontBtn" class="icon-btn" title="حجم الخط" aria-label="تكبير خط الأذكار">أ</button>
+      <button id="themeBtn" class="icon-btn" title="المظهر" aria-label="تبديل الوضع الداكن"><span class="i-sun"><i data-ic="sun"></i></span><span class="i-moon"><i data-ic="moon"></i></span><span class="i-sepia"><i data-ic="quran"></i></span></button>
+      <button id="installBtn" class="btn btn-gold btn-sm" hidden>تثبيت</button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <!-- HERO -->
+  <section class="container sky-card" id="skyCard" data-v="home" aria-label="حالة السماء والصلاة القادمة"><div class="sk-bg"></div><div class="sk-scene"></div><div class="sk-clouds"><span></span><span></span><span></span></div><div class="sk-info"><div class="sk-day"><b class="sk-wd">&nbsp;</b><small class="sk-city">&nbsp;</small></div><div class="sk-dates"><div><b class="sk-hj">&nbsp;</b><small class="sk-hy">&nbsp;</small></div><div><b class="sk-gr">&nbsp;</b><small class="sk-gy">&nbsp;</small></div></div><a class="sk-next" href="#prayer"><span class="sk-np">&nbsp;</span><b class="sk-cd"></b></a><div class="sk-meta"><span class="sk-dhikr">اجعل لسانك رطبًا بذكر الله</span><span class="sk-label" hidden></span><span class="sk-period"></span></div></div></section>
+<script>(function(){var h=new Date().getHours(),s=h>=19||h<4?"night":h<6?"dawn":h<16?"day":h<18?"dusk":"twilight";document.getElementById("skyCard").dataset.sky=s})()</script>
+  <section class="hero container">
+    <div class="hero-copy">
+      <p class="eyebrow" id="greetEyebrow">السلام عليكم</p>
+      <h2 id="greetTitle" class="greet-h">اجعل لسانك رطبًا بذكر الله</h2>
+      <p class="lead" id="greetLead">أذكارك اليومية في مكان واحد: واضحة، ومنظّمة، وتعمل حتى دون إنترنت.</p>
+      <div class="hero-actions">
+        <button class="btn btn-primary btn-lg" id="heroStart"><span id="heroStartText">ابدأ أذكار الصباح</span> <span aria-hidden="true">←</span></button>
+        <a class="btn btn-ghost btn-lg" href="#library">تصفّح المكتبة</a>
+      </div>
+      <div class="season" id="season" hidden></div>
+      <div class="nextd" id="nextd" hidden></div>
+      <ul class="hero-trust">
+        <li id="trustCount">١٤١ ذكرًا من القرآن والسنة</li><li>يعمل دون إنترنت</li><li>بلا حساب ولا إعلانات</li>
+      </ul>
+    </div>
+
+    <aside class="today-card" aria-label="تقدّمك اليوم">
+      <div class="today-head">
+        <div><p class="eyebrow">وِردك اليوم</p><h2 id="todayDate">—</h2></div>
+        <div class="streak" title="أيام متواصلة"><span class="flame"><i data-ic="flame"></i></span><strong id="streakNum">0</strong><small>يوم متواصل</small></div>
+      </div>
+      <div class="today-rings">
+        <button class="mini-ring" data-focus="morning" style="--p:0" id="ringMorning"><span class="mr-ico"><i data-ic="morning"></i></span><strong>الصباح</strong><small id="ringMorningTxt">0٪</small></button>
+        <button class="mini-ring" data-focus="evening" style="--p:0" id="ringEvening"><span class="mr-ico"><i data-ic="evening"></i></span><strong>المساء</strong><small id="ringEveningTxt">0٪</small></button>
+        <button class="mini-ring" data-focus="sleep" style="--p:0" id="ringSleep"><span class="mr-ico"><i data-ic="sleep"></i></span><strong>النوم</strong><small id="ringSleepTxt">0٪</small></button>
+      </div>
+      <div class="week" id="week" aria-label="آخر ٧ أيام"></div>
+      <div class="remind" id="remind"><button class="btn btn-ghost remind-open" type="button" aria-expanded="false" aria-controls="remindPanel"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg> ذكّرني يوميًا</button><div class="remind-panel" id="remindPanel" hidden><p>يُضاف تذكير يومي إلى تقويم هاتفك، ويعمل حتى لو لم تفتح الموقع.</p><label><input type="checkbox" data-r="morning" checked> أذكار الصباح <input type="time" value="06:30" data-t="morning" aria-label="وقت أذكار الصباح"></label><label><input type="checkbox" data-r="evening" checked> أذكار المساء <input type="time" value="17:30" data-t="evening" aria-label="وقت أذكار المساء"></label><label><input type="checkbox" data-r="sleep"> أذكار النوم <input type="time" value="22:30" data-t="sleep" aria-label="وقت أذكار النوم"></label><button class="btn btn-primary remind-add" type="button">أضف إلى التقويم</button></div></div>
+      <p class="today-note">يتجدّد التقدّم تلقائيًا كل يوم، ويُحسب اليوم متواصلًا عند إتمام أذكار الصباح أو المساء.</p>
+    </aside>
+  </section>
+
+  <!-- PRAYER -->
+  <section class="container section" id="prayer" aria-labelledby="prayerTitle">
+    <div class="prayer-card">
+      <div class="prayer-head">
+        <div>
+          <p class="eyebrow">مواقيت الصلاة</p>
+          <h2 id="prayerTitle"><span id="nextName">—</span> <small>بعد</small> <span class="countdown" id="countdown">--:--:--</span></h2>
+          <p class="muted" id="prayerPlace">—</p>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm" id="prayerSettingsBtn" aria-label="إعدادات المواقيت"><i data-ic="settings"></i></button>
+      </div>
+      <ol class="prayer-list" id="prayerList"></ol>
+    </div>
+  </section>
+
+  <!-- DAILY -->
+  <section class="container section">
+    <div class="daily-card">
+      <span class="daily-mark" aria-hidden="true">❝</span>
+      <p class="eyebrow">ذكر اليوم</p>
+      <p id="dailyText" class="daily-text"></p>
+      <p id="dailySource" class="daily-source"></p>
+      <div class="card-actions">
+        <button id="copyDaily" class="btn btn-soft btn-sm"><i data-ic="copy"></i> نسخ</button>
+        <button id="shareDaily" class="btn btn-soft btn-sm"><i data-ic="share"></i> مشاركة</button>
+        <button id="saveDaily" class="btn btn-soft btn-sm">♡ حفظ</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIBRARY -->
+  <section id="library" class="container section library-section">
+    <div class="section-head">
+      <div><h2 id="libTitle">اختر وردك</h2></div>
+      <div class="lib-tools">
+        <button class="btn btn-primary btn-sm" id="focusCatBtn"><i data-ic="play"></i> القراءة المتتابعة</button>
+        <button id="jumpFavorites" class="btn btn-ghost btn-sm"><i data-ic="mine"></i> وِردي <span id="favCount" class="count-badge">0</span></button>
+      </div>
+    </div>
+    <nav class="chips" id="categories" aria-label="أقسام الأذكار"></nav><button class="chips-more" id="chipsMore" type="button" aria-expanded="false" aria-controls="categories">عرض كل الأقسام</button>
+    <div class="toolbar">
+      <label class="search"><span aria-hidden="true"><i data-ic="search"></i></span><input id="searchInput" type="search" placeholder="ابحث في كل الأذكار…" aria-label="ابحث في الأذكار"><button id="clearSearch" class="clear-search" aria-label="مسح البحث" hidden>×</button></label>
+      <label class="sort">الترتيب
+        <select id="sortSelect"><option value="default">حسب الترتيب</option><option value="favorites">المفضلة أولًا</option><option value="remaining">غير المكتمل أولًا</option></select>
+      </label>
+    </div>
+    <div id="catProgress" class="cat-progress"></div>
+    <div id="adhkarList" class="adhkar-list"></div>
+    <div id="emptyState" class="empty-state" hidden><span><i data-ic="search"></i></span><strong>لا توجد نتائج</strong><p>جرّب كلمة أخرى أو قسمًا مختلفًا.</p><button id="resetFilters" class="btn btn-soft btn-sm">عرض كل الأذكار</button></div>
+  </section>
+
+  <section id="favoritesSection" class="container section" hidden>
+    <div class="section-head"><div><h2>أذكاري المحفوظة</h2></div><button id="closeFavorites" class="btn btn-ghost btn-sm">العودة للمكتبة</button></div>
+    <div id="favoritesList" class="adhkar-list"></div>
+    <p id="noFavorites" class="muted">لم تحفظ أي ذكر بعد. اضغط ♡ على أي ذكر لإضافته هنا.</p>
+  </section>
+
+  <!-- TASBIH -->
+
+  <section class="container section" id="tasbih">
+    <div class="tasbih-card">
+      <div class="tasbih-copy">
+        
+        <h2>سبّح واستغفر</h2>
+        <div class="phrase-chips" id="phraseChips"></div>
+        <div class="target-row">
+          <span class="muted small">الهدف</span>
+          <div class="seg" id="targetSeg"><button data-t="33">33</button><button data-t="100">100</button><button data-t="0">مفتوح</button></div>
+        </div>
+        <p class="muted small" id="tasbihTotal">مجموع تسبيحك اليوم: 0</p>
+      </div>
+      <div class="tasbih-dial">
+        <button class="dial" id="dial" style="--p:0" aria-live="polite" aria-label="اضغط للتسبيح">
+          <span class="dial-phrase" id="dialPhrase">سُبْحَانَ اللَّهِ</span>
+          <span class="dial-num" id="counterValue">0</span>
+          <span class="dial-target" id="dialTarget">/ 33</span>
+        </button>
+        <div class="dial-actions">
+          <button class="icon-btn" id="minusBtn" aria-label="إنقاص">−</button>
+          <button class="icon-btn" id="resetBtn" aria-label="تصفير"><i data-ic="reset"></i></button>
+          <button class="icon-btn" id="fullBtn" aria-label="ملء الشاشة" aria-pressed="false"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="container section" id="stats">
+    <div class="section-head"><div><h2>إحصائياتك</h2></div></div>
+    <div class="stats-grid">
+      <div class="stat"><strong id="stStreak">0</strong><span>أيام متواصلة</span></div>
+      <div class="stat"><strong id="stBest">0</strong><span>أطول مواظبة</span></div>
+      <div class="stat"><strong id="stToday">0</strong><span>ذكرًا اليوم</span></div>
+      <div class="stat"><strong id="stDays">0</strong><span>يومًا من الذكر</span></div>
+    </div>
+    <div class="heat" id="heat" aria-label="آخر 30 يومًا"></div><p class="heat-cap"><span>آخر 30 يومًا، والمربع الأخير هو اليوم</span><span class="heat-key"><i></i>قليل<i class="l1"></i><i class="l2"></i><i class="l3"></i>أتممت الصباح والمساء</span></p><div class="stats-empty" id="statsEmpty" hidden><p>هنا ستظهر أيامك المتواصلة وعدد أذكارك بعد أول ورد.</p><button class="btn btn-primary" type="button" data-focus="morning">ابدأ بأذكار الصباح</button></div>
+  </section>
+
+  <section class="container section">
+    <div class="note">
+      <strong>عن المحتوى</strong>
+      <p>نصوص الأذكار مأخوذة من القرآن الكريم وكتب السنة المعتمدة، وكل ذكر يظهر بجانبه مصدره. إن لاحظت خطأً فنرجو إبلاغنا عبر <a href="/contact.html">صفحة التواصل</a>.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer-in">
+    <a class="brand" href="/"><img class="brand-logo" src="/icon.svg?v=3" alt="" width="34" height="34"><span class="brand-name">وِرد<small>الذكر خير زاد</small></span></a>
+    <nav class="footer-links"><a href="/about.html">عن الموقع</a><a href="/privacy.html">الخصوصية</a><a href="/contact.html">تواصل معنا</a></nav>
+    <small>© <span id="year"></span> وِرد — صدقة جارية</small>
+  </div>
+</footer>
+
+<!-- FOCUS MODE -->
+<div class="focus" id="focus" hidden role="dialog" aria-modal="true" aria-labelledby="fCat">
+  <div class="focus-top">
+    <button class="icon-btn" id="fClose" aria-label="إغلاق"><i data-ic="x"></i></button>
+    <div class="focus-meta"><strong id="fCat"></strong><span id="fPos"></span></div>
+    <button class="icon-btn" id="fFont" aria-label="حجم الخط">أ</button>
+  </div>
+  <div class="focus-bar"><span id="fBar"></span></div>
+  <div class="focus-stage" id="fStage">
+    <p class="focus-text" id="fText"></p>
+    <p class="focus-fadl" id="fFadl"></p>
+    <p class="focus-src" id="fSrc"></p>
+  </div>
+  <div class="focus-bottom">
+    <button class="icon-btn lg" id="fPrev" aria-label="السابق">→</button>
+    <button class="focus-ring" id="fRing" style="--p:0" aria-label="عدّ"><span id="fNum">0</span><small id="fTot">/ 1</small></button>
+    <button class="icon-btn lg" id="fNext" aria-label="التالي">←</button>
+  </div>
+  <p class="focus-hint">اضغط في أي مكان على النص للعدّ</p>
+  <div class="focus-done" id="fDone" hidden>
+    <div class="fd-badge">✓</div>
+    <h3 id="fDoneTitle">أتممت الأذكار</h3>
+    <p>تقبّل الله منك. <span id="fDoneStreak"></span></p>
+    <div class="fd-actions"><button class="btn btn-gold" id="fDoneClose">العودة</button><button class="btn btn-ghost" id="fDoneShare"><i data-ic="share"></i> شارك الأجر</button></div>
+  </div>
+</div>
+
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script src="/data.js"></script>
+<script src="/app.js"></script>
+<script src="/ui.js"></script>
+</body>
+</html>

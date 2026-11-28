@@ -1,0 +1,338 @@
+{
+ "manifest.webmanifest": {
+  "type": "application/manifest+json",
+  "bytes": 1983
+ },
+ "icon.svg": {
+  "type": "image/svg+xml",
+  "bytes": 33955
+ },
+ "robots.txt": {
+  "type": "text/plain; charset=utf-8",
+  "bytes": 88
+ },
+ "index.html": {
+  "type": "text/html; charset=utf-8",
+  "bytes": 23467
+ },
+ "about.html": {
+  "type": "text/html; charset=utf-8",
+  "bytes": 2326
+ },
+ "contact.html": {
+  "type": "text/html; charset=utf-8",
+  "bytes": 2077
+ },
+ "privacy.html": {
+  "type": "text/html; charset=utf-8",
+  "bytes": 5699
+ },
+ "404.html": {
+  "type": "text/html; charset=utf-8",
+  "bytes": 1840
+ },
+ "styles.css": {
+  "type": "text/css; charset=utf-8",
+  "bytes": 300289
+ },
+ "app.js": {
+  "type": "application/javascript; charset=utf-8",
+  "bytes": 31621
+ },
+ "sw.js": {
+  "type": "application/javascript; charset=utf-8",
+  "bytes": 4304
+ },
+ "data.js": {
+  "type": "application/javascript; charset=utf-8",
+  "bytes": 47629
+ },
+ "icon-192.png": {
+  "type": "image/png",
+  "bytes": 9608
+ },
+ "icon-512.png": {
+  "type": "image/png",
+  "bytes": 33824
+ },
+ "moon.jpg": {
+  "type": "image/jpeg",
+  "bytes": 16900
+ },
+ "icon-maskable-512.png": {
+  "type": "image/png",
+  "bytes": 24004
+ },
+ "apple-touch-icon.png": {
+  "type": "image/png",
+  "bytes": 5996
+ },
+ "fonts/plex-arabic-300.woff2": {
+  "type": "font/woff2",
+  "bytes": 60064
+ },
+ "fonts/plex-arabic-400.woff2": {
+  "type": "font/woff2",
+  "bytes": 57132
+ },
+ "fonts/plex-arabic-500.woff2": {
+  "type": "font/woff2",
+  "bytes": 60396
+ },
+ "landing/home.jpg": {
+  "type": "image/jpeg",
+  "bytes": 105448
+ },
+ "landing/library.jpg": {
+  "type": "image/jpeg",
+  "bytes": 115492
+ },
+ "landing/prayer.jpg": {
+  "type": "image/jpeg",
+  "bytes": 103836
+ },
+ "site.css": {
+  "type": "text/css; charset=utf-8",
+  "bytes": 19632
+ },
+ "landing.html": {
+  "type": "text/html; charset=utf-8",
+  "bytes": 11500
+ },
+ "fonts/amiri-arabic-400-normal.woff2": {
+  "type": "font/woff2",
+  "bytes": 144748
+ },
+ "fonts/amiri-arabic-700-normal.woff2": {
+  "type": "font/woff2",
+  "bytes": 133292
+ },
+ "fonts/tajawal-arabic-400-normal.woff2": {
+  "type": "font/woff2",
+  "bytes": 11912
+ },
+ "fonts/tajawal-arabic-700-normal.woff2": {
+  "type": "font/woff2",
+  "bytes": 12032
+ },
+ "fonts/tajawal-arabic-800-normal.woff2": {
+  "type": "font/woff2",
+  "bytes": 12600
+ },
+ "fonts/tajawal-latin-400-normal.woff2": {
+  "type": "font/woff2",
+  "bytes": 13676
+ },
+ "fonts/tajawal-latin-700-normal.woff2": {
+  "type": "font/woff2",
+  "bytes": 13328
+ },
+ "fonts/tajawal-latin-800-normal.woff2": {
+  "type": "font/woff2",
+  "bytes": 14112
+ },
+ "ui.js": {
+  "type": "application/javascript; charset=utf-8",
+  "bytes": 731448
+ },
+ "quran.js": {
+  "type": "application/javascript; charset=utf-8",
+  "bytes": 21229
+ },
+ "googlef3721f9d7a3c9b82.html": {
+  "type": "text/html; charset=utf-8",
+  "bytes": 53
+ },
+ "fonts/amiri-quran-arabic-400-normal.woff2": {
+  "type": "font/woff2",
+  "bytes": 60908
+ },
+ ".well-known/assetlinks.json": {
+  "type": "application/json",
+  "bytes": 343
+ },
+ "b7e4c1a9d2f84e6a9c3b5d7e1f2a4c6e.txt": {
+  "type": "text/plain; charset=utf-8",
+  "bytes": 32
+ },
+ "logo-word.png": {
+  "type": "image/png",
+  "bytes": 6108
+ },
+ "gulzar.woff2": {
+  "type": "font/woff2",
+  "bytes": 235664
+ },
+ "nawawi.json": {
+  "type": "application/json; charset=utf-8",
+  "bytes": 25546
+ },
+ "qudsi.json": {
+  "type": "application/json; charset=utf-8",
+  "bytes": 29057
+ },
+ "kids/kaaba.png": {
+  "type": "image/webp",
+  "bytes": 29420
+ },
+ "kids/fil.png": {
+  "type": "image/png",
+  "bytes": 199324
+ },
+ "kids/p-book.jpg": {
+  "type": "image/jpeg",
+  "bytes": 22808
+ },
+ "kids/p-cave.jpg": {
+  "type": "image/jpeg",
+  "bytes": 29524
+ },
+ "kids/p-water.jpg": {
+  "type": "image/jpeg",
+  "bytes": 38984
+ },
+ "kids/p-cloud.jpg": {
+  "type": "image/jpeg",
+  "bytes": 16868
+ },
+ "kids/p-coins.jpg": {
+  "type": "image/jpeg",
+  "bytes": 38528
+ },
+ "kids/p-earth.jpg": {
+  "type": "image/jpeg",
+  "bytes": 22636
+ },
+ "kids/p-fire.jpg": {
+  "type": "image/jpeg",
+  "bytes": 18328
+ },
+ "kids/p-flood.jpg": {
+  "type": "image/jpeg",
+  "bytes": 12852
+ },
+ "kids/p-garden.jpg": {
+  "type": "image/jpeg",
+  "bytes": 28216
+ },
+ "kids/p-hills2.jpg": {
+  "type": "image/jpeg",
+  "bytes": 7396
+ },
+ "kids/p-lamp.jpg": {
+  "type": "image/jpeg",
+  "bytes": 43904
+ },
+ "kids/p-light.jpg": {
+  "type": "image/jpeg",
+  "bytes": 10504
+ },
+ "kids/p-mbirds.jpg": {
+  "type": "image/jpeg",
+  "bytes": 5604
+ },
+ "kids/p-mihrab.jpg": {
+  "type": "image/jpeg",
+  "bytes": 12872
+ },
+ "kids/p-palace.jpg": {
+  "type": "image/jpeg",
+  "bytes": 22096
+ },
+ "kids/p-palm.jpg": {
+  "type": "image/jpeg",
+  "bytes": 38308
+ },
+ "kids/p-rock.jpg": {
+  "type": "image/jpeg",
+  "bytes": 16324
+ },
+ "kids/p-sheep.jpg": {
+  "type": "image/jpeg",
+  "bytes": 17268
+ },
+ "kids/p-spring.jpg": {
+  "type": "image/jpeg",
+  "bytes": 33748
+ },
+ "kids/p-stars.jpg": {
+  "type": "image/jpeg",
+  "bytes": 11728
+ },
+ "kids/p-storm.jpg": {
+  "type": "image/jpeg",
+  "bytes": 26284
+ },
+ "kids/p-sunrise.jpg": {
+  "type": "image/jpeg",
+  "bytes": 10100
+ },
+ "kids/p-town.jpg": {
+  "type": "image/jpeg",
+  "bytes": 28272
+ },
+ "kids/p-tree.jpg": {
+  "type": "image/jpeg",
+  "bytes": 20240
+ },
+ "kids/p-well.jpg": {
+  "type": "image/jpeg",
+  "bytes": 18892
+ },
+ "kids/p-whale.jpg": {
+  "type": "image/jpeg",
+  "bytes": 28036
+ },
+ "kids/p-wheat.jpg": {
+  "type": "image/jpeg",
+  "bytes": 17272
+ },
+ "kids/p-wind.jpg": {
+  "type": "image/jpeg",
+  "bytes": 16752
+ },
+ "kids/desert.png": {
+  "type": "image/webp",
+  "bytes": 21256
+ },
+ "kids/rug.png": {
+  "type": "image/webp",
+  "bytes": 182840
+ },
+ "kids/water.png": {
+  "type": "image/png",
+  "bytes": 104292
+ },
+ "kids/mosque.png": {
+  "type": "image/webp",
+  "bytes": 17688
+ },
+ "kids/f2.png": {
+  "type": "image/webp",
+  "bytes": 68464
+ },
+ "kids/f3.png": {
+  "type": "image/webp",
+  "bytes": 21696
+ },
+ "kids/f4.png": {
+  "type": "image/webp",
+  "bytes": 51408
+ },
+ "kids/f5.png": {
+  "type": "image/webp",
+  "bytes": 10688
+ },
+ "kids/y1.png": {
+  "type": "image/webp",
+  "bytes": 28408
+ },
+ "kids/y4.png": {
+  "type": "image/webp",
+  "bytes": 49536
+ },
+ "kids/w8.png": {
+  "type": "image/webp",
+  "bytes": 29116
+ }
+}
