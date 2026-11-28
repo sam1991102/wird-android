@@ -145,7 +145,7 @@ function prayerIndex(origin){const url=origin+enc("/"+PRAY_ROOT),now=new Date();
  return pShell({title:"مواقيت الصلاة اليوم في المدن العربية والإسلامية | وِرد",desc:"مواقيت الصلاة اليوم في "+AR(P_CITIES.length)+" مدينة: الرياض ومكة والقاهرة ودبي وغيرها، بطريقة الحساب المعتمدة في كل بلد، مع جدول الشهر واتجاه القبلة.",url,
   crumb:'<a href="/">وِرد</a> · مواقيت الصلاة',
   ld:[{"@context":"https://schema.org","@type":"CollectionPage","name":"مواقيت الصلاة","url":url,"inLanguage":"ar"},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"وِرد","item":origin+"/"},{"@type":"ListItem","position":2,"name":"مواقيت الصلاة","item":url}]}],
-  body:'<h1>مواقيت الصلاة اليوم</h1><p class="pp-date">اختار مدينتك عشان تشوف مواقيت اليوم وجدول الشهر واتجاه القبلة.</p><div class="pp-card">'+rows+'</div><p class="pp-cta"><a class="btn btn-primary" href="/#prayer">مواقيت مدينتك بالضبط مع الأذان في وِرد</a></p>'})}
+  body:'<h1>مواقيت الصلاة اليوم</h1><p class="pp-date">اختار مدينتك عشان تشوف مواقيت اليوم وجدول الشهر واتجاه القبلة.</p><div class="pp-card">'+rows+'</div><p class="pp-cta"><a class="btn btn-primary" href="/?app=1#prayer">مواقيت مدينتك بالضبط مع الأذان في وِرد</a></p>'})}
 function prayerCity(c,origin){const now=new Date(),x=cityDay(c,now),url=origin+enc("/"+PRAY_ROOT+"/"+citySlug(c));
  const hijri=new Intl.DateTimeFormat("ar-SA-u-ca-islamic-umalqura-nu-arab",{day:"numeric",month:"long",year:"numeric",timeZone:c[4]}).format(now);
  const greg=new Intl.DateTimeFormat("ar-EG-u-nu-arab",{weekday:"long",day:"numeric",month:"long",year:"numeric",timeZone:c[4]}).format(now);
@@ -166,11 +166,153 @@ function prayerCity(c,origin){const now=new Date(),x=cityDay(c,now),url=origin+e
 <h2>جدول مواقيت الصلاة لشهر ${esc(mName)}</h2><div class="pp-wrap"><table class="pp-month"><thead><tr><th>اليوم</th>${PK.map(k=>"<th>"+PN[k]+"</th>").join("")}</tr></thead><tbody>${month}</tbody></table></div>
 <h2>اتجاه القبلة في ${esc(c[1])}</h2><p>القبلة في ${esc(c[1])} على زاوية ${AR(q)}° من الشمال الجغرافي، باتجاه عقارب الساعة. وفي وِرد بوصلة بتوريك الاتجاه بالموبايل.</p>
 <h2>كيف حُسبت هذه المواقيت</h2><p>بطريقة «${esc(P_METHOD_NAMES[c[5]]||"رابطة العالم الإسلامي")}»، وهي المعتمدة في البلد، ومذهب الجمهور في العصر، بتوقيت ${esc(c[4])}. وقد تختلف المواقيت دقيقة أو دقيقتين عن تقويم المساجد المحلي.</p>
-<p class="pp-cta"><a class="btn btn-primary" href="/#prayer">افتح وِرد: مواقيت مكانك بالضبط مع الأذان</a></p>
+<p class="pp-cta"><a class="btn btn-primary" href="/?app=1#prayer">افتح وِرد: مواقيت مكانك بالضبط مع الأذان</a></p>
 <h2>مدن أخرى</h2><nav class="pp-cities" aria-label="مدن أخرى">${others}</nav>`,
   /* العدّ للصلاة الجاية بيتحدّث في المتصفح من نفس الأوقات (بالساعات من نص الليل بتوقيت المدينة) */
   script:`<script>(function(){var T=${JSON.stringify(T)},OFF=${x.off},N=${JSON.stringify(PN)},K=["fajr","dhuhr","asr","maghrib","isha"],e=document.getElementById("ppNext"),ar=function(s){return String(s).replace(/[0-9]/g,function(d){return"٠١٢٣٤٥٦٧٨٩"[d]})};
 function tick(){var n=new Date(Date.now()+OFF*36e5),h=n.getUTCHours()+n.getUTCMinutes()/60+n.getUTCSeconds()/3600,k=K.find(function(k){return T[k]>h}),left=k?T[k]-h:T.fajr+24-h;k=k||"fajr";var hh=Math.floor(left),mm=Math.floor((left-hh)*60);e.textContent="الصلاة القادمة: "+N[k]+" بعد "+(hh?ar(hh)+" س ":"")+ar(mm)+" د"}tick();setInterval(tick,30000)})();</script>`})}
+/* ===== موقع وِرد في المتصفح (على طريقة azkar.me) =====
+   "/" في المتصفح = الصفحة الرئيسية للموقع. التطبيق المتثبت بيفتح على /?source=pwa، وأي رابط فيه query
+   (زي ?app=1 وروابط الإشعارات) بيفتح التطبيق، وكوكي wird_pwa (بتتحط جوه التطبيق المتثبت) بتخلي "/" يفتح التطبيق.
+   كل الصفحات بنفس القالب: siteShell (شريط علوي + تذييل) وملف /site.css. */
+const NAV=[["/","الرئيسية"],["/"+CAT_SLUG.morning,"الأذكار"],["/"+PRAY_ROOT,"المواقيت"],["/اتجاه-القبلة","القبلة"],["/التقويم-الهجري","التقويم الهجري"],["/عداد-التسبيح","السبحة"]];
+const APK_URL="https://github.com/sam1991102/wird-android/releases/latest/download/wird.apk";
+function siteShell(o){const cur=o.path||"";
+ return `<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>${esc(o.title)}</title><meta name="description" content="${esc(o.desc)}"><link rel="canonical" href="${o.url}">
+<meta property="og:type" content="website"><meta property="og:site_name" content="وِرد"><meta property="og:locale" content="ar_AR"><meta property="og:title" content="${esc(o.title)}"><meta property="og:description" content="${esc(o.desc)}"><meta property="og:url" content="${o.url}"><meta property="og:image" content="${o.origin}/landing/home.jpg">
+<meta name="theme-color" content="#08402a"><link rel="icon" href="/icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" href="/fonts/tajawal-arabic-400-normal.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/site.css">
+${(o.ld||[]).concat([{"@context":"https://schema.org","@type":"WebSite","name":"وِرد","url":o.origin+"/","inLanguage":"ar"}]).map(ld).join("")}
+</head><body><a class="skip" href="#main">تخطّى للمحتوى</a>
+<header class="sh" id="sh"><div class="w"><a class="sh-logo" href="/" aria-label="وِرد، الرئيسية">وِرْد</a>
+<nav class="sh-nav" id="shNav" aria-label="أقسام الموقع">${NAV.map(n=>`<a href="${enc(n[0])}"${n[0]===cur?' aria-current="page"':""}>${n[1]}</a>`).join("")}<a class="sh-m" href="/?app=1">افتح وِرد</a></nav>
+<div class="sh-cta"><a class="b b-line" href="/?app=1">افتح وِرد</a><a class="b b-gold" href="/download">نزّل التطبيق</a></div>
+<button class="sh-menu" type="button" aria-expanded="false" aria-controls="shNav" aria-label="القائمة"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button></div></header>
+<main id="main">${o.body}</main>
+<footer class="sf"><div class="w">
+<div><a class="sh-logo" href="/">وِرْد</a><p>أذكار المسلم اليومية من القرآن والسنة، ومواقيت الصلاة، والمصحف. مجاني ومن غير إعلانات، ويعمل دون إنترنت.</p></div>
+<div><h4>الأذكار</h4><ul>${["morning","evening","sleep","prayer","wake","travel"].map(k=>`<li><a href="${enc(catPath(k))}">${TITLE[k]}</a></li>`).join("")}</ul></div>
+<div><h4>المواقيت</h4><ul>${P_CITIES.slice(0,6).map(c=>`<li><a href="${enc("/"+PRAY_ROOT+"/"+citySlug(c))}">مواقيت ${esc(c[1])}</a></li>`).join("")}</ul></div>
+<div><h4>وِرد</h4><ul><li><a href="/download">نزّل التطبيق</a></li><li><a href="${enc("/ما-الجديد")}">ما الجديد</a></li><li><a href="/about.html">عن وِرد</a></li><li><a href="/privacy.html">الخصوصية</a></li><li><a href="/contact.html">تواصل معنا</a></li></ul></div>
+<p class="sf-copy">وِرد مشروع مجاني لوجه الله.</p></div></footer>
+<script>(function(){var h=document.getElementById("sh"),b=h.querySelector(".sh-menu");b.onclick=function(){var o=h.classList.toggle("open");b.setAttribute("aria-expanded",o)}})();</script>
+${o.script||""}</body></html>`}
+const SITE_H=o=>({"content-type":"text/html; charset=utf-8","cache-control":"public, max-age="+(o||900)});
+function dayIdx(d){return Math.floor((d.getTime()+3*36e5)/864e5)}
+function moonPhase(d){const k=((d.getTime()/864e5-10957.25)/29.530588853)%1;return k<0?k+1:k}
+function moonSVG(d){const p=moonPhase(d),lit=(1-Math.cos(2*Math.PI*p))/2,rx=Math.abs(1-2*lit)*50,wax=p<.5;
+ const path=wax?`M50 0A50 50 0 0 1 50 100A${rx.toFixed(1)} 50 0 0 ${lit<.5?0:1} 50 0`:`M50 0A50 50 0 0 0 50 100A${rx.toFixed(1)} 50 0 0 ${lit<.5?1:0} 50 0`;
+ return `<svg viewBox="0 0 100 100" aria-hidden="true"><defs><clipPath id="mc"><circle cx="50" cy="50" r="50"/></clipPath><mask id="mm"><rect width="100" height="100" fill="#000"/><path d="${path}" fill="#fff" filter="url(#mb)"/></mask><filter id="mb"><feGaussianBlur stdDeviation="1.6"/></filter></defs><g clip-path="url(#mc)"><image href="/moon.jpg" width="100" height="100" opacity=".07" preserveAspectRatio="xMidYMid slice"/><image href="/moon.jpg" width="100" height="100" mask="url(#mm)" preserveAspectRatio="xMidYMid slice"/></g><circle cx="50" cy="50" r="50" fill="none" stroke="rgba(255,255,255,.06)"/></svg>`}
+function nowCat(h){return h>=3.5&&h<11?"morning":h>=14.5&&h<19.5?"evening":h>=20||h<3.5?"sleep":"prayer"}
+function homePage(origin){const now=new Date(),riy=P_CITIES[0],x=cityDay(riy,now),h=x.h;
+ const t=h>x.t.sunrise+.5&&h<x.t.maghrib-.5?"day":(h>=x.t.maghrib-.5&&h<x.t.maghrib+.6)||(h>=x.t.fajr&&h<x.t.sunrise+.5)?"dusk":"night";
+ const wd=new Intl.DateTimeFormat("ar",{weekday:"long",timeZone:riy[4]}).format(now),hij=new Intl.DateTimeFormat("ar-SA-u-ca-islamic-umalqura-nu-arab",{day:"numeric",month:"long",year:"numeric",timeZone:riy[4]}).format(now);
+ const nc=nowCat(h),items=ADHKAR.filter(d=>d.cat===nc),dk=items[dayIdx(now)%items.length];
+ const NW=JSON.parse(FILES["nawawi.json"][1]),hd=NW[dayIdx(now)%NW.length];
+ /* مواقيت النهارده وبكرة لكل المدن: العدّاد في المتصفح بيستخدمها من غير ما يحسب */
+ const tom=new Date(now.getTime()+864e5),TT=P_CITIES.map(c=>{const a=cityDay(c,now),b=cityDay(c,tom);return[citySlug(c),c[1],c[2],c[3],a.off,PK.filter(k=>k!=="sunrise").map(k=>+a.t[k].toFixed(4)),+b.t.fajr.toFixed(4)]});
+ let stars="";for(let i=0;i<46;i++)stars+=`<i style="left:${(i*37%97)+1}%;top:${(i*53%62)+2}%;animation-delay:${(i%7)*.6}s;${i%3?"":"width:3px;height:3px"}"></i>`;
+ const cats=["morning","evening","sleep","prayer","wake","travel","kurb","quran","food","masjid"].filter(k=>ADHKAR.some(d=>d.cat===k));
+ const cnt=k=>ADHKAR.filter(d=>d.cat===k).length;
+ const catCards=cats.map((k,i)=>`<a class="cat${i===0?" big":""}" href="${enc(catPath(k))}"><div><h3>${TITLE[k]}</h3>${WHEN[k]?`<p>${esc(WHEN[k].split("،")[0].replace(/\.$/,""))}</p>`:""}</div><span class="cat-n">${AR(cnt(k))} ذكرًا</span></a>`).join("");
+ const top=["riyadh","makkah","cairo","dubai","kuwait","amman","casablanca","istanbul"].map(s=>P_CITIES.find(c=>c[0]===s)).filter(Boolean);
+ const cities=top.map(c=>{const a=cityDay(c,now);return `<a class="city" href="${enc("/"+PRAY_ROOT+"/"+citySlug(c))}"><b>${esc(c[1])}</b><span>الفجر ${fT(a.t.fajr)}<br>المغرب ${fT(a.t.maghrib)}</span></a>`}).join("");
+ const total=ADHKAR.filter(d=>ROUTES[d.cat]).length,ncat=Object.keys(ROUTES).filter(k=>ADHKAR.some(d=>d.cat===k)).length;
+ const desc="وِرد: أذكار الصباح والمساء والنوم من القرآن والسنة مكتوبة مع عدّاد، ومواقيت الصلاة لمدينتك، واتجاه القبلة، والتقويم الهجري، والمصحف. مجاني ومن غير إعلانات، ويعمل دون إنترنت.";
+ return siteShell({origin,path:"/",url:origin+"/",title:"وِرد — أذكار الصباح والمساء ومواقيت الصلاة والمصحف",desc,
+ ld:[{"@context":"https://schema.org","@type":"MobileApplication","name":"وِرد","operatingSystem":"Android, iOS, Web","applicationCategory":"LifestyleApplication","inLanguage":"ar","url":origin+"/","offers":{"@type":"Offer","price":"0","priceCurrency":"SAR"}}],
+ body:`<section class="hero" id="hero" data-t="${t}" aria-label="سما وِرد الحية">
+<div class="hero-stars" aria-hidden="true">${stars}</div>${t==="day"?'<div class="hero-sun" aria-hidden="true"></div>':`<div class="hero-orb">${moonSVG(now)}</div>`}<div class="hero-dune"></div>
+<div class="w"><div><h1 class="hero-day">${esc(wd)}</h1><p class="hero-date">${esc(hij)}</p>
+<p class="hero-lead">أذكارك اليومية من القرآن والسنة، ومواقيت صلاتك، ومصحفك، في مكان واحد هادي.</p>
+<div class="hero-btns"><a class="b b-gold" href="${enc(catPath(nc))}">ابدأ ${TITLE[nc]}</a><a class="b b-line" href="/download">نزّل التطبيق</a></div></div>
+<div class="np" id="np" aria-live="polite"><small>الصلاة القادمة</small><b id="npN">…</b><div class="np-t" id="npT"></div><div class="np-left" id="npL"></div>
+<div class="np-city"><span id="npC">${esc(riy[1])}</span><button type="button" id="npGeo">مدينتي</button></div></div></div></section>
+
+<section class="sec"><div class="w"><div class="now"><div><p class="now-k">ذكر الآن · ${TITLE[nc]}</p><p class="now-text">${esc(dk.text)}</p><p class="now-meta">${dk.repeat>1?"يُقال "+AR(dk.repeat)+" مرات":"يُقال مرة واحدة"}${dk.source?" · "+esc(dk.source):""} · <a href="${enc(dPath(dk))}">صفحة الذكر</a></p></div>
+<button class="ctr" type="button" id="ctr" data-max="${dk.repeat||1}" aria-label="عدّاد الذكر، دوس للعدّ"><b id="ctrN">٠</b><span>من ${AR(dk.repeat||1)}</span></button></div></div></section>
+
+<section class="sec" id="adhkar" style="padding-top:0"><div class="w"><div class="sec-h"><div><h2>الأذكار</h2><p class="sec-sub">كل قسم مكتوب كامل بالتشكيل، مع عدد مرات كل ذكر ومصدره، وعدّاد.</p></div></div><div class="cats">${catCards}</div></div></section>
+
+<section class="sec" style="background:var(--paper)"><div class="w hd"><div><p class="now-k">حديث اليوم · الأربعون النووية</p><h2 class="hd-t">${esc(hd.title)}</h2></div><div><p class="hd-text">${esc(hd.text)}</p><p class="hd-src">${esc(hd.src||"")}</p></div></div></section>
+
+<section class="sec"><div class="w"><div class="sec-h"><div><h2>مواقيت الصلاة اليوم</h2><p class="sec-sub">محسوبة بالطريقة المعتمدة في كل بلد، مع جدول الشهر واتجاه القبلة.</p></div><a class="more" href="${enc("/"+PRAY_ROOT)}">كل المدن</a></div><div class="cities">${cities}</div></div></section>
+
+<section class="sec" style="padding-top:0"><div class="w"><div class="app"><div><h2>وِرد على موبايلك</h2><p class="sec-sub">نفس الأذكار والمواقيت، وزيادة: الأذان في وقته، والمصحف كامل بالتفسير، والسبحة، والختمة، وركن الأطفال.</p>
+<ul><li>بيشتغل من غير إنترنت</li><li>من غير إعلانات ولا حسابات</li><li>تنبيه بالأذان وتذكير بالأذكار</li><li>أندرويد وآيفون</li></ul><a class="b b-gold" href="/download">نزّل التطبيق</a></div>
+<div class="shots"><img src="/landing/library.jpg" alt="صفحة الأذكار في تطبيق وِرد" width="390" height="844" loading="lazy"><img src="/landing/home.jpg" alt="الشاشة الرئيسية في تطبيق وِرد" width="390" height="844" loading="lazy"><img src="/landing/prayer.jpg" alt="مواقيت الصلاة في تطبيق وِرد" width="390" height="844" loading="lazy"></div></div></div></section>
+
+<section class="sec" style="padding-top:0"><div class="w"><div class="nums"><div><b>${AR(total)}</b><span>ذكرًا مكتوبًا</span></div><div><b>${AR(ncat)}</b><span>قسمًا</span></div><div><b>١١٤</b><span>سورة في المصحف</span></div><div><b>${AR(P_CITIES.length)}</b><span>مدينة للمواقيت</span></div><div><b>${AR(NW.length)}</b><span>حديثًا نوويًّا</span></div></div></div></section>`,
+ script:`<script>(function(){var C=${JSON.stringify(TT).replace(/</g,"\\u003c")},N={fajr:"الفجر",dhuhr:"الظهر",asr:"العصر",maghrib:"المغرب",isha:"العشاء"},K=["fajr","dhuhr","asr","maghrib","isha"],ar=function(s){return String(s).replace(/[0-9]/g,function(d){return"٠١٢٣٤٥٦٧٨٩"[d]})};
+var ci=0;try{var s=localStorage.getItem("wird-site-city");C.forEach(function(c,i){if(c[0]===s)ci=i})}catch(e){}
+function fmt(x){x=(x%24+24)%24;var h=Math.floor(x),m=Math.round((x-h)*60);if(m===60){h=(h+1)%24;m=0}return ar((h%12||12)+":"+(m<10?"0":"")+m)+" "+(h<12?"ص":"م")}
+function tick(){var c=C[ci],n=new Date(Date.now()+c[4]*36e5),h=n.getUTCHours()+n.getUTCMinutes()/60+n.getUTCSeconds()/3600,i=-1,t;for(var j=0;j<5;j++)if(c[5][j]>h){i=j;break}
+ t=i<0?c[6]+24:c[5][i];var k=i<0?"fajr":K[i],left=t-h,hh=Math.floor(left),mm=Math.floor((left-hh)*60);
+ document.getElementById("npN").textContent=N[k];document.getElementById("npT").textContent=fmt(t);document.getElementById("npL").textContent="بعد "+(hh?ar(hh)+" ساعة و":"")+ar(mm)+" دقيقة";document.getElementById("npC").textContent=c[1]}
+tick();setInterval(tick,20000);
+document.getElementById("npGeo").onclick=function(){if(!navigator.geolocation)return;navigator.geolocation.getCurrentPosition(function(p){var b=0,bd=1e9;C.forEach(function(c,i){var d=Math.hypot(c[2]-p.coords.latitude,(c[3]-p.coords.longitude)*Math.cos(p.coords.latitude*Math.PI/180));if(d<bd){bd=d;b=i}});ci=b;try{localStorage.setItem("wird-site-city",C[b][0])}catch(e){}tick()})};
+var q=document.getElementById("ctr"),qn=document.getElementById("ctrN"),n=0,mx=+q.dataset.max;q.onclick=function(){if(n>=mx){n=0;q.classList.remove("done")}else n++;qn.textContent=ar(n);if(n>=mx)q.classList.add("done");try{navigator.vibrate&&navigator.vibrate(n>=mx?[30,40,30]:12)}catch(e){}};
+})();</script>`})}
+/* التقويم الهجري: اليوم، والشهر كامل، والمناسبات الجاية، ومحوّل تاريخ (بتقويم أم القرى من المتصفح والسيرفر) */
+const HM=["محرم","صفر","ربيع الأول","ربيع الآخر","جمادى الأولى","جمادى الآخرة","رجب","شعبان","رمضان","شوال","ذو القعدة","ذو الحجة"];
+function hOf(d){const p=new Intl.DateTimeFormat("en-u-ca-islamic-umalqura-nu-latn",{day:"numeric",month:"numeric",year:"numeric",timeZone:"UTC"}).formatToParts(d),g=t=>+p.find(x=>x.type===t).value;return{d:g("day"),m:g("month"),y:g("year")}}
+function hijriPage(origin){const tz="Asia/Riyadh",now=new Date(),L=new Date(now.getTime()+3*36e5),today=new Date(Date.UTC(L.getUTCFullYear(),L.getUTCMonth(),L.getUTCDate(),12)),H=hOf(today);
+ let start=new Date(today.getTime()-(H.d-1)*864e5),cells=[],d=new Date(start);while(hOf(d).m===H.m){cells.push(new Date(d));d=new Date(d.getTime()+864e5)}
+ const EV=[[9,1,"بداية رمضان"],[10,1,"عيد الفطر"],[12,9,"يوم عرفة"],[12,10,"عيد الأضحى"],[1,1,"رأس السنة الهجرية"],[1,10,"يوم عاشوراء"]];
+ const up=[];for(let i=0;i<400&&up.length<6;i++){const x=new Date(today.getTime()+i*864e5),h=hOf(x),e=EV.find(e=>e[0]===h.m&&e[1]===h.d);if(e)up.push([e[2],x,i,h])}
+ const gF=x=>new Intl.DateTimeFormat("ar-EG-u-nu-arab",{weekday:"long",day:"numeric",month:"long",year:"numeric",timeZone:"UTC"}).format(x);
+ const dow=(start.getUTCDay()+1)%7;let rows="<tr>"+"<td></td>".repeat(dow);cells.forEach((c,i)=>{const h=hOf(c),ev=EV.some(e=>e[0]===h.m&&e[1]===h.d);rows+=`<td class="${+c===+today?"today":""}${ev?" ev":""}"><b>${AR(h.d)}</b><small>${AR(c.getUTCDate())}/${AR(c.getUTCMonth()+1)}</small></td>`;if((dow+i+1)%7===0)rows+="</tr><tr>"});rows+="</tr>";
+ const url=origin+enc("/التقويم-الهجري"),todayH=AR(H.d)+" "+HM[H.m-1]+" "+AR(H.y)+" هـ";
+ const faq=[["كم التاريخ الهجري اليوم؟","اليوم "+todayH+"، الموافق "+gF(today)+"، بتقويم أم القرى."],["متى رمضان القادم؟",(up.find(u=>u[0]==="بداية رمضان")?"يبدأ رمضان حسب تقويم أم القرى يوم "+gF(up.find(u=>u[0]==="بداية رمضان")[1])+"، والعبرة برؤية الهلال.":"بعد سنة هجرية تقريبًا.")],["ما التقويم المستخدم؟","تقويم أم القرى المعتمد في السعودية. وقد يختلف يومًا عن بلدان تعتمد رؤية الهلال."]];
+ return siteShell({origin,path:"/التقويم-الهجري",url,title:"التاريخ الهجري اليوم "+todayH+" — التقويم الهجري وتحويل التاريخ | وِرد",desc:"التاريخ الهجري اليوم "+todayH+" الموافق "+gF(today)+". تقويم شهر "+HM[H.m-1]+" كامل، والمناسبات الإسلامية الجاية، ومحوّل التاريخ من هجري لميلادي والعكس.",
+ ld:[{"@context":"https://schema.org","@type":"FAQPage","mainEntity":faq.map(f=>({"@type":"Question","name":f[0],"acceptedAnswer":{"@type":"Answer","text":f[1]}}))}],
+ body:`<div class="w pg"><p class="crumb"><a href="/">وِرد</a> · التقويم الهجري</p><h1>التاريخ الهجري اليوم</h1><p class="pg-lead"><b style="font-size:1.4em;color:var(--green)">${todayH}</b><br>${gF(today)}</p>
+<div class="grid2"><div class="box"><h2 style="margin-top:0">${HM[H.m-1]} ${AR(H.y)} هـ</h2><table class="cal"><thead><tr>${["السبت","الأحد","الإثنين","الثلاثاء","الأربعاء","الخميس","الجمعة"].map(x=>"<th>"+x.slice(0,3)+"</th>").join("")}</tr></thead><tbody>${rows}</tbody></table></div>
+<div class="box"><h2 style="margin-top:0">المناسبات الجاية</h2><div class="evs">${up.map(u=>`<div class="ev-r"><b>${u[0]}</b><span>${gF(u[1])}<br>بعد ${AR(u[2])} يوم</span></div>`).join("")}</div></div></div>
+<h2>تحويل التاريخ</h2><div class="box"><div class="conv"><label>اليوم<input id="cD" type="number" min="1" max="31" value="${H.d}"></label><label>الشهر<select id="cM">${HM.map((m,i)=>`<option value="${i+1}"${i+1===H.m?" selected":""}>${m}</option>`).join("")}</select></label><label>السنة<input id="cY" type="number" value="${H.y}"></label><button class="b b-green" type="button" id="cH">من هجري لميلادي</button></div>
+<div class="conv" style="margin-top:14px"><label>التاريخ الميلادي<input id="cG" type="date" value="${today.toISOString().slice(0,10)}"></label><button class="b b-green" type="button" id="cG2">من ميلادي لهجري</button></div><p class="out" id="cOut" aria-live="polite"></p></div>
+<h2>أسئلة شائعة</h2><dl class="faq">${faq.map(f=>`<dt>${f[0]}</dt><dd>${f[1]}</dd>`).join("")}</dl></div>`,
+ script:`<script>(function(){var HM=${JSON.stringify(HM)},o=document.getElementById("cOut"),fH=new Intl.DateTimeFormat("en-u-ca-islamic-umalqura-nu-latn",{day:"numeric",month:"numeric",year:"numeric",timeZone:"UTC"}),fG=new Intl.DateTimeFormat("ar-EG-u-nu-arab",{weekday:"long",day:"numeric",month:"long",year:"numeric",timeZone:"UTC"}),ar=function(s){return String(s).replace(/[0-9]/g,function(d){return"٠١٢٣٤٥٦٧٨٩"[d]})};
+function h(d){var p=fH.formatToParts(d),g=function(t){return+p.find(function(x){return x.type===t}).value};return{d:g("day"),m:g("month"),y:g("year")}}
+document.getElementById("cH").onclick=function(){var D=+document.getElementById("cD").value,M=+document.getElementById("cM").value,Y=+document.getElementById("cY").value,g=new Date(Date.UTC(Math.round((Y-1)*0.970229+622.5),0,1,12));for(var i=0;i<800;i++){var x=h(g);if(x.y===Y&&x.m===M&&x.d===D){o.textContent=fG.format(g);return}if(x.y>Y||(x.y===Y&&x.m>M))break;g=new Date(g.getTime()+864e5)}o.textContent="التاريخ ده مش موجود في الشهر ده"};
+document.getElementById("cG2").onclick=function(){var v=document.getElementById("cG").value;if(!v)return;var x=h(new Date(v+"T12:00:00Z"));o.textContent=ar(x.d)+" "+HM[x.m-1]+" "+ar(x.y)+" هـ"};})();</script>`})}
+/* اتجاه القبلة: الزاوية والمسافة من موقع الزائر، وبوصلة من حساسات الموبايل، وجدول المدن */
+function kaabaKm(la,lo){const r=Math.PI/180,K=[21.4225,39.8262],a=Math.sin((K[0]-la)*r/2)**2+Math.cos(la*r)*Math.cos(K[0]*r)*Math.sin((K[1]-lo)*r/2)**2;return Math.round(6371*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a)))}
+function qiblaPage(origin){const url=origin+enc("/اتجاه-القبلة");
+ const rows=P_CITIES.map(c=>`<div class="ev-r"><b>${esc(c[1])}</b><span>${AR(Math.round(qibla(c[2],c[3])))}° · ${AR(kaabaKm(c[2],c[3]).toLocaleString("en"))} كم</span></div>`).join("");
+ return siteShell({origin,path:"/اتجاه-القبلة",url,title:"اتجاه القبلة من موقعك — الزاوية والمسافة إلى الكعبة | وِرد",desc:"اعرف اتجاه القبلة من مكانك: الزاوية من الشمال، والمسافة إلى الكعبة المشرفة، وبوصلة حية على موبايلك. موقعك ما بيخرجش من جهازك.",
+ body:`<div class="w pg"><p class="crumb"><a href="/">وِرد</a> · اتجاه القبلة</p><h1>اتجاه القبلة</h1><p class="pg-lead">دوس «حدد موقعي»، وهتظهرلك زاوية القبلة من الشمال الجغرافي والمسافة إلى الكعبة. على الموبايل البوصلة بتلف مع اتجاهك. موقعك بيتحسب على جهازك وما بيتبعتش لأي حد.</p>
+<div class="grid2"><div class="box" style="text-align:center"><div class="compass"><span class="n">ش</span><div class="needle" id="qN"></div></div><p class="deg" id="qD">—</p><p id="qK" style="margin:0;color:var(--muted)">حدد موقعك</p><p style="margin-top:16px"><button class="b b-green" type="button" id="qGo">حدد موقعي</button></p></div>
+<div class="box"><h2 style="margin-top:0">القبلة من المدن</h2><div class="evs">${rows}</div></div></div>
+<h2>إزاي بيتحسب الاتجاه</h2><p>الاتجاه هو أقصر طريق على سطح الأرض من مكانك إلى الكعبة المشرفة (٢١٫٤٢٢٥ شمالًا، ٣٩٫٨٢٦٢ شرقًا)، ويُقاس بالدرجات من الشمال الجغرافي باتجاه عقارب الساعة. بوصلة الموبايل بتقيس الشمال المغناطيسي، وقد يختلف عن الجغرافي درجات قليلة حسب مكانك، فخلّي الموبايل بعيد عن الحديد والمغناطيس.</p></div>`,
+ script:`<script>(function(){var K=[21.4225,39.8262],r=Math.PI/180,Q=null,ar=function(s){return String(s).replace(/[0-9]/g,function(d){return"٠١٢٣٤٥٦٧٨٩"[d]})},n=document.getElementById("qN");
+function set(la,lo){var dl=(K[1]-lo)*r,y=Math.sin(dl),x=Math.cos(la*r)*Math.tan(K[0]*r)-Math.sin(la*r)*Math.cos(dl);Q=(Math.atan2(y,x)/r+360)%360;var a=Math.sin((K[0]-la)*r/2)*Math.sin((K[0]-la)*r/2)+Math.cos(la*r)*Math.cos(K[0]*r)*Math.sin((K[1]-lo)*r/2)*Math.sin((K[1]-lo)*r/2),km=Math.round(6371*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a)));document.getElementById("qD").textContent=ar(Math.round(Q))+"°";document.getElementById("qK").textContent="المسافة إلى الكعبة "+ar(km.toLocaleString("en"))+" كم";n.style.transform="rotate("+Q+"deg)"}
+function orient(e){var h=e.webkitCompassHeading!=null?e.webkitCompassHeading:(e.absolute&&e.alpha!=null?360-e.alpha:null);if(h==null||Q==null)return;n.style.transform="rotate("+(Q-h)+"deg)"}
+document.getElementById("qGo").onclick=function(){if(window.DeviceOrientationEvent&&DeviceOrientationEvent.requestPermission)DeviceOrientationEvent.requestPermission().then(function(s){if(s==="granted")addEventListener("deviceorientation",orient)}).catch(function(){});else addEventListener("deviceorientationabsolute",orient);
+ if(navigator.geolocation)navigator.geolocation.getCurrentPosition(function(p){set(p.coords.latitude,p.coords.longitude)},function(){document.getElementById("qK").textContent="مقدرناش نحدد موقعك، اختار مدينتك من الجدول"})};})();</script>`})}
+/* عداد التسبيح: سبحة من المتصفح بتحفظ العدد على الجهاز */
+const TASBIH=[["سُبْحَانَ اللَّهِ",33],["الْحَمْدُ لِلَّهِ",33],["اللَّهُ أَكْبَرُ",34],["لَا إِلَهَ إِلَّا اللَّهُ",100],["أَسْتَغْفِرُ اللَّهَ",100],["سُبْحَانَ اللَّهِ وَبِحَمْدِهِ",100],["اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ",10]];
+function tasbihPage(origin){const url=origin+enc("/عداد-التسبيح");
+ const faq=[["إزاي أستخدم عداد التسبيح؟","اختار الذكر، ودوس على الدايرة مع كل مرة. العدد بيتحفظ على جهازك، ولما توصل للعدد المطلوب الدايرة بتبقى دهبي."],["هل العدد بيضيع لو قفلت الصفحة؟","لأ، العدد بيتحفظ في متصفحك لحد ما تصفّره بنفسك."],["هل فيه سبحة من غير إنترنت؟","أيوه، تطبيق وِرد فيه سبحة بتشتغل من غير إنترنت، ومعاها عدّاد المواظبة."]];
+ return siteShell({origin,path:"/عداد-التسبيح",url,title:"عداد التسبيح — سبحة إلكترونية مجانية من المتصفح | وِرد",desc:"سبحة إلكترونية مجانية من المتصفح: اختار الذكر ودوس للعدّ، والعدد بيتحفظ على جهازك. سبحان الله، والحمد لله، والله أكبر، والاستغفار، والصلاة على النبي ﷺ.",
+ ld:[{"@context":"https://schema.org","@type":"FAQPage","mainEntity":faq.map(f=>({"@type":"Question","name":f[0],"acceptedAnswer":{"@type":"Answer","text":f[1]}}))}],
+ body:`<div class="w pg"><p class="crumb"><a href="/">وِرد</a> · عداد التسبيح</p><h1>عداد التسبيح</h1><p class="pg-lead">اختار الذكر ودوس على الدايرة. العدد بيتحفظ على جهازك.</p>
+<div class="box tas"><div class="chips" role="group" aria-label="الذكر">${TASBIH.map((t,i)=>`<button type="button" data-i="${i}" aria-pressed="${i?"false":"true"}">${plain(t[0])}</button>`).join("")}</div>
+<p class="tas-word" id="tW">${TASBIH[0][0]}</p><button class="ctr" type="button" id="tC" aria-label="دوس للعدّ"><b id="tN">٠</b><span id="tM">من ${AR(TASBIH[0][1])}</span></button>
+<p style="margin:0;color:var(--muted)" id="tT" aria-live="polite"></p><button class="b b-line" type="button" id="tR" style="color:var(--ink-2)">تصفير</button></div>
+<h2>أسئلة شائعة</h2><dl class="faq">${faq.map(f=>`<dt>${f[0]}</dt><dd>${f[1]}</dd>`).join("")}</dl></div>`,
+ script:`<script>(function(){var T=${JSON.stringify(TASBIH)},i=0,S={};try{S=JSON.parse(localStorage.getItem("wird-site-tasbih")||"{}")}catch(e){}var ar=function(s){return String(s).replace(/[0-9]/g,function(d){return"٠١٢٣٤٥٦٧٨٩"[d]})},c=document.getElementById("tC");
+function save(){try{localStorage.setItem("wird-site-tasbih",JSON.stringify(S))}catch(e){}}
+function draw(){var n=S[i]||0,m=T[i][1];document.getElementById("tW").textContent=T[i][0];document.getElementById("tN").textContent=ar(n%m===0&&n?m:n%m);document.getElementById("tM").textContent="من "+ar(m);c.classList.toggle("done",n>0&&n%m===0);document.getElementById("tT").textContent=n?"المجموع "+ar(n):""}
+document.querySelectorAll(".chips button").forEach(function(b){b.onclick=function(){i=+b.dataset.i;document.querySelectorAll(".chips button").forEach(function(x){x.setAttribute("aria-pressed",x===b)});draw()}});
+c.onclick=function(){S[i]=(S[i]||0)+1;save();draw();try{navigator.vibrate&&navigator.vibrate(S[i]%T[i][1]===0?[30,40,30]:10)}catch(e){}};
+document.getElementById("tR").onclick=function(){S[i]=0;save();draw()};draw()})();</script>`})}
+/* ما الجديد: سجل يدوي لأهم التحديثات */
+const CHANGELOG=[["2026-11-28","موقع وِرد الجديد",["صفحة رئيسية بالسما الحية والصلاة القادمة","صفحات مواقيت الصلاة لـ٢٧ مدينة","التقويم الهجري واتجاه القبلة وعداد التسبيح","روابط عربية لكل الأذكار"]],["2026-11-27","تخصيص المظهر",["صفحة مظهر بإعدادات تفصيلية: الألوان والخطوط والزوايا والأيقونات","أنماط جاهزة: الافتراضي، وعصري، وبسيط","الإذاعة بقت تبويب كامل","تحديث تطبيق الأندرويد من داخل التطبيق"]],["2026-11-26","حركة وألوان",["انتقالات ناعمة بين التبويبات","أخضر ودهبي جديد للمظهر الافتراضي","القمر الحقيقي بمرحلته في السما"]]];
+function changelogPage(origin){const url=origin+enc("/ما-الجديد"),gF=s=>new Intl.DateTimeFormat("ar-EG-u-nu-arab",{day:"numeric",month:"long",year:"numeric",timeZone:"UTC"}).format(new Date(s+"T12:00:00Z"));
+ return siteShell({origin,path:"/ما-الجديد",url,title:"ما الجديد في وِرد — سجل التحديثات",desc:"آخر التحديثات والمميزات الجديدة في موقع وتطبيق وِرد للأذكار ومواقيت الصلاة.",
+ body:`<div class="w pg"><p class="crumb"><a href="/">وِرد</a> · ما الجديد</p><h1>ما الجديد في وِرد</h1><p class="pg-lead">أهم التحديثات، الأحدث فوق.</p><div class="log">${CHANGELOG.map(c=>`<article><time datetime="${c[0]}">${gF(c[0])}</time><h3>${c[1]}</h3><ul>${c[2].map(x=>"<li>"+esc(x)+"</li>").join("")}</ul></article>`).join("")}</div></div>`})}
 function seoIndex(slug,name,origin){
   const items=ADHKAR.filter(x=>x.cat===slug);if(!items.length)return"";
   const t=TITLE[slug]||name,url=origin+enc(catPath(slug)),faq=catFaq(slug);
@@ -186,7 +328,7 @@ function seoIndex(slug,name,origin){
     '<h2>أقسام أخرى</h2><p class="seo-ix-cats">'+other.map(k=>'<a href="'+enc(catPath(k))+'">'+esc(TITLE[k]||ROUTES[k])+'</a>').join("")+'</p></section>'+data.map(ld).join("");
 }
 function sitemap(origin){const day=new Date().toISOString().slice(0,10),u=(path,pr)=>"<url><loc>"+origin+enc(path)+"</loc><lastmod>"+day+"</lastmod>"+(pr?"<priority>"+pr+"</priority>":"")+"</url>";
- const pages=["/","/download","/about.html","/privacy.html","/contact.html","/kids","/learn","/hadith"].map(x=>u(x,x==="/"?"1.0":"0.5"));
+ const pages=["/","/download","/التقويم-الهجري","/اتجاه-القبلة","/عداد-التسبيح","/ما-الجديد","/about.html","/privacy.html","/contact.html"].map(x=>u(x,x==="/"?"1.0":"0.6"));
  const cats=Object.keys(ROUTES).filter(k=>ADHKAR.some(x=>x.cat===k)).map(k=>u(catPath(k),"0.9"));
  const dk=ADHKAR.filter(d=>ROUTES[d.cat]).map(d=>u(dPath(d),"0.7"));
  const pr=[u("/"+PRAY_ROOT,"0.8")].concat(P_CITIES.map(c=>u("/"+PRAY_ROOT+"/"+citySlug(c),"0.8")));
@@ -359,6 +501,9 @@ export default{
       const html=FILES["index.html"][1].split(OLD_ORIGIN).join(url.origin);
       return new Response(pageFor(html,p,ROUTES[p],url.origin),{headers:{...headers,"content-type":"text/html; charset=utf-8","cache-control":"no-cache"}});
     }
+    /* موقع وِرد في المتصفح: "/" من غير query ولا كوكي التطبيق المتثبت = الصفحة الرئيسية للموقع */
+    if(!p&&req.method==="GET"&&!url.search&&!/(?:^|;\s*)wird_pwa=1/.test(req.headers.get("cookie")||""))return new Response(homePage(url.origin),{headers:{...headers,...SITE_H(300),"vary":"Cookie"}});
+    {let dp0="";try{dp0=decodeURIComponent(p)}catch(e){}const SP={"التقويم-الهجري":hijriPage,"اتجاه-القبلة":qiblaPage,"عداد-التسبيح":tasbihPage,"ما-الجديد":changelogPage}[dp0];if(SP)return new Response(SP(url.origin),{headers:{...headers,...SITE_H(dp0==="التقويم-الهجري"?900:3600)}})}
     /* صفحة تعريف وِرد وتنزيله (للبحث والمشاركة)، و"/" بيفتح التطبيق على طول */
     if(p==="download"&&FILES["landing.html"])return new Response(FILES["landing.html"][1],{headers:{...headers,"content-type":"text/html; charset=utf-8","cache-control":"no-cache"}});
     if(!p)p="index.html";

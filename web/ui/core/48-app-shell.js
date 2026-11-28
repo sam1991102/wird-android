@@ -4,4 +4,6 @@
 var C=window.Capacitor;
 var app=(C&&C.isNativePlatform&&C.isNativePlatform())||matchMedia("(display-mode: standalone)").matches||navigator.standalone===true;
 document.documentElement.classList.toggle("is-app",!!app);
+/* "/" بيفتح الموقع في المتصفح؛ جوه التطبيق المتثبت الكوكي دي بتخليه يفتح التطبيق (worker/routes.js) */
+if(app)try{document.cookie="wird_pwa=1; path=/; max-age=31536000; samesite=lax"+(location.protocol==="https:"?"; secure":"")}catch(e){}
 })();
