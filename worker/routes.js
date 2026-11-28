@@ -9,7 +9,7 @@ function plain(s){return String(s).replace(/[\u064B-\u065F\u0670\u06D6-\u06ED]/g
 ;(()=>{const S={"1":"رواه الحاكم، وصححه الألباني (صحيح الترغيب)","2":"سنن أبي داود (5082)، والترمذي (3575)","3":"سنن أبي داود (5082)، والترمذي (3575)","4":"سنن أبي داود (5082)، والترمذي (3575)","5":"صحيح مسلم (2723)","7":"صحيح البخاري (6306)","8":"سنن أبي داود (5069) — في إسناده ضعف","9":"سنن أبي داود (5073) — في إسناده ضعف","10":"سنن أبي داود (5081) موقوفًا على أبي الدرداء","11":"سنن أبي داود (5074)، وابن ماجه (3871)","12":"سنن أبي داود (5067)، والترمذي (3392)","13":"سنن أبي داود (5088)، والترمذي (3388)","14":"سنن أبي داود (5072)، والترمذي (3389)","15":"رواه النسائي في عمل اليوم والليلة، والحاكم، وحسّنه الألباني","16":"مسند أحمد، وصححه الألباني (صحيح الجامع)","18":"صحيح البخاري (3293)، ومسلم (2691)","19":"رواه الطبراني، وحسّنه الألباني (صحيح الترغيب)","20":"صحيح مسلم (2726)","21":"رواه الحاكم، وصححه الألباني (صحيح الترغيب)","22":"سنن أبي داود (5082)، والترمذي (3575)","23":"سنن أبي داود (5082)، والترمذي (3575)","24":"سنن أبي داود (5082)، والترمذي (3575)","25":"صحيح مسلم (2723)","27":"صحيح البخاري (6306)","28":"سنن أبي داود (5069) — في إسناده ضعف","29":"سنن أبي داود (5073) — في إسناده ضعف","30":"سنن أبي داود (5081) موقوفًا على أبي الدرداء","31":"سنن أبي داود (5074)، وابن ماجه (3871)","32":"سنن أبي داود (5067)، والترمذي (3392)","33":"سنن أبي داود (5088)، والترمذي (3388)","34":"سنن أبي داود (5072)، والترمذي (3389)","35":"رواه النسائي في عمل اليوم والليلة، والحاكم، وحسّنه الألباني","36":"مسند أحمد، وصححه الألباني (صحيح الجامع)","37":"صحيح مسلم (2692)","38":"صحيح البخاري (3293)، ومسلم (2691)","40":"رواه الطبراني، وحسّنه الألباني (صحيح الترغيب)","43":"صحيح البخاري (844)، ومسلم (593)","44":"صحيح مسلم (597)","45":"صحيح مسلم (597)","46":"صحيح مسلم (597)","47":"صحيح مسلم (597)","48":"سنن أبي داود (1522)، والنسائي (1303)","49":"الأمر بالصلاة على النبي ﷺ عام (الأحزاب: 56)، ولا يُعرف حديث يخصّها بدبر الصلاة","50":"رواه النسائي في السنن الكبرى، وصححه الألباني (صحيح الجامع)","53":"سنن أبي داود (5045)، والترمذي (3398)","54":"صحيح البخاري (3705)، ومسلم (2727)","55":"صحيح البخاري (247)، ومسلم (2710)","56":"صحيح البخاري (5017)","57":"صحيح البخاري (5017)","58":"صحيح البخاري (5017)","59":"صحيح مسلم (2712)","60":"صحيح البخاري (6312)","61":"صحيح البخاري (1154)","62":"سنن الترمذي (3401)","65":"رواه النسائي في عمل اليوم والليلة، وصححه الألباني","67":"سنن أبي داود (466)","68":"سنن أبي داود (465)، وابن ماجه (771)","70":"سنن أبي داود (3767)، والترمذي (1858)","71":"رواه ابن السني — إسناده ضعيف جدًا","72":"سنن أبي داود (4023)، والترمذي (3458)","74":"مسند أحمد","75":"سنن أبي داود (5096) — في إسناده ضعف","76":"هذا الدعاء ثابت دبر الصلاة (أبو داود 1522)، ولا يُعرف دليل يخصّه بدخول المنزل","78":"سنن أبي داود (5094)، والترمذي (3427)","84":"سنن أبي داود (5090)","86":"سنن أبي داود (5095)، والترمذي (3426) — ذكر الخروج من المنزل","88":"صحيح البخاري (1797)، ومسلم (1342)","121":"صحيح مسلم (2137)","122":"صحيح البخاري (6307)"};ADHKAR.forEach(a=>{if(!a.source&&S[a.id])a.source=S[a.id]})})();
 ;(()=>{const R=[49,76];for(let i=ADHKAR.length-1;i>=0;i--)if(R.includes(ADHKAR[i].id))ADHKAR.splice(i,1)})();
 function dhikrPage(d,origin){
-  const cat=CATS[d.cat]||{name:"أذكار"},same=ADHKAR.filter(x=>x.cat===d.cat),i=same.findIndex(x=>x.id===d.id);
+  const cat={name:TITLE[d.cat]||(CATS[d.cat]||{name:"أذكار"}).name},same=ADHKAR.filter(x=>x.cat===d.cat),i=same.findIndex(x=>x.id===d.id);
   const body=plain(d.text).replace(/^بسم الله الرحمن الرحيم[.،]?\s*/,"");
   const words=body.replace(/[.،,:*]/g," ").split(/\s+/).filter(Boolean),short=words.slice(0,7).join(" ")+(words.length>7?"…":"");
   const shortOf=x=>{const w=plain(x.text).replace(/^بسم الله الرحمن الرحيم[.،]?\s*/,"").replace(/[.،,:*]/g," ").split(/\s+/).filter(Boolean);return w.slice(0,7).join(" ")};
@@ -19,9 +19,10 @@ function dhikrPage(d,origin){
   const tail=" — "+(d.fadl||cat.name)+". يُقال "+repTxt+(d.source?"، "+d.source:"")+".";
   const room=Math.max(50,158-tail.length),snip=body.length>room?body.slice(0,body.lastIndexOf(" ",room)>40?body.lastIndexOf(" ",room):room)+"…":body;
   let desc=snip+tail;if(desc.length<120)desc+=" من "+cat.name+" في وِرد مع عدّاد للذكر.";if(desc.length>165)desc=desc.slice(0,desc.lastIndexOf(" ",162))+"…";
-  const url=origin+"/d/"+d.id,img=origin+"/og/"+(ROUTES[d.cat]?d.cat:"site")+".jpg";
+  const url=origin+enc(dPath(d)),img=origin+"/og/"+(ROUTES[d.cat]?d.cat:"site")+".jpg";
   const rep=d.repeat>1?(d.repeat===3?"٣ مرات":d.repeat===10?"١٠ مرات":d.repeat+" مرة"):"مرة واحدة";
   const prev=same[i-1],next=same[i+1];
+  const ld2='<script type="application/ld+json">'+JSON.stringify({"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"وِرد","item":origin+"/"},{"@type":"ListItem","position":2,"name":cat.name,"item":origin+enc(catPath(d.cat))},{"@type":"ListItem","position":3,"name":short,"item":url}]}).replace(/</g,"\\u003c")+'</script>';
   const ld={"@context":"https://schema.org","@type":"CreativeWork","name":short,"text":plain(d.text),"inLanguage":"ar","isPartOf":{"@type":"WebSite","name":"وِرد","url":origin+"/"},"citation":d.source||undefined};
   return `<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>${esc(title)}</title><meta name="description" content="${esc(desc)}"><link rel="canonical" href="${url}">
@@ -29,7 +30,7 @@ function dhikrPage(d,origin){
 <meta name="theme-color" content="#0f3d2e"><link rel="icon" href="/icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest">
 <link rel="preload" href="/fonts/amiri-arabic-400-normal.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/styles.css">
 <script>try{var t=localStorage.getItem("wird-dark");if(t==="true"||(t===null&&matchMedia("(prefers-color-scheme:dark)").matches))document.documentElement.classList.add("dark");if(localStorage.getItem("wird-sepia")==="true")document.documentElement.classList.add("sepia")}catch(e){}</script>
-<script type="application/ld+json">${JSON.stringify(ld).replace(/</g,"\\u003c")}</script>
+<script type="application/ld+json">${JSON.stringify(ld).replace(/</g,"\\u003c")}</script>${ld2}
 <style>
 .dp{max-width:760px;margin:auto;padding:20px 18px 60px}
 .dp-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:22px}
@@ -42,6 +43,7 @@ function dhikrPage(d,origin){
 .dp-fadl{margin:0 0 10px;padding:12px 14px;border-radius:14px;background:var(--emerald-50);border-inline-start:3px solid var(--emerald-700);color:var(--ink)}
 html.dark .dp-fadl{background:var(--emerald-100)}
 .dp-src{color:var(--ink-2);font-size:.92rem;margin:0}
+.dp-when-h{font-size:1rem;margin:18px 0 4px}.dp-when{margin:0;color:var(--ink-2)}
 .dp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
 .dp-nav{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
 .dp-nav a{display:block;padding:14px;border-radius:16px;border:1px solid var(--line);text-decoration:none;color:var(--ink);background:var(--paper);font-size:.92rem}
@@ -53,16 +55,17 @@ html.dark .dp-fadl{background:var(--emerald-100)}
 .dp a:focus-visible,.dp button:focus-visible{outline:3px solid var(--gold-2);outline-offset:2px}
 </style></head><body>
 <main class="dp">
-<header class="dp-top"><a class="dp-brand" href="/"><img src="/icon.svg" alt="" width="38" height="38">وِرد</a><nav class="dp-crumb" aria-label="مسار التنقل"><a href="/${ROUTES[d.cat]?d.cat:""}">${esc(cat.name)}</a> · ذكر ${i+1} من ${same.length}</nav></header>
+<header class="dp-top"><a class="dp-brand" href="/"><img src="/icon.svg" alt="" width="38" height="38">وِرد</a><nav class="dp-crumb" aria-label="مسار التنقل"><a href="${enc(catPath(d.cat))}">${esc(cat.name)}</a> · ذكر ${AR(i+1)} من ${AR(same.length)}</nav></header>
 <article class="dp-card">
 <span class="dp-badge">${rep}</span>
 <h1 class="dp-text">${esc(d.text)}</h1>
 ${d.fadl?`<p class="dp-fadl">${esc(d.fadl)}</p>`:""}
 ${d.source?`<p class="dp-src">المصدر: ${esc(d.source)}</p>`:""}
-<div class="dp-actions"><a class="btn btn-primary" href="/${ROUTES[d.cat]?d.cat:""}">اقرأ ${esc(cat.name)} مع العدّاد</a><button class="btn btn-ghost" type="button" id="dpShare">مشاركة</button><button class="btn btn-ghost" type="button" id="dpCopy">نسخ</button></div>
+${WHEN[d.cat]?`<h2 class="dp-when-h">متى يُقال</h2><p class="dp-when">${esc(WHEN[d.cat])} ويُقال ${repTxt}.</p>`:`<p class="dp-when">يُقال ${repTxt}.</p>`}
+<div class="dp-actions"><a class="btn btn-primary" href="${enc(catPath(d.cat))}">اقرأ ${esc(cat.name)} مع العدّاد</a><button class="btn btn-ghost" type="button" id="dpShare">مشاركة</button><button class="btn btn-ghost" type="button" id="dpCopy">نسخ</button></div>
 </article>
-<nav class="dp-nav" aria-label="الذكر السابق والتالي">${prev?`<a href="/d/${prev.id}" rel="prev"><small>السابق</small>${esc(plain(prev.text).split(/\s+/).slice(0,5).join(" "))}…</a>`:"<span></span>"}${next?`<a href="/d/${next.id}" rel="next"><small>التالي</small>${esc(plain(next.text).split(/\s+/).slice(0,5).join(" "))}…</a>`:"<span></span>"}</nav>
-<section class="dp-more" aria-labelledby="dpMore"><h2 id="dpMore">كل ${esc(cat.name)}</h2><ol>${same.map(x=>`<li><a href="/d/${x.id}"${x.id===d.id?' aria-current="page"':""}>${esc(plain(x.text))}</a></li>`).join("")}</ol></section>
+<nav class="dp-nav" aria-label="الذكر السابق والتالي">${prev?`<a href="${enc(dPath(prev))}" rel="prev"><small>السابق</small>${esc(plain(prev.text).split(/\s+/).slice(0,5).join(" "))}…</a>`:"<span></span>"}${next?`<a href="${enc(dPath(next))}" rel="next"><small>التالي</small>${esc(plain(next.text).split(/\s+/).slice(0,5).join(" "))}…</a>`:"<span></span>"}</nav>
+<section class="dp-more" aria-labelledby="dpMore"><h2 id="dpMore">كل ${esc(cat.name)}</h2><ol>${same.map(x=>`<li><a href="${enc(dPath(x))}"${x.id===d.id?' aria-current="page"':""}>${esc(plain(x.text))}</a></li>`).join("")}</ol></section>
 </main>
 <script>(function(){var T=${JSON.stringify(d.text+"\n\n"+(d.source?"— "+d.source+"\n":"")).replace(/</g,"\\u003c")},U=location.href;
 function c(s){(navigator.clipboard?navigator.clipboard.writeText(s):Promise.reject()).then(function(){b.textContent="تم النسخ ✓";setTimeout(function(){b.textContent="نسخ"},1800)},function(){})}
@@ -73,20 +76,51 @@ document.getElementById("dpShare").onclick=function(){if(navigator.share)navigat
 const OLD_ORIGIN="https://azkar.islam-a-elshehery.workers.dev";
 /* فهرس ثابت لأذكار القسم: روابط حقيقية لصفحة كل ذكر يقرأها جوجل من غير ما يشغّل التطبيق،
    ويشوفها الزائر في آخر الصفحة. مع ItemList عشان نتائج البحث تفهم إنها قائمة. */
+/* ===== روابط عربي وصفحات جاهزة لجوجل (على طريقة azkar.me) =====
+   كل قسم برابط عربي (/اذكار-الصباح) وكل ذكر تحته (/اذكار-الصباح/اصبحنا-واصبح-الملك-لله…).
+   الروابط القديمة (/morning و/d/5) بتتحول للجديدة بـ301 عشان الفهرسة ما تضيعش.
+   «متى يُقال» والأسئلة الشائعة كلام عام متفق عليه، من غير أحاديث بأرقام. */
+const TITLE={morning:"أذكار الصباح",evening:"أذكار المساء",prayer:"الأذكار بعد الصلاة",sleep:"أذكار النوم",wake:"أذكار الاستيقاظ",wudu:"أذكار الوضوء",masjid:"أذكار المسجد",food:"أذكار الطعام",home:"أذكار المنزل",kurb:"أدعية الكرب والهم",travel:"أذكار السفر",quran:"أدعية من القرآن الكريم",istikhara:"دعاء الاستخارة",sick:"أذكار المريض والرقية",weather:"أذكار المطر والريح",adhan:"أذكار الأذان",daily:"أذكار المواقف اليومية",general:"أذكار متنوعة",ramadan:"أدعية رمضان والصيام",hajj:"أذكار الحج والعمرة والعيد",family:"أدعية الزواج والأبناء",grief:"أدعية المصيبة والعزاء",market:"دعاء دخول السوق",friday:"أذكار يوم الجمعة",jawami:"جوامع الدعاء",janaza:"أدعية صلاة الجنازة"};
+const WHEN={morning:"من بعد صلاة الفجر إلى طلوع الشمس، ويمدّ بعض العلماء وقتها إلى الضحى.",evening:"من بعد صلاة العصر إلى غروب الشمس، ويمدّ بعض العلماء وقتها إلى أول الليل.",prayer:"بعد السلام من الصلاة المفروضة.",sleep:"عند النوم، والمسلم على فراشه.",wake:"عند الاستيقاظ من النوم.",wudu:"قبل الوضوء وبعده.",masjid:"عند دخول المسجد والخروج منه.",food:"قبل الطعام وبعده.",home:"عند دخول المنزل والخروج منه.",kurb:"عند الهمّ والكرب والضيق.",travel:"عند السفر والركوب والرجوع.",istikhara:"عند التردد في أمر مباح، بعد صلاة ركعتين من غير الفريضة.",sick:"عند المرض وعند زيارة المريض.",weather:"عند نزول المطر وهبوب الريح.",adhan:"عند سماع الأذان وبعد انتهائه.",ramadan:"في رمضان وعند الصيام والإفطار.",hajj:"في الحج والعمرة وأيام العيد.",grief:"عند المصيبة وفي التعزية.",market:"عند دخول السوق.",friday:"في يوم الجمعة."};
+const AR=n=>String(n).replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]);
+function slugAr(t){return plain(String(t)).replace(/\u0640/g,"").replace(/[أإآٱ]/g,"ا").replace(/[^\u0621-\u064A0-9\s-]/g," ").trim().split(/\s+/).filter(Boolean).join("-")}
+const CAT_SLUG={},SLUG_CAT={};for(const k in TITLE){CAT_SLUG[k]=slugAr(TITLE[k]);SLUG_CAT[CAT_SLUG[k]]=k}
+const DSLUG={},SLUG_D={};
+(function(){const used={};for(const d of ADHKAR){const w=plain(d.text).replace(/^بسم الله الرحمن الرحيم[.،]?\s*/,"");let s=slugAr(w.split(/\s+/).slice(0,7).join(" "))||String(d.id);if(used[d.cat+"/"+s])s+="-"+d.id;used[d.cat+"/"+s]=1;DSLUG[d.id]=s;SLUG_D[d.cat+"/"+s]=d.id}})();
+const catPath=k=>"/"+(CAT_SLUG[k]||k);
+const dPath=d=>catPath(d.cat)+"/"+DSLUG[d.id];
+const enc=p=>p.split("/").map(encodeURIComponent).join("/");
+function ld(o){return '<script type="application/ld+json">'+JSON.stringify(o).replace(/</g,"\\u003c")+'</script>'}
+function catFaq(k){const items=ADHKAR.filter(x=>x.cat===k),t=TITLE[k]||ROUTES[k],sum=items.reduce((a,x)=>a+(x.repeat||1),0),q=[];
+ if(items.length)q.push(["كم عدد "+t+"؟","في وِرد "+AR(items.length)+" ذكرًا من "+t+"، ومجموع تكرارها "+AR(sum)+" مرة، وبجانب كل ذكر عدد مرات قوله ومصدره."]);
+ if(WHEN[k])q.push(["متى تُقال "+t+"؟",WHEN[k]]);
+ if(k==="morning"||k==="evening")q.push(["ما الدليل على "+t+"؟","قال الله تعالى: «وَسَبِّحْ بِحَمْدِ رَبِّكَ قَبْلَ طُلُوعِ الشَّمْسِ وَقَبْلَ غُرُوبِهَا» [طه: ١٣٠]."]);
+ q.push(["هل يمكن قراءة "+t+" بدون إنترنت؟","نعم، يعمل وِرد دون إنترنت بعد فتحه أول مرة، على الموبايل والمتصفح، مع عدّاد لكل ذكر."]);
+ return q}
 function seoIndex(slug,name,origin){
   const items=ADHKAR.filter(x=>x.cat===slug);if(!items.length)return"";
-  const first=x=>{const w=plain(x.text).replace(/^بسم الله الرحمن الرحيم[.،]?\s*/,"").split(/\s+/);return w.slice(0,9).join(" ")+(w.length>9?"…":"")};
-  const ld={"@context":"https://schema.org","@type":"ItemList","name":name,"numberOfItems":items.length,"itemListElement":items.map((x,i)=>({"@type":"ListItem","position":i+1,"url":origin+"/d/"+x.id,"name":first(x)}))};
+  const t=TITLE[slug]||name,url=origin+enc(catPath(slug)),faq=catFaq(slug);
+  const rep=x=>x.repeat>1?AR(x.repeat)+" مرات":"مرة واحدة";
   const other=Object.keys(ROUTES).filter(k=>k!==slug&&ADHKAR.some(x=>x.cat===k));
-  return '<section class="seo-ix" aria-labelledby="seoIxH"><h1 id="seoIxH">'+esc(name)+' مكتوبة</h1><ol>'+
-    items.map(x=>'<li><a href="/d/'+x.id+'">'+esc(first(x))+'</a></li>').join("")+'</ol>'+
-    '<h2>أقسام أخرى</h2><p class="seo-ix-cats">'+other.map(k=>'<a href="/'+k+'">'+esc(ROUTES[k])+'</a>').join("")+'</p></section>'+
-    '<script type="application/ld+json">'+JSON.stringify(ld).replace(/</g,"\\u003c")+'</script>';
+  const data=[{"@context":"https://schema.org","@type":"CollectionPage","name":t+" مكتوبة كاملة","url":url,"inLanguage":"ar","mainEntity":{"@type":"ItemList","numberOfItems":items.length,"itemListElement":items.map((x,i)=>({"@type":"ListItem","position":i+1,"url":origin+enc(dPath(x))}))}},
+   {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"وِرد","item":origin+"/"},{"@type":"ListItem","position":2,"name":t,"item":url}]},
+   {"@context":"https://schema.org","@type":"FAQPage","mainEntity":faq.map(f=>({"@type":"Question","name":f[0],"acceptedAnswer":{"@type":"Answer","text":f[1]}}))}];
+  return '<section class="seo-ix" aria-labelledby="seoIxH"><h1 id="seoIxH">'+esc(t)+' مكتوبة كاملة</h1>'+
+    '<p>'+AR(items.length)+' ذكرًا من '+esc(t)+' بالتشكيل، مع عدد مرات كل ذكر ومصدره من القرآن والسنة.'+(WHEN[slug]?' وقتها: '+esc(WHEN[slug]):'')+'</p>'+
+    '<ol class="seo-ix-list">'+items.map(x=>'<li><a href="'+enc(dPath(x))+'">'+esc(plain(x.text))+'</a> <small>'+rep(x)+(x.source?' · '+esc(x.source):'')+'</small></li>').join("")+'</ol>'+
+    '<h2>أسئلة شائعة عن '+esc(t)+'</h2><dl class="seo-ix-faq">'+faq.map(f=>'<dt>'+esc(f[0])+'</dt><dd>'+esc(f[1])+'</dd>').join("")+'</dl>'+
+    '<h2>أقسام أخرى</h2><p class="seo-ix-cats">'+other.map(k=>'<a href="'+enc(catPath(k))+'">'+esc(TITLE[k]||ROUTES[k])+'</a>').join("")+'</p></section>'+data.map(ld).join("");
 }
+function sitemap(origin){const day=new Date().toISOString().slice(0,10),u=(path,pr)=>"<url><loc>"+origin+enc(path)+"</loc><lastmod>"+day+"</lastmod>"+(pr?"<priority>"+pr+"</priority>":"")+"</url>";
+ const pages=["/","/download","/about.html","/privacy.html","/contact.html","/kids","/learn","/hadith"].map(x=>u(x,x==="/"?"1.0":"0.5"));
+ const cats=Object.keys(ROUTES).filter(k=>ADHKAR.some(x=>x.cat===k)).map(k=>u(catPath(k),"0.9"));
+ const dk=ADHKAR.filter(d=>ROUTES[d.cat]).map(d=>u(dPath(d),"0.7"));
+ return '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+pages.concat(cats,dk).join("\n")+"\n</urlset>\n"}
 function pageFor(html,slug,name,origin){
-  const title=name+" مكتوبة كاملة مع الفضل والمصدر | وِرد";
-  const desc=name+" مكتوبة كاملة بالتشكيل مع عدّاد لكل ذكر، وفضله ومصدره من القرآن والسنة. اقرأها ذكرًا بعد ذكر، وتعمل دون إنترنت.";
-  const url=origin+"/"+slug,img=origin+"/og/"+slug+".jpg";
+  const t=TITLE[slug]||name,n=ADHKAR.filter(x=>x.cat===slug).length;
+  const title=t+" مكتوبة كاملة مع عداد"+(n?" — "+AR(n)+" ذكرًا":"")+" | وِرد";
+  const desc=t+" مكتوبة كاملة بالتشكيل"+(n?" ("+AR(n)+" ذكرًا)":"")+" مع عدّاد لكل ذكر، وعدد مرات قوله ومصدره من القرآن والسنة."+(WHEN[slug]?" وقتها "+WHEN[slug]:"")+" تعمل دون إنترنت.";
+  const url=origin+enc(catPath(slug)),img=origin+"/og/"+slug+".jpg";
   return html.replace(/<title>[^<]*<\/title>/,"<title>"+title+"</title>")
     .replace(/(<meta name="description" content=")[^"]*/,"$1"+desc)
     .replace(/(<link rel="canonical" href=")[^"]*/,"$1"+url)
@@ -95,7 +129,9 @@ function pageFor(html,slug,name,origin){
     .replace(/(<meta property="og:url" content=")[^"]*/,"$1"+url)
     .replace(/(<meta property="og:image" content=")[^"]*/,"$1"+img)
     .replace(/(<meta name="twitter:image" content=")[^"]*/,"$1"+img)
-    .replace('<div id="toast"',seoIndex(slug,name,origin)+'\n<div id="toast"');
+    .replace('<div id="toast"',seoIndex(slug,name,origin)+'\n<div id="toast"')
+    /* التطبيق بيفتح القسم من الرابط: الرابط عربي، فبنقوله اسم القسم بالإنجليزي (ui/core/24-dhikr-reminders.js) */
+    .replace('</head>','<script>window.__wirdCat='+JSON.stringify(slug)+'</script></head>');
 }
 const VAPID_PUBLIC="BBryBL4-vPUiJfuOZGWBXOEawUBZ6TJfXuEiEyRJ3i-CgfbN7OS_iTfYA_EQgf-EZls4kx4xYiMGbHJe0bYyddU";
 const PUSH_HOSTS=/(^|\.)(fcm\.googleapis\.com|push\.services\.mozilla\.com|web\.push\.apple\.com|notify\.windows\.com|push\.apple\.com)$/;
@@ -231,6 +267,14 @@ export default{
  if(isHtml&&!isBot){return new Response("<!doctype html><html lang=ar dir=rtl><meta charset=utf-8><meta name=robots content=noindex><title>وِرد</title><body style=\"font-family:sans-serif;text-align:center;padding:40px\">جارٍ نقلك إلى الرابط الجديد…<script>try{var d={};for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k.indexOf(\"wird\")===0)d[k]=localStorage.getItem(k)}var h=Object.keys(d).length?\"#wmig=\"+encodeURIComponent(JSON.stringify(d)):\"\";}catch(e){var h=\"\"}var u=\"https://wird-azkar.pages.dev\"+location.pathname+location.search+h;if(navigator.standalone||matchMedia(\"(display-mode: standalone)\").matches){document.body.innerHTML=\"<div style=\\\"max-width:420px;margin:auto;line-height:1.9;font-size:18px\\\"><h2>انتقل وِرد إلى رابط جديد</h2><p>لإكمال استخدام التطبيق دون شريط العنوان:</p><ol style=\\\"text-align:right\\\"><li>احذف أيقونة وِرد الحالية من الشاشة الرئيسية.</li><li>افتح الرابط الجديد في المتصفح (كروم على أندرويد أو سفاري على آيفون).</li><li>أندرويد: القائمة ⋮ ← تثبيت التطبيق. آيفون: مشاركة ← إضافة إلى الشاشة الرئيسية.</li></ol><p><a href=\\\"\"+u+\"\\\" style=\\\"display:inline-block;background:#0f3d2e;color:#fff;padding:12px 22px;border-radius:12px;text-decoration:none\\\">افتح wird-azkar.pages.dev</a></p><p style=\\\"font-size:14px;color:#666\\\">بياناتك ستنتقل تلقائيًا.</p></div>\"}else location.replace(u)</script>",{headers:{"content-type":"text/html; charset=utf-8","cache-control":"no-store"}})}return Response.redirect("https://wird-azkar.pages.dev"+url.pathname+url.search,301)}
     let p=url.pathname.replace(/^\/+/,"").replace(/\/+$/,"");
     const headers={"x-content-type-options":"nosniff","referrer-policy":"strict-origin-when-cross-origin","permissions-policy":"geolocation=(self), camera=(), microphone=(), payment=(), usb=(), interest-cohort=()","strict-transport-security":"max-age=31536000; includeSubDomains","x-frame-options":"DENY","cross-origin-opener-policy":"same-origin","content-security-policy":"default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data: https://static.qurancdn.com; connect-src 'self' https:; media-src 'self' blob: https:; worker-src 'self'; manifest-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests"};
+    /* روابط عربي: /اذكار-الصباح و/اذكار-الصباح/<ذكر>، والقديمة بتتحول لها بـ301 */
+    let dp="";try{dp=decodeURIComponent(p)}catch(e){}
+    if(ROUTES[p]&&CAT_SLUG[p])return Response.redirect(url.origin+enc(catPath(p)),301);
+    {const om=p.match(/^d\/(\d+)$/);if(om){const d=ADHKAR.find(x=>x.id===+om[1]);if(d)return Response.redirect(url.origin+enc(dPath(d)),301)}}
+    {const seg=dp.split("/"),k=SLUG_CAT[seg[0]];
+     if(k&&seg.length===1&&ROUTES[k]){const html=FILES["index.html"][1].split(OLD_ORIGIN).join(url.origin);return new Response(pageFor(html,k,ROUTES[k],url.origin),{headers:{...headers,"content-type":"text/html; charset=utf-8","cache-control":"no-cache"}})}
+     if(k&&seg.length===2){const id=SLUG_D[k+"/"+seg[1]],d=id&&ADHKAR.find(x=>x.id===id);if(d)return new Response(dhikrPage(d,url.origin),{headers:{...headers,"content-type":"text/html; charset=utf-8","cache-control":"public, max-age=3600"}})}}
+    if(p==="sitemap.xml")return new Response(sitemap(url.origin),{headers:{...headers,"content-type":"application/xml; charset=utf-8","cache-control":"public, max-age=3600"}});
     const dm=p.match(/^d\/(\d+)$/);
     if(dm){const d=ADHKAR.find(x=>x.id===+dm[1]);if(d)return new Response(dhikrPage(d,url.origin),{headers:{...headers,"content-type":"text/html; charset=utf-8","cache-control":"public, max-age=3600"}})}
     if(ROUTES[p]){

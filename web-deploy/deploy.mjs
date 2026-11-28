@@ -127,7 +127,8 @@ console.log('pages: deployed', r.url || r.id);
 //    المفتاح عام بطبيعته وملفه بيتقدّم من worker/routes.js. فشل الإبلاغ مش بيفشّل النشر.
 {
   const SITE = 'https://wird-azkar.pages.dev', KEY = '697fdf0010e539a98af74280271d7069';
-  const sm = F['sitemap.xml'] ? F['sitemap.xml'][1] : '';
+  // خريطة الموقع بيبنيها السيرفر من بيانات الأذكار (worker/routes.js → sitemap)، فبناخدها من الموقع بعد النشر
+  const sm = await fetch(SITE + '/sitemap.xml?' + Date.now()).then(r => r.ok ? r.text() : '').catch(() => '');
   const urls = [...sm.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1].replace(/^https?:\/\/[^/]+/, SITE));
   if (urls.length) {
     try {
