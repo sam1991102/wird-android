@@ -183,6 +183,118 @@
    "type": "image/png"
   },
   {
+   "name": "kids/p-book.jpg",
+   "type": "image/jpeg"
+  },
+  {
+   "name": "kids/p-cave.jpg",
+   "type": "image/jpeg"
+  },
+  {
+   "name": "kids/p-water.jpg",
+   "type": "image/jpeg"
+  },
+  {
+   "name": "kids/p-cloud.jpg",
+   "type": "image/jpeg"
+  },
+  {
+   "name": "kids/p-coins.jpg",
+   "type": "image/jpeg"
+  },
+  {
+   "name": "kids/p-earth.jpg",
+   "type": "image/jpeg"
+  },
+  {
+   "name": "kids/p-fire.jpg",
+   "type": "image/jpeg"
+  },
+  {
+   "name": "kids/p-flood.jpg",
+   "type": "image/jpeg"
+  },
+  {
+   "name": "kids/p-garden.jpg",
+   "type": "image/jpeg"
+  },
+  {
+   "name": "kids/p-hills2.jpg",
+   "type": "image/jpeg"
+  },
+  {
+   "name": "kids/p-lamp.jpg",
+   "type": "image/jpeg"
+  },
+  {
+   "name": "kids/p-light.jpg",
+   "type": "image/jpeg"
+  },
+  {
+   "name": "kids/p-mbirds.jpg",
+   "type": "image/jpeg"
+  },
+  {
+   "name": "kids/p-mihrab.jpg",
+   "type": "image/jpeg"
+  },
+  {
+   "name": "kids/p-palace.jpg",
+   "type": "image/jpeg"
+  },
+  {
+   "name": "kids/p-palm.jpg",
+   "type": "image/jpeg"
+  },
+  {
+   "name": "kids/p-rock.jpg",
+   "type": "image/jpeg"
+  },
+  {
+   "name": "kids/p-sheep.jpg",
+   "type": "image/jpeg"
+  },
+  {
+   "name": "kids/p-spring.jpg",
+   "type": "image/jpeg"
+  },
+  {
+   "name": "kids/p-stars.jpg",
+   "type": "image/jpeg"
+  },
+  {
+   "name": "kids/p-storm.jpg",
+   "type": "image/jpeg"
+  },
+  {
+   "name": "kids/p-sunrise.jpg",
+   "type": "image/jpeg"
+  },
+  {
+   "name": "kids/p-town.jpg",
+   "type": "image/jpeg"
+  },
+  {
+   "name": "kids/p-tree.jpg",
+   "type": "image/jpeg"
+  },
+  {
+   "name": "kids/p-well.jpg",
+   "type": "image/jpeg"
+  },
+  {
+   "name": "kids/p-whale.jpg",
+   "type": "image/jpeg"
+  },
+  {
+   "name": "kids/p-wheat.jpg",
+   "type": "image/jpeg"
+  },
+  {
+   "name": "kids/p-wind.jpg",
+   "type": "image/jpeg"
+  },
+  {
    "name": "kids/desert.png",
    "type": "image/webp"
   },

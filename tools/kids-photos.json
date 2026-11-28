@@ -1,0 +1,111 @@
+{
+ "a_book": {
+  "src": "https://cdn.pixabay.com/photo/2016/07/19/16/17/holy-quran-1528446_640.jpg",
+  "page": "https://pixabay.com/photos/holy-quran-ramadan-holy-month-1528446/"
+ },
+ "a_cave": {
+  "src": "https://cdn.pixabay.com/photo/2025/02/05/18/57/cave-9385317_640.jpg",
+  "page": "https://pixabay.com/photos/cave-birds-mountains-landscape-9385317/"
+ },
+ "a_cloud": {
+  "src": "https://cdn.pixabay.com/photo/2022/03/06/05/30/clouds-7050884_640.jpg",
+  "page": "https://pixabay.com/photos/clouds-sky-atmosphere-blue-sky-7050884/"
+ },
+ "a_coins": {
+  "src": "https://cdn.pixabay.com/photo/2017/03/28/21/35/coins-2183470_640.jpg",
+  "page": "https://pixabay.com/photos/coins-old-roman-gold-coins-antique-2183470/"
+ },
+ "a_earth": {
+  "src": "https://cdn.pixabay.com/photo/2019/08/24/11/05/planet-earth-4427437_640.jpg",
+  "page": "https://pixabay.com/photos/planet-earth-earth-planet-global-4427437/"
+ },
+ "a_fire": {
+  "src": "https://cdn.pixabay.com/photo/2025/10/06/15/41/fire-9877220_640.jpg",
+  "page": "https://pixabay.com/photos/fire-flames-fireplace-campfire-9877220/"
+ },
+ "a_flood": {
+  "src": "https://cdn.pixabay.com/photo/2019/03/11/00/15/rainbow-4047523_640.jpg",
+  "page": "https://pixabay.com/photos/rainbow-cloud-evening-sun-rain-4047523/"
+ },
+ "a_garden": {
+  "page": "https://pixabay.com/photos/waterfall-nature-landscape-forest-7845023/"
+ },
+ "a_hills2": {
+  "src": "https://cdn.pixabay.com/photo/2017/06/23/17/46/desert-2435404_640.jpg",
+  "page": "https://pixabay.com/photos/desert-morocco-dunes-sand-2435404/"
+ },
+ "a_lamp": {
+  "src": "https://cdn.pixabay.com/photo/2019/06/12/12/27/egypt-4269151_640.jpg",
+  "page": "https://pixabay.com/photos/egypt-cairo-lamps-bazaar-lanterns-4269151/"
+ },
+ "a_light": {
+  "src": "https://cdn.pixabay.com/photo/2014/08/09/15/45/sky-414199_640.jpg",
+  "page": "https://pixabay.com/photos/sky-clouds-sunlight-atmosphere-414199/"
+ },
+ "a_mbirds": {
+  "src": "https://cdn.pixabay.com/photo/2026/09/19/03/49/03-49-29-840_640.jpg",
+  "page": "https://pixabay.com/photos/birds-cranes-nature-reserve-10482068/"
+ },
+ "a_mihrab": {
+  "src": "https://cdn.pixabay.com/photo/2016/11/18/17/07/ancient-1835865_640.jpg",
+  "page": "https://pixabay.com/photos/ancient-arch-architecture-art-1835865/"
+ },
+ "a_palace": {
+  "src": "https://cdn.pixabay.com/photo/2015/10/01/13/52/alhambra-967024_640.jpg",
+  "page": "https://pixabay.com/photos/alhambra-granada-andalusia-spain-967024/"
+ },
+ "a_palm": {
+  "src": "https://cdn.pixabay.com/photo/2019/08/24/04/14/palm-4426939_640.jpg",
+  "page": "https://pixabay.com/photos/palm-fruit-tree-nature-garden-4426939/"
+ },
+ "a_rock": {
+  "src": "https://cdn.pixabay.com/photo/2023/06/14/17/55/nature-8063737_640.jpg",
+  "page": "https://pixabay.com/photos/nature-cave-valley-mountain-8063737/"
+ },
+ "a_sheep": {
+  "src": "https://cdn.pixabay.com/photo/2021/08/17/21/03/herd-6554180_640.jpg",
+  "page": "https://pixabay.com/photos/herd-dog-livestock-grazing-animals-6554180/"
+ },
+ "a_spring": {
+  "src": "https://cdn.pixabay.com/photo/2020/05/12/11/32/rocks-5162510_640.jpg",
+  "page": "https://pixabay.com/photos/rocks-brook-stream-flow-5162510/"
+ },
+ "a_stars": {
+  "src": "https://cdn.pixabay.com/photo/2019/10/01/21/39/caravansary-4519431_640.jpg",
+  "page": "https://pixabay.com/photos/caravansary-monument-4519431/"
+ },
+ "a_storm": {
+  "src": "https://cdn.pixabay.com/photo/2018/06/13/18/20/waves-3473335_640.jpg",
+  "page": "https://pixabay.com/photos/waves-sea-ocean-beach-blue-water-3473335/"
+ },
+ "a_sunrise": {
+  "src": "https://cdn.pixabay.com/photo/2016/11/18/19/38/desert-1836586_640.jpg",
+  "page": "https://pixabay.com/photos/desert-sand-dunes-dry-arid-1836586/"
+ },
+ "a_town": {
+  "page": "https://pixabay.com/photos/alley-historic-center-historical-2995354/"
+ },
+ "a_tree": {
+  "src": "https://cdn.pixabay.com/photo/2016/12/27/21/03/lone-tree-1934897_640.jpg",
+  "page": "https://pixabay.com/photos/lone-tree-tree-oak-clouds-1934897/"
+ },
+ "a_well": {
+  "src": "https://cdn.pixabay.com/photo/2017/08/12/23/37/fountain-2635754_640.png",
+  "page": "https://pixabay.com/photos/fountain-old-stone-wall-old-well-2635754/"
+ },
+ "a_whale": {
+  "src": "https://cdn.pixabay.com/photo/2026/09/09/19/42/19-42-29-269_640.jpg",
+  "page": "https://pixabay.com/photos/whale-sea-ocean-fin-tail-blue-10467525/"
+ },
+ "a_wheat": {
+  "src": "https://cdn.pixabay.com/photo/2026/09/19/18/51/18-51-12-411_640.jpg",
+  "page": "https://pixabay.com/photos/sky-clouds-rural-wheat-field-10482823/"
+ },
+ "a_wind": {
+  "page": "https://pixabay.com/photos/desert-sand-dune-sand-nature-10058281/"
+ },
+ "w1": {
+  "src": "https://cdn.pixabay.com/photo/2017/06/14/23/40/fountain-2403720_640.jpg",
+  "page": "https://pixabay.com/photos/fountain-mosque-patio-sightseeing-2403720/"
+ }
+}
