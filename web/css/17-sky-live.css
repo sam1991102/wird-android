@@ -72,3 +72,5 @@
 #skyCard .da-svg{overflow:visible}/* محطة النوم على طرف القوس: هالتها ما تتقصّش */
 #skyCard .da-hd{margin-inline:var(--s8)}
 #skyCard .da-go{width:calc(100% - var(--s16));margin-inline:var(--s8)}
+/* الرئيسية: الشمس في نفس مكان القمر فوق على الشمال، لأن الكارت طويل وموضعها حسب الوقت كان بيقع على «اجعل لسانك رطبًا» */
+#skyCard:has(#homeAlerts) .sk-scene .sk-sun{left:30%!important;top:var(--s32)!important}

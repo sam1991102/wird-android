@@ -8,7 +8,7 @@ var DEF={ac:"",bg:"cream",bgc:"",card:"white",ink:"normal",bar:"color",onTab:"pr
  font:"tajawal",deco:"diwani",textf:"amiri",weight:"normal",size:100,lh:"normal",
  rd:"normal",shadow:"normal",border:"on",density:"normal",icons:"regular",labels:"on",motion:"full"};
 var PRE={classic:{},hadi:{bg:"gray",bar:"light",onTab:"gold",font:"plex",weight:"light",rd:"round",shadow:"soft",border:"off",icons:"thin"}};
-var ACS=[["","أخضر وِرد"],["#1b8354","أخضر فاتح"],["#0f5c46","زمردي"],["#2f5d8c","أزرق"],["#7d2e3a","عنابي"],["#7a5a3a","بني"],["#5b4b8a","بنفسجي"],["#22303c","كحلي"]];
+var ACS=[["","أخضر وِرد"],["#32735c","أخضر هادي"],["#0f5c46","زمردي غامق"],["#2f5d8c","أزرق"],["#7d2e3a","عنابي"],["#7a5a3a","بني"],["#5b4b8a","بنفسجي"],["#22303c","كحلي"]];
 var T={"--t-2xs":11,"--t-xs":12,"--t-sm":13,"--t-md":14,"--t-base":16,"--t-lg":18,"--t-xl":20,"--t-2xl":24,"--t-3xl":28,"--t-4xl":32};
 var SP={"--s4":4,"--s6":6,"--s8":8,"--s10":10,"--s12":12,"--s14":14,"--s16":16,"--s20":20,"--s24":24,"--s28":28,"--s32":32};
 var CLS={bg:["white","gray","custom"],card:["tint"],ink:["soft","strong"],bar:["light"],onTab:["gold"],font:["plex"],deco:["ui"],textf:["ui"],weight:["light","bold"],lh:["tight","airy"],rd:["sharp","round"],shadow:["none","soft","strong"],border:["off"],icons:["thin","fill"],labels:["off"],motion:["off"]};
@@ -97,7 +97,7 @@ function sync(){var p=preset();
  document.querySelectorAll("[data-lk]").forEach(function(b){var k=b.dataset.lk;
   if(k==="preset")b.setAttribute("aria-checked",String(b.dataset.v===p));
   else if(k==="size")b.value=String(S.size);
-  else if(k==="acc")b.value=S.ac||"#32735c";
+  else if(k==="acc")b.value=S.ac||"#127a4f";
   else if(k==="bgc")b.value=S.bgc||"#f5f2ec";
   else if(b.dataset.v!==undefined)b.setAttribute("aria-checked",String(String(S[k])===b.dataset.v))})}
 function set(k,v){if(k==="reset"){setSkin("classic");S=Object.assign({},DEF);return save()}
