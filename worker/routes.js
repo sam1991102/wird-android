@@ -121,7 +121,7 @@ function tick(){var n=new Date(Date.now()+OFF*36e5),h=n.getUTCHours()+n.getUTCMi
    "/" في المتصفح = الصفحة الرئيسية للموقع. التطبيق المتثبت بيفتح على /?source=pwa، وأي رابط فيه query
    (زي ?app=1 وروابط الإشعارات) بيفتح التطبيق، وكوكي wird_pwa (بتتحط جوه التطبيق المتثبت) بتخلي "/" يفتح التطبيق.
    كل الصفحات بنفس القالب: siteShell (شريط علوي + تذييل) وملف /site.css. */
-const NAV=[["/","الرئيسية"],["/?app=1#library","الأذكار"],["/"+PRAY_ROOT,"المواقيت"],["/اتجاه-القبلة","القبلة"],["/التقويم-الهجري","التقويم الهجري"],["/عداد-التسبيح","السبحة"]];
+const NAV=[["/","الرئيسية"],["/?app=1#library","الأذكار"],["/?app=1#prayer","المواقيت"],["/اتجاه-القبلة","القبلة"],["/التقويم-الهجري","التقويم الهجري"],["/?app=1#tasbih","السبحة"]];
 const APK_URL="https://github.com/sam1991102/wird-android/releases/latest/download/wird.apk";
 function siteShell(o){const cur=o.path||"";
  return `<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -459,7 +459,6 @@ export default{
     if(ROUTES[p]&&CAT_SLUG[p])return Response.redirect(url.origin+enc(catPath(p)),301);
     {const om=p.match(/^d\/(\d+)$/);if(om){const d=ADHKAR.find(x=>x.id===+om[1]);if(d)return Response.redirect(url.origin+enc(dPath(d)),301)}}
     {const seg=dp.split("/"),k=SLUG_CAT[seg[0]];
-     if(k&&seg.length===1&&ROUTES[k]&&!url.search&&!/(?:^|;\s*)wird_pwa=1/.test(req.headers.get("cookie")||""))return new Response(catSitePage(k,url.origin),{headers:{...headers,...SITE_H(900)}});
      if(k&&seg.length===1&&ROUTES[k]){const html=FILES["index.html"][1].split(OLD_ORIGIN).join(url.origin);return new Response(pageFor(html,k,ROUTES[k],url.origin),{headers:{...headers,"content-type":"text/html; charset=utf-8","cache-control":"no-cache"}})}
      if(k&&seg.length===2){const id=SLUG_D[k+"/"+seg[1]],d=id&&ADHKAR.find(x=>x.id===id);if(d)return new Response(dhikrPage(d,url.origin),{headers:{...headers,"content-type":"text/html; charset=utf-8","cache-control":"public, max-age=3600"}})}}
     {const seg=dp.split("/");if(seg[0]===PRAY_ROOT){const H={...headers,"content-type":"text/html; charset=utf-8","cache-control":"public, max-age=900"};
