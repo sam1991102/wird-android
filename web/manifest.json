@@ -86,6 +86,22 @@
    "type": "font/woff2"
   },
   {
+   "name": "landing/home.jpg",
+   "type": "image/jpeg"
+  },
+  {
+   "name": "landing/library.jpg",
+   "type": "image/jpeg"
+  },
+  {
+   "name": "landing/prayer.jpg",
+   "type": "image/jpeg"
+  },
+  {
+   "name": "landing.html",
+   "type": "text/html; charset=utf-8"
+  },
+  {
    "name": "fonts/amiri-arabic-400-normal.woff2",
    "type": "font/woff2"
   },
@@ -268,6 +284,7 @@
   "core/45-motion.js",
   "core/46-app-update.js",
   "core/47-look.js",
+  "core/48-app-shell.js",
   "core/32-city-name.js",
   "core/33-mushaf-card.js",
   "core/34a-kids-art.js",

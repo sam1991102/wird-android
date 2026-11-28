@@ -237,6 +237,8 @@ export default{
       const html=FILES["index.html"][1].split(OLD_ORIGIN).join(url.origin);
       return new Response(pageFor(html,p,ROUTES[p],url.origin),{headers:{...headers,"content-type":"text/html; charset=utf-8","cache-control":"no-cache"}});
     }
+    /* صفحة تعريف وِرد وتنزيله (للبحث والمشاركة)، و"/" بيفتح التطبيق على طول */
+    if(p==="download"&&FILES["landing.html"])return new Response(FILES["landing.html"][1],{headers:{...headers,"content-type":"text/html; charset=utf-8","cache-control":"no-cache"}});
     if(!p)p="index.html";
     let status=200;
     if(!FILES[p]){if(env&&env.ASSETS){const ar=await env.ASSETS.fetch(new Request(new URL("/"+p,url.origin),{method:"GET"}));if(ar.ok){const h=new Headers(ar.headers);for(const [k,v] of Object.entries(headers))h.set(k,v);h.set("cache-control",/\.(png|jpg|jpeg|webp|woff2|svg|ico)$/.test(p)?"public, max-age=2592000, immutable":"public, max-age=86400");if(p.endsWith(".woff2"))h.set("access-control-allow-origin","*");return new Response(ar.body,{status:200,headers:h})}}p="404.html";status=404}

@@ -160,3 +160,6 @@ html.rd-round :is(.lk-lv-btn,.lk-lv-chip){border-radius:var(--rd-pill)}
 .lk-a{color:var(--muted);line-height:1}.lk-a-s{font-size:var(--t-sm)}.lk-a-l{font-size:var(--t-2xl)}
 .lk-range output{min-width:3.2em;text-align:center;color:var(--ink-2);font-size:var(--t-sm);background:var(--paper-2);border-radius:var(--rd-pill);padding:var(--s2) var(--s8)}
 .lk-reset{justify-self:center;margin-bottom:var(--s16);background:none;border:0;color:var(--danger);font:500 var(--t-md) var(--font-ui);padding:var(--s10) var(--s16);cursor:pointer}
+
+/* جوه التطبيق المتثبت: مفيش زرار تثبيت ولا روابط الموقع (ui/core/48-app-shell.js) */
+html.is-app :is(#installBtn,.footer){display:none!important}
