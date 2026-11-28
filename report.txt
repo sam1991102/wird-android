@@ -1,0 +1,110 @@
+مشاكل: 92
+
+[classic-light/home] كارت اليوم مش ظاهر
+[classic-light/home] الآية والحديث مش ظاهر
+[classic-light/home] أذكار اليوم مش ظاهر
+[classic-light/home] مسار اليوم مش مرسوم
+[classic-light/home] ميعاد الصلاة مش ظاهر في كارت اليوم: no skyCard
+[classic-light] الشريط السفلي مش موجود
+[classic-light] عناصر خارجة عن عرض الشاشة: A.skip«تخطّى للمحتوى» in undefined
+[classic-dark/home] كارت اليوم مش ظاهر
+[classic-dark/home] الآية والحديث مش ظاهر
+[classic-dark/home] أذكار اليوم مش ظاهر
+[classic-dark/home] مسار اليوم مش مرسوم
+[classic-dark/home] ميعاد الصلاة مش ظاهر في كارت اليوم: no skyCard
+[classic-dark] الشريط السفلي مش موجود
+[classic-dark] عناصر خارجة عن عرض الشاشة: A.skip«تخطّى للمحتوى» in undefined
+[creative-light/home] كارت اليوم مش ظاهر
+[creative-light/home] الآية والحديث مش ظاهر
+[creative-light/home] أذكار اليوم مش ظاهر
+[creative-light/home] مسار اليوم مش مرسوم
+[creative-light/home] ميعاد الصلاة مش ظاهر في كارت اليوم: no skyCard
+[creative-light] الشريط السفلي مش موجود
+[creative-light] عناصر خارجة عن عرض الشاشة: A.skip«تخطّى للمحتوى» in undefined
+[creative-dark/home] كارت اليوم مش ظاهر
+[creative-dark/home] الآية والحديث مش ظاهر
+[creative-dark/home] أذكار اليوم مش ظاهر
+[creative-dark/home] مسار اليوم مش مرسوم
+[creative-dark/home] ميعاد الصلاة مش ظاهر في كارت اليوم: no skyCard
+[creative-dark] الشريط السفلي مش موجود
+[creative-dark] عناصر خارجة عن عرض الشاشة: A.skip«تخطّى للمحتوى» in undefined
+[reader] اللمسة على المكان الفاضي ما خبّتش الشريطين
+[reader] زر الوضع الليلي مش شغال
+[classic-light/sweep] ما لقيتش صفحات الإعدادات للفحص
+[classic-light/settings] صف ناقص من الإعدادات: notif
+[classic-light/settings] صف ناقص من الإعدادات: st-prayer
+[classic-light/settings] صف ناقص من الإعدادات: st-adhan
+[classic-light/settings] صف ناقص من الإعدادات: st-dr
+[classic-light/settings] صف ناقص من الإعدادات: st-remind
+[classic-light/settings] صف ناقص من الإعدادات: st-look
+[classic-light/settings] صف ناقص من الإعدادات: st-qari
+[classic-light/settings] صف ناقص من الإعدادات: st-data
+[classic-light/settings] صف ناقص من الإعدادات: st-about
+[classic-dark/sweep] ما لقيتش صفحات الإعدادات للفحص
+[classic-dark/settings] صف ناقص من الإعدادات: notif
+[classic-dark/settings] صف ناقص من الإعدادات: st-prayer
+[classic-dark/settings] صف ناقص من الإعدادات: st-adhan
+[classic-dark/settings] صف ناقص من الإعدادات: st-dr
+[classic-dark/settings] صف ناقص من الإعدادات: st-remind
+[classic-dark/settings] صف ناقص من الإعدادات: st-look
+[classic-dark/settings] صف ناقص من الإعدادات: st-qari
+[classic-dark/settings] صف ناقص من الإعدادات: st-data
+[classic-dark/settings] صف ناقص من الإعدادات: st-about
+[creative-light/sweep] ما لقيتش صفحات الإعدادات للفحص
+[creative-light/settings] صف ناقص من الإعدادات: notif
+[creative-light/settings] صف ناقص من الإعدادات: st-prayer
+[creative-light/settings] صف ناقص من الإعدادات: st-adhan
+[creative-light/settings] صف ناقص من الإعدادات: st-dr
+[creative-light/settings] صف ناقص من الإعدادات: st-remind
+[creative-light/settings] صف ناقص من الإعدادات: st-look
+[creative-light/settings] صف ناقص من الإعدادات: st-qari
+[creative-light/settings] صف ناقص من الإعدادات: st-data
+[creative-light/settings] صف ناقص من الإعدادات: st-about
+[creative-dark/sweep] ما لقيتش صفحات الإعدادات للفحص
+[creative-dark/settings] صف ناقص من الإعدادات: notif
+[creative-dark/settings] صف ناقص من الإعدادات: st-prayer
+[creative-dark/settings] صف ناقص من الإعدادات: st-adhan
+[creative-dark/settings] صف ناقص من الإعدادات: st-dr
+[creative-dark/settings] صف ناقص من الإعدادات: st-remind
+[creative-dark/settings] صف ناقص من الإعدادات: st-look
+[creative-dark/settings] صف ناقص من الإعدادات: st-qari
+[creative-dark/settings] صف ناقص من الإعدادات: st-data
+[creative-dark/settings] صف ناقص من الإعدادات: st-about
+[focus] شاشة الأذكار ما فتحتش
+[views classic-light/home] أقسام من غير data-v: hero، sec، adhkar، sec، sec، sec، sec
+[views classic-light/library] أقسام من غير data-v: hero، sec، adhkar، sec، sec، sec، sec
+[views classic-light/prayer] أقسام من غير data-v: hero، sec، adhkar، sec، sec، sec، sec
+[views classic-light/tasbih] أقسام من غير data-v: hero، sec، adhkar، sec، sec، sec، sec
+[views classic-light/mushaf] أقسام من غير data-v: hero، sec، adhkar، sec، sec، sec، sec
+[views classic-dark/home] أقسام من غير data-v: hero، sec، adhkar، sec، sec، sec، sec
+[views classic-dark/library] أقسام من غير data-v: hero، sec، adhkar، sec، sec، sec، sec
+[views classic-dark/prayer] أقسام من غير data-v: hero، sec، adhkar، sec، sec، sec، sec
+[views classic-dark/tasbih] أقسام من غير data-v: hero، sec، adhkar، sec، sec، sec، sec
+[views classic-dark/mushaf] أقسام من غير data-v: hero، sec، adhkar، sec، sec، sec، sec
+[views creative-light/home] أقسام من غير data-v: hero، sec، adhkar، sec، sec، sec، sec
+[views creative-light/library] أقسام من غير data-v: hero، sec، adhkar، sec، sec، sec، sec
+[views creative-light/prayer] أقسام من غير data-v: hero، sec، adhkar، sec، sec، sec، sec
+[views creative-light/tasbih] أقسام من غير data-v: hero، sec، adhkar، sec، sec، sec، sec
+[views creative-light/mushaf] أقسام من غير data-v: hero، sec، adhkar، sec، sec، sec، sec
+[views creative-dark/home] أقسام من غير data-v: hero، sec، adhkar، sec، sec، sec، sec
+[views creative-dark/library] أقسام من غير data-v: hero، sec، adhkar، sec، sec، sec، sec
+[views creative-dark/prayer] أقسام من غير data-v: hero، sec، adhkar، sec، sec، sec، sec
+[views creative-dark/tasbih] أقسام من غير data-v: hero، sec، adhkar، sec، sec، sec، sec
+[views creative-dark/mushaf] أقسام من غير data-v: hero، sec، adhkar، sec، sec، sec، sec
+[wizard] المعالج ما ظهرش لمستخدم جديد
+
+--- ملاحظات ---
+classic-light تبويبات: لا يوجد
+classic-dark تبويبات: لا يوجد
+creative-light تبويبات: لا يوجد
+creative-dark تبويبات: لا يوجد
+READER:
+no .mp
+LS: wird-dark wird-skin wird-theme wird-setup-done wird-onboarded
+GLOBALS: 
+classic-light sweep pages: NONE
+classic-dark sweep pages: NONE
+creative-light sweep pages: NONE
+creative-dark sweep pages: NONE
+FOCUS:
+no #focus
