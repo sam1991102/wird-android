@@ -48,6 +48,11 @@ const tail = ';\n' + fs.readFileSync(new URL('../worker/routes.js', import.meta.
 const routesChanged = code.slice(cut) !== tail;
 if (routesChanged) console.log('worker/routes.js changed');
 
+// صفحات المواقيت في السيرفر بتحسب بنفس كود التطبيق: لو حد غيّر الحساب في واحد ونسي التاني، النشر يقف
+{ const app = fs.readFileSync(new URL('../web/site/app.js', import.meta.url), 'utf8'), rt = tail;
+  const cut2 = (s, a, b) => { const i = s.indexOf(a); return i < 0 ? null : s.slice(i, s.indexOf(b, i)); };
+  const same = cut2(app, 'const PT=', ',METHODS=') === cut2(rt, 'const PT=', ';\nconst P_METHODS=') && cut2(app, 'METHODS=', ',METHOD_NAMES=') === cut2(rt, 'METHODS=', ';\nconst P_METHOD_NAMES=');
+  if (!same) throw new Error('prayer-time calculation in worker/routes.js differs from web/site/app.js — copy PT/METHODS again'); }
 // 2) البناء من المستودع
 const F = build();
 // ملفات اتشالت من web/ عن قصد: لازم تتكتب هنا، وإلا الحماية بتوقف النشر عشان ما نمسحش حاجة بالغلط

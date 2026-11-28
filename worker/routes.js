@@ -97,6 +97,80 @@ function catFaq(k){const items=ADHKAR.filter(x=>x.cat===k),t=TITLE[k]||ROUTES[k]
  if(k==="morning"||k==="evening")q.push(["ما الدليل على "+t+"؟","قال الله تعالى: «وَسَبِّحْ بِحَمْدِ رَبِّكَ قَبْلَ طُلُوعِ الشَّمْسِ وَقَبْلَ غُرُوبِهَا» [طه: ١٣٠]."]);
  q.push(["هل يمكن قراءة "+t+" بدون إنترنت؟","نعم، يعمل وِرد دون إنترنت بعد فتحه أول مرة، على الموبايل والمتصفح، مع عدّاد لكل ذكر."]);
  return q}
+
+/* ===== صفحات مواقيت الصلاة للمدن: /مواقيت-الصلاة و/مواقيت-الصلاة/<المدينة> =====
+   الحساب هو نفس حساب التطبيق حرفيًا (PT وMETHODS وCITIES منسوخين من web/site/app.js،
+   وweb-deploy/deploy.mjs بيوقف النشر لو اختلفوا)، فالصفحة والتطبيق بيقولوا نفس الوقت. */
+const PT=(()=>{const t=Math.PI/180,e=e=>Math.sin(e*t),a=e=>Math.cos(e*t),r=e=>Math.asin(e)/t,n=(t,e)=>(t-=e*Math.floor(t/e))<0?t+e:t,s=s=>{const i=s-2451545,o=n(357.529+.98560028*i,360),c=n(280.459+.98564736*i,360),d=n(c+1.915*e(o)+.02*e(2*o),360),l=23.439-36e-8*i,u=n((h=a(l)*e(d),f=a(d),Math.atan2(h,f)/t/15),24);var h,f;return{decl:r(e(l)*e(d)),eqt:c/15-u}};return(r,i,o,c,d,l,u,h)=>{const f=((t,e,a)=>{e<=2&&(t--,e+=12);const r=Math.floor(t/100),n=2-r+Math.floor(r/4);return Math.floor(365.25*(t+4716))+Math.floor(30.6001*(e+1))+a+n-1524.5})(r,i,o)-d/360,g=t=>n(12-s(f+t).eqt,24),v=(r,n,i)=>{const o=s(f+n),d=(l=(-e(r)-e(o.decl)*e(c))/(a(o.decl)*a(c)),Math.acos(Math.max(-1,Math.min(1,l)))/t/15);var l;return g(n)+(i?-d:d)},p=(e,a)=>{const r=s(f+a);return v((n=e+(e=>Math.tan(e*t))(Math.abs(c-r.decl)),-Math.atan(1/n)/t),a);var n};let y={fajr:5,sunrise:6,dhuhr:12,asr:13,maghrib:18,isha:18};for(let t=0;t<6;t++){const t=t=>t/24;y={fajr:v(u.fajr,t(y.fajr),1),sunrise:v(.833,t(y.sunrise),1),dhuhr:g(t(y.dhuhr)),asr:p(h,t(y.asr)),maghrib:v(.833,t(y.maghrib)),isha:u.isha?v(u.isha,t(y.isha)):0}}const m=t=>t+l-d/15,$={fajr:m(y.fajr),sunrise:m(y.sunrise),dhuhr:m(y.dhuhr),asr:m(y.asr),maghrib:m(y.maghrib)};var _im=u.ishaMin;try{if(_im===90&&new Intl.DateTimeFormat("en-u-ca-islamic-umalqura",{month:"numeric",timeZone:"UTC"}).format(new Date(Date.UTC(r,i-1,o,12)))==="9")_im=120}catch(_e){}$.isha=_im?$.maghrib+_im/60:m(y.isha);var _N=24-($.maghrib-$.sunrise);if(u.fajr){var _pf=u.fajr/60*_N;if(!isFinite($.fajr)||$.sunrise-$.fajr>_pf)$.fajr=$.sunrise-_pf}if(u.isha){var _pi=u.isha/60*_N;if(!isFinite($.isha)||$.isha-$.maghrib>_pi)$.isha=$.maghrib+_pi}return $}})();
+const P_METHODS={uq:{fajr:18.5,ishaMin:90},egypt:{fajr:19.5,isha:17.5},mwl:{fajr:18,isha:17},gulf:{fajr:18.2,isha:18.2},kuwait:{fajr:18,isha:17.5},qatar:{fajr:18,ishaMin:90},karachi:{fajr:18,isha:18},turkey:{fajr:18,isha:17},isna:{fajr:15,isha:15}};
+const P_METHOD_NAMES={uq:"أم القرى",egypt:"الهيئة المصرية العامة للمساحة",mwl:"رابطة العالم الإسلامي",gulf:"الخليج (دبي)",kuwait:"الكويت",qatar:"قطر",karachi:"جامعة العلوم الإسلامية بكراتشي",turkey:"رئاسة الشؤون الدينية التركية",isna:"أمريكا الشمالية (ISNA)"};
+const P_CITIES=[["riyadh","الرياض",24.7136,46.6753,"Asia/Riyadh","uq"],["makkah","مكة المكرمة",21.3891,39.8579,"Asia/Riyadh","uq"],["madinah","المدينة المنورة",24.5247,39.5692,"Asia/Riyadh","uq"],["jeddah","جدة",21.4858,39.1925,"Asia/Riyadh","uq"],["dammam","الدمام",26.4207,50.0888,"Asia/Riyadh","uq"],["abha","أبها",18.2164,42.5053,"Asia/Riyadh","uq"],["cairo","القاهرة",30.0444,31.2357,"Africa/Cairo","egypt"],["alex","الإسكندرية",31.2001,29.9187,"Africa/Cairo","egypt"],["mansoura","المنصورة",31.0409,31.3785,"Africa/Cairo","egypt"],["aswan","أسوان",24.0889,32.8998,"Africa/Cairo","egypt"],["dubai","دبي",25.2048,55.2708,"Asia/Dubai","gulf"],["abudhabi","أبوظبي",24.4539,54.3773,"Asia/Dubai","gulf"],["kuwait","الكويت",29.3759,47.9774,"Asia/Kuwait","mwl"],["doha","الدوحة",25.2854,51.531,"Asia/Qatar","uq"],["manama","المنامة",26.2235,50.5876,"Asia/Bahrain","uq"],["muscat","مسقط",23.588,58.3829,"Asia/Muscat","mwl"],["amman","عمّان",31.9454,35.9284,"Asia/Amman","mwl"],["jerusalem","القدس",31.7683,35.2137,"Asia/Jerusalem","mwl"],["baghdad","بغداد",33.3152,44.3661,"Asia/Baghdad","mwl"],["damascus","دمشق",33.5138,36.2765,"Asia/Damascus","mwl"],["beirut","بيروت",33.8938,35.5018,"Asia/Beirut","mwl"],["khartoum","الخرطوم",15.5007,32.5599,"Africa/Khartoum","egypt"],["tunis","تونس",36.8065,10.1815,"Africa/Tunis","mwl"],["algiers","الجزائر",36.7538,3.0588,"Africa/Algiers","mwl"],["casablanca","الدار البيضاء",33.5731,-7.5898,"Africa/Casablanca","mwl"],["istanbul","إسطنبول",41.0082,28.9784,"Europe/Istanbul","mwl"],["london","لندن",51.5074,-.1278,"Europe/London","mwl"]];
+const PN={fajr:"الفجر",sunrise:"الشروق",dhuhr:"الظهر",asr:"العصر",maghrib:"المغرب",isha:"العشاء"},PK=["fajr","sunrise","dhuhr","asr","maghrib","isha"];
+const PRAY_ROOT="مواقيت-الصلاة",citySlug=c=>slugAr(c[1]);
+function tzOff(tz,d){const a=new Intl.DateTimeFormat("en-US",{timeZone:tz,hourCycle:"h23",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit"}).formatToParts(d),r=t=>+a.find(e=>e.type===t).value;return Math.round((Date.UTC(r("year"),r("month")-1,r("day"),r("hour"),r("minute"))-d.getTime())/36e5*4)/4}
+function cityDay(c,date){const off=tzOff(c[4],date),L=new Date(date.getTime()+off*36e5),y=L.getUTCFullYear(),m=L.getUTCMonth()+1,d=L.getUTCDate();
+ return{t:pDay(c,y,m,d,off),y,m,d,h:L.getUTCHours()+L.getUTCMinutes()/60,off}}
+/* نفس تقريب التطبيق: الشروق لتحت، والظهر لأقرب دقيقة، والباقي لفوق */
+function pDay(c,y,m,d,off){const t=PT(y,m,d,c[2],c[3],off,P_METHODS[c[5]]||P_METHODS.mwl,1);for(const k in t)if(isFinite(t[k])){const mm=t[k]*60;t[k]=(k==="sunrise"?Math.floor(mm+1e-6):k==="dhuhr"?Math.round(mm):Math.ceil(mm-1e-6))/60}return t}
+const fT=x=>{x=(x%24+24)%24;let h=Math.floor(x),mi=Math.round(60*(x-h));if(mi===60){h=(h+1)%24;mi=0}return AR((h%12||12)+":"+String(mi).padStart(2,"0"))+" "+(h<12?"ص":"م")};
+function qibla(la,lo){const r=Math.PI/180,K=[21.4225,39.8262],dl=(K[1]-lo)*r,y=Math.sin(dl),x=Math.cos(la*r)*Math.tan(K[0]*r)-Math.sin(la*r)*Math.cos(dl);return(Math.atan2(y,x)/r+360)%360}
+function pShell(o){return `<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>${esc(o.title)}</title><meta name="description" content="${esc(o.desc)}"><link rel="canonical" href="${o.url}">
+<meta property="og:type" content="website"><meta property="og:site_name" content="وِرد"><meta property="og:locale" content="ar_AR"><meta property="og:title" content="${esc(o.title)}"><meta property="og:description" content="${esc(o.desc)}"><meta property="og:url" content="${o.url}">
+<meta name="theme-color" content="#127a4f"><link rel="icon" href="/icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><link rel="stylesheet" href="/styles.css">
+<script>try{var t=localStorage.getItem("wird-dark");if(t==="true"||(t===null&&matchMedia("(prefers-color-scheme:dark)").matches))document.documentElement.classList.add("dark")}catch(e){}</script>
+${o.ld.map(ld).join("")}
+<style>
+.pp{max-width:760px;margin:auto;padding:20px 18px 60px}
+.pp-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+.pp-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font:700 1.5rem Amiri,serif}.pp-brand img{width:38px;height:38px;border-radius:11px}
+.pp-crumb{font-size:.9rem;color:var(--ink-2)}.pp-crumb a{color:var(--gold-ink);font-weight:700;text-decoration:none}
+.pp h1{font-size:clamp(1.5rem,5vw,2rem);margin:0 0 4px}.pp-date{color:var(--ink-2);margin:0 0 18px}
+.pp-card{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:6px 18px;box-shadow:var(--sh-1)}
+.pp-row{display:flex;justify-content:space-between;align-items:center;padding:13px 0;font-size:1.1rem}.pp-row+.pp-row{border-top:1px solid var(--line)}
+.pp-row strong{font-variant-numeric:tabular-nums}.pp-row.next{color:var(--primary);font-weight:700}.pp-row.next span::after{content:" · القادمة";font-size:.8rem;color:var(--gold-ink)}
+.pp-next{margin:14px 0 0;padding:12px 16px;border-radius:16px;background:var(--emerald-50);color:var(--ink)}
+.pp h2{font-size:1.15rem;margin:30px 0 10px}
+.pp-month{width:100%;border-collapse:collapse;font-size:.88rem;background:var(--paper);border-radius:16px;overflow:hidden}
+.pp-month th,.pp-month td{padding:8px 4px;text-align:center;border-bottom:1px solid var(--line)}.pp-month th{background:var(--paper-2);font-weight:700}.pp-month tr.today td{background:var(--emerald-50);font-weight:700}
+.pp-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:16px}
+.pp p{line-height:1.9}.pp-cities{display:flex;flex-wrap:wrap;gap:8px}.pp-cities a{padding:7px 14px;border:1px solid var(--line);border-radius:999px;text-decoration:none;color:var(--ink);background:var(--paper)}
+.pp-cta{margin-top:24px}.pp a:focus-visible{outline:3px solid var(--gold-2);outline-offset:2px}
+</style></head><body><main class="pp">
+<header class="pp-top"><a class="pp-brand" href="/"><img src="/icon.svg" alt="" width="38" height="38">وِرد</a><nav class="pp-crumb" aria-label="مسار التنقل">${o.crumb}</nav></header>
+${o.body}
+</main>${o.script||""}</body></html>`}
+function prayerIndex(origin){const url=origin+enc("/"+PRAY_ROOT),now=new Date();
+ const rows=P_CITIES.map(c=>{const x=cityDay(c,now);return `<a class="pp-row" href="${enc("/"+PRAY_ROOT+"/"+citySlug(c))}" style="text-decoration:none;color:inherit"><span>${esc(c[1])}</span><strong>الفجر ${fT(x.t.fajr)} · المغرب ${fT(x.t.maghrib)}</strong></a>`}).join("");
+ return pShell({title:"مواقيت الصلاة اليوم في المدن العربية والإسلامية | وِرد",desc:"مواقيت الصلاة اليوم في "+AR(P_CITIES.length)+" مدينة: الرياض ومكة والقاهرة ودبي وغيرها، بطريقة الحساب المعتمدة في كل بلد، مع جدول الشهر واتجاه القبلة.",url,
+  crumb:'<a href="/">وِرد</a> · مواقيت الصلاة',
+  ld:[{"@context":"https://schema.org","@type":"CollectionPage","name":"مواقيت الصلاة","url":url,"inLanguage":"ar"},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"وِرد","item":origin+"/"},{"@type":"ListItem","position":2,"name":"مواقيت الصلاة","item":url}]}],
+  body:'<h1>مواقيت الصلاة اليوم</h1><p class="pp-date">اختار مدينتك عشان تشوف مواقيت اليوم وجدول الشهر واتجاه القبلة.</p><div class="pp-card">'+rows+'</div><p class="pp-cta"><a class="btn btn-primary" href="/#prayer">مواقيت مدينتك بالضبط مع الأذان في وِرد</a></p>'})}
+function prayerCity(c,origin){const now=new Date(),x=cityDay(c,now),url=origin+enc("/"+PRAY_ROOT+"/"+citySlug(c));
+ const hijri=new Intl.DateTimeFormat("ar-SA-u-ca-islamic-umalqura-nu-arab",{day:"numeric",month:"long",year:"numeric",timeZone:c[4]}).format(now);
+ const greg=new Intl.DateTimeFormat("ar-EG-u-nu-arab",{weekday:"long",day:"numeric",month:"long",year:"numeric",timeZone:c[4]}).format(now);
+ const next=PK.find(k=>k!=="sunrise"&&x.t[k]>x.h)||"fajr";
+ const isFri=new Date(Date.UTC(x.y,x.m-1,x.d)).getUTCDay()===5,nm=k=>k==="dhuhr"&&isFri?"الجمعة":PN[k];
+ const list=PK.map(k=>`<div class="pp-row${k===next?" next":""}"><span>${nm(k)}</span><strong>${fT(x.t[k])}</strong></div>`).join("");
+ const days=new Date(Date.UTC(x.y,x.m,0)).getUTCDate(),mName=new Intl.DateTimeFormat("ar-EG",{month:"long",timeZone:"UTC"}).format(new Date(Date.UTC(x.y,x.m-1,1)));
+ let month="";for(let d=1;d<=days;d++){const t=pDay(c,x.y,x.m,d,x.off);month+=`<tr${d===x.d?' class="today"':""}><td>${AR(d)}</td>${PK.map(k=>"<td>"+fT(t[k]).replace(/ [صم]$/,"")+"</td>").join("")}</tr>`}
+ const q=Math.round(qibla(c[2],c[3])),others=P_CITIES.filter(o=>o!==c).map(o=>`<a href="${enc("/"+PRAY_ROOT+"/"+citySlug(o))}">${esc(o[1])}</a>`).join("");
+ const desc="مواقيت الصلاة في "+c[1]+" اليوم: الفجر "+fT(x.t.fajr)+"، الشروق "+fT(x.t.sunrise)+"، الظهر "+fT(x.t.dhuhr)+"، العصر "+fT(x.t.asr)+"، المغرب "+fT(x.t.maghrib)+"، العشاء "+fT(x.t.isha)+"، مع جدول شهر "+mName+" واتجاه القبلة.";
+ const ldc={"@context":"https://schema.org","@type":"WebPage","name":"مواقيت الصلاة في "+c[1],"url":url,"inLanguage":"ar","dateModified":x.y+"-"+String(x.m).padStart(2,"0")+"-"+String(x.d).padStart(2,"0"),"about":{"@type":"City","name":c[1],"geo":{"@type":"GeoCoordinates","latitude":c[2],"longitude":c[3]}}};
+ const ldb={"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"وِرد","item":origin+"/"},{"@type":"ListItem","position":2,"name":"مواقيت الصلاة","item":origin+enc("/"+PRAY_ROOT)},{"@type":"ListItem","position":3,"name":c[1],"item":url}]};
+ const T={};PK.forEach(k=>T[k]=x.t[k]);
+ return pShell({title:"مواقيت الصلاة في "+c[1]+" اليوم — أذان الفجر والمغرب | وِرد",desc,url,
+  crumb:'<a href="'+enc("/"+PRAY_ROOT)+'">مواقيت الصلاة</a> · '+esc(c[1]),ld:[ldc,ldb],
+  body:`<h1>مواقيت الصلاة في ${esc(c[1])} اليوم</h1><p class="pp-date">${esc(greg)} · ${esc(hijri)}</p>
+<div class="pp-card">${list}</div><p class="pp-next" id="ppNext">الصلاة القادمة: ${nm(next)} ${fT(x.t[next])}</p>
+<h2>جدول مواقيت الصلاة لشهر ${esc(mName)}</h2><div class="pp-wrap"><table class="pp-month"><thead><tr><th>اليوم</th>${PK.map(k=>"<th>"+PN[k]+"</th>").join("")}</tr></thead><tbody>${month}</tbody></table></div>
+<h2>اتجاه القبلة في ${esc(c[1])}</h2><p>القبلة في ${esc(c[1])} على زاوية ${AR(q)}° من الشمال الجغرافي، باتجاه عقارب الساعة. وفي وِرد بوصلة بتوريك الاتجاه بالموبايل.</p>
+<h2>كيف حُسبت هذه المواقيت</h2><p>بطريقة «${esc(P_METHOD_NAMES[c[5]]||"رابطة العالم الإسلامي")}»، وهي المعتمدة في البلد، ومذهب الجمهور في العصر، بتوقيت ${esc(c[4])}. وقد تختلف المواقيت دقيقة أو دقيقتين عن تقويم المساجد المحلي.</p>
+<p class="pp-cta"><a class="btn btn-primary" href="/#prayer">افتح وِرد: مواقيت مكانك بالضبط مع الأذان</a></p>
+<h2>مدن أخرى</h2><nav class="pp-cities" aria-label="مدن أخرى">${others}</nav>`,
+  /* العدّ للصلاة الجاية بيتحدّث في المتصفح من نفس الأوقات (بالساعات من نص الليل بتوقيت المدينة) */
+  script:`<script>(function(){var T=${JSON.stringify(T)},OFF=${x.off},N=${JSON.stringify(PN)},K=["fajr","dhuhr","asr","maghrib","isha"],e=document.getElementById("ppNext"),ar=function(s){return String(s).replace(/[0-9]/g,function(d){return"٠١٢٣٤٥٦٧٨٩"[d]})};
+function tick(){var n=new Date(Date.now()+OFF*36e5),h=n.getUTCHours()+n.getUTCMinutes()/60+n.getUTCSeconds()/3600,k=K.find(function(k){return T[k]>h}),left=k?T[k]-h:T.fajr+24-h;k=k||"fajr";var hh=Math.floor(left),mm=Math.floor((left-hh)*60);e.textContent="الصلاة القادمة: "+N[k]+" بعد "+(hh?ar(hh)+" س ":"")+ar(mm)+" د"}tick();setInterval(tick,30000)})();</script>`})}
 function seoIndex(slug,name,origin){
   const items=ADHKAR.filter(x=>x.cat===slug);if(!items.length)return"";
   const t=TITLE[slug]||name,url=origin+enc(catPath(slug)),faq=catFaq(slug);
@@ -115,7 +189,8 @@ function sitemap(origin){const day=new Date().toISOString().slice(0,10),u=(path,
  const pages=["/","/download","/about.html","/privacy.html","/contact.html","/kids","/learn","/hadith"].map(x=>u(x,x==="/"?"1.0":"0.5"));
  const cats=Object.keys(ROUTES).filter(k=>ADHKAR.some(x=>x.cat===k)).map(k=>u(catPath(k),"0.9"));
  const dk=ADHKAR.filter(d=>ROUTES[d.cat]).map(d=>u(dPath(d),"0.7"));
- return '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+pages.concat(cats,dk).join("\n")+"\n</urlset>\n"}
+ const pr=[u("/"+PRAY_ROOT,"0.8")].concat(P_CITIES.map(c=>u("/"+PRAY_ROOT+"/"+citySlug(c),"0.8")));
+ return '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+pages.concat(cats,pr,dk).join("\n")+"\n</urlset>\n"}
 function pageFor(html,slug,name,origin){
   const t=TITLE[slug]||name,n=ADHKAR.filter(x=>x.cat===slug).length;
   const title=t+" مكتوبة كاملة مع عداد"+(n?" — "+AR(n)+" ذكرًا":"")+" | وِرد";
@@ -274,6 +349,9 @@ export default{
     {const seg=dp.split("/"),k=SLUG_CAT[seg[0]];
      if(k&&seg.length===1&&ROUTES[k]){const html=FILES["index.html"][1].split(OLD_ORIGIN).join(url.origin);return new Response(pageFor(html,k,ROUTES[k],url.origin),{headers:{...headers,"content-type":"text/html; charset=utf-8","cache-control":"no-cache"}})}
      if(k&&seg.length===2){const id=SLUG_D[k+"/"+seg[1]],d=id&&ADHKAR.find(x=>x.id===id);if(d)return new Response(dhikrPage(d,url.origin),{headers:{...headers,"content-type":"text/html; charset=utf-8","cache-control":"public, max-age=3600"}})}}
+    {const seg=dp.split("/");if(seg[0]===PRAY_ROOT){const H={...headers,"content-type":"text/html; charset=utf-8","cache-control":"public, max-age=900"};
+      if(seg.length===1)return new Response(prayerIndex(url.origin),{headers:H});
+      const c=P_CITIES.find(c=>citySlug(c)===seg[1]);if(c&&seg.length===2)return new Response(prayerCity(c,url.origin),{headers:H})}}
     if(p==="sitemap.xml")return new Response(sitemap(url.origin),{headers:{...headers,"content-type":"application/xml; charset=utf-8","cache-control":"public, max-age=3600"}});
     const dm=p.match(/^d\/(\d+)$/);
     if(dm){const d=ADHKAR.find(x=>x.id===+dm[1]);if(d)return new Response(dhikrPage(d,url.origin),{headers:{...headers,"content-type":"text/html; charset=utf-8","cache-control":"public, max-age=3600"}})}
