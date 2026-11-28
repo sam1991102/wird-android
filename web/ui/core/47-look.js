@@ -5,7 +5,7 @@
   الصفوف اللي بتبنيها ملفات تانية (الوضع، حجم خط الأذكار، الأرقام، الاهتزاز، القراءة الهادئة) بتتحط في مجموعاتها. */
 var R=document.documentElement,K="wird-look";
 var DEF={ac:"",bg:"cream",bgc:"",card:"white",ink:"normal",bar:"color",onTab:"primary",
- font:"tajawal",deco:"diwani",textf:"amiri",weight:"normal",size:100,lh:"normal",
+ font:"plex",deco:"diwani",textf:"amiri",weight:"normal",size:100,lh:"normal",
  rd:"normal",shadow:"normal",border:"on",density:"normal",icons:"regular",labels:"on",motion:"full"};
 var PRE={classic:{},hadi:{bg:"gray",bar:"light",onTab:"gold",font:"plex",weight:"light",rd:"round",shadow:"soft",border:"off",icons:"thin"}};
 var ACS=[["","أخضر وِرد"],["#32735c","أخضر هادي"],["#0f5c46","زمردي غامق"],["#2f5d8c","أزرق"],["#7d2e3a","عنابي"],["#7a5a3a","بني"],["#5b4b8a","بنفسجي"],["#22303c","كحلي"]];
@@ -26,7 +26,7 @@ var G=[
   ["bar","الشريط العلوي","","tiles",[["color","ملوّن"],["light","فاتح"]]],
   ["onTab","لون التبويب المختار","في الشريط السفلي","seg",[["primary","اللون الأساسي"],["gold","دهبي"]]]]],
  ["الخطوط",[
-  ["font","خط التطبيق","القوائم والأزرار والكلام","tiles",[["tajawal","تجوّل"],["plex","بلكس"]]],
+  ["font","خط التطبيق","القوائم والأزرار والكلام","tiles",[["plex","بلكس"],["tajawal","تجوّل"]]],
   ["deco","خط العناوين المميزة","اسم اليوم وعناوين الصفحات","tiles",[["diwani","ديواني"],["ui","نفس خط التطبيق"]]],
   ["textf","خط نص الأذكار","","tiles",[["amiri","أميري"],["ui","نفس خط التطبيق"]]],
   ["weight","سُمك الخط","","seg",[["light","خفيف"],["normal","عادي"],["bold","عريض"]]],
@@ -47,7 +47,9 @@ var G=[
 var NAME={};G.forEach(function(g){g[1].forEach(function(r){if(r[4])NAME[r[0]]=r[4]})});
 
 function load(){try{var o=JSON.parse(localStorage.getItem(K)||"null");if(o){/* النسخة اللي فاتت كانت بتحفظ rd/icons/bar بأسماء تانية */
-  if(o.rd==="round"&&!o.shadow)o.shadow="soft";return Object.assign({},DEF,o)}}catch(e){}
+  if(o.rd==="round"&&!o.shadow)o.shadow="soft";/* بلكس بقى الخط الافتراضي: مرة واحدة للي كان محفوظ عنده تجوّل */
+  try{if(!localStorage.getItem("wird-look-f2")){localStorage.setItem("wird-look-f2","1");if(o.font==="tajawal"){o.font="plex";localStorage.setItem(K,JSON.stringify(o))}}}catch(e){}
+  return Object.assign({},DEF,o)}}catch(e){}
  try{if(localStorage.getItem("wird-skin")==="hadi"){localStorage.setItem("wird-skin","classic");var h=Object.assign({},DEF,PRE.hadi);localStorage.setItem(K,JSON.stringify(h));return h}}catch(e){}
  return Object.assign({},DEF)}
 var S=load();
